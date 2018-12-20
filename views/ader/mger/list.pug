@@ -1,0 +1,19 @@
+extends ../aalayout/layout
+
+block content
+	.container
+		.row
+			table.table.table-hover.table-bordered
+				thead
+					tr
+						th 账户
+						th id
+						th delete
+				tbody
+					each item in objects
+						<tr class="item-id-#{item._id}">
+							td: a(href="/adMgerDetail/"+item._id) #{item.code}
+							td #{item._id}
+							td <button class="btn btn-danger del" type="button", data-urldel="/adMgerDel", data-id="#{item._id}"> delete </button>
+						</tr>
+	script(src="/js/delete.js")

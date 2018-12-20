@@ -1,0 +1,14 @@
+extends ../aalayout/layout
+
+block content
+	.container
+		#selectOption
+			include ./list/selectList
+		hr
+		.row
+			include ../aalayout/pageSlip
+		.row
+			include ./list/taskList
+
+		hr
+		include ./list/selectPrint

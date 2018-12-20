@@ -1,0 +1,71 @@
+form(method="get", action=filterAction, enctype="multipart/form-data")
+	.form-group.row
+		label.col-sm-2.col-form-label Keywords
+		.col-md-2
+			select.form-control(name="ktype", data-style="btn-info")
+				if ktype == "code"
+					option(value="code", selected="selected") Code
+				else
+					option(value="code") Code
+				if ktype == "title"
+					option(value="title", selected="selected") Title
+				else
+					option(value="title") Title
+				if ktype == "order"
+					option(value="order", selected="selected") Order
+				else
+					option(value="order") Order
+				if ktype == "description"
+					option(value="description", selected="selected") Description
+				else
+					option(value="description") Description
+				if ktype == "note"
+					option(value="note", selected="selected") Note
+				else
+					option(value="note") Note
+		.col-md-6
+			input.form-control(type="text", name='keyword', value=keyword, placeholder="input the keywords to find your jobs")
+	hr
+	.form-group.row
+		label.col-md-2.col-form-label: img#imgStart(src="/imgs/clockStart.jpg", width="50px")
+		.col-md-3
+			if selStart
+				input#selStartTime.datepicker.form-control(type="text", name="start", placeholder="startDate format:month/day/year", readonly="readonly", value=moment(selStart).format('MM/DD/YYYY'))
+			else
+				input#selStartTime.datepicker.form-control(type="text", name="start", placeholder="startDate format:month/day/year", readonly="readonly")
+		label.col-md-2.col-form-label: img#imgEnded(src="/imgs/clockEnd.jpg", width="50px")
+		.col-md-3
+			if selEnded
+				input#selEndedTime.datepicker.form-control(type="text", name="ended", placeholder="endDate format : month/day/year", readonly="readonly", value=moment(selEnded).format('MM/DD/YYYY'))
+			else
+				input#selEndedTime.datepicker.form-control(type="text", name="ended", placeholder="endDate format : month/day/year", readonly="readonly")
+		.col-md-2
+			#optResult.text-danger
+
+	.form-group.row
+		label.col-sm-2.col-form-label Status
+		.col-sm-8
+			select.form-control(name="status", data-style="btn-info")
+				each key in Object.keys(Conf.stsTask)
+					if key == selStatus
+						option(value=key, selected="selected") #{Conf.stsTask[key]}
+					else
+						option(value=key) #{Conf.stsTask[key]}
+				if selStatus == 3
+					option(value=3, selected="selected") select all
+				else
+					option(value=3) select all
+	.form-group.row
+		.col-sm-12
+			input#subFilter.btn.btn-info.btn-block(type="submit" value="filter")
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+//- <link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+//- timepicker
+link(rel="stylesheet", href="/libs/jt.timepicker/jquery.timepicker.css")
+script(src="/libs/jt.timepicker/jquery.timepicker.min.js")
+
+
+script(src="/js/task/selectList.js")

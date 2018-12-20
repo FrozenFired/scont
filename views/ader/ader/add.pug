@@ -1,0 +1,17 @@
+extends ../aalayout/layout
+
+block content
+	.container
+		form(method="post", action=action, enctype="multipart/form-data")
+			.form-group.row
+				label.col-md-2.col-form-label(for="iptCode") 帐号
+				.col-md-6
+					input#iptCode.form-control(type="text", class="iptCode", name="object[code]")
+			.form-group.row
+				label.col-md-2.col-form-label(for="iptPw") 密码
+				.col-md-6
+					input#iptPw.form-control(type="text", class="iptPw", name="object[password]")
+			hr
+			.form-group.row
+				.offset-md-2.col-md-10
+					input.btn.btn-default(type="submit" value="add")

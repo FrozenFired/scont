@@ -1,0 +1,46 @@
+a.btn.btn-default(href="#", data-toggle="modal", data-target="#upSferInfo") updateInfo
+
+#upSferInfo.modal.fade
+	.modal-dialog
+		.modal-content
+			form#updateInfo(method="post", action="/mgUpdateSferInfo", enctype="multipart/form-data")
+				.modal-header: h3 update [ #{object.code} ]
+				.modal-body
+					input(type="hidden", name="object[_id]", value=object._id)
+					input(type="hidden", name="object[code]",value=object.code)
+					.form-group
+						label.col-form-label(for="iptRole") Role
+						select#iptRole.form-control(name="object[role]", data-style="btn-info")
+							each key in Object.keys(Conf.sfRole)
+								if key == object.role
+									option(value=key, selected="selected") #{Conf.sfRole[key]} #{key}
+								else
+									option(value=key) #{Conf.sfRole[key]} #{key}
+								- let a;
+					.form-group
+						label.col-form-label(for="iptName") Name
+						input#iptName.form-control(type="text", class="iptName", name="object[name]", value=object.name)
+					.form-group.udPhoto
+						input(type="hidden", name="object[photoDir]", value=Conf.photoPath.sferAvatar)
+						input(type="hidden", name="object[orgPhoto]", value=object.photo)
+						label.col-form-label(for="uploadPhoto") 头像
+						input#uploadPhoto.btn.btn-info.btn-block(type="file", name="uploadPhoto")
+					hr
+					.form-group
+						label.col-form-label(for="iptDocu") Document Number
+						input#iptDocu.form-control(type="text", class="iptDocu", name="object[document]", value=object.document)
+					.form-group
+						label.col-form-label(for="iptTel") Tel
+						input#iptTel.form-control(type="text", class="iptTel", name="object[telephone]", value=object.telephone)
+					.form-group
+						label.col-form-label(for="iptAddr") Address
+						input#iptAddr.form-control(type="text", class="iptAddr", name="object[address]", value=object.address)
+					.form-group
+						label.col-form-label(for="iptPost") Post
+						input#iptPost.form-control(type="text", class="iptPost", name="object[post]", value=object.post)
+					.form-group
+						label.col-form-label(for="iptIva") IVA
+						input#iptIva.form-control(type="text", class="iptIva", name="object[ivaNumber]", value=object.ivaNumber)
+				.modal-footer
+					button.btn.btn-default(type="button" data-dismiss="modal") 关闭
+					button.btn.btn-success(type="submit") 提交

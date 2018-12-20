@@ -1,0 +1,35 @@
+.form-group.row
+	input.form-control#vendorCode(type="hidden", name="vendor[code]", readonly="readonly")
+.form-group.row
+	label.col-md-2.col-form-label select Type
+	.col-md-3
+		select.form-control(name="vendor[vtype]", data-style="btn-info")
+			each key in Object.keys(Conf.vtype)
+				option(value=key) #{Conf.vtype[key]}
+			- a;
+.form-group.row.contact0
+	label.col-md-2.col-form-label contacts
+	.col-md-3
+		a.btn.btn-block.btn-warning#addContact(href="#") plus
+	.col-md-3
+		a.btn.btn-block.btn-danger#delContact(href="#") minus
+.form-group.row
+	label.col-sm-2.col-form-label AC/SA
+	.col-sm-2
+		input.form-control(type="number", name="vendor[ac]", placeholder="ac")
+	.col-sm-1
+		span /
+	.col-sm-2
+		input.form-control(type="number", name="vendor[sa]", placeholder="sa")
+	.col-sm-5
+		input.form-control(type="text", name="vendor[acsaNote]", placeholder="ac/sa NOTE")
+.form-group.row
+	label.col-sm-2.col-form-label freight
+	.col-sm-8
+		input.form-control(type="text", name="vendor[freight]")
+.form-group.row
+	label.col-sm-2.col-form-label Vendor NOTE
+	.col-sm-8
+		input.form-control(type="text", name="vendor[note]")
+
+script(src="/js/scont/scont/add/vendorAdd.js")

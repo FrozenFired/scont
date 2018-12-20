@@ -1,0 +1,56 @@
+h2 vendor Information:
+if object.vendor
+	-a;
+	dl.dl-horizontal
+		dt code:
+		dd #{object.vendor.code}
+		dt weight: 
+		dd #{object.vendor.weight}
+		dt Vendor Type: 
+		dd #{Conf.vtype[object.vendor.vtype]}
+
+		if object.vendor.contacts && object.vendor.contacts.length > 0
+			each contact in object.vendor.contacts
+				dt contacter:
+				dd #{contact.contacter}
+				dt telephone:
+				dd #{contact.tel}
+				dt email:
+				dd #{contact.email}
+				br
+		-a;
+		dt ac:
+		dd #{object.vendor.ac}
+		dt sa:
+		dd #{object.vendor.sa}
+		dt NOTE:
+		dd #{object.vendor.acsaNote}
+		dt freight:
+		dd #{object.vendor.freight}
+		dt NOTE:
+		dd #{object.vendor.note}
+
+		if object.vendor.creater
+			dt creater:
+			dd #{object.vendor.creater.name}
+		-a;
+		if object.vendor.updater
+			dt updater:
+			dd #{object.vendor.updater.name}
+		-a;
+		dt createAt:
+		dd #{moment(object.vendor.createAt).format('MM/DD/YYYY')}
+		dt updateAt:
+		dd #{moment(object.vendor.updateAt).format('MM/DD/YYYY')}
+
+		dt status:
+		dd #{Conf.stsVendor[object.vendor.status]}
+
+		dt weight:
+		dd #{object.vendor.weight}
+
+
+
+	a.btn.btn-warning.btn-lg(href="/vendorUpdate/"+object.vendor._id) update
+else
+	.text-danger vendor information lost

@@ -1,0 +1,78 @@
+extends ../../aalayout/layout
+
+block content
+	.container
+		h1 Vendor Update
+		hr
+		form#update(method="post", action="/updateVendor", enctype="multipart/form-data")
+			input(type="hidden", name="object[_id]", value=object._id)
+			.form-group.row
+				label.col-sm-2.col-form-label Code
+				.col-sm-8
+					input#iptCode.form-control(type="text", class="iptCode", name="object[code]", value=object.code, placeholder="Must fill it")
+			.form-group.row
+				label.col-md-2.col-form-label select Type
+				.col-md-3
+					select.form-control(name="object[vtype]", data-style="btn-info")
+						each key in Object.keys(Conf.vtype)
+							if key == object.vtype
+								option(value=key, selected="selected") #{Conf.vtype[key]}
+							else
+								option(value=key) #{Conf.vtype[key]}
+						- a;
+			.form-group.row.contact0
+				label.col-md-2.col-form-label contacts
+				.col-md-3
+					a.btn.btn-block.btn-warning#addContact(href="#") plus
+				.col-md-3
+					a.btn.btn-block.btn-danger#delContact(href="#") minus
+			input#contactsLen(type="hidden" value=object.contacts.length)
+			-for(j=0; j<object.contacts.length; j++) {
+				<div class="form-group row contact#{j+1}" id="contact#{j+1}">
+					<label class="col-md-2 col-form-label"> contact#{j+1} </label>
+					<div class="col-md-3">
+						<input class="form-control" type="text", name="object[contacts][#{j}][contacter]", value="#{object.contacts[j].contacter}" />
+					</div>
+					<div class="col-md-3">
+						<input class="form-control" type="text", name="object[contacts][#{j}][tel]", value="#{object.contacts[j].tel}" />
+					</div>
+					<div class="col-md-4">
+						<input class="form-control" type="text", name="object[contacts][#{j}][email]", value="#{object.contacts[j].email}" />
+					</div>
+				</div>
+			-}
+			-a;
+			hr
+			.form-group.row
+				label.col-sm-2.col-form-label AC/SA
+				.col-sm-2
+					input.form-control(type="number", name="object[ac]", placeholder="ac", value=object.ac)
+				.col-sm-1
+					span /
+				.col-sm-2
+					input.form-control(type="number", name="object[sa]", placeholder="sa", value=object.sa)
+				.col-sm-5
+					input.form-control(type="text", name="object[acsaNote]", placeholder="ac/sa NOTE", value=object.acsaNote)
+			.form-group.row
+				label.col-sm-2.col-form-label freight
+				.col-sm-8
+					input.form-control(type="text", name="object[freight]", value=object.freight)
+			.form-group.row
+				label.col-sm-2.col-form-label Vendor NOTE
+				.col-sm-8
+					input.form-control(type="text", name="object[note]", value=object.note)
+			.form-group.row
+				label.col-md-2.col-form-label Status
+				.col-md-8
+					select.form-control(name="object[status]", data-style="btn-info")
+						each key in Object.keys(Conf.stsVendor)
+							-a;
+							if object.status == key
+								-a;
+								option(value=key, selected="selected") #{Conf.stsVendor[key]}
+							else
+								option(value=key) #{Conf.stsVendor[key]}
+			.form-group.row
+				.offset-md-2.col-md-10
+					input.btn.btn-default(type="submit" value="Update Vendor")
+	script(src='/js/scont/vendor/update.js')

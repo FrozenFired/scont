@@ -1,0 +1,15 @@
+extends ../../aalayout/layout
+
+block content
+	.container
+		.row
+			.col-md-4
+				include ./detail/brandInfo
+			.col-md-4
+				include ./detail/vendorInfo
+			.col-md-4
+				include ./detail/selfInfo
+		if object.numbrand > 0
+			hr
+			//- .row
+			//- 	include ../../brand/list/listBrands

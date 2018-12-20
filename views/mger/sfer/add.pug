@@ -1,0 +1,53 @@
+extends ../aalayout/layout
+
+block content
+	.container
+		form(method="post", action=action, enctype="multipart/form-data")
+			.form-group.row
+				label.col-md-2.col-form-label(for="iptCode") 帐号
+				.col-md-6
+					input#iptCode.form-control(type="text",class="iptCode", name="object[code]")
+			.form-group.row
+				label.col-md-2.col-form-label(for="iptPassword") 密码
+				.col-md-6
+					input#iptPassword.form-control(type="text", class="iptPassword", name="object[password]")
+			.form-group.row
+				label.col-md-2.col-form-label(for="iptRole") 角色
+				.col-md-6
+					select#iptRole.form-control(name="object[role]", data-style="btn-info")
+						each key in Object.keys(Conf.sfRole)
+							- let a;
+							option(value=key) #{Conf.sfRole[key]} #{key}
+			.form-group.row
+				label.col-md-2.col-form-label(for="iptName") Name
+				.col-md-6
+					input#iptName.form-control(type="text", class="iptName", name="object[name]")
+			.form-group.row.udPhoto
+				input(type="hidden", name="object[photoDir]", value=Conf.photoPath.sferAvatar)
+				label.col-md-2.col-form-label(for="uploadPhoto") 头像
+				.col-md-6
+					input#uploadPhoto.btn.btn-info.btn-block(type="file", name="uploadPhoto")
+			hr
+			.form-group.row
+				label.col-md-2.col-form-label(for="iptDocu") Document Number
+				.col-md-6
+					input#iptDocu.form-control(type="text", class="iptDocu", name="object[document]")
+			.form-group.row
+				label.col-md-2.col-form-label(for="iptTel") Tel
+				.col-md-6
+					input#iptTel.form-control(type="text", class="iptTel", name="object[telephone]")
+			.form-group.row
+				label.col-md-2.col-form-label(for="iptAddr") Address
+				.col-md-6
+					input#iptAddr.form-control(type="text", class="iptAddr", name="object[address]")
+			.form-group.row
+				label.col-md-2.col-form-label(for="iptPost") Post
+				.col-md-6
+					input#iptPost.form-control(type="text", class="iptPost", name="object[post]")
+			.form-group.row
+				label.col-md-2.col-form-label(for="iptIva") IVA
+				.col-md-6
+					input#iptIva.form-control(type="text", class="iptIva", name="object[ivaNumber]")
+			.form-group.row
+				.offset-md-2.col-md-10
+					input.btn.btn-default(type="submit" value="添加sfer")

@@ -1,0 +1,51 @@
+extends ../../aalayout/layout
+
+block content
+	.container
+		a.btn.btn-info.btn-lg.btn-block(href="/scontAdd") Add Scont
+		hr
+		.row
+			table.table.table-hover.table-bordered
+				thead
+					tr
+						th Cause <br/> Note
+						th Brand <br/> Category
+						th Vendor <br/> Type
+						th scont <br/> scontNote
+						th creater <br/> updater
+						th status
+						th oprate
+				tbody
+					each item in objects
+						-let a;
+						tr(class="item-id-"+item._id)
+							td: a(href="/scontDetail/"+item._id)
+								span #{Conf.sctCause[item.cause]} <br/> #{item.note}
+							td
+								if item.brand
+									-a;
+									span #{item.brand.code}
+									br
+									if item.brand.bcateg
+										-a;
+										span #{item.brand.bcateg.code} ; 
+										span #{Conf.bcate[item.brand.bcateg.bcate]}
+							td
+								if item.vendor
+									-a;
+									span #{item.vendor.code}
+									br
+									span #{Conf.vtype[item.vendor.vtype]}
+							td #{item.scont} <br/> #{item.scontNote}
+							td
+								if item.creater
+									-a;
+									span #{item.creater.code}
+								br
+								if item.updater
+									-a;
+									span #{item.updater.code}
+							td #{Conf.stsScont[item.status]}
+							
+							td: button.btn.btn-danger.del(type="button", data-urldel="/scontDel", data-id=item._id) 删除
+	script(src="/js/delete.js")

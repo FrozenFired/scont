@@ -1,0 +1,23 @@
+.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
+	button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation")
+		<span class="navbar-toggler-icon"></span>
+
+	.collapse.navbar-collapse#navbarTogglerDemo02
+		if crAder
+			ul.navbar-nav.mr-auto.mt-2.mt-lg-0
+				li.nav-item.active
+					a.nav-link(href="/ader") admin <span class="sr-only">(current)</span>
+			ul.navbar-nav
+				li: a.btn.btn-info(href="/aderDetail/"+crAder._id) hello: #{crAder.code}
+				span &nbsp;&nbsp;&nbsp;&nbsp;
+				li: a.btn.btn-danger(href="/aderLogout") Logout
+		else
+			ul.navbar-nav
+				li: a(href="/") home
+.row
+	div(style="height:60px") 
+
+.container
+	.row
+		.page-header
+			h1= title

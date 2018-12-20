@@ -1,0 +1,16 @@
+a.btn.btn-default(href="#", data-toggle="modal", data-target="#upMgerInfo") updateInfo
+
+#upMgerInfo.modal.fade
+	.modal-dialog
+		.modal-content
+			form#updateInfo(method="post", action="/adUpdateMgerInfo", enctype="multipart/form-data")
+				.modal-header: h3 update Information
+				.modal-body
+					input(type="hidden", name="object[_id]", value=object._id)
+					.form-group
+						label.col-form-label(for="iptCode") Code
+						input#iptCode.form-control(type="text", class="iptCode", value=object.code, readonly="readonly")
+				.modal-footer
+					button.btn.btn-default(type="button" data-dismiss="modal") 关闭
+					button.btn.btn-success(type="submit") 提交
+script(src="/js/administrator/manager/editInfo.js")

@@ -1,0 +1,42 @@
+h2 nation Information:
+dl.dl-horizontal
+	dt code:
+	dd #{object.code}
+	dt nameEN: 
+	dd #{object.name}
+	dt nameCN: 
+	dd #{object.nameCN}
+	dt telCode
+	dd #{object.telCode}
+	dt Brand Number
+	dd #{object.numbrand}
+	dt moment
+	dd DAY/MONTH/YEAR
+	dt createAt:
+	dd #{moment(object.createAt).format('DD/MM/YYYY')}
+	dt updateAt:
+	dd #{moment(object.updateAt).format('DD/MM/YYYY')}
+	dt creater:
+	if object.creater && object.creater.name
+		dd #{object.creater.name}
+	else
+		dd
+	dt updater:
+	if object.updater && object.updater.name
+		dd #{object.updater.name}
+	else
+		dd
+
+	//- dt weight:
+	//- -for(i in Object.values(Numbs.objectWeight) ) {
+	//- 	- if(object.weight == Object.values(Numbs.nationWeight)[i]) {
+	//- 		- var weight = Object.keys(Numbs.nationWeight)[i]
+	//- 		- break
+	//- 	-}
+	//- -}
+	//- if weight
+	//- 	dd #{weight}
+	//- else
+	//- 	dd #{brander.weight}
+
+a.btn.btn-warning.btn-lg(href="/nationUpdate/"+object._id) update

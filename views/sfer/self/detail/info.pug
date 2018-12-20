@@ -1,0 +1,23 @@
+dl.dl-horizontal
+	dt Code:
+	dd #{object.code}
+	dt Name:
+	dd #{object.name}
+	hr
+	dt Document
+	dd #{object.document}
+	dt Telephone
+	dd #{object.telephone}
+	dt Address
+	dd #{object.address}
+	dt Post
+	dd #{object.post}
+	dt IVA
+	dd #{object.ivaNumber}
+	hr
+	dt createAt:
+	dd #{moment(object.createAt).format('DD/MM/YYYY')}
+	dt updateAt:
+	dd #{moment(object.updateAt).format('DD/MM/YYYY')}
+	
+img(src=object.photo, width="50")

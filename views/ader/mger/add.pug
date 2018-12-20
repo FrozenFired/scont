@@ -1,0 +1,17 @@
+extends ../aalayout/layout
+
+block content
+	.container
+		form(method="post", action=action, enctype="multipart/form-data")
+			.form-group.row
+				label.col-md-2.col-form-label(for="inputCode") 帐号
+				.col-md-6
+					input#inputCode.form-control(type="text",class="inputCode", name="object[code]")
+			.form-group.row
+				label.col-md-2.col-form-label(for="inputPassword") 密码
+				.col-md-6
+					input#inputPassword.form-control(type="text", class="inputPassword", name="object[password]")
+			hr
+			.form-group.row
+				.offset-md-2.col-md-10
+					input.btn.btn-default(type="submit" value="添加管理员")

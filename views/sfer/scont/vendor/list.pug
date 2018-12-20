@@ -1,0 +1,41 @@
+extends ../../aalayout/layout
+
+block content
+	.container
+		a.btn.btn-info.btn-lg.btn-block(href="/vendorAdd") Add Vendor
+		hr
+		.row
+			table.table.table-hover.table-bordered
+				thead
+					tr
+						th vendor code
+						th Weight(for sort)
+						th vtype
+						th contacts
+						th ac/sa
+						th status
+						th numvendor
+						th option
+				tbody
+					each item in objects
+						-let a;
+						tr(class="item-id-"+item._id)
+							td: a(href="/vendorDetail/"+item._id) #{item.code}
+							td #{item.weight}
+							td #{Conf.vtype[item.vtype]}
+							if item.contacts && item.contacts.length > 0
+								td
+									each contact in item.contacts
+										span #{contact.contacter} #{contact.tel}  #{contact.email} <br/>
+							else
+								td
+							-a;
+							td #{item.ac} / #{item.sa}
+							td #{Conf.stsVendor[item.status]}
+							if item.sconts
+								td #{item.sconts.length}
+							else
+								td 0
+							-a;
+							td: button.btn.btn-danger.del(type="button", data-urldel="/vendorDel", data-id=item._id) 删除
+	script(src="/js/delete.js")
