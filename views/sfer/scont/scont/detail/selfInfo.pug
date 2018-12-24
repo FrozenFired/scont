@@ -1,32 +1,36 @@
-h2 brand Information:
-dl.dl-horizontal
-	dt cause:
-	dd #{object.cause}
-	dt scont: 
-	dd #{object.scont}
-	dt sctNote
-	dd #{object.sctNote}
-	dt note
-	dd #{object.note}
-	dt status
-	dd #{Conf.stsScont[object.status]}
-	dt moment
-	dd DAY/MONTH/YEAR
-	dt createAt:
-	dd #{moment(object.createAt).format('DD/MM/YYYY')}
-	dt updateAt:
-	dd #{moment(object.updateAt).format('DD/MM/YYYY')}
-	dt creater:
-	if object.creater && object.creater.name
-		dd #{object.creater.name}
-	else
-		dd
-	-a;
-	dt updater:
-	if object.updater && object.updater.name
-		dd #{object.updater.name}
-	else
-		dd
-	-a;
-
-a.btn.btn-warning.btn-lg(href="/scontUpdate/"+object._id) update
+.row
+	.col-sm-6: h2 Brand: 
+		if object.brand
+			-a;
+			a(href="/brandDetail/"+object.brand._id) #{object.brand.code}
+	.col-sm-6: h2 Vendor: 
+		if object.vendor
+			-a;
+			a(href="/vendorDetail/"+object.vendor._id) #{object.vendor.code}
+table.table.table-hover.table-bordered
+	tr
+		th Cause 
+		th summary
+		th scont
+		th scontNote
+		th creater <br/> updater
+		th createAt <br/> updateAt
+		th status
+		th oprate
+	tr
+		td #{Conf.sctCause[object.cause]}
+		td #{object.note}
+		td #{object.scont}
+		td #{object.scontNote}
+		td
+			if object.creater
+				-a;
+				span #{object.creater.code}
+			br
+			if object.updater
+				-a;
+				span #{object.updater.code}
+		td #{moment(object.createAt).format('MM/DD/YYYY HH:mm')} <br/> #{moment(object.updateAt).format('MM/DD/YYYY HH:mm')}
+		td #{Conf.stsScont[object.status]}
+		
+		td: a.btn.btn-warning.btn-lg(href="/scontUpdate/"+object._id) update

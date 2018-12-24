@@ -9,11 +9,11 @@ let dbSchema = new Schema({
 		type: String
 	},
 	nation: {type: ObjectId, ref: 'Nation'},
+	firmName: String, 
 	bcateg: {type: ObjectId, ref: 'Bcateg'},
 	matDesp: String, // 自定义 三级分类
 	website: String,
 	webNote: String,
-	firmName: String, 
 
 	iva: String,
 	plist: Boolean, // pricelist

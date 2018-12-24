@@ -1,58 +1,76 @@
-h2 brand Information:
-dl.dl-horizontal
-	dt code:
-	dd #{object.code}
-	dt weight: 
-	dd #{object.weight}
-	dt Category Second: 
-	if object.bcateg && object.bcateg.code
-		dd #{object.bcateg.code}
-	else
-		dd lost
-	-a;
-	dt matDesp
-	dd #{object.matDesp}
-	dt website
-	dd #{object.website}
-	dt webNote
-	dd #{object.webNote}
-	dt firmName
-	dd #{object.firmName}
-	dt iva
-	dd #{object.iva}
-	dt plist
-	dd #{object.plist}
-	dt plNote
-	dd #{object.plNote}
-	dt atlas
-	dd #{object.atlas}
-	dt atNote
-	dd #{object.atNote}
-	dt pTime
-	dd #{object.pTime}
-	dt cartace
-	dd #{object.cartace}
-	dt video
-	dd #{object.video}
-	dt status
-	dd #{Conf.stsBrand[object.status]}
-	dt moment
-	dd DAY/MONTH/YEAR
-	dt createAt:
-	dd #{moment(object.createAt).format('DD/MM/YYYY')}
-	dt updateAt:
-	dd #{moment(object.updateAt).format('DD/MM/YYYY')}
-	dt creater:
-	if object.creater && object.creater.name
-		dd #{object.creater.name}
-	else
-		dd
-	-a;
-	dt updater:
-	if object.updater && object.updater.name
-		dd #{object.updater.name}
-	else
-		dd
-	-a;
+.bg-light
+	h2 brand Information:
+	hr
+	table.table.table-hover.table-bordered
+		tr
+			th brand code
+			th nation
+			th firm name
+			th category1
+			th category2
+			th material Description
 
-a.btn.btn-warning.btn-lg(href="/brandUpdate/"+object._id) update
+		tr
+			td <strong>#{object.code}</strong>
+			td
+				if object.nation
+					-a;
+					span #{object.nation.code}<br/>
+			td #{object.firmName}
+			if object.bcateg
+				-a;
+				td #{Conf.bcate[object.bcateg.bcate]}
+				td #{object.bcateg.code}
+			else
+				td
+				td
+			td #{object.matDesp}
+	table.table.table-hover.table-bordered
+		tr
+			th website
+			th iva
+			th product Time
+			th price list
+			th atlas
+		tr
+			td 
+				span #{object.website}
+				if object.webNote
+					-a;
+					span <br/>#{object.webNote}
+			td #{object.iva}
+			td #{object.pTime}
+			td 
+				span #{object.plist} 
+				if object.plNote && object.plNote.length > 0
+					-a;
+					span : #{object.plNote}
+			td 
+				span #{object.atlas} 
+				if object.atNote && object.atNote.length > 0
+					-a;
+					span : #{object.atNote}
+	table.table.table-hover.table-bordered
+		tr
+			th status
+			th staff
+			th createAt<br/>updateAt
+			th weight
+			th option
+		tr
+			td #{Conf.stsBrand[object.status]}
+			td
+				if object.creater
+					-a;
+					span creater: #{object.creater.code}
+				if object.updater
+					-a;
+					br
+					span updater: #{object.updater.code}
+			td 
+				span #{moment(object.createAt).format('MM/DD/YYYY HH:mm')}
+				br
+				span #{moment(object.updateAt).format('MM/DD/YYYY HH:mm')}
+				
+			td #{object.weight}
+			td: a.btn.btn-warning(href="/brandUpdate/"+object._id) update

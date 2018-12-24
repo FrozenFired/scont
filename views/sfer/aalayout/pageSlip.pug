@@ -1,9 +1,13 @@
+if !slipCond
+	-slipCond = "";
 if totalPage > 1
+	-a;
 	ul.pagination
 		li.page-item
 			a.page-link(href=slipUrl+'page=0'+slipCond) First [1]
 
 		if currentPage > 5
+			-a;
 			li.page-item
 				a.page-link(href=slipUrl+'page=#{currentPage-6}'+slipCond) 5<<
 		li.page-item: span &nbsp;

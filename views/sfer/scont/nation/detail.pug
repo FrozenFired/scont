@@ -2,10 +2,10 @@ extends ../../aalayout/layout
 
 block content
 	.container
-		.row
-			.col-md-6
-				include ./detail/selfInfo
-		if object.numbrand > 0
-			hr
-			//- .row
-			//- 	include ../../brand/list/listBrands
+		include ./detail/selfInfo
+		if crSfer.role == 5 || crSfer.role == 10
+			-a;
+			if brands.length > 0 
+				-a;
+				hr
+				include ./detail/brands

@@ -39,8 +39,19 @@ block content
 						- a;
 				.col-sm-4
 					span.text-danger#optSctCause
+			.form-group.row
+				label.col-md-2.col-form-label Status
+				.col-md-8
+					select.form-control(name="object[status]", data-style="btn-info")
+						each key in Object.keys(Conf.stsScont)
+							-a;
+							if object.status == key
+								-a;
+								option(value=key, selected="selected") #{Conf.stsScont[key]}
+							else
+								option(value=key) #{Conf.stsScont[key]}
 			script(src="/js/scont/scont/add/scontAdd.js")
 			.form-group.row
 				.offset-md-2.col-md-10
-					input.btn.btn-default(type="submit" value="Add Scont")
+					input.btn.btn-default(type="submit" value="Update Scont")
 	script(src="/js/scont/scont/update/add.js")

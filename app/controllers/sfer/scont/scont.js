@@ -10,20 +10,151 @@ let Nation = require('../../../models/scont/nation')
 let _ = require('underscore')
 
 
-exports.scontList = function(req, res) {
-	Scont.find()
-	.populate({path: 'brand', populate: {path: 'bcateg'} } )
-	.populate('vendor')
-	.sort({'weight': -1}).sort({'updateAt': -1})
-	.exec(function(err, objects){
+exports.scontListFilter = function(req, res, next) {
+	// 分页
+	let page = parseInt(req.query.page) || 0
+	let count = 20
+	let index = page * count
+	let slipCond = ""; // 分页时用到的其他条件
+
+	// 条件判断   ----------------
+	// 根据状态筛选
+	let condStatus;
+	// console.log(req.query.status)
+	if(!req.query.status) {
+		condStatus = ['0', '1', '3', '4', '7', '10'];
+	} else {
+		condStatus = req.query.status;
+		if(condStatus instanceof Array){
+			for(status in condStatus){
+				slipCond += "&status="+status;
+			}
+		} else {
+			slipCond += "&status="+condStatus;
+		}
+	}
+	// console.log(condStatus)
+	// 选择创建的开始时间
+	let condCrtStart, symCrtStart;
+	if(req.query.crtStart && req.query.crtStart.length == 10){
+		symCrtStart = "$gt";   // $ ne eq gte gt lte lt
+		condCrtStart = new Date(req.query.crtStart).setHours(0,0,0,0);
+		slipCond += "&crtStart="+req.query.crtStart;
+	} else {
+		symCrtStart = "$ne";
+		condCrtStart = null;
+	}
+
+	// console.log(req.query.crtStart)
+	// console.log(symCrtStart)
+	// console.log(condCrtStart)
+	// 选择创建的结束时间
+	let condCrtEnded, symCrtEnded;
+	if(req.query.crtEnded && req.query.crtEnded.length == 10){
+		symCrtEnded = "$lt";
+		condCrtEnded = new Date(req.query.crtEnded).setHours(23,59,59,0)
+		slipCond += "&crtEnded="+req.query.crtEnded;
+	} else {
+		symCrtEnded = "$ne";
+		condCrtEnded = null;
+	}
+	// 选择更新的开始时间
+	let condUpdStart, symUpdStart;
+	if(req.query.updStart && req.query.updStart.length == 10){
+		symUpdStart = "$gt";
+		condUpdStart = new Date(req.query.updStart).setHours(0,0,0,0);
+		slipCond += "&updStart="+req.query.updStart;
+	} else {
+		symUpdStart = "$ne";
+		condUpdStart = null;
+	}
+	// 选择更新的结束时间
+	let condUpdEnded, symUpdEnded;
+	if(req.query.updEnded && req.query.updEnded.length == 10){
+		symUpdEnded = "$lt";
+		condUpdEnded = new Date(req.query.updEnded).setHours(23,59,59,0)
+		slipCond += "&updEnded="+req.query.updEnded;
+	} else {
+		symUpdEnded = "$ne";
+		condUpdEnded = null;
+	}
+	// console.log(symCrtEnded)
+	// console.log(condCrtEnded)
+
+	Scont.count({
+		'createAt': {[symCrtStart]: condCrtStart, [symCrtEnded]: condCrtEnded},
+		'updateAt': {[symUpdStart]: condUpdStart, [symUpdEnded]: condUpdEnded},
+		'status': condStatus  // 'status': {[symStatus]: condStatus}
+	})
+	.exec(function(err, amount) {
 		if(err) console.log(err);
-		res.render('./sfer/scont/scont/list', {
-			title: 'Scont List',
-			crSfer: req.session.crSfer,
-			objects: objects
+		Scont.find({
+			'createAt': {[symCrtStart]: condCrtStart, [symCrtEnded]: condCrtEnded},
+			'updateAt': {[symUpdStart]: condUpdStart, [symUpdEnded]: condUpdEnded},
+			'status': condStatus  // 'status': {[symStatus]: condStatus}
+		})
+		.skip(index)
+		.limit(count)
+		.populate({path: 'brand', populate: {path: 'bcateg'} } )
+		.populate('vendor')
+		.sort({'weight': -1}).sort({'updateAt': -1})
+		.exec(function(err, objects){
+			if(err) console.log(err);
+			if(objects){
+				let object = new Object()
+				object.objects = objects;
+
+				object.keytype = req.query.keytype;
+				object.keyword = req.query.keyword;
+
+				object.condStatus = condStatus;
+				object.condCrtStart = req.query.crtStart;
+				object.condCrtEnded = req.query.crtEnded;
+				object.condUpdStart = req.query.updStart;
+				object.condUpdEnded = req.query.updEnded;
+
+				object.amount = amount;
+				object.count = count;
+				object.page = page;
+
+				object.slipCond = slipCond;
+
+				req.body.object = object;
+				next();
+			} else {
+				info = "Option error, Please Contact Manger"
+				Index.sfOptionWrong(req, res, info)
+			}
 		})
 	})
 }
+exports.scontList = function(req, res) {
+	let object = req.body.object
+	res.render('./sfer/scont/scont/list', {
+		title: 'Scont List',
+		crSfer: req.session.crSfer,
+		
+		objects: object.objects,
+		amount: object.amount,
+
+		condStatus: object.condStatus,
+		condCrtStart: object.condCrtStart,
+		condCrtEnded: object.condCrtEnded,
+		condUpdStart: object.condUpdStart,
+		condUpdEnded: object.condUpdEnded,
+		keytype: object.keytype,
+		keyword: object.keyword,
+
+		currentPage: (object.page + 1),
+		totalPage: Math.ceil(object.amount / object.count),
+		slipUrl: '/scontList?',
+		slipCond: object.slipCond,
+
+		filterAction: '/scontList',
+		printAction: '/scontListPrint'
+	})
+}
+
 
 exports.scontAdd = function(req, res) {
 	Nation.find(function(err, nations) {
@@ -114,6 +245,8 @@ createVendor = function(req, res) {
 createScont = function(req, res) {
 	let objBody = req.body.object
 
+	objBody.updateAt = objBody.createAt = Date.now();
+
 	if(objBody.brand.length < 10 || objBody.vendor.length < 10) {
 		info = "brand or vendor is not complete, Please Reopration";
 		Index.sfOptionWrong(req, res, info);
@@ -190,7 +323,8 @@ exports.scontUpdate = function(req, res){
 
 exports.updateScont = function(req, res) {
 	let objBody = req.body.object
-
+	objBody.updateAt = Date.now();
+	
 	Scont.findOne({_id: objBody._id}, function(err, object) {
 		if(err) console.log(err);
 		if(object){

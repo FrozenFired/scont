@@ -1,0 +1,43 @@
+table.table.table-hover.table-bordered
+	thead
+		tr
+			th brand code <br/> Weight(sort)
+			th nation <br/> firm name
+			th category1 / category2 <br/> material Description
+			th website <br/> Note
+			th status
+			th numvendor
+			th createAt <br/> updateAt
+			th option
+	tbody
+		each item in objects
+			-let a;
+			tr(class="item-id-"+item._id)
+				td
+					a(href="/brandDetail/"+item._id) #{item.code}
+					span <br/> #{item.weight}
+				td
+					if item.nation
+						-a;
+						span #{item.nation.code}<br/>
+					span #{item.firmName}
+				td 
+					if item.bcateg
+						-a;
+						span #{Conf.bcate[item.bcateg.bcate]}<br/>#{item.bcateg.code}
+					if item. matDesp && item.matDesp.length > 0
+						-a;
+						span <br/>#{item.matDesp}
+				td #{item.website} <br/> #{item.webNote}
+				td #{Conf.stsBrand[item.status]}
+				if item.sconts
+					td #{item.sconts.length}
+				else
+					td 0
+				-a;
+				td
+					span #{moment(item.createAt).format('MM/DD/YYYY')}
+					br
+					span #{moment(item.updateAt).format('MM/DD/YYYY')}
+				td: button.btn.btn-danger.del(type="button", data-urldel="/brandDel", data-id=item._id) 删除
+script(src="/js/delete.js")

@@ -1,0 +1,54 @@
+form#subBrandFilter(method="get", action=filterAction, enctype="multipart/form-data")
+	.form-group.row
+		label.col-sm-2.col-form-label Keywords
+		.col-md-8
+			input#fKeyword.form-control(type="text", name='keyword', value=keyword, placeholder="input the code of Brand")
+	.form-group.row
+		label.col-md-2.col-form-label CreateAt
+		label.col-md-1.col-form-label: img#imgCrtStart(src="/imgs/clockStart.jpg", width="50px")
+		.col-md-3
+			input#crtStartTime.datepicker.form-control(type="text", name="crtStart", placeholder="startDate format:month/day/year", readonly="readonly", value=condCrtStart)
+		label.col-md-1.col-form-label: img#imgCrtEnded(src="/imgs/clockEnd.jpg", width="50px")
+		.col-md-3
+			input#crtEndedTime.datepicker.form-control(type="text", name="crtEnded", placeholder="endDate format : month/day/year", readonly="readonly", value=condCrtEnded)
+		.col-md-2
+			#optResult.text-danger
+
+	.form-group.row
+		label.col-md-2.col-form-label UpdateAt
+		label.col-md-1.col-form-label: img#imgUpdStart(src="/imgs/clockStart.jpg", width="50px")
+		.col-md-3
+			input#updStartTime.datepicker.form-control(type="text", name="updStart", placeholder="startDate format:month/day/year", readonly="readonly", value=condUpdStart)
+		label.col-md-1.col-form-label: img#imgUpdEnded(src="/imgs/clockEnd.jpg", width="50px")
+		.col-md-3
+			input#updEndedTime.datepicker.form-control(type="text", name="updEnded", placeholder="endDate format : month/day/year", readonly="readonly", value=condUpdEnded)
+		.col-md-2
+			#optResult.text-danger
+
+	.form-group.row
+		label.col-sm-2.col-form-label Status
+		.col-sm-8
+			.form-check.form-check-inline
+				each key in Object.keys(Conf.stsBrand)
+					-a;
+					if condStatus.indexOf(key) > -1
+						-a;
+						input.form-check-input(id="sts"+key, type="checkbox", name="status", value=key, checked="checked")
+						label.form-check-label(for="sts"+key) #{Conf.stsBrand[key]} &nbsp; &nbsp;
+					else
+						input.form-check-input(id="sts"+key, type="checkbox", name="status", value=key)
+						label.form-check-label(for="sts"+key) #{Conf.stsBrand[key]} &nbsp; &nbsp;
+	.form-group.row
+		.col-sm-12
+			input.btn.btn-info.btn-block(type="submit" value="filter")
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+//- <link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+//- timepicker
+link(rel="stylesheet", href="/libs/jt.timepicker/jquery.timepicker.css")
+script(src="/libs/jt.timepicker/jquery.timepicker.min.js")
+
+
+script(src="/js/scont/brand/filter.js")

@@ -2,38 +2,11 @@ extends ../../aalayout/layout
 
 block content
 	.container
+		h1 Brands [#{amount}]
+		hr
 		a.btn.btn-info.btn-lg.btn-block(href="/brandAdd") Add Brand
 		hr
-		.row
-			table.table.table-hover.table-bordered
-				thead
-					tr
-						th brand code
-						th Weight(for sort)
-						th bcateg
-						th matDesp
-						th website
-						th status
-						th numvendor
-						th option
-				tbody
-					each item in objects
-						-let a;
-						tr(class="item-id-"+item._id)
-							td: a(href="/brandDetail/"+item._id) #{item.code}
-							td #{item.weight}
-							if item.bcateg
-								td #{item.bcateg.code}
-							else
-								td lost
-							-a;
-							td #{item.matDesp}
-							td #{item.website}
-							td #{Conf.stsBrand[item.status]}
-							if item.sconts
-								td #{item.sconts.length}
-							else
-								td 0
-							-a;
-							td: button.btn.btn-danger.del(type="button", data-urldel="/brandDel", data-id=item._id) 删除
-	script(src="/js/delete.js")
+		include ./list/filter
+		hr
+		include ../../aalayout/pageSlip
+		include ./list/selfList

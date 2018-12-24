@@ -1,52 +1,42 @@
-h2 vendor Information:
-dl.dl-horizontal
-	dt code:
-	dd #{object.code}
-	dt weight: 
-	dd #{object.weight}
-	dt Vendor Type: 
-	dd #{Conf.vtype[object.vtype]}
-
-	if object.contacts && object.contacts.length > 0
-		each contact in object.contacts
-			dt contacter:
-			dd #{contact.contacter}
-			dt telephone:
-			dd #{contact.tel}
-			dt email:
-			dd #{contact.email}
+table.table.table-hover.table-bordered
+	tr
+		th code
+		th Weight(for sort)
+		th vtype
+		th contacts
+		th ac/sa <br/> acsaNote
+		th freight
+		th Summary
+	tr
+		td: a(href="/vendorDetail/"+object._id) #{object.code}
+		td #{object.weight}
+		td #{Conf.vtype[object.vtype]}
+		if object.contacts && object.contacts.length > 0
+			td
+				each contact in object.contacts
+					span #{contact.contacter} #{contact.tel}  #{contact.email} <br/>
+		else
+			td
+		-a;
+		td #{object.ac} / #{object.sa}<br/>#{object.acsaNote}
+		td #{object.freight}
+		td #{object.note}
+table.table.table-hover.table-bordered
+	tr
+		th creater <br/> updater
+		th createAt <br/> updateAt
+		th status
+		th oprate
+	tr
+		td
+			if object.creater
+				-a;
+				span #{object.creater.code}
 			br
-	-a;
-	dt ac:
-	dd #{object.ac}
-	dt sa:
-	dd #{object.sa}
-	dt NOTE:
-	dd #{object.acsaNote}
-	dt freight:
-	dd #{object.freight}
-	dt NOTE:
-	dd #{object.note}
-
-	if object.creater
-		dt creater:
-		dd #{object.creater.name}
-	-a;
-	if object.updater
-		dt updater:
-		dd #{object.updater.name}
-	-a;
-	dt createAt:
-	dd #{moment(object.createAt).format('MM/DD/YYYY')}
-	dt updateAt:
-	dd #{moment(object.updateAt).format('MM/DD/YYYY')}
-
-	dt status:
-	dd #{Conf.stsVendor[object.status]}
-
-	dt weight:
-	dd #{object.weight}
-
-
-
-a.btn.btn-warning.btn-lg(href="/vendorUpdate/"+object._id) update
+			if object.updater
+				-a;
+				span #{object.updater.code}
+		td #{moment(object.createAt).format('MM/DD/YYYY HH:mm')} <br/> #{moment(object.updateAt).format('MM/DD/YYYY HH:mm')}
+		td #{Conf.stsScont[object.status]}
+		
+		td: a.btn.btn-warning.btn-lg(href="/vendorUpdate/"+object._id) update

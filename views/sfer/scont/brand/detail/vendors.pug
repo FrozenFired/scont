@@ -1,0 +1,30 @@
+if object.sconts && object.sconts.length > 0
+	-let sconts = object.sconts;
+	hr
+	h2 #{sconts.length} - Vendors:
+	table.table.table-hover.table-bordered
+		thead
+			tr
+				th Type
+				th Vendor
+				th ac/sa
+				th scont / scontNote
+				th Cause
+				th Note
+				th status
+		tbody
+			each scont in sconts
+				-let a;
+				tr(class="scont-id-"+scont._id)
+					if scont.vendor
+						-a;
+						td #{Conf.vtype[scont.vendor.vtype]}
+						td: a(href="/vendorDetail/"+scont.vendor._id) #{scont.vendor.code}
+						td #{scont.vendor.ac}40 / 60#{scont.vendor.sa}
+					else
+						td
+						td
+					td #{scont.scont}%  &nbsp; &nbsp;- #{scont.scontNote}
+					td: a(href="/scontDetail/"+scont._id) #{Conf.sctCause[scont.cause]} 
+					td #{scont.note}
+					td #{Conf.stsScont[scont.status]}

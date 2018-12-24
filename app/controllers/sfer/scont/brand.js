@@ -1,22 +1,167 @@
-let Index = require('../index')
-let Brand = require('../../../models/scont/brand')
-let Bcateg = require('../../../models/scont/bcateg')
-let Nation = require('../../../models/scont/nation')
-let _ = require('underscore')
+let Index = require('../index');
+let Brand = require('../../../models/scont/brand');
+let Bcateg = require('../../../models/scont/bcateg');
+let Nation = require('../../../models/scont/nation');
+let _ = require('underscore');
 
 
-exports.brandList = function(req, res) {
-	Brand.find()
-	.populate('bcateg')
-	// .populate({path: 'brands', options: {sort: {'weight': -1} } } )
-	.sort({"code": -1})
-	.exec(function(err, objects){
+exports.brandListFilter = function(req, res, next) {
+	// 分页
+	let page = parseInt(req.query.page) || 0
+	let count = 20
+	let index = page * count
+	let slipCond = ""; // 分页时用到的其他条件
+
+	// 条件判断   ----------------
+	// 查找关键字
+	let keytype = "code"
+	if(req.query.keytype) { 
+		keytype = req.query.keytype;
+		slipCond += "&keytype="+keytype;
+	}
+
+	let keyword = "";
+	if(req.query.keyword) {
+		keyword = req.query.keyword.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+		slipCond += "&keyword="+keyword;
+	}
+	
+	// 根据状态筛选
+	let condStatus;
+	// console.log(req.query.status)
+	if(!req.query.status) {
+		condStatus = ['0', '1'];
+	} else {
+		condStatus = req.query.status;
+		if(condStatus instanceof Array){
+			for(status in condStatus){
+				slipCond += "&status="+status;
+			}
+		} else {
+			slipCond += "&status="+condStatus;
+		}
+	}
+	// console.log(condStatus)
+	// 选择创建的开始时间
+	let condCrtStart, symCrtStart;
+	if(req.query.crtStart && req.query.crtStart.length == 10){
+		symCrtStart = "$gt";   // $ ne eq gte gt lte lt
+		condCrtStart = new Date(req.query.crtStart).setHours(0,0,0,0);
+		slipCond += "&crtStart="+req.query.crtStart;
+	} else {
+		symCrtStart = "$ne";
+		condCrtStart = null;
+	}
+
+	// console.log(req.query.crtStart)
+	// console.log(symCrtStart)
+	// console.log(condCrtStart)
+	// 选择创建的结束时间
+	let condCrtEnded, symCrtEnded;
+	if(req.query.crtEnded && req.query.crtEnded.length == 10){
+		symCrtEnded = "$lt";
+		condCrtEnded = new Date(req.query.crtEnded).setHours(23,59,59,0)
+		slipCond += "&crtEnded="+req.query.crtEnded;
+	} else {
+		symCrtEnded = "$ne";
+		condCrtEnded = null;
+	}
+	// 选择更新的开始时间
+	let condUpdStart, symUpdStart;
+	if(req.query.updStart && req.query.updStart.length == 10){
+		symUpdStart = "$gt";
+		condUpdStart = new Date(req.query.updStart).setHours(0,0,0,0);
+		slipCond += "&updStart="+req.query.updStart;
+	} else {
+		symUpdStart = "$ne";
+		condUpdStart = null;
+	}
+	// 选择更新的结束时间
+	let condUpdEnded, symUpdEnded;
+	if(req.query.updEnded && req.query.updEnded.length == 10){
+		symUpdEnded = "$lt";
+		condUpdEnded = new Date(req.query.updEnded).setHours(23,59,59,0)
+		slipCond += "&updEnded="+req.query.updEnded;
+	} else {
+		symUpdEnded = "$ne";
+		condUpdEnded = null;
+	}
+	// console.log(symCrtEnded)
+	// console.log(condCrtEnded)
+
+	Brand.count({
+		[keytype]: new RegExp(keyword + '.*'),
+		'createAt': {[symCrtStart]: condCrtStart, [symCrtEnded]: condCrtEnded},
+		'updateAt': {[symUpdStart]: condUpdStart, [symUpdEnded]: condUpdEnded},
+		'status': condStatus  // 'status': {[symStatus]: condStatus}
+	})
+	.exec(function(err, amount) {
 		if(err) console.log(err);
-		res.render('./sfer/scont/brand/list', {
-			title: 'Brand List',
-			crSfer: req.session.crSfer,
-			objects: objects
+		Brand.find({
+			[keytype]: new RegExp(keyword + '.*'),
+			'createAt': {[symCrtStart]: condCrtStart, [symCrtEnded]: condCrtEnded},
+			'updateAt': {[symUpdStart]: condUpdStart, [symUpdEnded]: condUpdEnded},
+			'status': condStatus  // 'status': {[symStatus]: condStatus}
 		})
+		.skip(index)
+		.limit(count)
+		.populate('bcateg')
+		.populate('nation')
+		.sort({"code": -1})
+		.exec(function(err, objects){
+			if(err) console.log(err);
+			if(objects){
+				let object = new Object()
+				object.objects = objects;
+
+				object.keytype = req.query.keytype;
+				object.keyword = req.query.keyword;
+
+				object.condStatus = condStatus;
+				object.condCrtStart = req.query.crtStart;
+				object.condCrtEnded = req.query.crtEnded;
+				object.condUpdStart = req.query.updStart;
+				object.condUpdEnded = req.query.updEnded;
+
+				object.amount = amount;
+				object.count = count;
+				object.page = page;
+
+				object.slipCond = slipCond;
+
+				req.body.object = object;
+				next();
+			} else {
+				info = "Option error, Please Contact Manger"
+				Index.sfOptionWrong(req, res, info)
+			}
+		})
+	})
+}
+exports.brandList = function(req, res) {
+	let object = req.body.object
+	res.render('./sfer/scont/brand/list', {
+		title: 'Brand List',
+		crSfer: req.session.crSfer,
+		
+		objects: object.objects,
+		amount: object.amount,
+
+		condStatus: object.condStatus,
+		condCrtStart: object.condCrtStart,
+		condCrtEnded: object.condCrtEnded,
+		condUpdStart: object.condUpdStart,
+		condUpdEnded: object.condUpdEnded,
+		keytype: object.keytype,
+		keyword: object.keyword,
+
+		currentPage: (object.page + 1),
+		totalPage: Math.ceil(object.amount / object.count),
+		slipUrl: '/brandList?',
+		slipCond: object.slipCond,
+
+		filterAction: '/brandList',
+		printAction: '/brandListPrint'
 	})
 }
 
@@ -39,7 +184,9 @@ exports.brandAdd = function(req, res) {
 exports.addBrand = function(req, res) {
 	let objBody = req.body.object
 
-	objBody.code = objBody.code.replace(/(\s*$)/g, "").replace( /^\s*/, '')
+	objBody.code = objBody.code.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+	objBody.updateAt = objBody.createAt = Date.now();
+
 	Brand.findOne({code: objBody.code}, function(err, object) {
 		if(err) console.log(err);
 		if(object) {
@@ -66,8 +213,9 @@ exports.addBrand = function(req, res) {
 exports.brandDetail = function(req, res){
 	let id = req.params.id
 	Brand.findOne({_id: id})
-	// .populate({path: 'brands', options: {sort: {'weight': -1} } } )
 	.populate('bcateg')
+	.populate('nation')
+	.populate({path: 'sconts', populate: {path: 'vendor' } } )
 	.populate('creater')
 	.populate('updater')
 	.exec(function(err, object){
@@ -114,7 +262,9 @@ exports.brandUpdate = function(req, res){
 
 exports.updateBrand = function(req, res) {
 	let objBody = req.body.object
-	objBody.code = objBody.code.replace(/(\s*$)/g, "").replace( /^\s*/, '')
+
+	objBody.code = objBody.code.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+	objBody.updateAt = Date.now();
 
 	Brand.findOne({_id: objBody._id}, function(err, object) {
 		if(err) console.log(err);
@@ -195,7 +345,7 @@ exports.brandDel = function(req, res) {
 // Ajax
 exports.ajaxCodeBrand = function(req, res) {
 	let keytpye = req.query.keytype
-	let keyword = req.query.keyword
+	let keyword = req.query.keyword.toUpperCase();
 	// console.log(keytpye)
 	// console.log(keyword)
 	Brand.findOne({[keytpye]: keyword}, function(err, brand) {

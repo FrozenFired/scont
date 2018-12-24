@@ -65,7 +65,7 @@ module.exports = function(app){
 	app.delete('/bcategDel', MiddleRole.bnerIsLogin, Bcateg.bcategDel)
 
 	// Brand
-	app.get('/brandList', MiddleRole.sferIsLogin, Brand.brandList)
+	app.get('/brandList', MiddleRole.sferIsLogin, Brand.brandListFilter, Brand.brandList)
 	app.get('/brandDetail/:id', MiddleRole.sferIsLogin, Brand.brandDetail)
 	app.get('/brandAdd', MiddleRole.sfitIsLogin, Brand.brandAdd)
 	app.post('/addBrand', multipartMiddleware, MiddleRole.sfitIsLogin, Brand.addBrand)
@@ -76,7 +76,7 @@ module.exports = function(app){
 	app.get('/ajaxCodeBrand', MiddleRole.sfitIsLogin, Brand.ajaxCodeBrand)
 
 	// Vendor
-	app.get('/vendorList', MiddleRole.sfitIsLogin, Vendor.vendorList)
+	app.get('/vendorList', MiddleRole.sfitIsLogin, Vendor.vendorListFilter, Vendor.vendorList)
 	app.get('/vendorDetail/:id', MiddleRole.sfitIsLogin, Vendor.vendorDetail)
 	app.get('/vendorAdd', MiddleRole.sfitIsLogin, Vendor.vendorAdd)
 	app.post('/addVendor', multipartMiddleware, MiddleRole.sfitIsLogin, Vendor.addVendor)
@@ -87,7 +87,7 @@ module.exports = function(app){
 	app.get('/ajaxCodeVendor', MiddleRole.sfitIsLogin, Vendor.ajaxCodeVendor)
 
 	// Scont
-	app.get('/scontList', MiddleRole.sfitIsLogin, Scont.scontList)
+	app.get('/scontList', MiddleRole.sfitIsLogin, Scont.scontListFilter, Scont.scontList)
 	app.get('/scontDetail/:id', MiddleRole.sfitIsLogin, Scont.scontDetail)
 	app.get('/scontAdd', MiddleRole.sfitIsLogin, Scont.scontAdd)
 	app.post('/addScont', multipartMiddleware, MiddleRole.sfitIsLogin, Scont.addScont)
