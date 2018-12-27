@@ -1,7 +1,7 @@
 table.table.table-hover.table-bordered
 	thead
 		tr
-			th Cause <br/> Note
+			th Cause
 			th Brand <br/> Category
 			th Vendor <br/> Type
 			th scont <br/> note
@@ -13,7 +13,7 @@ table.table.table-hover.table-bordered
 			-let a;
 			tr(class="item-id-"+item._id)
 				td: a(href="/scontDetail/"+item._id)
-					span #{Conf.sctCause[item.cause]} <br/> #{item.note}
+					span #{Conf.sctCause[item.cause]}
 				td
 					if item.brand
 						-a;

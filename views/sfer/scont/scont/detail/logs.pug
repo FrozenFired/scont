@@ -1,0 +1,21 @@
+h2 recorders:
+table.table.table-hover.table-bordered
+	thead
+		tr
+			th <strong>Num</strong>
+			th scont
+			th note
+			th editer
+	tbody
+		-let i =0;
+		each log in logs
+			-i++;
+			tr
+				td <strong>#{i}:</strong>
+				td #{log.scont}
+				td #{log.note}
+				if log.editer
+					-a;
+					td #{log.editer.code}
+				else
+					td loss

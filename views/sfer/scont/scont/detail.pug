@@ -5,3 +5,10 @@ block content
 		h1 scont Detail:
 		hr
 		include ./detail/selfInfo
+		
+		include ./detail/mark
+		if object.logs && object.logs.length > 0
+			-let logs = object.logs;
+			hr
+			include ./detail/logs
+	script(src="/js/scont/scont/detail/detail.js")
