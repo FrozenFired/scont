@@ -80,3 +80,33 @@ exports.updateSferPw = function(req, res) {
 		res.redirect("/sferDetail/"+objSave._id);
 	});
 }
+
+
+
+
+
+
+
+
+// Ajax
+exports.ajaxSfer = function(req, res) {
+	let keytpye = req.query.keytype
+	let keyword = req.query.keyword.toUpperCase();
+	// console.log(keytpye)
+	// console.log(keyword)
+	Sfer.findOne({[keytpye]: keyword}, function(err, sfer) {
+		if(err) console.log(err);
+		if(sfer){
+			res.json({success: 1, sfer: sfer})
+		} else {
+			Sfer.find({[keytpye]: new RegExp(keyword + '.*')}, function(err, sfers) {
+				if(err) console.log(err);
+				if(sfers && sfers.length > 0) {
+					res.json({success: 2, sfers: sfers});
+				} else {
+					res.json({success: 0})
+				}
+			})
+		}
+	})
+}

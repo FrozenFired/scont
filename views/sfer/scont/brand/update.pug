@@ -8,8 +8,11 @@ block content
 			input(type="hidden", name="object[_id]", value=object._id)
 			.form-group.row
 				label.col-sm-2.col-form-label Code
+				input#orgCode(type="hidden", value=object.code)
 				.col-sm-8
 					input#iptCode.form-control(type="text", class="iptCode", name="object[code]", value=object.code, placeholder="Must fill it")
+				.col-sm-2
+					#optCode.text-danger
 			.form-group.row
 				label.col-md-2.col-form-label Nation
 				input(type="hidden", name="orgNation", value=object.nation)
@@ -17,28 +20,32 @@ block content
 					select.form-control(name="object[nation]", data-style="btn-info")
 						each nation in nations
 							if String(nation._id) == String(object.nation)
+								- a;
 								option(value=nation._id, selected="selected") #{nation.code}
 							else
 								option(value=nation._id) #{nation.code}
-						- a;
 			.form-group.row
-				//- label.col-md-2.col-form-label select First Categ
-				//- .col-md-3
-				//- 	select.form-control#cateFir(data-style="btn-info")
-				//- 		option(value=-1) Please Select
-				//- 		each key in Object.keys(Conf.bcate)
-				//- 			option(value=key) #{Conf.bcate[key]}
-				//- 		- a;
-				label.col-md-2.col-form-label select Second Categ(后期做优化)
-				input(type="hidden", name="orgBcateg", value=object.bcateg)
+				label.col-md-2.col-form-label select CategI
+				if object.bcateg
+					-let bcateg = object.bcateg;
+					input#orgBcate(type="hidden", value=object.bcateg.bcate)
 				.col-md-3
-					select.form-control(name="object[bcateg]", data-style="btn-info")
-						each bcateg in bcategs
-							if String(bcateg._id) == String(object.bcateg)
-								option(value=bcateg._id, selected="selected") #{bcateg.code}
+					select.form-control#iptCateFir(data-style="btn-info")
+						each key in Object.keys(Conf.bcate)
+							- a;
+							if key == object.bcateg.bcate
+								- a;
+								option(value=key selected="selected") #{Conf.bcate[key]} #{key}
 							else
-								option(value=bcateg._id) #{bcateg.code}
-						- a;
+								option(value=key) #{Conf.bcate[key]} #{key}
+				label.col-md-2.col-form-label select CategII
+				if object.bcateg
+					-let bcateg = object.bcateg;
+					input#orgBcateg(type="hidden", name="orgBcateg", value=bcateg._id)
+				.col-md-3
+					select.form-control#iptCateg(name="object[bcateg]", data-style="btn-info")
+				.col-md-2
+					#optCateg.text-danger
 			.form-group.row
 				label.col-sm-2.col-form-label matDesp
 				.col-sm-8
@@ -110,3 +117,4 @@ block content
 			.form-group.row
 				.offset-md-2.col-md-10
 					input.btn.btn-default(type="submit" value="Update Brand")
+	script(src="/js/scont/brand/update.js")

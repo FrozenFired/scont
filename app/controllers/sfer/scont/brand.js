@@ -165,17 +165,15 @@ exports.brandList = function(req, res) {
 	})
 }
 
+
+
 exports.brandAdd = function(req, res) {
-	Bcateg.find(function(err, bcategs) {
+	Nation.find(function(err, nations) {
 		if(err) console.log(err);
-		Nation.find(function(err, nations) {
-			if(err) console.log(err);
-			res.render('./sfer/scont/brand/add', {
-				title: 'BrandAdd',
-				crSfer: req.session.crSfer,
-				bcategs: bcategs,
-				nations: nations
-			})
+		res.render('./sfer/scont/brand/add', {
+			title: 'BrandAdd',
+			crSfer: req.session.crSfer,
+			nations: nations
 		})
 	})
 }
@@ -237,20 +235,17 @@ exports.brandDetail = function(req, res){
 exports.brandUpdate = function(req, res){
 	let id = req.params.id
 	Brand.findOne({_id: id})
+	.populate('bcateg')
 	.exec(function(err, object){
 		if(err) console.log(err);
 		if(object) {
-			Bcateg.find(function(err, bcategs) {
+			Nation.find(function(err, nations) {
 				if(err) console.log(err);
-				Nation.find(function(err, nations) {
-					if(err) console.log(err);
-					res.render('./sfer/scont/brand/update', {
-						title: 'Brand Update',
-						crSfer: req.session.crSfer,
-						object: object,
-						bcategs: bcategs,
-						nations: nations
-					})
+				res.render('./sfer/scont/brand/update', {
+					title: 'Brand Update',
+					crSfer: req.session.crSfer,
+					object: object,
+					nations: nations
 				})
 			})
 		} else {

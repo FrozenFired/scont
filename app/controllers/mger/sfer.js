@@ -16,7 +16,7 @@ exports.mgSferAdd =function(req, res) {
 
 exports.mgExistSferN = function(req, res, next) {
 	let objBody = req.body.object;
-	objBody.code = objBody.code.replace(/(\s*$)/g, "").replace( /^\s*/, '');
+	objBody.code = objBody.code.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
 
 	Sfer.findOne({code: objBody.code}, function(err, object) {
 		if(err) console.log(err);

@@ -2,8 +2,7 @@ table.table.table-hover.table-bordered
 	thead
 		tr
 			th brand code
-			th firm name
-			th category1 / category2
+			th nation
 			th material Description
 			th status
 			th numvendor
@@ -12,14 +11,11 @@ table.table.table-hover.table-bordered
 			-let a;
 			tr(class="brand-id-"+brand._id)
 				td: a(href="/brandDetail/"+brand._id) #{brand.code}
-				td #{brand.firmName}
-				td 
-					if brand.bcateg
+				td
+					if brand.nation
 						-a;
-						span #{Conf.bcate[brand.bcateg.bcate]}<br/>#{brand.bcateg.code}
-					if brand. matDesp && brand.matDesp.length > 0
-						-a;
-				td <br/>#{brand.matDesp}
+						span #{brand.nation.code}
+				td #{brand.matDesp}
 				td #{Conf.stsBrand[brand.status]}
 				if brand.sconts
 					td #{brand.sconts.length}

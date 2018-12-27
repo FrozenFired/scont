@@ -34,6 +34,7 @@ module.exports = function(app){
 		multipartMiddleware, Sfer.checkSferOrgPw, MiddleBcrypt.rqBcrypt, 
 		Sfer.updateSferPw);
 
+	app.get('/ajaxSfer', MiddleRole.sfitIsLogin, Sfer.ajaxSfer)
 
 	// task         ----------------------------------------------------------------------
 	app.get('/taskAdd', MiddleRole.sferIsLogin, MiddleRole.singleSferLogin, Task.taskAdd)
@@ -63,6 +64,8 @@ module.exports = function(app){
 	app.get('/bcategUpdate/:id', MiddleRole.bnerIsLogin, Bcateg.bcategUpdate)
 	app.post('/updateBcateg', multipartMiddleware, MiddleRole.bnerIsLogin, Bcateg.updateBcateg)
 	app.delete('/bcategDel', MiddleRole.bnerIsLogin, Bcateg.bcategDel)
+
+	app.get('/ajaxBcateg', MiddleRole.sfitIsLogin, Bcateg.ajaxBcateg)
 
 	// Brand
 	app.get('/brandList', MiddleRole.sferIsLogin, Brand.brandListFilter, Brand.brandList)

@@ -8,19 +8,22 @@
 				option(value=nation._id) #{nation.code}
 			- a;
 .form-group.row
-	//- label.col-md-2.col-form-label select First Categ
-	//- .col-md-3
-	//- 	select.form-control#cateFir(data-style="btn-info")
-	//- 		option(value=-1) Please Select
-	//- 		each key in Object.keys(Conf.bcate)
-	//- 			option(value=key) #{Conf.bcate[key]}
-	//- 		- a;
-	label.col-md-2.col-form-label select Second Categ(后期做优化)
-	.col-md-3
-		select.form-control(name="brand[bcateg]", data-style="btn-info")
-			each bcateg in bcategs
-				option(value=bcateg._id) #{bcateg.code}
-			- a;
+	label.col-sm-2.col-form-label select CategI
+	.col-sm-3
+		select.form-control#iptCateFir(data-style="btn-info")
+			option#cateSel(value=-1) Please Select
+			each key in Object.keys(Conf.bcate)
+				- a;
+				option(value=key) #{Conf.bcate[key]} #{key}
+	label.col-sm-2.col-form-label select CategII
+	.col-sm-3
+		select.form-control#iptCateg(name="brand[bcateg]", data-style="btn-info")
+			option(value=-1) Please Select
+			//- each bcateg in bcategs
+			//- 	option(value=bcateg._id) #{bcateg.code}
+			//- - a;
+	.col-sm-2
+		#optCateg.text-danger
 .form-group.row
 	label.col-sm-2.col-form-label matDesp
 	.col-sm-8

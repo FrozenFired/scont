@@ -22,7 +22,7 @@ exports.scontListFilter = function(req, res, next) {
 	let condStatus;
 	// console.log(req.query.status)
 	if(!req.query.status) {
-		condStatus = ['0', '1', '3', '4', '7', '10'];
+		condStatus = ['0', '1', '2', '3', '4', '5'];
 	} else {
 		condStatus = req.query.status;
 		if(condStatus instanceof Array){
@@ -97,6 +97,7 @@ exports.scontListFilter = function(req, res, next) {
 		.limit(count)
 		.populate({path: 'brand', populate: {path: 'bcateg'} } )
 		.populate('vendor')
+		.populate('creater').populate('updater')
 		.sort({'weight': -1}).sort({'updateAt': -1})
 		.exec(function(err, objects){
 			if(err) console.log(err);
@@ -159,14 +160,10 @@ exports.scontList = function(req, res) {
 exports.scontAdd = function(req, res) {
 	Nation.find(function(err, nations) {
 		if(err) console.log(err);
-		Bcateg.find(function(err, bcategs) {
-			if(err) console.log(err);
-			res.render('./sfer/scont/scont/add', {
-				title: 'ScontAdd',
-				crSfer: req.session.crSfer,
-				nations: nations,
-				bcategs: bcategs
-			})
+		res.render('./sfer/scont/scont/add', {
+			title: 'ScontAdd',
+			crSfer: req.session.crSfer,
+			nations: nations,
 		})
 	})
 }
@@ -186,6 +183,7 @@ createBrand = function(req, res) {
 			let brandBody = req.body.brand
 			brandBody.code = brandBody.code.replace(/(\s*$)/g, "").replace( /^\s*/, '')
 			brandBody.code = brandBody.code.toUpperCase()
+			// console.log(brandBody.bcateg)
 			if(brandBody.nation.length < 15 || brandBody.bcateg.length < 15){
 				info = "Your brand nation or category is not complete, Please Reopration";
 				Index.sfOptionWrong(req, res, info);
@@ -257,11 +255,16 @@ createScont = function(req, res) {
 		.exec(function(err, sconts) {
 			if(err) console.log(err);
 			if(sconts.length > 0) {
-				info = "This Brand Is Include This Vendor Already"
+				info = "This Brand Is Already Include This Vendor"
 				Index.sfOptionWrong(req, res, info)
 			} else {
 				objBody.status = 0
+				let log = new Object();
+				log.scont = objBody.scont;
+				log.note = objBody.note;
+				log.editer = objBody.creater;
 				let _object = new Scont(objBody)
+				_object.logs.push(log)
 				_object.save(function(err, objSave) {
 					if(err) console.log(err);
 					SctRelate.scontRelBrand('Brand', objSave.brand, objSave._id, 1)
@@ -286,6 +289,7 @@ exports.scontDetail = function(req, res){
 	.populate('vendor')
 	.populate('creater')
 	.populate('updater')
+	.populate('logs.editer')
 	.exec(function(err, object){
 		if(err) console.log(err);
 		if(object) {
@@ -306,13 +310,19 @@ exports.scontUpdate = function(req, res){
 	Scont.findOne({_id: id})
 	.populate('brand')
 	.populate('vendor')
+	.populate('updater')
 	.exec(function(err, object){
 		if(err) console.log(err);
 		if(object) {
+			let updater = new Object();
+			if(object.updater && object.updater._id) {
+				updater = object.updater;
+			}
 			res.render('./sfer/scont/scont/update', {
 				title: 'Scontory Update',
 				crSfer: req.session.crSfer,
 				object: object,
+				updater: updater
 			})
 		} else {
 			info = "This ScontI is deleted, Please reflesh"
@@ -328,7 +338,14 @@ exports.updateScont = function(req, res) {
 	Scont.findOne({_id: objBody._id}, function(err, object) {
 		if(err) console.log(err);
 		if(object){
+			let log = new Object();
+			log.scont = objBody.scont;
+			log.note = objBody.note;
+			log.editer = objBody.updater;
+
 			let _object = _.extend(object, objBody)
+			_object.logs.push(log)
+			
 			_object.save(function(err, object) {
 				if(err) console.log(err);
 				res.redirect('/scontList')

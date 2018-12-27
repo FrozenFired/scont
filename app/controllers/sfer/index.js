@@ -30,7 +30,7 @@ exports.sferLogin = function(req, res) {
 
 
 exports.loginSfer = function(req, res) {
-	var code = req.body.code.replace(/(\s*$)/g, "").replace( /^\s*/, '');
+	var code = req.body.code.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
 	var password = req.body.password.replace(/(\s*$)/g, "").replace( /^\s*/, '');
 	Sfer.findOne({code: code}, function(err, sfer) {
 		if(err) console.log(err);

@@ -4,7 +4,7 @@ table.table.table-hover.table-bordered
 			th Cause <br/> Note
 			th Brand <br/> Category
 			th Vendor <br/> Type
-			th scont <br/> scontNote
+			th scont <br/> note
 			th creater <br/> updater
 			th status
 			th oprate
@@ -29,7 +29,7 @@ table.table.table-hover.table-bordered
 						span #{item.vendor.code}
 						br
 						span #{Conf.vtype[item.vendor.vtype]}
-				td #{item.scont} <br/> #{item.scontNote}
+				td #{item.scont} <br/> #{item.note}
 				td
 					if item.creater
 						-a;

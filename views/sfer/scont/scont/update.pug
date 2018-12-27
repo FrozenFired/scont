@@ -10,48 +10,44 @@ block content
 			.col-sm-6
 				h2 Vendor: #{object.vendor.code}
 		hr
-		form#updateScont(method="post", action="/updateScont", enctype="multipart/form-data")
-			input#scontBrand(type="hidden", name="object[_id]", value=object._id)
-			input(type="hidden", name="object[updater]", value=crSfer._id)
-			.form-group.row
-				label.col-sm-2.col-form-label Sconto
-				.col-sm-2.input-group
-					input#iptSctScont.form-control(type="number", name="object[scont]", value=object.scont)
-					.input-group-append
-						span.input-group-text %	
-				.col-sm-2
-					span.text-danger#optSctScont
-				.col-sm-6
-					input.form-control(type="text", name="object[sctNote]", placeholder="scont NOTE", value=object.sctNote)
-			.form-group.row
-				label.col-sm-2.col-form-label Product NOTE
-				.col-sm-10
-					input.form-control(type="text", name="object[note]", value=object.note)
-			.form-group.row
-				label.col-sm-2.col-form-label Cause
-				.col-sm-6
-					select#iptSctCause.form-control(name="object[cause]", data-style="btn-info")
-						each key in Object.keys(Conf.sctCause)
-							if key == object.cause
-								option(value=key, selected="selected") #{Conf.sctCause[key]}
-							else
-								option(value=key) #{Conf.sctCause[key]}
-						- a;
-				.col-sm-4
-					span.text-danger#optSctCause
-			.form-group.row
-				label.col-md-2.col-form-label Status
-				.col-md-8
-					select.form-control(name="object[status]", data-style="btn-info")
-						each key in Object.keys(Conf.stsScont)
-							-a;
-							if object.status == key
-								-a;
-								option(value=key, selected="selected") #{Conf.stsScont[key]}
-							else
-								option(value=key) #{Conf.stsScont[key]}
-			script(src="/js/scont/scont/add/scontAdd.js")
-			.form-group.row
-				.offset-md-2.col-md-10
-					input.btn.btn-default(type="submit" value="Update Scont")
-	script(src="/js/scont/scont/update/add.js")
+		.row
+			.col-sm-8
+				form#updateScont(method="post", action="/updateScont", enctype="multipart/form-data")
+					input#scontBrand(type="hidden", name="object[_id]", value=object._id)
+					.form-group.row
+						label.col-sm-2.col-form-label Updater
+						input#iptUpdater(type="hidden", name="object[updater]", value=updater._id)
+						.col-sm-6.input-group
+							input#updaterCode.form-control(type="text", value=updater.code)
+						.col-sm-4
+							span.text-danger#optUpdater
+					.form-group.row
+						label.col-sm-2.col-form-label Sconto
+						input#orgScont(type="hidden", value=object.scont)
+						.col-sm-6.input-group
+							input#iptScont.form-control(type="number", name="object[scont]", value=object.scont)
+							.input-group-append
+								span.input-group-text %	
+						.col-sm-4
+							span.text-danger#optScont
+					.form-group.row
+						label.col-sm-2.col-form-label NOTE
+						.col-sm-10
+							input.form-control(type="text", name="object[note]", placeholder="Change the reason for the discount")
+					.form-group.row
+						label.col-sm-2.col-form-label Cause
+						.col-sm-10
+							select#iptSctCause.form-control(name="object[cause]", data-style="btn-info")
+								each key in Object.keys(Conf.sctCause)
+									if key == object.cause
+										option(value=key, selected="selected") #{Conf.sctCause[key]}
+									else
+										option(value=key) #{Conf.sctCause[key]}
+								- a;
+					script(src="/js/scont/scont/add/scontAdd.js")
+					.form-group.row
+						.offset-md-2.col-md-10
+							input.btn.btn-default(type="submit" value="Update Scont")
+			.col-sm-4#matchSfer(style="display:none")
+				table#filterSfer.table.table-hover.table-bordered
+	script(src="/js/scont/scont/update.js")

@@ -10,9 +10,13 @@ let dbSchema = new Schema({
 	vendor: {type: ObjectId, ref: 'Vendor'},
 
 	scont: String,
-	sctNote: String,
-
 	note: String,
+
+	logs: [{
+		scont: String,
+		note: String,
+		editer: {type: ObjectId, ref: 'Sfer'}
+	}],
 
 	status: { type: Number, default: 0},
 

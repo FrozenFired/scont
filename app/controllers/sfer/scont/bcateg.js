@@ -58,7 +58,9 @@ exports.bcategDetail = function(req, res){
 	.exec(function(err, object){
 		if(err) console.log(err);
 		if(object) {
-			Brand.find({bcateg: object._id}, function(err, brands) {
+			Brand.find({bcateg: object._id})
+			.populate('nation')
+			.exec(function(err, brands) {
 				if(err) console.log(err);
 				if(object.numbrand != brands.length) {
 					object.numbrand = brands.length;
@@ -148,6 +150,25 @@ exports.bcategDel = function(req, res) {
 			}
 		} else {
 			res.json({success: 0, failDel: "已被删除，按F5刷新页面查看"})
+		}
+	})
+}
+
+
+
+
+// Ajax
+exports.ajaxBcateg = function(req, res) {
+	let keytpye = req.query.keytype
+	let keyword = req.query.keyword.toUpperCase();
+	// console.log(keytpye)
+	// console.log(keyword)
+	Bcateg.find({[keytpye]: keyword}, function(err, bcategs) {
+		if(err) console.log(err);
+		if(bcategs && bcategs.length > 0){
+			res.json({success: 1, bcategs: bcategs})
+		} else {
+			res.json({success: 0, info: "此分类下，无子分类"});
 		}
 	})
 }

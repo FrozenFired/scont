@@ -10,18 +10,16 @@
 table.table.table-hover.table-bordered
 	tr
 		th Cause 
-		th summary
 		th scont
-		th scontNote
+		th note
 		th creater <br/> updater
 		th createAt <br/> updateAt
 		th status
 		th oprate
 	tr
 		td #{Conf.sctCause[object.cause]}
-		td #{object.note}
 		td #{object.scont}
-		td #{object.scontNote}
+		td #{object.note}
 		td
 			if object.creater
 				-a;
@@ -34,3 +32,27 @@ table.table.table-hover.table-bordered
 		td #{Conf.stsScont[object.status]}
 		
 		td: a.btn.btn-warning.btn-lg(href="/scontUpdate/"+object._id) update
+if object.logs && object.logs.length > 0
+	-let logs = object.logs;
+	hr
+	h2 recorders:
+	table.table.table-hover.table-bordered
+		thead
+			tr
+				th <strong>Num</strong>
+				th scont
+				th note
+				th editer
+		tbody
+			-let i =0;
+			each log in logs
+				-i++;
+				tr
+					td <strong>#{i}:</strong>
+					td #{log.scont}
+					td #{log.note}
+					if log.editer
+						-a;
+						td #{log.editer.code}
+					else
+						td loss
