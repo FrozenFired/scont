@@ -29,13 +29,15 @@ div(class=divBg)
 			td.text-primary <strong>#{object.code}</strong>
 			td #{object.weight}
 			td #{Conf.vtype[object.vtype]}
-			if object.contacts && object.contacts.length > 0
-				td
-					each contact in object.contacts
-						span #{contact.contacter} #{contact.tel}  #{contact.email} <br/>
-			else
-				td
-			-a;
+			td
+				if object.contacts && object.contacts.length > 0
+					-contacts = object.contacts;
+					each contact in contacts
+						-a;
+						ul
+							li #{contact.contacter} 
+							li #{contact.tel} 
+							li #{contact.email}
 			td #{object.ac} / #{object.sa}<br/>#{object.acsaNote}
 			td #{object.freight}
 			td #{object.note}

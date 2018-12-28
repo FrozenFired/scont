@@ -157,7 +157,6 @@ exports.taskListCheck = function(req, res, next) {
 			object.page = page;
 			req.body.object = object;
 			next();
-			
 		})
 	})
 }

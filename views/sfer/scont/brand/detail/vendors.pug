@@ -7,6 +7,7 @@ if object.sconts && object.sconts.length > 0
 			tr
 				th Vendor
 				th Type
+				th contacts
 				th ac/sa
 				th scont
 				th Note
@@ -29,10 +30,23 @@ if object.sconts && object.sconts.length > 0
 					-trBg ="bg-danger";
 				tr(class=trBg+" scont-id-"+scont._id)
 					if scont.vendor
-						-a;
-						td: a.btn.btn-primary(href="/vendorDetail/"+scont.vendor._id) #{scont.vendor.code}
-						td #{Conf.vtype[scont.vendor.vtype]}
-						td #{scont.vendor.ac} / #{scont.vendor.sa}
+						-vendor = scont.vendor;
+						if vendor.status == 4
+							-vdBg ="bg-secondary";
+						else
+							-vdBg ="bg-default";
+						td(class=vdBg): a.btn.btn-primary(href="/vendorDetail/"+vendor._id) #{vendor.code}
+						td(class=vdBg) #{Conf.vtype[vendor.vtype]}
+						td(class=vdBg)
+							if vendor.contacts && vendor.contacts.length > 0
+								-contacts = vendor.contacts;
+								each contact in contacts
+									-a;
+									ul
+										li #{contact.contacter} 
+										li #{contact.tel} 
+										li #{contact.email}
+						td #{vendor.ac} / #{vendor.sa}
 					else
 						td
 						td

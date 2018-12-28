@@ -29,14 +29,15 @@ table.table.table-hover.table-bordered
 				td: a.btn.btn-primary(href="/vendorDetail/"+item._id) #{item.code}
 				td #{item.weight}
 				td #{Conf.vtype[item.vtype]}
-				if item.contacts && item.contacts.length > 0
-					-a;
-					td
-						each contact in item.contacts
+				td
+					if item.contacts && item.contacts.length > 0
+						-contacts = item.contacts;
+						each contact in contacts
 							-a;
-							span #{contact.contacter} #{contact.tel}  #{contact.email} <br/>
-				else
-					td
+							ul
+								li #{contact.contacter} 
+								li #{contact.tel} 
+								li #{contact.email}
 				td #{item.ac} / #{item.sa}
 				td #{Conf.stsVendor[item.status]}
 				if item.sconts
