@@ -104,17 +104,6 @@ block content
 				.col-md-3
 					input.form-control#iptVideo(type="number", name="object[video]", value=object.video)
 			.form-group.row
-				label.col-md-2.col-form-label Status
-				.col-md-8
-					select.form-control(name="object[status]", data-style="btn-info")
-						each key in Object.keys(Conf.stsBrand)
-							-a;
-							if object.status == key
-								-a;
-								option(value=key, selected="selected") #{Conf.stsBrand[key]}
-							else
-								option(value=key) #{Conf.stsBrand[key]}
-			.form-group.row
 				.offset-md-2.col-md-10
 					input.btn.btn-default(type="submit" value="Update Brand")
 	script(src="/js/scont/brand/update.js")

@@ -1,6 +1,21 @@
-.bg-light
-	h2 brand Information:
+-let divBg = "bg-light";
+
+if object.status == 0
+	-divBg ="bg-info";
+else if object.status == 1
+	-divBg ="bg-white";
+else if object.status == 2
+	-divBg ="bg-success";
+else if object.status == 3
+	-divBg ="bg-warning";
+else if object.status == 4
+	-divBg ="bg-secondary";
+else if object.status == 5
+	-divBg ="bg-danger";
+div(class=divBg)
+	h1 brand Information:
 	hr
+.bg-light
 	table.table.table-hover.table-bordered
 		tr
 			th brand code
@@ -11,7 +26,7 @@
 			th material Description
 
 		tr
-			td <strong>#{object.code}</strong>
+			td.text-primary <strong>#{object.code}</strong>
 			td
 				if object.nation
 					-a;
@@ -58,7 +73,7 @@
 			th weight
 			th option
 		tr
-			td #{Conf.stsBrand[object.status]}
+			td(class=divBg) #{Conf.stsBrand[object.status]}
 			td
 				if object.creater
 					-a;
@@ -73,4 +88,7 @@
 				span #{moment(object.updateAt).format('MM/DD/YYYY HH:mm')}
 				
 			td #{object.weight}
-			td: a.btn.btn-warning(href="/brandUpdate/"+object._id) update
+			td
+				a.btn.btn-dark.btn-lg(href="/brandUpdate/"+object._id) update
+				button.btn.btn-warning.btn-lg#mark(type="button") Mark
+script(src="/js/scont/markToggle.js")

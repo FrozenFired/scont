@@ -1,30 +1,42 @@
 if object.sconts && object.sconts.length > 0
 	-let sconts = object.sconts;
 	hr
-	h2 #{sconts.length} - Vendors:
+	h2 #{sconts.length} - Brands:
 	table.table.table-hover.table-bordered
 		thead
 			tr
-				th Type
-				th Vendor
-				th ac/sa
-				th scont / scontNote
-				th Cause
+				th Brand
+				th Category
+				th scont
 				th Note
 				th status
+				th view
 		tbody
 			each scont in sconts
-				-let a;
-				tr(class="scont-id-"+scont._id)
-					if scont.vendor
-						-a;
-						td #{Conf.vtype[scont.vendor.vtype]}
-						td: a(href="/vendorDetail/"+scont.vendor._id) #{scont.vendor.code}
-						td #{scont.vendor.ac}40 / 60#{scont.vendor.sa}
+				- let trBg;
+				if scont.status == 0
+					-trBg ="bg-info";
+				else if scont.status == 1
+					-trBg ="bg-default";
+				else if scont.status == 2
+					-trBg ="bg-success";
+				else if scont.status == 3
+					-trBg ="bg-warning";
+				else if scont.status == 4
+					-trBg ="bg-secondary";
+				else if scont.status == 5
+					-trBg ="bg-danger";
+				tr(class=trBg+" scont-id-"+scont._id)
+					if scont.brand
+						-brand=scont.brand;
+						td: a.btn.btn-primary(href="/brandDetail/"+brand._id) #{brand.code}
+						if brand.bcateg
+							-bcateg=brand.bcateg;
+						td #{Conf.bcate[bcateg.bcate]}
 					else
 						td
 						td
-					td #{scont.scont}%  &nbsp; &nbsp;- #{scont.scontNote}
-					td: a(href="/scontDetail/"+scont._id) #{Conf.sctCause[scont.cause]} 
+					td #{scont.scont}%
 					td #{scont.note}
 					td #{Conf.stsScont[scont.status]}
+					td: a.btn.btn-primary(href="/scontDetail/"+scont._id) view

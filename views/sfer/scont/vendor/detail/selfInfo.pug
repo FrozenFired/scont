@@ -1,42 +1,63 @@
-table.table.table-hover.table-bordered
-	tr
-		th code
-		th Weight(for sort)
-		th vtype
-		th contacts
-		th ac/sa <br/> acsaNote
-		th freight
-		th Summary
-	tr
-		td: a(href="/vendorDetail/"+object._id) #{object.code}
-		td #{object.weight}
-		td #{Conf.vtype[object.vtype]}
-		if object.contacts && object.contacts.length > 0
+-let divBg = "bg-light";
+
+if object.status == 0
+	-divBg ="bg-info";
+else if object.status == 1
+	-divBg ="bg-white";
+else if object.status == 2
+	-divBg ="bg-success";
+else if object.status == 3
+	-divBg ="bg-warning";
+else if object.status == 4
+	-divBg ="bg-secondary";
+else if object.status == 5
+	-divBg ="bg-danger";
+div(class=divBg)
+	h1 Vendor Infomation:
+	hr
+.bg-light
+	table.table.table-hover.table-bordered
+		tr
+			th code
+			th Weight(for sort)
+			th vtype
+			th contacts
+			th ac/sa <br/> acsaNote
+			th freight
+			th Summary
+		tr
+			td.text-primary <strong>#{object.code}</strong>
+			td #{object.weight}
+			td #{Conf.vtype[object.vtype]}
+			if object.contacts && object.contacts.length > 0
+				td
+					each contact in object.contacts
+						span #{contact.contacter} #{contact.tel}  #{contact.email} <br/>
+			else
+				td
+			-a;
+			td #{object.ac} / #{object.sa}<br/>#{object.acsaNote}
+			td #{object.freight}
+			td #{object.note}
+	table.table.table-hover.table-bordered
+		tr
+			th creater <br/> updater
+			th createAt <br/> updateAt
+			th status
+			th oprate
+		tr
 			td
-				each contact in object.contacts
-					span #{contact.contacter} #{contact.tel}  #{contact.email} <br/>
-		else
+				if object.creater
+					-a;
+					span #{object.creater.code}
+				br
+				if object.updater
+					-a;
+					span #{object.updater.code}
+			td #{moment(object.createAt).format('MM/DD/YYYY HH:mm')} <br/> #{moment(object.updateAt).format('MM/DD/YYYY HH:mm')}
+			td(class=divBg) #{Conf.stsScont[object.status]}
+			
 			td
-		-a;
-		td #{object.ac} / #{object.sa}<br/>#{object.acsaNote}
-		td #{object.freight}
-		td #{object.note}
-table.table.table-hover.table-bordered
-	tr
-		th creater <br/> updater
-		th createAt <br/> updateAt
-		th status
-		th oprate
-	tr
-		td
-			if object.creater
-				-a;
-				span #{object.creater.code}
-			br
-			if object.updater
-				-a;
-				span #{object.updater.code}
-		td #{moment(object.createAt).format('MM/DD/YYYY HH:mm')} <br/> #{moment(object.updateAt).format('MM/DD/YYYY HH:mm')}
-		td #{Conf.stsScont[object.status]}
-		
-		td: a.btn.btn-warning.btn-lg(href="/vendorUpdate/"+object._id) update
+				a.btn.btn-dark.btn-lg(href="/vendorUpdate/"+object._id) update
+				button.btn.btn-warning.btn-lg#mark(type="button") Mark
+script(src="/js/scont/markToggle.js")

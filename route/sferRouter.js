@@ -77,6 +77,7 @@ module.exports = function(app){
 	app.delete('/brandDel', MiddleRole.bnerIsLogin, Brand.brandDel)
 
 	app.get('/ajaxCodeBrand', MiddleRole.sfitIsLogin, Brand.ajaxCodeBrand)
+	app.get('/ajaxBrandSts', MiddleRole.bnerIsLogin, Brand.ajaxBrandSts)
 
 	// Vendor
 	app.get('/vendorList', MiddleRole.sfitIsLogin, Vendor.vendorListFilter, Vendor.vendorList)
@@ -88,6 +89,7 @@ module.exports = function(app){
 	app.delete('/vendorDel', MiddleRole.bnerIsLogin, Vendor.vendorDel)
 
 	app.get('/ajaxCodeVendor', MiddleRole.sfitIsLogin, Vendor.ajaxCodeVendor)
+	app.get('/ajaxVendorSts', MiddleRole.bnerIsLogin, Vendor.ajaxVendorSts)
 
 	// Scont
 	app.get('/scontList', MiddleRole.sfitIsLogin, Scont.scontListFilter, Scont.scontList)
@@ -97,6 +99,8 @@ module.exports = function(app){
 	app.get('/scontUpdate/:id', MiddleRole.bnerIsLogin, Scont.scontUpdate)
 	app.post('/updateScont', multipartMiddleware, MiddleRole.bnerIsLogin, Scont.updateScont)
 	app.delete('/scontDel', MiddleRole.bnerIsLogin, Scont.scontDel)
+
+	app.get('/ajaxScontSts', MiddleRole.bnerIsLogin, Scont.ajaxScontSts)
 	// Scont
 	// scont
 };

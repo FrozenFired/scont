@@ -10,23 +10,38 @@ table.table.table-hover.table-bordered
 			th oprate
 	tbody
 		each item in objects
-			-let a;
-			tr(class="item-id-"+item._id)
-				td: a(href="/scontDetail/"+item._id)
-					span #{Conf.sctCause[item.cause]}
-				td
+			- let trBg, brandBg, vendorBg;
+			if item.status == 0
+				-trBg ="bg-info";
+			else if item.status == 1
+				-trBg ="bg-default";
+			else if item.status == 2
+				-trBg ="bg-success";
+			else if item.status == 3
+				-trBg ="bg-warning";
+			else if item.status == 4
+				-trBg ="bg-secondary";
+			else if item.status == 5
+				-trBg ="bg-danger";
+			if item.brand && item.brand.status == 4
+				-brandBg ="bg-secondary";
+			if item.vendor && item.vendor.status == 4
+				-vendorBg ="bg-secondary";
+			tr(class=trBg+" item-id-"+item._id)
+				td #{Conf.sctCause[item.cause]}
+				td(class=brandBg)
 					if item.brand
 						-a;
-						span #{item.brand.code}
+						a.btn.btn-primary(href="/brandDetail/"+item.brand._id) #{item.brand.code}
 						br
 						if item.brand.bcateg
 							-a;
 							span #{item.brand.bcateg.code} ; 
 							span #{Conf.bcate[item.brand.bcateg.bcate]}
-				td
+				td(class=vendorBg)
 					if item.vendor
 						-a;
-						span #{item.vendor.code}
+						a.btn.btn-primary(href="/vendorDetail/"+item.vendor._id) #{item.vendor.code}
 						br
 						span #{Conf.vtype[item.vendor.vtype]}
 				td #{item.scont} <br/> #{item.note}
@@ -40,5 +55,9 @@ table.table.table-hover.table-bordered
 						span #{item.updater.code}
 				td #{Conf.stsScont[item.status]}
 				
-				td: button.btn.btn-danger.del(type="button", data-urldel="/scontDel", data-id=item._id) 删除
+				td
+					a.btn.btn-primary(href="/scontDetail/"+item._id) View
+					if item.status == 5
+						span &nbsp; | &nbsp;
+						button.btn.btn-warning.del(type="button", data-urldel="/scontDel", data-id=item._id) 删除
 script(src="/js/delete.js")

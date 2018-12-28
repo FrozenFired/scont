@@ -1,17 +1,29 @@
 #divMark(style="display:none")
 	hr
+	- let referBtn=commonBtn=greenBtn=yellowBtn=grayBtn=deleteBtn="btn-default";
+	if object.status == 0
+		-referBtn ="btn-warning";
+	else if object.status == 1
+		-commonBtn ="btn-warning";
+	else if object.status == 2
+		-greenBtn ="btn-warning";
+	else if object.status == 3
+		-yellowBtn ="btn-warning";
+	else if object.status == 4
+		-grayBtn ="btn-warning";
+	else if object.status == 5
+		-deleteBtn ="btn-warning";
 	.row
 		.col-sm-2
-			button.btn.btn-default.btn-lg.changSts(type="button", data-url="/scontSts", data-sts=0) To refer
+			button.btn.btn-lg.btn-block.change(type="button", class=referBtn, data-url="/ajaxScontSts", data-id=object._id, data-sts=0) To refer
 		.col-sm-2
-			button.btn.btn-warning.btn-lg.changSts(type="button", data-url="/scontSts", data-sts=1) To common
+			button.btn.btn-lg.btn-block.change(type="button", class=commonBtn, data-url="/ajaxScontSts", data-id=object._id, data-sts=1) To common
 		.col-sm-2
-			button.btn.btn-default.btn-lg.changSts(type="button", data-url="/scontSts", data-sts=2) To gray
+			button.btn.btn-lg.btn-block.change(type="button", class=greenBtn, data-url="/ajaxScontSts", data-id=object._id, data-sts=2) To green
 		.col-sm-2
-			button.btn.btn-default.btn-lg.changSts(type="button", data-url="/scontSts", data-sts=3) To green
+			button.btn.btn-lg.btn-block.change(type="button", class=yellowBtn, data-url="/ajaxScontSts", data-id=object._id, data-sts=3) To yellow
 		.col-sm-2
-			button.btn.btn-default.btn-lg.changSts(type="button", data-url="/scontSts", data-sts=4) To yellow
+			button.btn.btn-lg.btn-block.change(type="button", class=grayBtn, data-url="/ajaxScontSts", data-id=object._id, data-sts=4) To gray
 		.col-sm-2
-			button.btn.btn-default.btn-lg.changSts(type="button", data-url="/scontSts", data-sts=5) To delete
-	.row
-		button.btn.btn-link.btn-block#hideMark(type="button") hide
+			button.btn.btn-lg.btn-block.change(type="button", class=deleteBtn, data-url="/ajaxScontSts", data-id=object._id, data-sts=5) To delete
+script(src="/js/changeStatus.js")

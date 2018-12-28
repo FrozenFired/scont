@@ -2,7 +2,11 @@ extends ../../aalayout/layout
 
 block content
 	.container
+		
 		include ./detail/selfInfo
+
+		include ./detail/mark
+		
 		if crSfer.role == 5 || crSfer.role == 10
 			-a;
 			include ./detail/vendors

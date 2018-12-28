@@ -22,7 +22,7 @@ exports.scontListFilter = function(req, res, next) {
 	let condStatus;
 	// console.log(req.query.status)
 	if(!req.query.status) {
-		condStatus = ['0', '1', '2', '3', '4', '5'];
+		condStatus = Object.keys(Conf.stsScont);
 	} else {
 		condStatus = req.query.status;
 		if(condStatus instanceof Array){
@@ -98,7 +98,7 @@ exports.scontListFilter = function(req, res, next) {
 		.populate({path: 'brand', populate: {path: 'bcateg'} } )
 		.populate('vendor')
 		.populate('creater').populate('updater')
-		.sort({'weight': -1}).sort({'updateAt': -1})
+		.sort({'status': 1, 'updateAt': -1})
 		.exec(function(err, objects){
 			if(err) console.log(err);
 			if(objects){
@@ -376,6 +376,26 @@ exports.scontDel = function(req, res) {
 			})
 		} else {
 			res.json({success: 0, failDel: "已被删除，按F5刷新页面查看"})
+		}
+	})
+}
+
+
+
+exports.ajaxScontSts = function(req, res) {
+	let id = req.query.id
+	let newStatus = req.query.newStatus
+	Scont.findOne({_id: id}, function(err, object){
+		if(err) console.log(err);
+		if(object){
+			object.status = parseInt(newStatus)
+
+			object.save(function(err,objSave) {
+				if(err) console.log(err);
+				res.json({success: 1, info: "标记已经完成"});
+			})
+		} else {
+			res.json({success: 0, info: "已被删除，按F5刷新页面查看"})
 		}
 	})
 }

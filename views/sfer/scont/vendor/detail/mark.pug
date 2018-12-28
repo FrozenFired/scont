@@ -1,0 +1,17 @@
+#divMark(style="display:none")
+	hr
+	- let referBtn=commonBtn=grayBtn="btn-default";
+	if object.status == 0
+		-referBtn ="btn-warning";
+	else if object.status == 1
+		-commonBtn ="btn-warning";
+	else if object.status == 4
+		-grayBtn ="btn-warning";
+	.row
+		.col-sm-4
+			button.btn.btn-lg.btn-block.change(type="button", class=referBtn, data-url="/ajaxVendorSts", data-id=object._id, data-sts=0) To refer
+		.col-sm-4
+			button.btn.btn-lg.btn-block.change(type="button", class=commonBtn, data-url="/ajaxVendorSts", data-id=object._id, data-sts=1) To common
+		.col-sm-4
+			button.btn.btn-lg.btn-block.change(type="button", class=grayBtn, data-url="/ajaxVendorSts", data-id=object._id, data-sts=4) To gray
+script(src="/js/changeStatus.js")

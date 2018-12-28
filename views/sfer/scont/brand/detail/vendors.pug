@@ -5,26 +5,39 @@ if object.sconts && object.sconts.length > 0
 	table.table.table-hover.table-bordered
 		thead
 			tr
-				th Type
 				th Vendor
+				th Type
 				th ac/sa
-				th scont / scontNote
-				th Cause
+				th scont
 				th Note
 				th status
+				th views
 		tbody
 			each scont in sconts
-				-let a;
-				tr(class="scont-id-"+scont._id)
+				- let trBg;
+				if scont.status == 0
+					-trBg ="bg-info";
+				else if scont.status == 1
+					-trBg ="bg-default";
+				else if scont.status == 2
+					-trBg ="bg-success";
+				else if scont.status == 3
+					-trBg ="bg-warning";
+				else if scont.status == 4
+					-trBg ="bg-secondary";
+				else if scont.status == 5
+					-trBg ="bg-danger";
+				tr(class=trBg+" scont-id-"+scont._id)
 					if scont.vendor
 						-a;
+						td: a.btn.btn-primary(href="/vendorDetail/"+scont.vendor._id) #{scont.vendor.code}
 						td #{Conf.vtype[scont.vendor.vtype]}
-						td: a(href="/vendorDetail/"+scont.vendor._id) #{scont.vendor.code}
-						td #{scont.vendor.ac}40 / 60#{scont.vendor.sa}
+						td #{scont.vendor.ac} / #{scont.vendor.sa}
 					else
 						td
 						td
-					td #{scont.scont}%  &nbsp; &nbsp;- #{scont.scontNote}
-					td: a(href="/scontDetail/"+scont._id) #{Conf.sctCause[scont.cause]} 
+						td
+					td #{scont.scont}%
 					td #{scont.note}
 					td #{Conf.stsScont[scont.status]}
+					td: a.btn.btn-primary(href="/scontDetail/"+scont._id) view

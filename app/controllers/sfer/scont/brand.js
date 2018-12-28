@@ -2,6 +2,8 @@ let Index = require('../index');
 let Brand = require('../../../models/scont/brand');
 let Bcateg = require('../../../models/scont/bcateg');
 let Nation = require('../../../models/scont/nation');
+
+let Conf = require('../../../../confile/conf.js')
 let _ = require('underscore');
 
 
@@ -30,7 +32,7 @@ exports.brandListFilter = function(req, res, next) {
 	let condStatus;
 	// console.log(req.query.status)
 	if(!req.query.status) {
-		condStatus = ['0', '1'];
+		condStatus = Object.keys(Conf.stsBrand);
 	} else {
 		condStatus = req.query.status;
 		if(condStatus instanceof Array){
@@ -107,7 +109,7 @@ exports.brandListFilter = function(req, res, next) {
 		.limit(count)
 		.populate('bcateg')
 		.populate('nation')
-		.sort({"code": -1})
+		.sort({'status': 1, 'updateAt': -1})
 		.exec(function(err, objects){
 			if(err) console.log(err);
 			if(objects){
@@ -213,7 +215,11 @@ exports.brandDetail = function(req, res){
 	Brand.findOne({_id: id})
 	.populate('bcateg')
 	.populate('nation')
-	.populate({path: 'sconts', populate: {path: 'vendor' } } )
+	.populate({
+		path: 'sconts',
+		options: {sort: {'status': 1} },
+		populate: {path: 'vendor' } 
+	})
 	.populate('creater')
 	.populate('updater')
 	.exec(function(err, object){
@@ -390,6 +396,25 @@ nationChangeBrandnum = function(nationId, vary) {
 			nation.save(function(err, nationSave) {
 				if(err) console.log(err);
 			})
+		}
+	})
+}
+
+
+exports.ajaxBrandSts = function(req, res) {
+	let id = req.query.id
+	let newStatus = req.query.newStatus
+	Brand.findOne({_id: id}, function(err, object){
+		if(err) console.log(err);
+		if(object){
+			object.status = parseInt(newStatus)
+
+			object.save(function(err,objSave) {
+				if(err) console.log(err);
+				res.json({success: 1, info: "标记已经完成"});
+			})
+		} else {
+			res.json({success: 0, info: "已被删除，按F5刷新页面查看"})
 		}
 	})
 }

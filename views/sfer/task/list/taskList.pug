@@ -12,11 +12,11 @@ table.table.table-hover.table-bordered
 			th changeStatus
 	tbody
 		each item in objects
-			-if(item.status == 1) {
-				- bgr="bg-white"
-			- } else {
-				- bgr="bg-light"
-			- }
+			-a;
+			if item.status == 1
+				- bgr="bg-white";
+			else
+				- bgr="bg-light";
 			tr(class="item-id-"+item._id+" "+bgr)
 				td: a(href="/taskDetail/"+item._id) #{item.code}
 				td #{item.title}
@@ -25,6 +25,7 @@ table.table.table-hover.table-bordered
 				td
 					button.btn.btn-link.btnEdit(class="edit-"+item._id, type="button", data-id=item._id) edit
 					if item.note
+						-a;
 						span(class="text-"+item._id) &nbsp;->&nbsp #{item.note}
 					form(class="form-"+item._id, method="post", action="/updateTask", style="display:none")
 						input.form-control(type="hidden", name="object[_id]", value=item._id)
@@ -35,19 +36,17 @@ table.table.table-hover.table-bordered
 				td #{moment(item.createAt).format('MM/DD/YYYY HH:mm')}
 				td #{item.finishAt}
 				//- td #{Conf.stsTask[item.status]}
-				if item.status == 1
-					td
-						button.btn.btn-info.changeStatus(class="del-"+item._id, type="button", data-newstatus=2, data-id=item._id) progress->finish
+				td
+					if item.status == 0
+						button.btn.btn-info.change(class="del-"+item._id, type="button", data-url="/taskStatus", data-sts	=1, data-id=item._id) progress->finish
 						
-				else if item.status == 2
-					td
-						button.btn.btn-warning.changeStatus(class="del-"+item._id, type="button", data-newstatus=1, data-id=item._id) finish->progress
-				else
-					td
-						button.btn.btn-warning.changeStatus(class="del-"+item._id, type="button", data-newstatus=1, data-id=item._id) progress
-						button.btn.btn-info.changeStatus(class="del-"+item._id, type="button", data-newstatus=2, data-id=item._id) finish
+					else if item.status == 1
+						button.btn.btn-warning.change(class="del-"+item._id, type="button", data-url="/taskStatus", data-sts	=0, data-id=item._id) finish->progress
+					else
+						button.btn.btn-warning.change(class="del-"+item._id, type="button", data-url="/taskStatus", data-sts	=0, data-id=item._id) progress
+						button.btn.btn-info.change(class="del-"+item._id, type="button", data-url="/taskStatus", data-sts	=1, data-id=item._id) finish
 				
 hr
 h3 #{amount}
 
-script(src="/js/task/list.js")
+script(src="/js/changeStatus.js")

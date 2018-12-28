@@ -1,6 +1,8 @@
-var Index = require('../index')
-var Vendor = require('../../../models/scont/vendor')
-var _ = require('underscore')
+let Index = require('../index')
+let Vendor = require('../../../models/scont/vendor')
+
+let Conf = require('../../../../confile/conf.js')
+let _ = require('underscore')
 
 exports.vendorListFilter = function(req, res, next) {
 	// 分页
@@ -27,7 +29,7 @@ exports.vendorListFilter = function(req, res, next) {
 	let condStatus;
 	// console.log(req.query.status)
 	if(!req.query.status) {
-		condStatus = ['0', '1'];
+		condStatus = Object.keys(Conf.stsVendor);
 	} else {
 		condStatus = req.query.status;
 		if(condStatus instanceof Array){
@@ -102,7 +104,7 @@ exports.vendorListFilter = function(req, res, next) {
 		})
 		.skip(index)
 		.limit(count)
-		.sort({"code": -1})
+		.sort({'status': 1, 'updateAt': -1})
 		.exec(function(err, objects){
 			if(err) console.log(err);
 			if(objects){
@@ -170,7 +172,7 @@ exports.vendorAdd = function(req, res) {
 
 
 exports.addVendor = function(req, res) {
-	var objBody = req.body.object
+	let objBody = req.body.object
 
 	objBody.code = objBody.code.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
 	objBody.updateAt = objBody.createAt = Date.now();
@@ -181,7 +183,7 @@ exports.addVendor = function(req, res) {
 			info = "This Vendor Code is Exist"
 			Index.sfOptionWrong(req, res, info)
 		} else {
-			var _object = new Vendor(objBody)
+			let _object = new Vendor(objBody)
 			_object.creater = req.session.crSfer._id
 			_object.save(function(err, objSave) {
 				if(err) console.log(err);
@@ -195,9 +197,14 @@ exports.addVendor = function(req, res) {
 
 
 exports.vendorDetail = function(req, res){
-	var id = req.params.id
+	let id = req.params.id
 	Vendor.findOne({_id: id})
 	// .populate({path: 'brands', options: {sort: {'weight': -1} } } )
+	.populate({
+		path: 'sconts',
+		options: {sort: {'status': 1} }, 
+		populate: {path: 'brand', populate: {path: 'bcateg'} } 
+	})
 	.populate('creater')
 	.populate('updater')
 	.exec(function(err, object){
@@ -216,7 +223,7 @@ exports.vendorDetail = function(req, res){
 }
 
 exports.vendorUpdate = function(req, res){
-	var id = req.params.id
+	let id = req.params.id
 	Vendor.findOne({_id: id})
 	.exec(function(err, object){
 		if(err) console.log(err);
@@ -234,7 +241,7 @@ exports.vendorUpdate = function(req, res){
 }
 
 exports.updateVendor = function(req, res) {
-	var objBody = req.body.object
+	let objBody = req.body.object
 	
 	objBody.code = objBody.code.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
 	objBody.updateAt = Date.now();
@@ -250,7 +257,7 @@ exports.updateVendor = function(req, res) {
 					info = "This Vendor Code is Exist"
 					Index.sfOptionWrong(req, res, info)
 				} else {
-					var _object = _.extend(object, objBody)
+					let _object = _.extend(object, objBody)
 					_object.updateUser = req.session.crSfer._id
 					_object.save(function(err, object) {
 						if(err) console.log(err);
@@ -266,7 +273,7 @@ exports.updateVendor = function(req, res) {
 }
 
 exports.vendorDel = function(req, res) {
-	var id = req.query.id
+	let id = req.query.id
 	Vendor.findOne({_id: id})
 	.exec(function(err, vendor){
 		if(err) console.log(err);
@@ -310,6 +317,25 @@ exports.ajaxCodeVendor = function(req, res) {
 					res.json({success: 0})
 				}
 			})
+		}
+	})
+}
+
+
+exports.ajaxVendorSts = function(req, res) {
+	let id = req.query.id
+	let newStatus = req.query.newStatus
+	Vendor.findOne({_id: id}, function(err, object){
+		if(err) console.log(err);
+		if(object){
+			object.status = parseInt(newStatus)
+
+			object.save(function(err,objSave) {
+				if(err) console.log(err);
+				res.json({success: 1, info: "标记已经完成"});
+			})
+		} else {
+			res.json({success: 0, info: "已被删除，按F5刷新页面查看"})
 		}
 	})
 }

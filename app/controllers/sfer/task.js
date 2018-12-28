@@ -1,6 +1,8 @@
 let Index = require('./index')
 let Task = require('../../models/task/task')
 let _ = require('underscore')
+
+let Conf = require('../../../confile/conf.js')
 let moment = require('moment')
 
 
@@ -90,10 +92,10 @@ exports.taskListCheck = function(req, res, next) {
 	let selStatus = req.query.status;
 	let condStatus = "$lte";
 	if(!selStatus) {
-		selStatus = 1
-	} else if(selStatus == 2){
+		selStatus = 0
+	} else if(selStatus == 1){
 		condStatus = "$gte";
-	} else if(selStatus == 3) {
+	} else if(selStatus == 2) {
 		condStatus = "$ne";
 	}
 	// console.log(selStatus)
@@ -331,10 +333,10 @@ exports.taskStatus = function(req, res) {
 			}
 			object.save(function(err,objSave) {
 				if(err) console.log(err);
-				res.json({success: 1});
+				res.json({success: 1, info: "已经更改"});
 			})
 		} else {
-			res.json({success: 0, failDel: "已被删除，按F5刷新页面查看"})
+			res.json({success: 0, info: "已被删除，按F5刷新页面查看"})
 		}
 	})
 }
