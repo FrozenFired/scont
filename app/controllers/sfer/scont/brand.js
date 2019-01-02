@@ -364,36 +364,6 @@ exports.brandDel = function(req, res) {
 
 
 
-// Ajax
-exports.ajaxCodeBrand = function(req, res) {
-	let keytpye = req.query.keytype
-	let keyword = req.query.keyword.toUpperCase();
-	// console.log(keytpye)
-	// console.log(keyword)
-	Brand.findOne({[keytpye]: keyword}, function(err, brand) {
-		if(err) console.log(err);
-		if(brand){
-			res.json({success: 1, brand: brand})
-		} else {
-			Brand.find({[keytpye]: new RegExp(keyword + '.*')}, function(err, brands) {
-				if(err) console.log(err);
-				if(brands && brands.length > 0) {
-					res.json({success: 2, brands: brands});
-				} else {
-					res.json({success: 0})
-				}
-			})
-		}
-	})
-}
-
-
-
-
-
-
-
-
 
 // 分类中的品牌个数变化
 categChangeBrandnum = function(bcategId, vary) {
@@ -420,6 +390,35 @@ nationChangeBrandnum = function(nationId, vary) {
 		}
 	})
 }
+
+
+
+
+// Ajax
+exports.ajaxCodeBrand = function(req, res) {
+	let keytpye = req.query.keytype
+	let keyword = req.query.keyword.toUpperCase();
+	// console.log(keytpye)
+	// console.log(keyword)
+	Brand.findOne({[keytpye]: keyword}, function(err, brand) {
+		if(err) console.log(err);
+		if(brand){
+			res.json({success: 1, brand: brand})
+		} else {
+			Brand.find({[keytpye]: new RegExp(keyword + '.*')}, function(err, brands) {
+				if(err) console.log(err);
+				if(brands && brands.length > 0) {
+					res.json({success: 2, brands: brands});
+				} else {
+					res.json({success: 0})
+				}
+			})
+		}
+	})
+}
+
+
+
 
 
 exports.ajaxBrandSts = function(req, res) {

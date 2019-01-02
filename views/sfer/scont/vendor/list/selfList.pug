@@ -53,5 +53,5 @@ table.table.table-hover.table-bordered
 					a.btn.btn-primary(href="/vendorDetail/"+item._id) view
 					if item.sconts && item.sconts.length == 0
 						-a;
-						button.btn.btn-danger.del(type="button", data-urldel="/vendorDel", data-id=item._id) 删除
+						button.btn.btn-danger.del(type="button", data-urldel="/vendorDel", data-id=item._id) delete
 script(src="/js/delete.js")

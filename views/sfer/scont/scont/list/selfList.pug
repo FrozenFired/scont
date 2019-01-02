@@ -44,7 +44,7 @@ table.table.table-hover.table-bordered
 						a.btn.btn-primary(href="/vendorDetail/"+item.vendor._id) #{item.vendor.code}
 						br
 						span #{Conf.vtype[item.vendor.vtype]}
-				td #{item.scont} <br/> #{item.note}
+				td #{item.scont} % <br/> #{item.note}
 				td
 					if item.creater
 						-a;
@@ -54,10 +54,9 @@ table.table.table-hover.table-bordered
 						-a;
 						span #{item.updater.code}
 				td #{Conf.stsScont[item.status]}
-				
 				td
 					a.btn.btn-primary(href="/scontDetail/"+item._id) View
 					if item.status == 5
 						span &nbsp; | &nbsp;
-						button.btn.btn-warning.del(type="button", data-urldel="/scontDel", data-id=item._id) 删除
+						button.btn.btn-warning.del(type="button", data-urldel="/scontDel", data-id=item._id) delete
 script(src="/js/delete.js")

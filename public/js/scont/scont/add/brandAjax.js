@@ -14,7 +14,7 @@ $(function() {
 				if(results.success === 1) {
 					$('.divAddBrand').hide();
 					$('#matchBrands').hide();
-					if(results.brand.status != 1) {
+					if(results.brand.status != 2) {
 						$("#ajaxOptBrandCode").text('Brand is Inputed');
 						$('#brandCode').val(results.brand.code);
 						$('#scontBrand').val(results.brand._id);			// scont中的 brand赋值

@@ -14,7 +14,7 @@ $(function() {
 				if(results.success === 1) {
 					$('.divAddVendor').hide();
 					$('#matchVendors').hide();
-					if(results.vendor.status != 1) {
+					if(results.vendor.status != 2) {
 						$("#ajaxOptVendorCode").text('Vendor is Inputed');
 						$('#vendorCode').val(results.vendor.code);
 						$('#scontVendor').val(results.vendor._id);			// scont中的 vendor赋值
