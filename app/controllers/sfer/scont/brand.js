@@ -10,7 +10,7 @@ let _ = require('underscore');
 exports.brandListFilter = function(req, res, next) {
 	// 分页
 	let page = parseInt(req.query.page) || 0
-	let count = 20
+	let count = 10
 	let index = page * count
 	let slipCond = ""; // 分页时用到的其他条件
 
@@ -165,6 +165,27 @@ exports.brandList = function(req, res) {
 		filterAction: '/brandList',
 		printAction: '/brandListPrint'
 	})
+}
+
+// header search
+exports.headerBrand = function(req, res) {
+	let object = req.body.object
+	if(object && object.objects) {
+		let objects = object.objects;
+		if(objects.length > 0) {
+			if(objects.length == 1) {
+				res.redirect("/brandDetail/"+objects[0]._id)
+			} else {
+				res.redirect('/brandList?keyword='+object.keyword)
+			}
+		} else {
+			info = "This Brand Code is not Exist"
+			Index.sfOptionWrong(req, res, info)
+		}
+	} else {
+		info = "Option Error~!"
+		Index.sfOptionWrong(req, res, info)
+	}
 }
 
 

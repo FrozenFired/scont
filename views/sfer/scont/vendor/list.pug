@@ -2,11 +2,13 @@ extends ../../aalayout/layout
 
 block content
 	.container
-		h1 Vendors [#{amount}]
-		hr
-		a.btn.btn-info.btn-lg.btn-block(href="/vendorAdd") Add Vendor
-		hr
-		include ./list/filter
+		.row
+			h1.col-sm-6
+				span Vendors [#{amount}]
+			.col-sm-6.text-right
+				span: a.btn.btn-info.btn-lg(href="/brandAdd") Add Vendor
 		hr
 		include ../../aalayout/pageSlip
 		include ./list/selfList
+		hr
+		include ./list/filter

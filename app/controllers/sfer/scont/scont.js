@@ -13,7 +13,7 @@ let _ = require('underscore')
 exports.scontListFilter = function(req, res, next) {
 	// 分页
 	let page = parseInt(req.query.page) || 0
-	let count = 20
+	let count = 10
 	let index = page * count
 	let slipCond = ""; // 分页时用到的其他条件
 

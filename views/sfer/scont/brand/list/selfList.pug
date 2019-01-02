@@ -26,7 +26,7 @@ table.table.table-hover.table-bordered
 			else if item.status == 5
 				-trBg ="bg-danger";
 			tr(class=trBg+" item-id-"+item._id)
-				td: a.btn.btn-primary(href="/brandDetail/"+item._id) #{item.code}
+				td #{item.code}
 				td #{item.weight}
 				td
 					if item.nation
@@ -51,5 +51,9 @@ table.table.table-hover.table-bordered
 					span #{moment(item.createAt).format('MM/DD/YYYY')}
 					br
 					span #{moment(item.updateAt).format('MM/DD/YYYY')}
-				td: button.btn.btn-danger.del(type="button", data-urldel="/brandDel", data-id=item._id) 删除
+				td
+					a.btn.btn-primary(href="/brandDetail/"+item._id) view
+					if item.sconts && item.sconts.length == 0
+						-a;
+						button.btn.btn-danger.del(type="button", data-urldel="/brandDel", data-id=item._id) 删除
 script(src="/js/delete.js")

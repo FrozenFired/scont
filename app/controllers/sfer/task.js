@@ -48,7 +48,7 @@ getNewTaskCode = function(lastTask, userCode) {
 
 exports.addTaskCheck = function(req, res, next) {
 	let objBody = req.body.object
-	objBody.status = 1
+	objBody.status = 0
 	Task.findOne({code: objBody.code}, function(err, object) {
 		if(err) console.log(err);
 		if(object) {

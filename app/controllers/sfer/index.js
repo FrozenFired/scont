@@ -6,13 +6,21 @@ exports.sfer = function(req, res) {
 	if(!req.session.crSfer) {
 		res.redirect('/sferLogin');
 	} else {
-		res.render('./sfer/index/index', {
-			title: 'Staff',
-			crSfer : req.session.crSfer,
-		});
+		res.redirect('/brandList')
+		// res.render('./sfer/index/index', {
+		// 	title: 'Staff',
+		// 	crSfer : req.session.crSfer,
+		// });
 	}
 }
 
+
+exports.option = function(req, res) {
+	res.render('./sfer/index/option', {
+		title: 'option',
+		crSfer : req.session.crSfer,
+	});
+}
 
 
 

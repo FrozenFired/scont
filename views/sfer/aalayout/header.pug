@@ -7,18 +7,8 @@
 			ul.navbar-nav.mr-auto.mt-2.mt-lg-0
 				if crSfer
 					-a;
-					if crSfer.role == 5 || crSfer.role == 10
-						-a;
-						li.nav-item.active
-							a.nav-link(href="/scontList") scontList <span class="sr-only">(current)</span>
-						li.nav-item.active
-							a.nav-link(href="/vendorList") vendorList <span class="sr-only">(current)</span>
 					li.nav-item.active
-						a.nav-link(href="/brandList") brandList <span class="sr-only">(current)</span>
-					li.nav-item.active
-						a.nav-link(href="/nationList") nationList <span class="sr-only">(current)</span>
-					li.nav-item.active
-						a.nav-link(href="/bcategList") bcategList <span class="sr-only">(current)</span>
+						a.nav-link(href="/option") option <span class="sr-only">(current)</span>
 					li.nav-item.active
 						a.nav-link(href="/taskList") taskList <span class="sr-only">(current)</span>
 					li.nav-item.active
@@ -26,16 +16,24 @@
 			ul.navbar-nav
 				if crSfer
 					-a;
-					li.text-info: a.btn.btn-info(href="/sferDetail/"+crSfer._id) hello: 
-						if crSfer.name && crSfer.name.length > 0
-							span #{crSfer.name}
-						else
-							span #{crSfer.code}
-						if crSfer.role
-							span &nbsp;(#{Conf.sfRole[crSfer.role]})
-						if crSfer.photo
-							img(src=ServerAddress+crSfer.photo, width="30")
-						-a;
+					li
+						form.form-inline(method="get", action="/headerBrand", enctype="multipart/form-data")
+							input(type="hidden", name="keytpye", value="code")
+							input.form-control.mr-sm-2(type="search", name='keyword',  placeholder="Brand Code",  aria-label="Search")
+							button.btn.btn-outline-success.my-2.my-sm-0(type="submit") Search
+
+					li.text-info
+						span &nbsp;
+						a.btn.btn-info(href="/sferDetail/"+crSfer._id) hello: 
+							if crSfer.name && crSfer.name.length > 0
+								span #{crSfer.name}
+							else
+								span #{crSfer.code}
+							if crSfer.role
+								span &nbsp;(#{Conf.sfRole[crSfer.role]})
+							if crSfer.photo
+								img(src=ServerAddress+crSfer.photo, width="30")
+							-a;
 					span &nbsp;&nbsp;&nbsp;&nbsp;
 					li: a.btn.btn-danger(href="/sferLogout") Logout
 				else

@@ -25,6 +25,9 @@ module.exports = function(app){
 	app.post('/loginSfer', Index.loginSfer);
 	app.get('/sferLogout', Index.sferLogout);
 
+	app.get('/option', MiddleRole.sferIsLogin, Index.option);
+	app.get('/headerBrand', MiddleRole.sferIsLogin, Brand.brandListFilter, Brand.headerBrand)
+
 	// Sfer ------------------------------------------------------------------------
 	app.get('/sferDetail/:id', MiddleRole.sferIsLogin, MiddleRole.singleSferLogin, Sfer.sferDetail);
 	app.post('/updateSferInfo', MiddleRole.sferIsLogin, MiddleRole.singleSferLogin,

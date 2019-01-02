@@ -15,20 +15,20 @@ if object.sconts && object.sconts.length > 0
 				th views
 		tbody
 			each scont in sconts
-				- let trBg;
+				- let scontBg;
 				if scont.status == 0
-					-trBg ="bg-info";
+					-scontBg ="bg-info";
 				else if scont.status == 1
-					-trBg ="bg-default";
+					-scontBg ="bg-default";
 				else if scont.status == 2
-					-trBg ="bg-success";
+					-scontBg ="bg-success";
 				else if scont.status == 3
-					-trBg ="bg-warning";
+					-scontBg ="bg-warning";
 				else if scont.status == 4
-					-trBg ="bg-secondary";
+					-scontBg ="bg-secondary";
 				else if scont.status == 5
-					-trBg ="bg-danger";
-				tr(class=trBg+" scont-id-"+scont._id)
+					-scontBg ="bg-danger";
+				tr(class="scont-id-"+scont._id)
 					if scont.vendor
 						-vendor = scont.vendor;
 						if vendor.status == 4
@@ -46,12 +46,12 @@ if object.sconts && object.sconts.length > 0
 										li #{contact.contacter} 
 										li #{contact.tel} 
 										li #{contact.email}
-						td #{vendor.ac} / #{vendor.sa}
+						td(class=vdBg) #{vendor.ac} / #{vendor.sa}
 					else
 						td
 						td
 						td
-					td #{scont.scont}%
-					td #{scont.note}
-					td #{Conf.stsScont[scont.status]}
-					td: a.btn.btn-primary(href="/scontDetail/"+scont._id) view
+					td(class=scontBg) #{scont.scont}%
+					td(class=scontBg) #{scont.note}
+					td(class=scontBg) #{Conf.stsScont[scont.status]}
+					td(class=scontBg): a.btn.btn-primary(href="/scontDetail/"+scont._id) view

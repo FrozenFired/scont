@@ -2,9 +2,11 @@ extends ../../aalayout/layout
 
 block content
 	.container
-		h1 Scont [#{amount}]
-		hr
-		a.btn.btn-info.btn-lg.btn-block(href="/scontAdd") Add Scont
+		.row
+			h1.col-sm-6
+				span Scont [#{amount}]
+			.col-sm-6.text-right
+				span: a.btn.btn-info.btn-lg(href="/scontAdd") Add Scont
 		hr
 		include ./list/filter
 		hr

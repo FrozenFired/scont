@@ -26,7 +26,7 @@ if object.sconts && object.sconts.length > 0
 					-scontBg ="bg-secondary";
 				else if scont.status == 5
 					-scontBg ="bg-danger";
-				tr(class=scontBg+" scont-id-"+scont._id)
+				tr(class="scont-id-"+scont._id)
 					if scont.brand
 						-brand=scont.brand;
 						if brand.status == 4
@@ -41,7 +41,7 @@ if object.sconts && object.sconts.length > 0
 					else
 						td
 						td
-					td #{scont.scont}%
-					td #{scont.note}
-					td #{Conf.stsScont[scont.status]}
-					td: a.btn.btn-primary(href="/scontDetail/"+scont._id) view
+					td(class=scontBg) #{scont.scont}%
+					td(class=scontBg) #{scont.note}
+					td(class=scontBg) #{Conf.stsScont[scont.status]}
+					td(class=scontBg): a.btn.btn-primary(href="/scontDetail/"+scont._id) view
