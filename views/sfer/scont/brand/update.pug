@@ -2,7 +2,11 @@ extends ../../aalayout/layout
 
 block content
 	.container
-		h1 Brand Update
+		.row
+			h1.col-sm-6
+				span Brand Update: [#{object.code}]
+			.col-sm-4.text-right
+				a.btn.btn-link(href="/brandDetail/"+object._id) brand [#{object.code}] Detail
 		hr
 		form#update(method="post", action="/updateBrand", enctype="multipart/form-data")
 			input(type="hidden", name="object[_id]", value=object._id)

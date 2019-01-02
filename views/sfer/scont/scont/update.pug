@@ -2,7 +2,11 @@ extends ../../aalayout/layout
 
 block content
 	.container
-		h1 Scont Update
+		.row
+			h1.col-sm-6
+				span Scont Update
+			.col-sm-6.text-right
+				a.btn.btn-link(href="/scontDetail/"+object._id) scont Detail
 		hr
 		.row
 			.col-sm-6

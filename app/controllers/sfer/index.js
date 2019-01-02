@@ -6,11 +6,16 @@ exports.sfer = function(req, res) {
 	if(!req.session.crSfer) {
 		res.redirect('/sferLogin');
 	} else {
-		res.redirect('/brandList')
-		// res.render('./sfer/index/index', {
-		// 	title: 'Staff',
-		// 	crSfer : req.session.crSfer,
-		// });
+		if(req.session.crSfer.home) {
+			let url = req.session.crSfer.home.replace(/(\s*$)/g, "").replace( /^\s*/, '')
+			res.redirect('/'+url)
+		} else {
+			res.render('./sfer/index/index', {
+				title: 'Staff',
+				crSfer : req.session.crSfer,
+			});
+		}
+		
 	}
 }
 

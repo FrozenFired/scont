@@ -1,27 +1,36 @@
--let divBg = "bg-light";
+-let scontBg = "bg-light";
 
 if object.status == 0
-	-divBg ="bg-info";
+	-scontBg ="bg-info";
 else if object.status == 1
-	-divBg ="bg-white";
+	-scontBg ="bg-white";
 else if object.status == 2
-	-divBg ="bg-success";
+	-scontBg ="bg-success";
 else if object.status == 3
-	-divBg ="bg-warning";
+	-scontBg ="bg-warning";
 else if object.status == 4
-	-divBg ="bg-secondary";
+	-scontBg ="bg-secondary";
 else if object.status == 5
-	-divBg ="bg-danger";
-div(class=divBg)
-	.row
-		.col-sm-6: h2 Brand: 
-			if object.brand
-				-a;
-				a.btn.btn-primary(href="/brandDetail/"+object.brand._id) #{object.brand.code}
-		.col-sm-6: h2 Vendor: 
-			if object.vendor
-				-a;
-				a.btn.btn-primary(href="/vendorDetail/"+object.vendor._id) #{object.vendor.code}
+	-scontBg ="bg-danger";
+.row(class=scontBg)
+	h1.col-sm-6
+		span scont Detail:
+	.col-sm-6.text-right
+		a.btn.btn-link(href="/scontList") scont list
+hr
+.row
+	.col-sm-6
+		if object.brand
+			-let brand=object.brand;
+			include ./brandInfo
+		else
+			h2 loss brand information
+	.col-sm-6
+		if object.vendor
+			-vendor = object.vendor;
+			include ./vendorInfo
+		else
+			h2 loss vendor information
 .bg-light
 	table.table.table-hover.table-bordered
 		tr
@@ -45,7 +54,7 @@ div(class=divBg)
 					-a;
 					span #{object.updater.code}
 			td #{moment(object.createAt).format('MM/DD/YYYY HH:mm')} <br/> #{moment(object.updateAt).format('MM/DD/YYYY HH:mm')}
-			td(class=divBg) #{Conf.stsScont[object.status]}
+			td(class=scontBg) #{Conf.stsScont[object.status]}
 			
 			td
 				a.btn.btn-dark.btn-lg(href="/scontUpdate/"+object._id) update

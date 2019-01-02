@@ -2,7 +2,12 @@ extends ../aalayout/layout
 
 block content
 	.container
-		#selectOption
+		.row
+			h1.col-sm-6 Tasks [#{amount}]
+			.col-sm-6.text-right
+				a.btn.btn-primary.btn-lg(href="/taskAdd") new Task
+		hr
+		#selectOption.bg-light.pt-2
 			include ./list/selectList
 		hr
 		.row

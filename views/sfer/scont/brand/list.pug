@@ -5,10 +5,13 @@ block content
 		.row
 			h1.col-sm-6
 				span Brands [#{amount}]
-			.col-sm-6.text-right
+			.col-sm-3.text-right
 				span: a.btn.btn-info.btn-lg(href="/brandAdd") Add Brand
+			.col-sm-3.text-right
+				span: a.btn.btn-info.btn-lg(href="/scontAdd") Add Scont
 		hr
 		include ../../aalayout/pageSlip
 		include ./list/selfList
 		hr
-		include ./list/filter
+		.bg-light.p-2
+			include ./list/filter

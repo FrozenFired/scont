@@ -4,11 +4,12 @@ block content
 	.container
 		.row
 			h1.col-sm-6
-				span Scont [#{amount}]
+				span Sconts [#{amount}]
 			.col-sm-6.text-right
 				span: a.btn.btn-info.btn-lg(href="/scontAdd") Add Scont
 		hr
-		include ./list/filter
+		.bg-light.pt-2
+			include ./list/filter
 		hr
 		include ../../aalayout/pageSlip
 		include ./list/selfList

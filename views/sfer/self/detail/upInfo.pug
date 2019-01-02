@@ -13,6 +13,16 @@ a.btn.btn-default(href="#", data-toggle="modal", data-target="#upSferInfo") upda
 					.form-group
 						label.col-form-label(for="iptName") Name
 						input#iptName.form-control(type="text", class="iptName", name="object[name]", value=object.name)
+					.form-group
+						label.col-form-label(for="iptHome") Home
+						select#iptHome.form-control(name="object[home]", data-style="btn-info")
+							each key in Object.keys(Conf.home)
+								-a;
+								if Conf.home[key] == object.home
+									-a;
+									option(value=Conf.home[key], selected="selected") #{key}
+								else
+									option(value=Conf.home[key]) #{key}
 					.form-group.udPhoto
 						input(type="hidden", name="object[photoDir]", value=Conf.photoPath.sferAvatar)
 						input(type="hidden", name="object[orgPhoto]", value=object.photo)

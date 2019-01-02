@@ -2,7 +2,12 @@ extends ../aalayout/layout
 
 block content
 	.container
-		form#add(method="post", action=action, enctype="multipart/form-data")
+		.row
+			h1.col-sm-6 New Task
+			.col-sm-6.text-right
+				a.btn.btn-link(href="/taskList") back TaskList
+		hr
+		form#addTask(method="post", action=action, enctype="multipart/form-data")
 			.form-group.row
 				label.col-sm-2.col-form-label TaskCode
 				.col-sm-4

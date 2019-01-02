@@ -22,6 +22,8 @@ let dbSchema = new Schema({
 	post: String,			// 10141 TO Torino, Italia
 	ivaNumber: String,
 
+	home: String,
+
 
 	loginTime:  {
 		type: Number,

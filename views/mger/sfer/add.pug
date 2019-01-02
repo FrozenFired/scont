@@ -16,12 +16,19 @@ block content
 				.col-md-6
 					select#iptRole.form-control(name="object[role]", data-style="btn-info")
 						each key in Object.keys(Conf.sfRole)
-							- let a;
+							-a;
 							option(value=key) #{Conf.sfRole[key]} #{key}
 			.form-group.row
 				label.col-md-2.col-form-label(for="iptName") Name
 				.col-md-6
 					input#iptName.form-control(type="text", class="iptName", name="object[name]")
+			.form-group.row
+				label.col-md-2.col-form-label(for="iptHome") Home Page
+				.col-md-6
+					select#iptHome.form-control(name="object[home]", data-style="btn-info")
+						each key in Object.keys(Conf.home)
+							-a;
+							option(value=Conf.home[key]) #{key}
 			.form-group.row.udPhoto
 				input(type="hidden", name="object[photoDir]", value=Conf.photoPath.sferAvatar)
 				label.col-md-2.col-form-label(for="uploadPhoto") 头像

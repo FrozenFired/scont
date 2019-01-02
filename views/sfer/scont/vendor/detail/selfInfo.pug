@@ -12,9 +12,12 @@ else if object.status == 4
 	-divBg ="bg-secondary";
 else if object.status == 5
 	-divBg ="bg-danger";
-div(class=divBg)
-	h1 Vendor Infomation:
-	hr
+.row(class=divBg)
+	h1.col-sm-6
+		span vendor Information: [#{object.code}]
+	.col-sm-6.text-right
+			a.btn.btn-link(href="/vendorList") vendor list
+hr
 .bg-light
 	table.table.table-hover.table-bordered
 		tr
