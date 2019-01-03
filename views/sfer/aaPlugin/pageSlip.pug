@@ -4,12 +4,12 @@ if totalPage > 1
 	-a;
 	ul.pagination
 		li.page-item
-			a.page-link(href=slipUrl+'page=0'+slipCond) First [1]
+			a.page-link(href=url+'?page=0'+slipCond) First [1]
 
 		if currentPage > 5
 			-a;
 			li.page-item
-				a.page-link(href=slipUrl+'page=#{currentPage-6}'+slipCond) 5<<
+				a.page-link(href=url+'?page=#{currentPage-6}'+slipCond) 5<<
 		li.page-item: span &nbsp;
 		- for(var i = currentPage-3; i < currentPage+2; i++){
 			- if(i >= 0 && i<totalPage){
@@ -19,13 +19,13 @@ if totalPage > 1
 				- }
 				- else{
 					li.page-item
-						a.page-link(href=slipUrl+'page='+i+slipCond) #{i+1}
+						a.page-link(href=url+'?page='+i+slipCond) #{i+1}
 				- }
 			-}
 		- }
 		li.page-item: span &nbsp;
 		if currentPage < totalPage -4
 			li.page-item
-				a.page-link(href=slipUrl+'page=#{currentPage+4}'+slipCond) >>5
+				a.page-link(href=url+'?page=#{currentPage+4}'+slipCond) >>5
 		li.page-item
-			a.page-link(href=slipUrl+'page=' + (totalPage-1)+slipCond) Last [#{totalPage}]
+			a.page-link(href=url+'?page=' + (totalPage-1)+slipCond) Last [#{totalPage}]

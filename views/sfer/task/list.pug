@@ -3,15 +3,15 @@ extends ../aalayout/layout
 block content
 	.container
 		.row
-			h1.col-sm-6 Tasks [#{amount}]
+			h1.col-sm-6 Tasks [#{count}]
 			.col-sm-6.text-right
 				a.btn.btn-primary.btn-lg(href="/taskAdd") new Task
 		hr
 		#selectOption.bg-light.pt-2
-			include ./list/selectList
+			include ./list/filter
 		hr
 		.row
-			include ../aalayout/pageSlip
+			include ../aaPlugin/pageSlip
 		.row
 			include ./list/taskList
 

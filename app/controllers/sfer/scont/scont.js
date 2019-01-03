@@ -7,98 +7,50 @@ let Vendor = require('../../../models/scont/vendor')
 
 let Bcateg = require('../../../models/scont/bcateg')
 let Nation = require('../../../models/scont/nation')
+
+let Filter = require('../../../middle/filter');
+
+let Conf = require('../../../../confile/conf.js')
 let _ = require('underscore')
 
 
 exports.scontListFilter = function(req, res, next) {
+	let title = 'scont List';
+	let url = "/scontList";
+
 	// 分页
 	let slipCond = ""; // 分页时用到的其他条件
 
-	let defEntry = 10;
-	let entry = parseInt(req.query.entry) || defEntry;
-	if(isNaN(entry)) {
-		entry = defEntry;
-	} else if(entry != defEntry) {
-		if(entry < 0) entry = -entry;
-		slipCond += "&entry="+entry;
-	}
-	let page = parseInt(req.query.page) || 0;
+	let page = 0, entry = 10;
+	[entry, page, slipCond] = Filter.slipPage(req, entry, slipCond)
 	let index = page * entry;
 
 	// 条件判断   ----------------
-	// 根据状态筛选
-	let condStatus;
-	// console.log(req.query.status)
-	if(!req.query.status) {
-		condStatus = Object.keys(Conf.stsScont);
-	} else {
-		condStatus = req.query.status;
-		if(condStatus instanceof Array){
-			for(status in condStatus){
-				slipCond += "&status="+status;
-			}
-		} else {
-			slipCond += "&status="+condStatus;
-		}
-	}
-	// console.log(condStatus)
-	// 选择创建的开始时间
-	let condCrtStart, symCrtStart;
-	if(req.query.crtStart && req.query.crtStart.length == 10){
-		symCrtStart = "$gt";   // $ ne eq gte gt lte lt
-		condCrtStart = new Date(req.query.crtStart).setHours(0,0,0,0);
-		slipCond += "&crtStart="+req.query.crtStart;
-	} else {
-		symCrtStart = "$ne";
-		condCrtStart = null;
-	}
+	// 查找关键字
+	let keytype = "scont", keyword = "";
+	[keytype, keyword, slipCond] = Filter.key(req, keytype, keyword, slipCond)
 
-	// console.log(req.query.crtStart)
-	// console.log(symCrtStart)
-	// console.log(condCrtStart)
-	// 选择创建的结束时间
-	let condCrtEnded, symCrtEnded;
-	if(req.query.crtEnded && req.query.crtEnded.length == 10){
-		symCrtEnded = "$lt";
-		condCrtEnded = new Date(req.query.crtEnded).setHours(23,59,59,0)
-		slipCond += "&crtEnded="+req.query.crtEnded;
-	} else {
-		symCrtEnded = "$ne";
-		condCrtEnded = null;
-	}
-	// 选择更新的开始时间
-	let condUpdStart, symUpdStart;
-	if(req.query.updStart && req.query.updStart.length == 10){
-		symUpdStart = "$gt";
-		condUpdStart = new Date(req.query.updStart).setHours(0,0,0,0);
-		slipCond += "&updStart="+req.query.updStart;
-	} else {
-		symUpdStart = "$ne";
-		condUpdStart = null;
-	}
-	// 选择更新的结束时间
-	let condUpdEnded, symUpdEnded;
-	if(req.query.updEnded && req.query.updEnded.length == 10){
-		symUpdEnded = "$lt";
-		condUpdEnded = new Date(req.query.updEnded).setHours(23,59,59,0)
-		slipCond += "&updEnded="+req.query.updEnded;
-	} else {
-		symUpdEnded = "$ne";
-		condUpdEnded = null;
-	}
-	// console.log(symCrtEnded)
-	// console.log(condCrtEnded)
+	// 根据状态筛选
+	let condStatus = Object.keys(Conf.stsScont);
+	// let condStatus = 0;
+	[condStatus, slipCond] = Filter.status(req.query.status, condStatus, slipCond);
+
+	// 根据创建更新时间筛选
+	let at = Filter.at(req);
+	slipCond+=at.slipCond;
 
 	Scont.count({
-		'createAt': {[symCrtStart]: condCrtStart, [symCrtEnded]: condCrtEnded},
-		'updateAt': {[symUpdStart]: condUpdStart, [symUpdEnded]: condUpdEnded},
+		[keytype]: new RegExp(keyword + '.*'),
+		'createAt': {[at.symCrtStart]: at.condCrtStart, [at.symCrtEnded]: at.condCrtEnded},
+		'updateAt': {[at.symUpdStart]: at.condUpdStart, [at.symUpdEnded]: at.condUpdEnded},
 		'status': condStatus  // 'status': {[symStatus]: condStatus}
 	})
 	.exec(function(err, count) {
 		if(err) console.log(err);
 		Scont.find({
-			'createAt': {[symCrtStart]: condCrtStart, [symCrtEnded]: condCrtEnded},
-			'updateAt': {[symUpdStart]: condUpdStart, [symUpdEnded]: condUpdEnded},
+			[keytype]: new RegExp(keyword + '.*'),
+			'createAt': {[at.symCrtStart]: at.condCrtStart, [at.symCrtEnded]: at.condCrtEnded},
+			'updateAt': {[at.symUpdStart]: at.condUpdStart, [at.symUpdEnded]: at.condUpdEnded},
 			'status': condStatus  // 'status': {[symStatus]: condStatus}
 		})
 		.skip(index)
@@ -110,25 +62,31 @@ exports.scontListFilter = function(req, res, next) {
 		.exec(function(err, objects){
 			if(err) console.log(err);
 			if(objects){
-				let object = new Object()
-				object.objects = objects;
+				let list = new Object()
+				list.title = title;
+				list.url = url;
+				list.crSfer = req.session.crSfer;
 
-				object.keytype = req.query.keytype;
-				object.keyword = req.query.keyword;
+				list.count = count;
+				list.objects = objects;
 
-				object.condStatus = condStatus;
-				object.condCrtStart = req.query.crtStart;
-				object.condCrtEnded = req.query.crtEnded;
-				object.condUpdStart = req.query.updStart;
-				object.condUpdEnded = req.query.updEnded;
+				list.keytype = req.query.keytype;
+				list.keyword = req.query.keyword;
 
-				object.count = count;
-				object.entry = entry;
-				object.page = page;
+				list.condStatus = condStatus;
 
-				object.slipCond = slipCond;
+				list.condCrtStart = req.query.crtStart;
+				list.condCrtEnded = req.query.crtEnded;
+				list.condUpdStart = req.query.updStart;
+				list.condUpdEnded = req.query.updEnded;
 
-				req.body.object = object;
+				list.currentPage = (page + 1);
+				list.entry = entry;
+				list.totalPage = Math.ceil(count / entry);
+
+				list.slipCond = slipCond;
+
+				req.body.list = list;
 				next();
 			} else {
 				info = "Option error, Please Contact Manger"
@@ -138,31 +96,7 @@ exports.scontListFilter = function(req, res, next) {
 	})
 }
 exports.scontList = function(req, res) {
-	let object = req.body.object
-	res.render('./sfer/scont/scont/list', {
-		title: 'Scont List',
-		crSfer: req.session.crSfer,
-		
-		objects: object.objects,
-		count: object.count,
-
-		condStatus: object.condStatus,
-		condCrtStart: object.condCrtStart,
-		condCrtEnded: object.condCrtEnded,
-		condUpdStart: object.condUpdStart,
-		condUpdEnded: object.condUpdEnded,
-		keytype: object.keytype,
-		keyword: object.keyword,
-
-		currentPage: (object.page + 1),
-		entry: object.entry,
-		totalPage: Math.ceil(object.count / object.entry),
-		slipUrl: '/scontList?',
-		slipCond: object.slipCond,
-
-		filterAction: '/scontList',
-		printAction: '/scontListPrint'
-	})
+	res.render('./sfer/scont/scont/list', req.body.list)
 }
 
 

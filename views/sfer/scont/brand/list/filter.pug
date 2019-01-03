@@ -1,9 +1,9 @@
-form#subBrandFilter(method="get", action=filterAction, enctype="multipart/form-data")
+form#subBrandFilter(method="get", action=url, enctype="multipart/form-data")
 	.form-group.row
 		label.col-sm-2.col-form-label Keywords
 		.col-md-10
 			input#fKeyword.form-control(type="text", name='keyword', value=keyword, placeholder="input the code of Brand")
-	- let objStatus = Conf.stsBrand;
 	include ../../../aaPlugin/filter/at
+	- let objStatus = Conf.stsBrand;
 	include ../../../aaPlugin/filter/status
 	include ../../../aaPlugin/filter/footer

@@ -23,9 +23,9 @@ table.table.table-hover.table-bordered
 				-trBg ="bg-secondary";
 			else if item.status == 5
 				-trBg ="bg-danger";
-			if item.brand && item.brand.status == 4
+			if item.brand && item.brand.status == 2
 				-brandBg ="bg-secondary";
-			if item.vendor && item.vendor.status == 4
+			if item.vendor && item.vendor.status == 2
 				-vendorBg ="bg-secondary";
 			tr(class=trBg+" item-id-"+item._id)
 				td #{Conf.sctCause[item.cause]}

@@ -12,20 +12,14 @@ table.table.table-hover.table-bordered
 			th option
 	tbody
 		each item in objects
-			- let trBg;
+			- let objBg;
 			if item.status == 0
-				-trBg ="bg-info";
+				-objBg ="bg-info";
 			else if item.status == 1
-				-trBg ="bg-default";
+				-objBg ="bg-default";
 			else if item.status == 2
-				-trBg ="bg-success";
-			else if item.status == 3
-				-trBg ="bg-warning";
-			else if item.status == 4
-				-trBg ="bg-secondary";
-			else if item.status == 5
-				-trBg ="bg-danger";
-			tr(class=trBg+" item-id-"+item._id)
+				-objBg ="bg-secondary";
+			tr(class=objBg+" item-id-"+item._id)
 				td #{item.code}
 				td #{item.weight}
 				td #{Conf.vtype[item.vtype]}

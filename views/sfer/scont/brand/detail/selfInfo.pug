@@ -1,18 +1,12 @@
--let divBg = "bg-light";
+-let objBg = "bg-light";
 
 if object.status == 0
-	-divBg ="bg-info";
+	-objBg ="bg-info";
 else if object.status == 1
-	-divBg ="bg-white";
+	-objBg ="bg-white";
 else if object.status == 2
-	-divBg ="bg-success";
-else if object.status == 3
-	-divBg ="bg-warning";
-else if object.status == 4
-	-divBg ="bg-secondary";
-else if object.status == 5
-	-divBg ="bg-danger";
-.row(class=divBg)
+	-objBg ="bg-secondary";
+.row(class=objBg)
 	h1.col-sm-6
 		span brand Information: [#{object.code}]
 	.col-sm-6.text-right
@@ -77,7 +71,7 @@ hr
 			th weight
 			th option
 		tr
-			td(class=divBg) #{Conf.stsBrand[object.status]}
+			td(class=objBg) #{Conf.stsBrand[object.status]}
 			td
 				if object.creater
 					-a;

@@ -1,18 +1,12 @@
--let divBg = "bg-light";
+-let objBg = "bg-light";
 
 if object.status == 0
-	-divBg ="bg-info";
+	-objBg ="bg-info";
 else if object.status == 1
-	-divBg ="bg-white";
+	-objBg ="bg-white";
 else if object.status == 2
-	-divBg ="bg-success";
-else if object.status == 3
-	-divBg ="bg-warning";
-else if object.status == 4
-	-divBg ="bg-secondary";
-else if object.status == 5
-	-divBg ="bg-danger";
-.row(class=divBg)
+	-objBg ="bg-secondary";
+.row(class=objBg)
 	h1.col-sm-6
 		span vendor Information: [#{object.code}]
 	.col-sm-6.text-right
@@ -60,7 +54,7 @@ hr
 					-a;
 					span #{object.updater.code}
 			td #{moment(object.createAt).format('MM/DD/YYYY HH:mm')} <br/> #{moment(object.updateAt).format('MM/DD/YYYY HH:mm')}
-			td(class=divBg) #{Conf.stsScont[object.status]}
+			td(class=objBg) #{Conf.stsScont[object.status]}
 			
 			td
 				a.btn.btn-dark.btn-lg(href="/vendorUpdate/"+object._id) update
