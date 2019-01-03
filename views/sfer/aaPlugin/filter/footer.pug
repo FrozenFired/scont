@@ -1,0 +1,10 @@
+.form-group.row
+	label.col-md-2.col-form-label Entry
+	.col-sm-2
+		//- if entry > count
+		//- 	-entry = count;
+		input.form-control(type="number", name='entry', value=entry)
+	.col-md-4
+		span.text-muted 每页展示的条目数
+	.col-md-4
+		input.btn.btn-info.btn-block(type="submit" value="filter")

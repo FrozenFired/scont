@@ -4,7 +4,7 @@ block content
 	.container
 		.row
 			h1.col-sm-6
-				span Brands [#{amount}]
+				span Brands [#{count}]
 			.col-sm-3.text-right
 				span: a.btn.btn-info.btn-lg(href="/brandAdd") Add Brand
 			.col-sm-3.text-right
@@ -13,5 +13,8 @@ block content
 		include ../../aalayout/pageSlip
 		include ./list/selfList
 		hr
-		.bg-light.p-2
-			include ./list/filter
+		.row.bg-light.p-2
+			.col-sm-8
+				include ./list/filter
+			.col-sm-4
+				include ./list/print

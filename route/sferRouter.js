@@ -44,11 +44,11 @@ module.exports = function(app){
 
 	app.post('/addTask', MiddleRole.sferIsLogin, MiddleRole.singleSferLogin, multipartMiddleware,
 		Task.addTaskCheck, Task.addTask)
-	app.get('/taskList', MiddleRole.sferIsLogin, Task.taskListCheck, Task.taskList)
+	app.get('/taskList', MiddleRole.sferIsLogin, Task.taskListFilter, Task.taskList)
 	app.get('/taskDetail/:id', MiddleRole.sferIsLogin, Task.taskDetailCheck, Task.taskDetail)
 	app.post('/updateTask', MiddleRole.sferIsLogin, MiddleRole.singleSferLogin, Task.updateTask)
 	app.get('/taskDel/:id', MiddleRole.sferIsLogin, Task.taskDelCheck, Task.taskDel)
-	app.get('/taskListPrint', MiddleRole.sferIsLogin, Task.taskListCheck, Task.taskListPrint)
+	app.get('/taskListPrint', MiddleRole.sferIsLogin, Task.taskListFilter, Task.taskListPrint)
 	app.get('/taskStatus', MiddleRole.sferIsLogin, Task.taskStatus)
 
 	// Nation

@@ -6,77 +6,9 @@ let Conf = require('../../../confile/conf.js')
 let moment = require('moment')
 
 
-exports.taskAdd =function(req, res) {
-	Task.find({staff: req.session.crSfer._id})
-	.sort({"createAt": -1})
-	.limit(1)
-	.exec(function(err, objects) {
-
-		let code = getNewTaskCode(objects[0], req.session.crSfer.code)
-
-		res.render('./sfer/task/add', {
-			title: 'Add Task',
-			crSfer : req.session.crSfer,
-			code: code,
-			action: "/addTask",
-		})
-	})
-}
-getNewTaskCode = function(lastTask, userCode) {
-	let today =parseInt(moment(Date.now()).format('YYMMDD')) // 计算今天的日期
-	let preTaskDay = 0, dayLen = 0;
-
-	if(lastTask){ // 找出上个任务的日期和序列号
-		preTaskDay = parseInt(lastTask.code.slice(0,6))
-		dayLen = parseInt(lastTask.code.slice(6,10))
-	}
-	if(today == preTaskDay) {	// 判断上个任务的日期是否是今天
-		dayLen = dayLen+1
-	} else {					// 如果不是则从1开始
-		dayLen = 1
-	}
-	for(let len = (dayLen + "").length; len < 4; len = dayLen.length) { // 序列号补0
-		dayLen = "0" + dayLen;
-	}
-	return String(today) + String(dayLen) + '_' + userCode
-}
 
 
-
-
-
-
-exports.addTaskCheck = function(req, res, next) {
-	let objBody = req.body.object
-	objBody.status = 0
-	Task.findOne({code: objBody.code}, function(err, object) {
-		if(err) console.log(err);
-		if(object) {
-			let _object
-			_object = _.extend(object, objBody)
-			req.body.object = _object
-			next()
-		} else {
-			let _object = new Task(objBody)
-			req.body.object = _object
-			next()
-		}
-	})
-}
-exports.addTask = function(req, res) {
-	let objBody = req.body.object
-	objBody.save(function(err, objSave) {
-		if(err) console.log(err)
-		// res.redirect('/taskDetail/'+objSave._id)
-		res.redirect('/taskList')
-	})
-}
-
-
-
-
-
-exports.taskListCheck = function(req, res, next) {
+exports.taskListFilter = function(req, res, next) {
 	// 分页
 	let page = parseInt(req.query.page) || 0
 	let count = 20
@@ -232,6 +164,84 @@ exports.taskListPrint = function(req, res) {
 
 	wb.write(req.session.crSfer.code+'_work'+ new Date() + '.xlsx', res);
 }
+
+
+
+
+
+
+
+
+
+
+exports.taskAdd =function(req, res) {
+	Task.find({staff: req.session.crSfer._id})
+	.sort({"createAt": -1})
+	.limit(1)
+	.exec(function(err, objects) {
+
+		let code = getNewTaskCode(objects[0], req.session.crSfer.code)
+
+		res.render('./sfer/task/add', {
+			title: 'Add Task',
+			crSfer : req.session.crSfer,
+			code: code,
+			action: "/addTask",
+		})
+	})
+}
+getNewTaskCode = function(lastTask, userCode) {
+	let today =parseInt(moment(Date.now()).format('YYMMDD')) // 计算今天的日期
+	let preTaskDay = 0, dayLen = 0;
+
+	if(lastTask){ // 找出上个任务的日期和序列号
+		preTaskDay = parseInt(lastTask.code.slice(0,6))
+		dayLen = parseInt(lastTask.code.slice(6,10))
+	}
+	if(today == preTaskDay) {	// 判断上个任务的日期是否是今天
+		dayLen = dayLen+1
+	} else {					// 如果不是则从1开始
+		dayLen = 1
+	}
+	for(let len = (dayLen + "").length; len < 4; len = dayLen.length) { // 序列号补0
+		dayLen = "0" + dayLen;
+	}
+	return String(today) + String(dayLen) + '_' + userCode
+}
+
+
+
+
+
+
+exports.addTaskCheck = function(req, res, next) {
+	let objBody = req.body.object
+	objBody.status = 0
+	Task.findOne({code: objBody.code}, function(err, object) {
+		if(err) console.log(err);
+		if(object) {
+			let _object
+			_object = _.extend(object, objBody)
+			req.body.object = _object
+			next()
+		} else {
+			let _object = new Task(objBody)
+			req.body.object = _object
+			next()
+		}
+	})
+}
+exports.addTask = function(req, res) {
+	let objBody = req.body.object
+	objBody.save(function(err, objSave) {
+		if(err) console.log(err)
+		// res.redirect('/taskDetail/'+objSave._id)
+		res.redirect('/taskList')
+	})
+}
+
+
+
 
 
 

@@ -12,10 +12,18 @@ let _ = require('underscore')
 
 exports.scontListFilter = function(req, res, next) {
 	// 分页
-	let page = parseInt(req.query.page) || 0
-	let count = 10
-	let index = page * count
 	let slipCond = ""; // 分页时用到的其他条件
+
+	let defEntry = 10;
+	let entry = parseInt(req.query.entry) || defEntry;
+	if(isNaN(entry)) {
+		entry = defEntry;
+	} else if(entry != defEntry) {
+		if(entry < 0) entry = -entry;
+		slipCond += "&entry="+entry;
+	}
+	let page = parseInt(req.query.page) || 0;
+	let index = page * entry;
 
 	// 条件判断   ----------------
 	// 根据状态筛选
@@ -86,7 +94,7 @@ exports.scontListFilter = function(req, res, next) {
 		'updateAt': {[symUpdStart]: condUpdStart, [symUpdEnded]: condUpdEnded},
 		'status': condStatus  // 'status': {[symStatus]: condStatus}
 	})
-	.exec(function(err, amount) {
+	.exec(function(err, count) {
 		if(err) console.log(err);
 		Scont.find({
 			'createAt': {[symCrtStart]: condCrtStart, [symCrtEnded]: condCrtEnded},
@@ -94,7 +102,7 @@ exports.scontListFilter = function(req, res, next) {
 			'status': condStatus  // 'status': {[symStatus]: condStatus}
 		})
 		.skip(index)
-		.limit(count)
+		.limit(entry)
 		.populate({path: 'brand', populate: {path: 'bcateg'} } )
 		.populate('vendor')
 		.populate('creater').populate('updater')
@@ -114,8 +122,8 @@ exports.scontListFilter = function(req, res, next) {
 				object.condUpdStart = req.query.updStart;
 				object.condUpdEnded = req.query.updEnded;
 
-				object.amount = amount;
 				object.count = count;
+				object.entry = entry;
 				object.page = page;
 
 				object.slipCond = slipCond;
@@ -136,7 +144,7 @@ exports.scontList = function(req, res) {
 		crSfer: req.session.crSfer,
 		
 		objects: object.objects,
-		amount: object.amount,
+		count: object.count,
 
 		condStatus: object.condStatus,
 		condCrtStart: object.condCrtStart,
@@ -147,7 +155,8 @@ exports.scontList = function(req, res) {
 		keyword: object.keyword,
 
 		currentPage: (object.page + 1),
-		totalPage: Math.ceil(object.amount / object.count),
+		entry: object.entry,
+		totalPage: Math.ceil(object.count / object.entry),
 		slipUrl: '/scontList?',
 		slipCond: object.slipCond,
 
