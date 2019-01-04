@@ -178,7 +178,7 @@ exports.vendorListPrint = function(req, res) {
 		if(object.updateAt) ws.cell((i+2), 16).string(moment(object.updateAt).format('MM/DD/YYYY'));
 	}
 
-	wb.write('Vendor_'+ new Date() + '.xlsx', res);
+	wb.write('Vendor_'+ moment(new Date()).format('YYYYMMDD-HHmmss') + '.xlsx', res);
 }
 
 exports.vendorAdd = function(req, res) {

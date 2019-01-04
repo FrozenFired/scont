@@ -137,7 +137,7 @@ exports.taskListPrint = function(req, res) {
 		if(item.finishAt) ws.cell((i+2), 7).string(item.finishAt);
 	}
 
-	wb.write(req.session.crSfer.code+'_work'+ new Date() + '.xlsx', res);
+	wb.write('Task_'+req.session.crSfer.code+'_'+ moment(new Date()).format('YYYYMMDD-HHmmss') + '.xlsx', res);
 }
 
 

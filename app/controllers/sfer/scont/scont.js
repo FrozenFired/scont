@@ -221,7 +221,7 @@ exports.scontListPrint = function(req, res) {
 		}
 	}
 
-	wb.write('Scont_'+ new Date() + '.xlsx', res);
+	wb.write('Scont_'+ moment(new Date()).format('YYYYMMDD-HHmmss') + '.xlsx', res);
 }
 
 

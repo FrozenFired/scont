@@ -202,7 +202,7 @@ exports.brandListPrint = function(req, res) {
 		if(object.updateAt) ws.cell((i+2), 23).string(moment(object.updateAt).format('MM/DD/YYYY'));
 	}
 
-	wb.write('Brand_'+ new Date() + '.xlsx', res);
+	wb.write('Brand_'+ moment(new Date()).format('YYYYMMDD-HHmmss') + '.xlsx', res);
 }
 
 // header search
