@@ -93,11 +93,12 @@ exports.brandList = function(req, res) {
 // header search
 exports.headerBrand = function(req, res) {
 	let objects = req.body.list.objects
+	let keyword = req.body.list.keyword
 	if(objects && objects.length > 0) {
 		if(objects.length == 1) {
 			res.redirect("/brandDetail/"+objects[0]._id)
 		} else {
-			res.redirect('/brandList?keyword='+object.keyword)
+			res.redirect('/brandList?keyword='+keyword)
 		}
 	} else {
 		info = "Option Error~!"
