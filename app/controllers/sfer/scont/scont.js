@@ -350,10 +350,10 @@ createScont = function(req, res) {
 
 
 
-exports.scontDetail = function(req, res){
+exports.scontSingleFilter = function(req, res, next){
 	let id = req.params.id
 	Scont.findOne({_id: id})
-	.populate({path: 'brand', populate: {path: 'bcateg'} } )
+	.populate({path: 'brand', populate: {path: 'bcateg nation'} } )
 	.populate('vendor')
 	.populate('creater')
 	.populate('updater')
@@ -361,41 +361,36 @@ exports.scontDetail = function(req, res){
 	.exec(function(err, object){
 		if(err) console.log(err);
 		if(object) {
-			res.render('./sfer/scont/scont/detail', {
-				title: 'Scontory Detail',
-				crSfer: req.session.crSfer,
-				object: object,
-			})
+			req.body.object = object;
+			next();
 		} else {
 			info = "This ScontI is deleted, Please reflesh"
 			Index.sfOptionWrong(req, res, info)
 		}
 	})
 }
+exports.scontDetail = function(req, res){
+	// scontSingleFilter
+	let object = req.body.object
+	res.render('./sfer/scont/scont/detail', {
+		title: 'Scontory Detail',
+		crSfer: req.session.crSfer,
+		object: object,
+	})
+}
 
 exports.scontUpdate = function(req, res){
-	let id = req.params.id
-	Scont.findOne({_id: id})
-	.populate('brand')
-	.populate('vendor')
-	.populate('updater')
-	.exec(function(err, object){
-		if(err) console.log(err);
-		if(object) {
-			let updater = new Object();
-			if(object.updater && object.updater._id) {
-				updater = object.updater;
-			}
-			res.render('./sfer/scont/scont/update', {
-				title: 'Scontory Update',
-				crSfer: req.session.crSfer,
-				object: object,
-				updater: updater
-			})
-		} else {
-			info = "This ScontI is deleted, Please reflesh"
-			Index.sfOptionWrong(req, res, info)
-		}
+	// scontSingleFilter
+	let object = req.body.object;
+	let updater = new Object();
+	if(object.updater && object.updater._id) {
+		updater = object.updater;
+	}
+	res.render('./sfer/scont/scont/update', {
+		title: 'Scontory Update',
+		crSfer: req.session.crSfer,
+		object: object,
+		updater: updater
 	})
 }
 

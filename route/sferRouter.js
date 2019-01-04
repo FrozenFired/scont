@@ -97,10 +97,10 @@ module.exports = function(app){
 	// Scont
 	app.get('/scontList', MiddleRole.sfitIsLogin, Scont.scontListFilter, Scont.scontList)
 	app.get('/scontListPrint', MiddleRole.sfitIsLogin, Scont.scontListFilter, Scont.scontListPrint)
-	app.get('/scontDetail/:id', MiddleRole.sfitIsLogin, Scont.scontDetail)
+	app.get('/scontDetail/:id', MiddleRole.sfitIsLogin, Scont.scontSingleFilter, Scont.scontDetail)
 	app.get('/scontAdd', MiddleRole.sfitIsLogin, Scont.scontAdd)
 	app.post('/addScont', multipartMiddleware, MiddleRole.sfitIsLogin, Scont.addScont)
-	app.get('/scontUpdate/:id', MiddleRole.bnerIsLogin, Scont.scontUpdate)
+	app.get('/scontUpdate/:id', MiddleRole.bnerIsLogin, Scont.scontSingleFilter, Scont.scontUpdate)
 	app.post('/updateScont', multipartMiddleware, MiddleRole.bnerIsLogin, Scont.updateScont)
 	app.delete('/scontDel', MiddleRole.bnerIsLogin, Scont.scontDel)
 

@@ -27,7 +27,7 @@ hr
 			h2 loss brand information
 	.col-sm-6
 		if object.vendor
-			-vendor = object.vendor;
+			-let vendor = object.vendor;
 			include ./vendorInfo
 		else
 			h2 loss vendor information
