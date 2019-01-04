@@ -221,7 +221,7 @@ exports.scontListPrint = function(req, res) {
 		}
 	}
 
-	wb.write(req.session.crSfer.code+'_work'+ new Date() + '.xlsx', res);
+	wb.write('Scont_'+ new Date() + '.xlsx', res);
 }
 
 

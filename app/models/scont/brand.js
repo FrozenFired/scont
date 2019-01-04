@@ -27,9 +27,10 @@ let dbSchema = new Schema({
 	video: Number,
 
 	status: {type: Number, default: 0},
+	weight: {type: Number, default: 0},
+	
 	sconts: [{type: ObjectId, ref: 'Scont'}],
 	
-	weight: {type: Number, default: 0},
 	creater: {type: ObjectId, ref: 'Sfer'},
 	updater: {type: ObjectId, ref: 'Sfer'},
 	

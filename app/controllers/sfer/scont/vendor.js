@@ -6,6 +6,8 @@ var Filter = require('../../../middle/filter');
 let Conf = require('../../../../confile/conf.js')
 let _ = require('underscore')
 
+let moment = require('moment');
+
 exports.vendorListFilter = function(req, res, next) {
 	let title = 'vendor List';
 	let url = "/vendorList";
@@ -45,6 +47,8 @@ exports.vendorListFilter = function(req, res, next) {
 		})
 		.skip(index)
 		.limit(entry)
+		.populate('creater')
+		.populate('updater')
 		.sort({'status': 1, 'updateAt': -1})
 		.exec(function(err, objects){
 			if(err) console.log(err);
@@ -85,7 +89,97 @@ exports.vendorListFilter = function(req, res, next) {
 exports.vendorList = function(req, res) {
 	res.render('./sfer/scont/vendor/list', req.body.list)
 }
+exports.vendorListPrint = function(req, res) {
+	let objects = req.body.list.objects
+	let xl = require('excel4node');
+	let wb = new xl.Workbook({
+		defaultFont: {
+			size: 12,
+			color: '333333'
+		},
+		dateFormat: 'yyyy-mm-dd hh:mm:ss'
+	});
+	
+	let ws = wb.addWorksheet('Sheet 1');
+	ws.column(1).setWidth(20);
+	ws.column(2).setWidth(15);
+	ws.column(3).setWidth(15);
+	ws.column(4).setWidth(30);
+	ws.column(5).setWidth(5);
 
+	ws.column(6).setWidth(15);
+	ws.column(7).setWidth(30);
+	ws.column(8).setWidth(15);
+	ws.column(9).setWidth(8);
+	ws.column(10).setWidth(5);
+	ws.column(11).setWidth(15);
+	ws.column(12).setWidth(5);
+	ws.column(13).setWidth(15);
+
+	ws.column(14).setWidth(10);
+	ws.column(15).setWidth(8);
+	ws.column(16).setWidth(8);
+	ws.column(17).setWidth(8);
+	ws.column(18).setWidth(8);
+	ws.column(19).setWidth(10);
+	ws.column(20).setWidth(15);
+	ws.column(21).setWidth(15);
+	ws.column(22).setWidth(15);
+	ws.column(23).setWidth(15);
+	
+	// header
+	ws.cell(1,1).string('Vendor Code');
+	ws.cell(1,2).string('Type');
+
+	ws.cell(1,3).string('ac/sa');
+	ws.cell(1,4).string('acsaNote');
+	ws.cell(1,5).string('freight');
+
+	ws.cell(1,6).string('contacter');
+	ws.cell(1,7).string('telephone');
+	ws.cell(1,8).string('email');
+
+	ws.cell(1,9).string('note');
+	ws.cell(1,10).string('STATUS');
+	ws.cell(1,11).string('WEIGHT');
+	ws.cell(1,12).string('NUMBER VENDOR');
+
+	ws.cell(1,13).string('creater');
+	ws.cell(1,14).string('createAt');
+	ws.cell(1,15).string('updater');
+	ws.cell(1,16).string('updateAt');
+
+	for(let i=0; i<objects.length; i++){
+		let object = objects[i];
+
+		if(object.code) ws.cell((i+2), 1).string(object.code);
+		if(Conf.vtype[object.vtype]) ws.cell((i+2), 2).string(Conf.vtype[object.vtype]);
+		if(object.ac && object.sa) ws.cell((i+2), 3).string(object.ac+"/"+object.sa);
+		if(object.acsaNote) ws.cell((i+2), 4).string(object.acsaNote);
+		if(object.freight) ws.cell((i+2), 5).string(object.freight);
+		if(object.contacts && object.contacts.length > 0) {
+			contact = object.contacts[0];
+			ws.cell((i+2), 6).string(contact.contacter);
+			ws.cell((i+2), 7).string(contact.tel);
+			ws.cell((i+2), 8).string(contact.email);
+		}
+
+		if(object.note) ws.cell((i+2), 9).string(object.note);
+
+
+		if(object.status) ws.cell((i+2), 10).string(Conf.stsBrand[object.status]);
+		if(object.weight) ws.cell((i+2), 11).string(String(object.weight));
+
+		if(object.sconts) ws.cell((i+2), 12).string(String(object.sconts.length));
+
+		if(object.creater) ws.cell((i+2), 13).string(object.creater.code + " (" + object.creater.name + ")" );
+		if(object.createAt) ws.cell((i+2), 14).string(moment(object.createAt).format('MM/DD/YYYY'));
+		if(object.updater) ws.cell((i+2), 15).string(object.updater.code + " (" + object.updater.name + ")" );
+		if(object.updateAt) ws.cell((i+2), 16).string(moment(object.updateAt).format('MM/DD/YYYY'));
+	}
+
+	wb.write('Vendor_'+ new Date() + '.xlsx', res);
+}
 
 exports.vendorAdd = function(req, res) {
 	res.render('./sfer/scont/vendor/add', {
@@ -99,6 +193,8 @@ exports.addVendor = function(req, res) {
 	let objBody = req.body.object
 
 	objBody.code = objBody.code.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+	// objBody.status = 0;
+	objBody.updater = objBody.creater = req.session.crSfer._id;
 	objBody.updateAt = objBody.createAt = Date.now();
 
 	Vendor.findOne({code: objBody.code}, function(err, object) {
@@ -108,7 +204,6 @@ exports.addVendor = function(req, res) {
 			Index.sfOptionWrong(req, res, info)
 		} else {
 			let _object = new Vendor(objBody)
-			_object.creater = req.session.crSfer._id
 			_object.save(function(err, objSave) {
 				if(err) console.log(err);
 				res.redirect('/vendorList')
@@ -168,6 +263,7 @@ exports.updateVendor = function(req, res) {
 	let objBody = req.body.object
 	
 	objBody.code = objBody.code.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+	objBody.updater = req.session.crSfer._id;
 	objBody.updateAt = Date.now();
 
 	Vendor.findOne({_id: objBody._id}, function(err, object) {
@@ -182,7 +278,6 @@ exports.updateVendor = function(req, res) {
 					Index.sfOptionWrong(req, res, info)
 				} else {
 					let _object = _.extend(object, objBody)
-					_object.updateUser = req.session.crSfer._id
 					_object.save(function(err, object) {
 						if(err) console.log(err);
 						res.redirect('/vendorList')

@@ -72,6 +72,7 @@ module.exports = function(app){
 
 	// Brand
 	app.get('/brandList', MiddleRole.sferIsLogin, Brand.brandListFilter, Brand.brandList)
+	app.get('/brandListPrint', MiddleRole.sfitIsLogin, Brand.brandListFilter, Brand.brandListPrint)
 	app.get('/brandDetail/:id', MiddleRole.sferIsLogin, Brand.brandDetail)
 	app.get('/brandAdd', MiddleRole.sfitIsLogin, Brand.brandAdd)
 	app.post('/addBrand', multipartMiddleware, MiddleRole.sfitIsLogin, Brand.addBrand)
@@ -84,6 +85,7 @@ module.exports = function(app){
 
 	// Vendor
 	app.get('/vendorList', MiddleRole.sfitIsLogin, Vendor.vendorListFilter, Vendor.vendorList)
+	app.get('/vendorListPrint', MiddleRole.sfitIsLogin, Vendor.vendorListFilter, Vendor.vendorListPrint)
 	app.get('/vendorDetail/:id', MiddleRole.sfitIsLogin, Vendor.vendorDetail)
 	app.get('/vendorAdd', MiddleRole.sfitIsLogin, Vendor.vendorAdd)
 	app.post('/addVendor', multipartMiddleware, MiddleRole.sfitIsLogin, Vendor.addVendor)
