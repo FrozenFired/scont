@@ -2,12 +2,12 @@ table.table.table-hover.table-bordered
 	thead
 		tr
 			th vendor code
-			th Weight(for sort)
+			//- th Weight(for sort)
 			th vtype
 			th contacts
 			th ac/sa
-			th status
-			th numvendor
+			//- th status
+			th number <br/>of brand
 			th createAt <br/>updateAt
 			th option
 	tbody
@@ -21,7 +21,7 @@ table.table.table-hover.table-bordered
 				-objBg ="bg-secondary";
 			tr(class=objBg+" item-id-"+item._id)
 				td #{item.code}
-				td #{item.weight}
+				//- td #{item.weight}
 				td #{Conf.vtype[item.vtype]}
 				td
 					if item.contacts && item.contacts.length > 0
@@ -33,16 +33,15 @@ table.table.table-hover.table-bordered
 								li #{contact.tel} 
 								li #{contact.email}
 				td #{item.ac} / #{item.sa}
-				td #{Conf.stsVendor[item.status]}
+				//- td #{Conf.stsVendor[item.status]}
 				if item.sconts
+					-a;
 					td #{item.sconts.length}
 				else
 					td 0
-				-a;
 				td
-					span #{moment(item.createAt).format('MM/DD/YYYY')}
-					br
-					span #{moment(item.updateAt).format('MM/DD/YYYY')}
+					li #{moment(item.createAt).format('MM/DD/YYYY')}
+					li #{moment(item.updateAt).format('MM/DD/YYYY')}
 				td
 					a.btn.btn-primary(href="/vendorDetail/"+item._id) view
 					if item.sconts && item.sconts.length == 0

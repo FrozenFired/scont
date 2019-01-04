@@ -6,7 +6,7 @@ table.table.table-hover.table-bordered
 			th Vendor <br/> Type
 			th scont <br/> note
 			th creater <br/> updater
-			th status
+			//- th status
 			th oprate
 	tbody
 		each item in objects
@@ -53,7 +53,7 @@ table.table.table-hover.table-bordered
 					if item.updater
 						-a;
 						span #{item.updater.code}
-				td #{Conf.stsScont[item.status]}
+				//- td #{Conf.stsScont[item.status]}
 				td
 					a.btn.btn-primary(href="/scontDetail/"+item._id) View
 					if item.status == 5
