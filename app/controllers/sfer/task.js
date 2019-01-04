@@ -56,6 +56,7 @@ exports.taskListFilter = function(req, res, next) {
 		.exec(function(err, objects) {
 			if(err) console.log(err);
 			if(objects){
+				// console.log(objects)
 				let list = new Object()
 				list.title = title;
 				list.url = url;

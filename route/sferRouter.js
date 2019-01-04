@@ -96,6 +96,7 @@ module.exports = function(app){
 
 	// Scont
 	app.get('/scontList', MiddleRole.sfitIsLogin, Scont.scontListFilter, Scont.scontList)
+	app.get('/scontListPrint', MiddleRole.sfitIsLogin, Scont.scontListFilter, Scont.scontListPrint)
 	app.get('/scontDetail/:id', MiddleRole.sfitIsLogin, Scont.scontDetail)
 	app.get('/scontAdd', MiddleRole.sfitIsLogin, Scont.scontAdd)
 	app.post('/addScont', multipartMiddleware, MiddleRole.sfitIsLogin, Scont.addScont)
