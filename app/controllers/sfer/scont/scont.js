@@ -16,7 +16,7 @@ let _ = require('underscore')
 let moment = require('moment');
 
 
-exports.scontListFilter = function(req, res, next) {
+exports.scontsFilter = function(req, res, next) {
 	let title = 'scont List';
 	let url = "/scontList";
 
@@ -350,7 +350,7 @@ createScont = function(req, res) {
 
 
 
-exports.scontSingleFilter = function(req, res, next){
+exports.scontFilter = function(req, res, next){
 	let id = req.params.id
 	Scont.findOne({_id: id})
 	.populate({path: 'brand', populate: {path: 'bcateg nation'} } )

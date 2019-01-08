@@ -1,4 +1,4 @@
 $( function() {
-	$("#tarDesc").val($("#iptDesc").val())
-	$("#tarNote").val($("#iptNote").val())
+	$("#iptDesc").val($("#valDesc").val())
+	$("#iptNote").val($("#valNote").val())
 } );

@@ -1,0 +1,50 @@
+extends ../aalayout/layout
+
+block content
+	.container
+		.row
+			h1.col-sm-4 Update Task
+			.col-sm-3.text-right
+				a.btn.btn-link(href="/taskList") back TaskList
+			.col-sm-3.text-right
+				a.btn.btn-link(href="/taskDetail/"+object._id) back Detail
+		hr
+		form#updateTask(method="post", action='/updateTask', enctype="multipart/form-data")
+			input(type="hidden", name="object[_id]", value=object._id)
+			.form-group.row
+				label.col-sm-2.col-form-label TaskCode
+				.col-sm-3
+					input.form-control(type="text", value=object.code, readonly="readonly")
+
+				label.col-sm-2.col-form-label Sfer
+				.col-sm-3
+					input#iptSferName.form-control(type="text", value=crSfer.code, readonly="readonly")
+
+			.form-group.row
+				label.col-sm-2.col-form-label Title
+				.col-sm-8
+					input#iptTitle.form-control(type="text", name="object[title]", value=object.title, placeholder="Must fill it")
+				.col-sm-2
+					span#optTitle.text-danger(style="display:none") Pleas complete your task
+
+			.form-group.row
+				label.col-sm-2.col-form-label Serial
+				.col-sm-8
+					input.form-control(type="text", name="object[order]", value=object.order, placeholder="About order or qutation")
+
+			.form-group.row
+				input#valDesc(type="hidden",  value=object.description, readonly="readonly")
+				label.col-sm-2.col-form-label description
+				.col-sm-8
+					textarea#iptDesc.form-control.rounded-0(rows="3", name="object[description]", placeholder="Descript about this work")
+			.form-group.row
+				input#valNote(type="hidden",  value=object.note, readonly="readonly")
+				label.col-sm-2.col-form-label note
+				.col-sm-8
+					textarea#iptNote.form-control.rounded-0(rows="3", name="object[note]")
+
+			.form-group.row
+				.col-md-10.text-right
+					input.btn.btn-warning(type="submit" value="update")
+	script(src="/js/task/detail.js")
+	script(src="/js/task/add.js")

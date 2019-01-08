@@ -8,7 +8,7 @@ let _ = require('underscore')
 
 let moment = require('moment');
 
-exports.vendorListFilter = function(req, res, next) {
+exports.vendorsFilter = function(req, res, next) {
 	let title = 'vendor List';
 	let url = "/vendorList";
 
@@ -105,27 +105,20 @@ exports.vendorListPrint = function(req, res) {
 	ws.column(2).setWidth(15);
 	ws.column(3).setWidth(15);
 	ws.column(4).setWidth(30);
-	ws.column(5).setWidth(5);
+	ws.column(5).setWidth(10);
 
-	ws.column(6).setWidth(15);
-	ws.column(7).setWidth(30);
-	ws.column(8).setWidth(15);
-	ws.column(9).setWidth(8);
-	ws.column(10).setWidth(5);
-	ws.column(11).setWidth(15);
+	ws.column(6).setWidth(20);
+	ws.column(7).setWidth(20);
+	ws.column(8).setWidth(30);
+	ws.column(9).setWidth(20);
+	ws.column(10).setWidth(10);
+	ws.column(11).setWidth(5);
 	ws.column(12).setWidth(5);
-	ws.column(13).setWidth(15);
 
+	ws.column(13).setWidth(20);
 	ws.column(14).setWidth(10);
-	ws.column(15).setWidth(8);
-	ws.column(16).setWidth(8);
-	ws.column(17).setWidth(8);
-	ws.column(18).setWidth(8);
-	ws.column(19).setWidth(10);
-	ws.column(20).setWidth(15);
-	ws.column(21).setWidth(15);
-	ws.column(22).setWidth(15);
-	ws.column(23).setWidth(15);
+	ws.column(15).setWidth(20);
+	ws.column(16).setWidth(10);
 	
 	// header
 	ws.cell(1,1).string('Vendor Code');
@@ -142,7 +135,7 @@ exports.vendorListPrint = function(req, res) {
 	ws.cell(1,9).string('note');
 	ws.cell(1,10).string('STATUS');
 	ws.cell(1,11).string('WEIGHT');
-	ws.cell(1,12).string('NUMBER VENDOR');
+	ws.cell(1,12).string('NUMBER Brand');
 
 	ws.cell(1,13).string('creater');
 	ws.cell(1,14).string('createAt');
@@ -213,9 +206,7 @@ exports.addVendor = function(req, res) {
 }
 
 
-
-
-exports.vendorDetail = function(req, res){
+exports.vendorFilter = function(req, res, next){
 	let id = req.params.id
 	Vendor.findOne({_id: id})
 	// .populate({path: 'brands', options: {sort: {'weight': -1} } } )
@@ -229,11 +220,8 @@ exports.vendorDetail = function(req, res){
 	.exec(function(err, object){
 		if(err) console.log(err);
 		if(object) {
-			res.render('./sfer/scont/vendor/detail', {
-				title: 'Vendorory Detail',
-				crSfer: req.session.crSfer,
-				object: object,
-			})
+			req.body.object = object;
+			next();
 		} else {
 			info = "This VendorI is deleted, Please reflesh"
 			Index.sfOptionWrong(req, res, info)
@@ -241,21 +229,21 @@ exports.vendorDetail = function(req, res){
 	})
 }
 
+exports.vendorDetail = function(req, res){
+	let object = req.body.object;
+	res.render('./sfer/scont/vendor/detail', {
+		title: 'Vendorory Detail',
+		crSfer: req.session.crSfer,
+		object: object,
+	})
+}
+
 exports.vendorUpdate = function(req, res){
-	let id = req.params.id
-	Vendor.findOne({_id: id})
-	.exec(function(err, object){
-		if(err) console.log(err);
-		if(object) {
-			res.render('./sfer/scont/vendor/update', {
-				title: 'Vendorory Update',
-				crSfer: req.session.crSfer,
-				object: object,
-			})
-		} else {
-			info = "This VendorI is deleted, Please reflesh"
-			Index.sfOptionWrong(req, res, info)
-		}
+	let object = req.body.object;
+	res.render('./sfer/scont/vendor/update', {
+		title: 'Vendorory Update',
+		crSfer: req.session.crSfer,
+		object: object,
 	})
 }
 

@@ -19,11 +19,11 @@ block content
 					#optCode.text-danger
 			.form-group.row
 				label.col-md-2.col-form-label Nation
-				input(type="hidden", name="orgNation", value=object.nation)
+				input(type="hidden", name="orgNation", value=object.nation._id)
 				.col-md-8
 					select.form-control(name="object[nation]", data-style="btn-info")
 						each nation in nations
-							if String(nation._id) == String(object.nation)
+							if String(nation._id) == String(object.nation._id)
 								- a;
 								option(value=nation._id, selected="selected") #{nation.code}
 							else

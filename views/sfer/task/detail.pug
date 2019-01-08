@@ -2,6 +2,12 @@ extends ../aalayout/layout
 
 block content
 	.container
+		.row
+			h1.col-sm-6
+				span Task Information:
+			.col-sm-4.text-right
+				a.btn.btn-link(href="/taskList") task list
+		hr
 		form(method="post", action="updateTask", enctype="multipart/form-data")
 			.form-group.row
 				label.col-sm-2.col-form-label TaskCode
@@ -26,15 +32,18 @@ block content
 					input.form-control(type="text", value=object.order, readonly="readonly")
 
 			.form-group.row
-				input#iptDesc(type="hidden",  value=object.description, readonly="readonly")
+				input#valDesc(type="hidden",  value=object.description, readonly="readonly")
 				label.col-sm-2.col-form-label description
 				.col-sm-8
-					textarea#tarDesc.form-control.rounded-0(rows="3", readonly="readonly")
+					textarea#iptDesc.form-control.rounded-0(rows="3", readonly="readonly")
 			.form-group.row
-				input#iptNote(type="hidden",  value=object.note, readonly="readonly")
+				input#valNote(type="hidden",  value=object.note, readonly="readonly")
 				label.col-sm-2.col-form-label note
 				.col-sm-8
-					textarea#tarNote.form-control.rounded-0(rows="3", readonly="readonly")
+					textarea#iptNote.form-control.rounded-0(rows="3", readonly="readonly")
 		.row
-			a.btn.btn-danger(href="/taskDel/"+object._id) delete
+			.col-sm-6
+				a.btn.btn-danger(href="/taskDel/"+object._id) delete
+			.col-sm-4.text-right
+				a.btn.btn-warning(href="/taskUpdate/"+object._id) Update
 	script(src="/js/task/detail.js")

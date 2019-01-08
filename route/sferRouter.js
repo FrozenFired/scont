@@ -26,7 +26,7 @@ module.exports = function(app){
 	app.get('/sferLogout', Index.sferLogout);
 
 	app.get('/option', MiddleRole.sferIsLogin, Index.option);
-	app.get('/headerBrand', MiddleRole.sferIsLogin, Brand.brandListFilter, Brand.headerBrand)
+	app.get('/headerBrand', MiddleRole.sferIsLogin, Brand.brandsFilter, Brand.headerBrand)
 
 	// Sfer ------------------------------------------------------------------------
 	app.get('/sferDetail/:id', MiddleRole.sferIsLogin, MiddleRole.singleSferLogin, Sfer.sferDetail);
@@ -42,13 +42,13 @@ module.exports = function(app){
 	// task         ----------------------------------------------------------------------
 	app.get('/taskAdd', MiddleRole.sferIsLogin, MiddleRole.singleSferLogin, Task.taskAdd)
 
-	app.post('/addTask', MiddleRole.sferIsLogin, MiddleRole.singleSferLogin, multipartMiddleware,
-		Task.addTaskCheck, Task.addTask)
-	app.get('/taskList', MiddleRole.sferIsLogin, Task.taskListFilter, Task.taskList)
-	app.get('/taskDetail/:id', MiddleRole.sferIsLogin, Task.taskDetailCheck, Task.taskDetail)
-	app.post('/updateTask', MiddleRole.sferIsLogin, MiddleRole.singleSferLogin, Task.updateTask)
-	app.get('/taskDel/:id', MiddleRole.sferIsLogin, Task.taskDelCheck, Task.taskDel)
-	app.get('/taskListPrint', MiddleRole.sferIsLogin, Task.taskListFilter, Task.taskListPrint)
+	app.post('/addTask', MiddleRole.sferIsLogin, MiddleRole.singleSferLogin, multipartMiddleware, Task.addTask)
+	app.get('/taskList', MiddleRole.sferIsLogin, Task.tasksFilter, Task.taskList)
+	app.get('/taskListPrint', MiddleRole.sferIsLogin, Task.tasksFilter, Task.taskListPrint)
+	app.get('/taskDetail/:id', MiddleRole.sferIsLogin, Task.taskFilter, Task.taskDetail)
+	app.get('/taskUpdate/:id', MiddleRole.sferIsLogin, Task.taskFilter, Task.taskUpdate)
+	app.post('/updateTask', multipartMiddleware, MiddleRole.sferIsLogin, MiddleRole.singleSferLogin, Task.updateTask)
+	app.get('/taskDel/:id', MiddleRole.sferIsLogin, Task.taskFilter, Task.taskDel)
 	app.get('/taskStatus', MiddleRole.sferIsLogin, Task.taskStatus)
 
 	// Nation
@@ -71,12 +71,12 @@ module.exports = function(app){
 	app.get('/ajaxBcateg', MiddleRole.sfitIsLogin, Bcateg.ajaxBcateg)
 
 	// Brand
-	app.get('/brandList', MiddleRole.sferIsLogin, Brand.brandListFilter, Brand.brandList)
-	app.get('/brandListPrint', MiddleRole.sfitIsLogin, Brand.brandListFilter, Brand.brandListPrint)
-	app.get('/brandDetail/:id', MiddleRole.sferIsLogin, Brand.brandDetail)
 	app.get('/brandAdd', MiddleRole.sfitIsLogin, Brand.brandAdd)
+	app.get('/brandList', MiddleRole.sferIsLogin, Brand.brandsFilter, Brand.brandList)
+	app.get('/brandListPrint', MiddleRole.sfitIsLogin, Brand.brandsFilter, Brand.brandListPrint)
+	app.get('/brandDetail/:id', MiddleRole.sferIsLogin, Brand.brandFilter, Brand.brandDetail)
+	app.get('/brandUpdate/:id', MiddleRole.bnerIsLogin, Brand.brandFilter, Brand.brandUpdate)
 	app.post('/addBrand', multipartMiddleware, MiddleRole.sfitIsLogin, Brand.addBrand)
-	app.get('/brandUpdate/:id', MiddleRole.bnerIsLogin, Brand.brandUpdate)
 	app.post('/updateBrand', multipartMiddleware, MiddleRole.bnerIsLogin, Brand.updateBrand)
 	app.delete('/brandDel', MiddleRole.bnerIsLogin, Brand.brandDel)
 
@@ -84,12 +84,12 @@ module.exports = function(app){
 	app.get('/ajaxBrandSts', MiddleRole.bnerIsLogin, Brand.ajaxBrandSts)
 
 	// Vendor
-	app.get('/vendorList', MiddleRole.sfitIsLogin, Vendor.vendorListFilter, Vendor.vendorList)
-	app.get('/vendorListPrint', MiddleRole.sfitIsLogin, Vendor.vendorListFilter, Vendor.vendorListPrint)
-	app.get('/vendorDetail/:id', MiddleRole.sfitIsLogin, Vendor.vendorDetail)
 	app.get('/vendorAdd', MiddleRole.sfitIsLogin, Vendor.vendorAdd)
+	app.get('/vendorList', MiddleRole.sfitIsLogin, Vendor.vendorsFilter, Vendor.vendorList)
+	app.get('/vendorListPrint', MiddleRole.sfitIsLogin, Vendor.vendorsFilter, Vendor.vendorListPrint)
+	app.get('/vendorDetail/:id', MiddleRole.sfitIsLogin, Vendor.vendorFilter, Vendor.vendorDetail)
+	app.get('/vendorUpdate/:id', MiddleRole.bnerIsLogin, Vendor.vendorFilter, Vendor.vendorUpdate)
 	app.post('/addVendor', multipartMiddleware, MiddleRole.sfitIsLogin, Vendor.addVendor)
-	app.get('/vendorUpdate/:id', MiddleRole.bnerIsLogin, Vendor.vendorUpdate)
 	app.post('/updateVendor', multipartMiddleware, MiddleRole.bnerIsLogin, Vendor.updateVendor)
 	app.delete('/vendorDel', MiddleRole.bnerIsLogin, Vendor.vendorDel)
 
@@ -97,12 +97,12 @@ module.exports = function(app){
 	app.get('/ajaxVendorSts', MiddleRole.bnerIsLogin, Vendor.ajaxVendorSts)
 
 	// Scont
-	app.get('/scontList', MiddleRole.sfitIsLogin, Scont.scontListFilter, Scont.scontList)
-	app.get('/scontListPrint', MiddleRole.sfitIsLogin, Scont.scontListFilter, Scont.scontListPrint)
-	app.get('/scontDetail/:id', MiddleRole.sfitIsLogin, Scont.scontSingleFilter, Scont.scontDetail)
 	app.get('/scontAdd', MiddleRole.sfitIsLogin, Scont.scontAdd)
+	app.get('/scontList', MiddleRole.sfitIsLogin, Scont.scontsFilter, Scont.scontList)
+	app.get('/scontListPrint', MiddleRole.sfitIsLogin, Scont.scontsFilter, Scont.scontListPrint)
+	app.get('/scontDetail/:id', MiddleRole.sfitIsLogin, Scont.scontFilter, Scont.scontDetail)
+	app.get('/scontUpdate/:id', MiddleRole.bnerIsLogin, Scont.scontFilter, Scont.scontUpdate)
 	app.post('/addScont', multipartMiddleware, MiddleRole.sfitIsLogin, Scont.addScont)
-	app.get('/scontUpdate/:id', MiddleRole.bnerIsLogin, Scont.scontSingleFilter, Scont.scontUpdate)
 	app.post('/updateScont', multipartMiddleware, MiddleRole.bnerIsLogin, Scont.updateScont)
 	app.delete('/scontDel', MiddleRole.bnerIsLogin, Scont.scontDel)
 

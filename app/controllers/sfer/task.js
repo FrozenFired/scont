@@ -9,7 +9,7 @@ let moment = require('moment')
 
 
 
-exports.taskListFilter = function(req, res, next) {
+exports.tasksFilter = function(req, res, next) {
 	let title = 'task List';
 	let url = "/taskList";
 	
@@ -189,7 +189,7 @@ getNewTaskCode = function(lastTask, userCode) {
 
 
 
-exports.addTaskCheck = function(req, res, next) {
+exports.addTask = function(req, res) {
 	let objBody = req.body.object
 	objBody.status = 0
 	Task.findOne({code: objBody.code}, function(err, object) {
@@ -201,27 +201,20 @@ exports.addTaskCheck = function(req, res, next) {
 			next()
 		} else {
 			let _object = new Task(objBody)
-			req.body.object = _object
-			next()
+			_object.save(function(err, objSave) {
+				if(err) console.log(err)
+				// res.redirect('/taskDetail/'+objSave._id)
+				res.redirect('/taskList')
+			})
 		}
 	})
 }
-exports.addTask = function(req, res) {
-	let objBody = req.body.object
-	objBody.save(function(err, objSave) {
-		if(err) console.log(err)
-		// res.redirect('/taskDetail/'+objSave._id)
-		res.redirect('/taskList')
-	})
-}
 
 
 
 
 
-
-
-exports.taskDetailCheck = function(req, res, next) {
+exports.taskFilter = function(req, res, next) {
 	let id = req.params.id
 	Task.findOne({_id: id})
 	.populate('staff')
@@ -251,12 +244,22 @@ exports.taskDetail = function(req, res) {
 	})
 }
 
+exports.taskUpdate = function(req, res) {
+	let objBody = req.body.object
+
+	res.render('./sfer/task/update', {
+		title: 'task Update',
+		crSfer : req.session.crSfer,
+		object: objBody
+	})
+}
 
 
 
 
 exports.updateTask = function(req, res) {
 	let objBody = req.body.object
+	// console.log(objBody)
 	Task.findOne({_id: objBody._id}, function(err, object) {
 		if(err) console.log(err);
 		if(!object) {
@@ -275,22 +278,6 @@ exports.updateTask = function(req, res) {
 
 
 
-
-
-
-exports.taskDelCheck = function(req, res, next) {
-	let id = req.params.id
-	Task.findOne({_id: id}, function(err, task){
-		if(err) console.log(err);
-		if(task){
-			req.body.object = task
-			next()
-		} else {
-			info = "此任务已经被删除"
-			Index.sfOptionWrong(req, res, info)
-		}
-	})
-}
 exports.taskDel = function(req, res) {
 	let objBody = req.body.object;
 	Task.remove({_id: objBody._id}, function(err, taskRm) {
@@ -298,6 +285,8 @@ exports.taskDel = function(req, res) {
 		res.redirect('/taskList')
 	})
 }
+
+
 
 
 

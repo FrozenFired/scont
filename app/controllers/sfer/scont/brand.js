@@ -10,7 +10,7 @@ let _ = require('underscore');
 
 let moment = require('moment');
 
-exports.brandListFilter = function(req, res, next) {
+exports.brandsFilter = function(req, res, next) {
 	let title = 'brand List';
 	let url = "/brandList";
 
@@ -264,8 +264,7 @@ exports.addBrand = function(req, res) {
 }
 
 
-
-exports.brandDetail = function(req, res){
+exports.brandFilter = function(req, res, next){
 	let id = req.params.id
 	Brand.findOne({_id: id})
 	.populate('bcateg')
@@ -280,39 +279,33 @@ exports.brandDetail = function(req, res){
 	.exec(function(err, object){
 		if(err) console.log(err);
 		if(object) {
-			// console.log(object)
-			res.render('./sfer/scont/brand/detail', {
-				title: 'Brand Detail',
-				crSfer: req.session.crSfer,
-				object: object
-			})
+			req.body.object = object;
+			next();
 		} else {
 			info = "This BrandI is deleted, Please reflesh"
 			Index.sfOptionWrong(req, res, info)
 		}
 	})
 }
+exports.brandDetail = function(req, res){
+	let object = req.body.object;
+	res.render('./sfer/scont/brand/detail', {
+		title: 'Brand Detail',
+		crSfer: req.session.crSfer,
+		object: object
+	})
+}
 
 exports.brandUpdate = function(req, res){
-	let id = req.params.id
-	Brand.findOne({_id: id})
-	.populate('bcateg')
-	.exec(function(err, object){
+	let object = req.body.object;
+	Nation.find(function(err, nations) {
 		if(err) console.log(err);
-		if(object) {
-			Nation.find(function(err, nations) {
-				if(err) console.log(err);
-				res.render('./sfer/scont/brand/update', {
-					title: 'Brand Update',
-					crSfer: req.session.crSfer,
-					object: object,
-					nations: nations
-				})
-			})
-		} else {
-			info = "This BrandI is deleted, Please reflesh"
-			Index.sfOptionWrong(req, res, info)
-		}
+		res.render('./sfer/scont/brand/update', {
+			title: 'Brand Update',
+			crSfer: req.session.crSfer,
+			object: object,
+			nations: nations
+		})
 	})
 }
 
