@@ -29,7 +29,7 @@ block content
 						label.col-sm-2.col-form-label Sconto
 						input#orgScont(type="hidden", value=object.scont)
 						.col-sm-6.input-group
-							input#iptScont.form-control(type="number", name="object[scont]", value=object.scont)
+							input#iptScont.form-control(type="text", name="object[scont]", value=object.scont)
 							.input-group-append
 								span.input-group-text %	
 						.col-sm-4
@@ -48,7 +48,6 @@ block content
 									else
 										option(value=key) #{Conf.sctCause[key]}
 								- a;
-					script(src="/js/scont/scont/add/scontAdd.js")
 					.form-group.row
 						.offset-md-2.col-md-10
 							input.btn.btn-default(type="submit" value="Update Scont")

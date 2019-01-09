@@ -480,17 +480,26 @@ let rtPath = require('path').join(__dirname, "../../../../");
 
 exports.scontPdf = function(req, res) {
 	let object = req.body.object;
+	let brand = object.brand;
+	let vendor = object.vendor;
 	// let pug = require('pug');
-	let hc = require('pug').renderFile(rtPath + 'views/zzPdf/scont/detail.pug', {
-		publicPath: "file://"+rtPath + 'public',
-		moment : require('moment'),
-		crSfer: req.session.crSfer,
-		title: 'scont Pdf',
+	if(brand && vendor) {
+		let hc = require('pug').renderFile(rtPath + 'views/zzPdf/scont/detail.pug', {
+			publicPath: "file://"+rtPath + 'public',
+			moment : require('moment'),
+			crSfer: req.session.crSfer,
+			title: 'scont Pdf',
 
-		object: object,
-	});
-	res.pdfFromHTML({
-		filename: 'scont.pdf',
-		htmlContent: hc
-	});
+			object: object,
+			brand: brand,
+			vendor: vendor
+		});
+		res.pdfFromHTML({
+			filename: brand.code + '_' + vendor.code + '.pdf',
+			htmlContent: hc
+		});
+	} else {
+		info = "Option is wrong, please contact manager. error: in scont pdf not have brand or vendor";
+		Index.sfOptionWrong(req, res, info)
+	}
 }
