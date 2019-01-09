@@ -1,0 +1,17 @@
+- let contact1 = new Object(), contact2 = new Object();
+if vendor.contacts && vendor.contacts.length > 0
+	- contact1 = vendor.contacts[0];
+if vendor.contacts && vendor.contacts.length > 1
+	- contact2 = vendor.contacts[1];
+.w160.border.m-1
+	.h30 #{contact1.contacter}
+.w160.border.m-1
+	.h30 #{contact1.tel}
+.w160.border.m-1
+	.h30 #{contact1.email}
+.w160.border.m-1
+	.h30 <strong>REF: </strong> #{contact2.contacter}
+.w160.border.m-1
+	.h30 <strong>TEL: </strong>#{contact2.tel}
+.w160.border.m-1
+	.h30 <strong>@: </strong>#{contact2.email}

@@ -1,0 +1,11 @@
+doctype
+html
+	head
+		meta(charset="utf-8")
+		title #{title}
+		link(href=publicPath+"/libs/bootstrap/dist/css/bootstrap.min.css", rel="stylesheet", type="text/css")
+		script(src=publicPath+"/libs/jquery/dist/jquery.min.js")
+		script(src=publicPath+"/libs/bootstrap/dist/js/bootstrap.min.js")
+		link(href=publicPath+"/css/pdf.css", rel="stylesheet", type="text/css")
+	body
+		block content

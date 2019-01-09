@@ -1,13 +1,7 @@
-let InitSet = require('./confile/initSet');
-let serverUrl;
-if(InitSet.port == 80) {
-	serverUrl = "http://"+InitSet.ip;
-} else {
-	serverUrl = "http://"+InitSet.ip+":" + InitSet.port;
-}
+let InitConf = require('./confile/initConf');
 
 let express = require('express');
-let path = require('path');
+
 let mongoose = require('mongoose');
 let bodyParser = require('body-parser');
 let cookieParser = require('cookie-parser');
@@ -21,28 +15,29 @@ let server = require('http').createServer(app);
 // 前端读取配置数据
 app.locals.moment = require('moment');// 时间格式化
 app.locals.Conf = require('./confile/conf');// 
-app.locals.ServerAddress = serverUrl;// 
+app.locals.ServerAddress = InitConf.serverUrl;// 
 
 mongoose.Promise = global.Promise;
-let dbUrl = 'mongodb://localhost/' + InitSet.dbName;
-mongoose.connect(dbUrl);
+mongoose.connect(InitConf.dbUrl);
 
 app.set('views', './views')
 app.set('view engine', 'pug')
 
 let serveStatic = require('serve-static')
-app.use(serveStatic(path.join(__dirname, "public")))
+
+let path = require('path');
+app.use(serveStatic(path.join(__dirname, "./public")))
 
 app.use(bodyParser.urlencoded( { extended: true } ) )
 app.use(bodyParser.json())
 
 app.use(cookieParser())	
 app.use(session({
-	secret: InitSet.dbName,
+	secret: InitConf.dbName,
 	resave: false,
 	saveUninitialized: true,
 	store: new mongoStore({
-		url: dbUrl,
+		url: InitConf.dbUrl,
 		collection: 'sessions'
 	})
 }))
@@ -58,6 +53,6 @@ app.use(function(req, res, next) {
 })
 
 
-server.listen(InitSet.port, function(){
-	console.log('Server start on port : ' + serverUrl)
+server.listen(InitConf.port, function(){
+	console.log('Server start on port : ' + InitConf.serverUrl)
 });

@@ -1,0 +1,27 @@
+/*pdf width 595px height 842px */
+.pdfcontainer {
+	width: 540px;
+	margin: 25px;
+	font-size:60%;
+}
+
+.imgDiv{height: 100px; width: 310px; padding-left: 93px; padding-top: 15px; float: left;}
+.imgRight{height: 100px; width: 230px; padding-left: auto; float: left;}
+.htBody{height: 692px; width: 540px; float: left;}
+
+.hp60{height: 60px; padding-top: 10px; padding-bottom: 10px;}
+.hp100{height: 100px; padding-top: 10px; padding-bottom: 10px;}
+
+.w60{width: 60px; float: left;}
+.w120{width: 120px; float: left;}
+.w150{width: 150px; margin-left: 5px; margin-right: 5px; float: left;}
+.w160{width: 160px; float: left;}
+.w200{width: 200px; float: left;}
+.w210{width: 210px; float: left;}
+.w400{width: 400px; float: left;}
+
+.h18{height: 18px;}
+.h30{height: 30px;}
+.h40{height: 40px;}
+.h45{height: 45px;}
+.h80{height: 80px;}

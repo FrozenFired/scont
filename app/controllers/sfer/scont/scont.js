@@ -379,6 +379,7 @@ exports.scontDetail = function(req, res){
 	})
 }
 
+
 exports.scontUpdate = function(req, res){
 	// scontSingleFilter
 	let object = req.body.object;
@@ -461,4 +462,35 @@ exports.ajaxScontSts = function(req, res) {
 			res.json({success: 0, info: "已被删除，按F5刷新页面查看"})
 		}
 	})
+}
+
+
+
+
+
+
+// res.render('./sfer/scont/scont/detail', {
+// 	title: 'Scontory Detail',
+// 	crSfer: req.session.crSfer,
+// 	object: object,
+// })
+
+
+let rtPath = require('path').join(__dirname, "../../../../");
+
+exports.scontPdf = function(req, res) {
+	let object = req.body.object;
+	// let pug = require('pug');
+	let hc = require('pug').renderFile(rtPath + 'views/zzPdf/scont/detail.pug', {
+		publicPath: "file://"+rtPath + 'public',
+		moment : require('moment'),
+		crSfer: req.session.crSfer,
+		title: 'scont Pdf',
+
+		object: object,
+	});
+	res.pdfFromHTML({
+		filename: 'scont.pdf',
+		htmlContent: hc
+	});
 }

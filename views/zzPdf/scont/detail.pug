@@ -1,0 +1,42 @@
+extends ../layout
+
+block content
+	- let brand = object.brand;
+	- let vendor = object.vendor;
+	.pdfcontainer
+		.htHead
+			include ./detail/head
+		.htBody
+			.hp100.border-bottom
+				include ./detail/b1_brandBase
+			.hp100.border-bottom.text-center
+				include ./detail/b2_contact
+			.hp60.border-bottom
+				include ./detail/b3_1channel
+			.hp60.border-bottom
+				include ./detail/b4_2catalog
+			.hp60.border-bottom
+				include ./detail/b5_3scont
+			.hp60.border-bottom
+				.w120 
+					.h40 4) Material Description
+				.w400.border
+					.h40 #{brand.matDesp}
+			.hp60.border-bottom
+				.w200 5) LOGO Authorization
+				.w120 |
+				.w200 7) Authorization in e-Commerce
+			.hp60.border-bottom
+				.w60 8) Production Time
+				.w200.border
+					.h40 #{brand.pTime}
+				.w60 9) Delivery
+				.w200.border
+					.h40 #{vendor.freight}
+			.hp100
+				.w400 Note: 
+				.w120
+					span Date: 
+					br
+					span Sign: 
+

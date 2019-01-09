@@ -6,7 +6,7 @@ let _ = require('underscore')
 
 exports.bcategList = function(req, res) {
 	Bcateg.find()
-	.sort({"code": -1})
+	.sort({"bcate": 1, "code": -1})
 	.exec(function(err, objects){
 		if(err) console.log(err);
 		res.render('./sfer/scont/bcateg/list', {

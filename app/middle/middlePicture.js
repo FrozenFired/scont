@@ -1,10 +1,12 @@
 let fs = require('fs');
-let path = require('path');
+// let path = require('path');
+let projectPath = require('path').join(__dirname, '../../');
 
 let MiddlePicture = {
 	deleteOldPhoto : function(orgPhoto, photoDir){
 		if(orgPhoto != '/upload' + photoDir + '1.jpg') {
-			fs.unlink(path.join(__dirname, '../../public' + orgPhoto), function(err) { });
+			// fs.unlink(path.join(__dirname, '../../public' + orgPhoto), function(err) { });
+			fs.unlink(projectPath + 'public' + orgPhoto, function(err) { });
 		}
 	},
 
@@ -24,7 +26,10 @@ let MiddlePicture = {
 					let type = photoData.type.split('/')[1];
 					let timestamp = Date.now();
 					let photo = '/upload' + photoDir + picName + '_' + timestamp + '.' + type;
-					let newPath = path.join(__dirname, '../../public' + photo);
+					// console.log(path.join(__dirname, '../../public' + photo))
+					// console.log(projectPath + 'public' + photo)
+					// let newPath = path.join(__dirname, '../../public' + photo);
+					let newPath = projectPath + 'public' + photo;
 					fs.writeFile(newPath, data, function(err){
 						parameterObj.photo = photo;
 						next();
