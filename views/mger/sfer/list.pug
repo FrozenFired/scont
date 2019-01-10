@@ -17,7 +17,7 @@ block content
 					each item in objects
 						<tr class="item-id-#{item._id}">
 							td: a(href="/mgSferDetail/"+item._id) #{item.code}
-							td #{Conf.sfRole[item.role]}
+							td #{Conf.sfRole[item.role]} #{item.role}
 							td #{item.name}
 							td <button class="btn btn-danger del" type="button", data-urldel="/mgSferDel", data-id="#{item._id}"> delete </button>
 						</tr>

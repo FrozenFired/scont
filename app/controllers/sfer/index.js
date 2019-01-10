@@ -61,15 +61,22 @@ exports.loginSfer = function(req, res) {
 					sfer.save(function(err, sfer){
 						if(err) console.log(err)
 					})
-					req.session.crSfer = sfer
-					if(sfer.role == 5) {
-						req.session.crBner = sfer
-					}else if(sfer.role == 10) {
-						req.session.crQter = sfer
-					} else if(sfer.role == 15) {
-						req.session.crCner = sfer
+					if(sfer.role == 20) {
+						delete req.session.crSfer;
+						info = "您已经离职, You are leaving our company, sorry";
+						sfWrongpage(req, res, info);
+					} else {
+						console.log(1)
+						req.session.crSfer = sfer
+						if(sfer.role == 5) {
+							req.session.crBner = sfer
+						}else if(sfer.role == 10) {
+							req.session.crQter = sfer
+						} else if(sfer.role == 15) {
+							req.session.crCner = sfer
+						}
+						res.redirect('/')
 					}
-					res.redirect('/')
 				}
 				else {
 					info = "用户名与密码不符，请重新登陆";

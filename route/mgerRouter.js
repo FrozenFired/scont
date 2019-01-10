@@ -1,16 +1,21 @@
-var Index = require('../app/controllers/mger/index');
+let Index = require('../app/controllers/mger/index');
 
-var Mger = require('../app/controllers/mger/mger');
-var Sfer = require('../app/controllers/mger/sfer');
+let Mger = require('../app/controllers/mger/mger');
+let Sfer = require('../app/controllers/mger/sfer');
 
-var Task = require('../app/controllers/mger/task');
+let Task = require('../app/controllers/mger/task');
 
-var MiddleBcrypt = require('../app/middle/middleBcrypt');
-var MiddleRole = require('../app/middle/middleRole');
-var MiddlePicture = require('../app/middle/middlePicture');
+let MiddleExcel = require('../app/controllers/mger/multy/aaMiddleExcel')
+let MtySfer = require('../app/controllers/mger/multy/sfer');
+let MtyNation = require('../app/controllers/mger/multy/nation');
+let MtyBcateg = require('../app/controllers/mger/multy/bcateg');
 
-var multipart = require('connect-multiparty');
-var multipartMiddleware = multipart();
+let MiddleBcrypt = require('../app/middle/middleBcrypt');
+let MiddleRole = require('../app/middle/middleRole');
+let MiddlePicture = require('../app/middle/middlePicture');
+
+let multipart = require('connect-multiparty');
+let multipartMiddleware = multipart();
 
 module.exports = function(app){
 
@@ -30,7 +35,7 @@ module.exports = function(app){
 		Mger.updateMgerPw);
 
 
-	// Sfer  ------------------------------------------------------------------------
+	// Sfer ---------------------------------------------------------------------------------
 	app.get('/mgSferAdd', MiddleRole.mgerIsLogin, Sfer.mgSferAdd)
 
 	app.post('/mgAddSfer', MiddleRole.mgerIsLogin, multipartMiddleware,
@@ -52,5 +57,12 @@ module.exports = function(app){
 	app.get('/mgTaskDetail/:id', MiddleRole.mgerIsLogin, Task.mgTaskDetailCheck, Task.mgTaskDetail)
 
 	app.get('/mgTaskListPrint', MiddleRole.mgerIsLogin, Task.mgTaskListCheck, Task.mgTaskListPrint)
+
+
+
+	// Multy ---------------------------------------------------------------------------------
+	app.post('/multySfer', multipartMiddleware, MiddleExcel.loadFile, MtySfer.multySfer)
+	app.post('/multyNation', multipartMiddleware, MiddleExcel.loadFile, MtyNation.multyNation)
+	app.post('/multyBcateg', multipartMiddleware, MiddleExcel.loadFile, MtyBcateg.multyBcateg)
 
 };

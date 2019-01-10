@@ -4,7 +4,7 @@ var Conf = {
 	},
 	home: { homePage: '', option: 'option', brand: 'brandList', scont: 'scontList', vendor: 'vendorList', task: 'taskList' },
 	//员工角色
-	sfRole: { 5: 'brand', 10: 'quotation', 15: '中国报价',},
+	sfRole: { 5: 'brand', 10: 'quotation', 15: '中国报价', 20: 'leave'},
 
 	/* ------------------ task staus ------------------ */
 	stsTask:{ 0: 'progress', 1: 'finish'},
