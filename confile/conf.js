@@ -13,7 +13,7 @@ var Conf = {
 	// 品牌分类
 	bcate: { 0: 'PROFESSIONISTI', 1: 'ACCESSORI', 2: 'COSTRUZIONE', 3: 'MOBILI'},
 	// 厂家类型
-	vtype: { 0: 'RIVENDITORE', 1: 'AGENTE', 2: 'PRO.+AGE.', 3: 'PRODUTTORE', 4: 'OTHER'},
+	vtype: { 0: 'RIVENDITORE', 1: 'AGENTE', 2: 'PRO.+AGE.', 3: 'PRODUTTORE', 5: 'OTHER'},
 	// 品牌状态
 	stsBrand: { 0: 'refer', 1: 'common', 2: 'gray'},
 	// 厂家状态
@@ -21,7 +21,7 @@ var Conf = {
 	// 折扣状态
 	stsScont: { 0: 'refer', 1: 'common', 2: 'green', 3: 'yellow', 4: 'gray', 5: 'deleted'},
 	// 折扣原因
-	sctCause: { 0: 'NEW', 1:'NEW BRAND', 2: 'addDealer', 3: 'toAgent', 4: 'toProductor', 5: 'fixScont', 6: 'fixOther'},
+	sctCause: { 0: 'NEW', 1:'NEW BRAND', 2: 'addDealer', 3: 'toAgent', 4: 'toProductor', 5: 'fixScont', 6: 'MULTY'},
 }
 
 module.exports = Conf

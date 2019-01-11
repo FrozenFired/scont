@@ -52,7 +52,7 @@ module.exports = function(app){
 	app.get('/taskStatus', MiddleRole.sferIsLogin, Task.taskStatus)
 
 	// Nation ------------------------------------------------------------------------------
-	app.get('/nationList', MiddleRole.sferIsLogin, Nation.nationList)
+	app.get('/nationList', MiddleRole.sferIsLogin, Nation.nationsFilter, Nation.nationList)
 	app.get('/nationDetail/:id', MiddleRole.sferIsLogin, Nation.nationDetail)
 	app.get('/nationAdd', MiddleRole.bnerIsLogin, Nation.nationAdd)
 	app.post('/addNation', multipartMiddleware, MiddleRole.bnerIsLogin, Nation.addNation)

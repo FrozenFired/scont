@@ -66,7 +66,6 @@ exports.loginSfer = function(req, res) {
 						info = "您已经离职, You are leaving our company, sorry";
 						sfWrongpage(req, res, info);
 					} else {
-						console.log(1)
 						req.session.crSfer = sfer
 						if(sfer.role == 5) {
 							req.session.crBner = sfer

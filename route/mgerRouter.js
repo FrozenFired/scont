@@ -9,6 +9,9 @@ let MiddleExcel = require('../app/controllers/mger/multy/aaMiddleExcel')
 let MtySfer = require('../app/controllers/mger/multy/sfer');
 let MtyNation = require('../app/controllers/mger/multy/nation');
 let MtyBcateg = require('../app/controllers/mger/multy/bcateg');
+let MtyBrand = require('../app/controllers/mger/multy/brand');
+let MtyVendor = require('../app/controllers/mger/multy/vendor');
+let MtyScont = require('../app/controllers/mger/multy/scont');
 
 let MiddleBcrypt = require('../app/middle/middleBcrypt');
 let MiddleRole = require('../app/middle/middleRole');
@@ -64,5 +67,9 @@ module.exports = function(app){
 	app.post('/multySfer', multipartMiddleware, MiddleExcel.loadFile, MtySfer.multySfer)
 	app.post('/multyNation', multipartMiddleware, MiddleExcel.loadFile, MtyNation.multyNation)
 	app.post('/multyBcateg', multipartMiddleware, MiddleExcel.loadFile, MtyBcateg.multyBcateg)
+
+	app.post('/multyBrand', multipartMiddleware, MiddleExcel.loadFile, MtyBrand.multyBrand)
+	app.post('/multyVendor', multipartMiddleware, MiddleExcel.loadFile, MtyVendor.multyVendor)
+	app.post('/multyScont', multipartMiddleware, MiddleExcel.loadFile, MtyScont.multyScont)
 
 };

@@ -7,8 +7,9 @@ block content
 		table.table.table-hover.table-bordered
 			thead
 				tr
+					th 序号
 					th nation code
-					th Weight(for sort)
+					th Weight (sort)
 					th Origin Name
 					th English Name
 					th Chinese Name
@@ -16,9 +17,11 @@ block content
 					th brand Numbers
 					th 删除
 			tbody
+				-let i = 0;
 				each item in objects
-					-let a;
+					- i++;
 					tr(class="item-id-"+item._id)
+						td <strong> #{i} </strong>
 						td: a(href="/nationDetail/"+item._id) #{item.code}
 						td #{item.weight}
 						td #{item.name}

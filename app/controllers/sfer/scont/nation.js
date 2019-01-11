@@ -3,19 +3,30 @@ var Nation = require('../../../models/scont/nation')
 var Brand = require('../../../models/scont/brand')
 var _ = require('underscore')
 
-
-exports.nationList = function(req, res) {
+exports.nationsFilter = function(req, res, next) {
 	Nation.find()
-	.sort({'weight': -1}).sort({'updateAt': -1})
+	.sort({'weight': -1}).sort({'numbrand': -1})
 	.exec(function(err, objects){
 		if(err) console.log(err);
-		res.render('./sfer/scont/nation/list', {
-			title: 'Nation List',
-			crSfer: req.session.crSfer,
-			objects: objects
-		})
+		if(objects) {
+			req.body.objects = objects;
+			next();
+		} else {
+			info = "Can't Find The Nation"
+			Index.sfOptionWrong(req, res, info)
+		}
 	})
 }
+
+exports.nationList = function(req, res) {
+	let objects = req.body.objects;
+	res.render('./sfer/scont/nation/list', {
+		title: 'Nation List',
+		crSfer: req.session.crSfer,
+		objects: objects
+	})
+}
+
 
 exports.nationAdd = function(req, res) {
 	res.render('./sfer/scont/nation/add', {

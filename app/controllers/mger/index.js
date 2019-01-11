@@ -2,6 +2,7 @@ let Mger = require('../../models/user/mger');
 let bcrypt = require('bcryptjs');
 
 
+// let Conf = require('../../../confile/conf.js')
 exports.mgerCheck = function(req, res, next) {
 	if(!req.session.crMger) {
 		res.redirect('/mgerLogin');
