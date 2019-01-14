@@ -180,26 +180,26 @@ exports.scontListPrint = function(req, res) {
 		if(object.updateAt) ws.cell((i+2), 1).string(moment(object.updateAt).format('MM/DD/YYYY'));
 		if(object.scont) ws.cell((i+2), 15).string(object.scont+ " %");
 		if(object.createAt) ws.cell((i+2), 19).string(moment(object.createAt).format('MM/DD/YYYY'));
-		if(object.updater) ws.cell((i+2), 20).string(object.updater.code);
+		if(object.updater) ws.cell((i+2), 20).string(String(object.updater.code));
 		if(object.brand) {
 			let brand = object.brand;
-			if(brand.code) ws.cell((i+2), 2).string(brand.code);
+			if(brand.code) ws.cell((i+2), 2).string(String(brand.code));
 			if(brand.bcateg) {
 				let bcateg = brand.bcateg;
 				if(Conf.bcate[bcateg.bcate]) ws.cell((i+2), 3).string(Conf.bcate[bcateg.bcate]);
-				if(bcateg.code) ws.cell((i+2), 4).string(bcateg.code);
+				if(bcateg.code) ws.cell((i+2), 4).string(String(bcateg.code));
 			}
-			ws.cell((i+2), 5).string(brand.matDesp);
-			if(brand.nation && brand.nation.code) ws.cell((i+2), 6).string(brand.nation.code);
+			ws.cell((i+2), 5).string(String(brand.matDesp));
+			if(brand.nation && brand.nation.code) ws.cell((i+2), 6).string(String(brand.nation.code));
 
 			if(brand.iva) ws.cell((i+2), 12).string(brand.iva + "%");
 			if(brand.plist) ws.cell((i+2), 13).string("Y");
 			if(brand.atlas) ws.cell((i+2), 14).string("Y");
 
-			if(brand.pTime) ws.cell((i+2), 17).string(brand.pTime);
+			if(brand.pTime) ws.cell((i+2), 17).string(String(brand.pTime));
 
-			if(brand.website) ws.cell((i+2), 21).string(brand.website);
-			if(brand.webNote) ws.cell((i+2), 22).string(brand.webNote);
+			if(brand.website) ws.cell((i+2), 21).string(String(brand.website));
+			if(brand.webNote) ws.cell((i+2), 22).string(String(brand.webNote));
 			if(brand.cartace) ws.cell((i+2), 23).string(String(brand.cartace));
 			if(brand.video) ws.cell((i+2), 24).string(String(brand.video));
 			if(brand.createAt) ws.cell((i+2), 25).string(moment(brand.createAt).format('MM/DD/YYYY'));
@@ -207,17 +207,17 @@ exports.scontListPrint = function(req, res) {
 		if(object.vendor) {
 			let vendor = object.vendor;
 			if(Conf.vtype[vendor.vtype]) ws.cell((i+2), 7).string(Conf.vtype[vendor.vtype]);
-			if(vendor.code) ws.cell((i+2), 8).string(vendor.code);
+			if(vendor.code) ws.cell((i+2), 8).string(String(vendor.code));
 			if(vendor.contacts && vendor.contacts.length > 0) {
 				contact = vendor.contacts[0];
-				ws.cell((i+2), 9).string(contact.contacter);
-				ws.cell((i+2), 10).string(contact.tel);
-				ws.cell((i+2), 11).string(contact.email);
+				ws.cell((i+2), 9).string(String(contact.contacter));
+				ws.cell((i+2), 10).string(String(contact.tel));
+				ws.cell((i+2), 11).string(String(contact.email));
 			}
 
 			ws.cell((i+2), 16).string(vendor.ac+"/"+vendor.sa);
 
-			if(vendor.freight) ws.cell((i+2), 18).string(vendor.freight);
+			if(vendor.freight) ws.cell((i+2), 18).string(String(vendor.freight));
 		}
 	}
 

@@ -56,9 +56,9 @@ exports.bcategListPrint = function(req, res) {
 	for(let i=0; i<objects.length; i++){
 		let item = objects[i];
 		if(item.bcate || item.bcate==0) ws.cell((i+2), 1).string(Conf.bcate[item.bcate]);
-		if(item.code) ws.cell((i+2), 2).string(item.code);
-		if(item.nameEN) ws.cell((i+2), 3).string(item.nameEN);
-		if(item.nameCN) ws.cell((i+2), 4).string(item.nameCN);
+		if(item.code) ws.cell((i+2), 2).string(String(item.code));
+		if(item.nameEN) ws.cell((i+2), 3).string(String(item.nameEN));
+		if(item.nameCN) ws.cell((i+2), 4).string(String(item.nameCN));
 		if(item.numbrand) ws.cell((i+2), 6).string(String(item.numbrand));
 	}
 

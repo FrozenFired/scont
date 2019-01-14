@@ -128,13 +128,13 @@ exports.taskListPrint = function(req, res) {
 
 	for(let i=0; i<objects.length; i++){
 		let item = objects[i];
-		if(item.code) ws.cell((i+2), 1).string(item.code);
-		if(item.title) ws.cell((i+2), 2).string(item.title);
-		if(item.order) ws.cell((i+2), 3).string(item.order);
-		if(item.description) ws.cell((i+2), 4).string(item.description);
-		if(item.note) ws.cell((i+2), 5).string(item.note);
+		if(item.code) ws.cell((i+2), 1).string(String(item.code));
+		if(item.title) ws.cell((i+2), 2).string(String(item.title));
+		if(item.order) ws.cell((i+2), 3).string(String(item.order));
+		if(item.description) ws.cell((i+2), 4).string(String(item.description));
+		if(item.note) ws.cell((i+2), 5).string(String(item.note));
 		if(item.createAt) ws.cell((i+2), 6).string(moment(item.createAt).format('MM/DD/YYYY HH:mm'));
-		if(item.finishAt) ws.cell((i+2), 7).string(item.finishAt);
+		if(item.finishAt) ws.cell((i+2), 7).string(String(item.finishAt));
 	}
 
 	wb.write('Task_'+req.session.crSfer.code+'_'+ moment(new Date()).format('YYYYMMDD-HHmmss') + '.xlsx', res);

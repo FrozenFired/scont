@@ -145,19 +145,19 @@ exports.vendorListPrint = function(req, res) {
 	for(let i=0; i<objects.length; i++){
 		let object = objects[i];
 
-		if(object.code) ws.cell((i+2), 1).string(object.code);
+		if(object.code) ws.cell((i+2), 1).string(String(object.code));
 		if(Conf.vtype[object.vtype]) ws.cell((i+2), 2).string(Conf.vtype[object.vtype]);
 		if(object.ac && object.sa) ws.cell((i+2), 3).string(object.ac+"/"+object.sa);
-		if(object.acsaNote) ws.cell((i+2), 4).string(object.acsaNote);
-		if(object.freight) ws.cell((i+2), 5).string(object.freight);
+		if(object.acsaNote) ws.cell((i+2), 4).string(String(object.acsaNote));
+		if(object.freight) ws.cell((i+2), 5).string(String(object.freight));
 		if(object.contacts && object.contacts.length > 0) {
 			contact = object.contacts[0];
-			ws.cell((i+2), 6).string(contact.contacter);
-			ws.cell((i+2), 7).string(contact.tel);
-			ws.cell((i+2), 8).string(contact.email);
+			ws.cell((i+2), 6).string(String(contact.contacter));
+			ws.cell((i+2), 7).string(String(contact.tel));
+			ws.cell((i+2), 8).string(String(contact.email));
 		}
 
-		if(object.note) ws.cell((i+2), 9).string(object.note);
+		if(object.note) ws.cell((i+2), 9).string(String(object.note));
 
 
 		if(object.status) ws.cell((i+2), 10).string(Conf.stsBrand[object.status]);

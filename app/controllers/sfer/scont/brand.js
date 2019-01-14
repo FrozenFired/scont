@@ -161,26 +161,26 @@ exports.brandListPrint = function(req, res) {
 	for(let i=0; i<objects.length; i++){
 		let object = objects[i];
 
-		if(object.code) ws.cell((i+2), 1).string(object.code);
+		if(object.code) ws.cell((i+2), 1).string(String(object.code));
 		if(object.bcateg) {
 			let bcateg = object.bcateg;
 			if(Conf.bcate[bcateg.bcate]) ws.cell((i+2), 2).string(Conf.bcate[bcateg.bcate]);
-			if(bcateg.code) ws.cell((i+2), 3).string(bcateg.code);
+			if(bcateg.code) ws.cell((i+2), 3).string(String(bcateg.code));
 		}
-		ws.cell((i+2), 4).string(object.matDesp);
-		if(object.nation && object.nation.code) ws.cell((i+2), 5).string(object.nation.code);
+		ws.cell((i+2), 4).string(String(object.matDesp));
+		if(object.nation && object.nation.code) ws.cell((i+2), 5).string(String(object.nation.code));
 
-		if(object.firmName) ws.cell((i+2), 6).string(object.firmName);
-		if(object.website) ws.cell((i+2), 7).string(object.website);
-		if(object.webNote) ws.cell((i+2), 8).string(object.webNote);
+		if(object.firmName) ws.cell((i+2), 6).string(String(object.firmName));
+		if(object.website) ws.cell((i+2), 7).string(String(object.website));
+		if(object.webNote) ws.cell((i+2), 8).string(String(object.webNote));
 
 		if(object.iva) ws.cell((i+2), 9).string(object.iva + "%");
 		if(object.plist) ws.cell((i+2), 10).string("Y");
-		if(object.plNote) ws.cell((i+2), 11).string(object.plNote);
+		if(object.plNote) ws.cell((i+2), 11).string(String(object.plNote));
 		if(object.atlas) ws.cell((i+2), 12).string("Y");
-		if(object.atNote) ws.cell((i+2), 13).string(object.atNote);
+		if(object.atNote) ws.cell((i+2), 13).string(String(object.atNote));
 
-		if(object.pTime) ws.cell((i+2), 14).string(object.pTime);
+		if(object.pTime) ws.cell((i+2), 14).string(String(object.pTime));
 
 		if(object.cartace) ws.cell((i+2), 15).string(String(object.cartace));
 		if(object.video) ws.cell((i+2), 16).string(String(object.video));

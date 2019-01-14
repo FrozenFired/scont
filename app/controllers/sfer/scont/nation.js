@@ -59,10 +59,10 @@ exports.nationListPrint = function(req, res) {
 
 	for(let i=0; i<objects.length; i++){
 		let item = objects[i];
-		if(item.code) ws.cell((i+2), 1).string(item.code);
-		if(item.name) ws.cell((i+2), 2).string(item.name);
-		if(item.nameEN) ws.cell((i+2), 3).string(item.nameEN);
-		if(item.nameCN) ws.cell((i+2), 4).string(item.nameCN);
+		if(item.code) ws.cell((i+2), 1).string(String(item.code));
+		if(item.name) ws.cell((i+2), 2).string(String(item.name));
+		if(item.nameEN) ws.cell((i+2), 3).string(String(item.nameEN));
+		if(item.nameCN) ws.cell((i+2), 4).string(String(item.nameCN));
 		if(item.tel) ws.cell((i+2), 5).string(String(item.tel));
 		if(item.numbrand) ws.cell((i+2), 6).string(String(item.numbrand));
 	}
