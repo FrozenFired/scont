@@ -11,10 +11,16 @@ block content
 				span: a.btn.btn-info.btn-lg(href="/scontAdd") Add Scont
 		hr
 		.row.bg-light.p-2
-			.col-sm-8
+			.col-sm-12
 				include ./list/filter
+		hr
+		.row
+			.col-sm-12
+				include ../../aaPlugin/pageSlip
+			.col-sm-12
+				include ./list/selfList
+		.row
+			.col-sm-8
 			.col-sm-4
 				include ./list/print
-		hr
-		include ../../aaPlugin/pageSlip
-		include ./list/selfList
+	script(src="/js/responsive.js")

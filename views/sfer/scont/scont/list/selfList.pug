@@ -4,7 +4,7 @@ table.table.table-hover.table-bordered
 			th Cause
 			th Brand <br/> Category
 			th Vendor <br/> Type
-			th scont <br/> note
+			th scont
 			th creater <br/> updater
 			//- th status
 			th oprate
@@ -44,7 +44,7 @@ table.table.table-hover.table-bordered
 						a.btn.btn-primary(href="/vendorDetail/"+item.vendor._id) #{item.vendor.code}
 						br
 						span #{Conf.vtype[item.vendor.vtype]}
-				td #{item.scont} % <br/> #{item.note}
+				td #{item.scont} %
 				td
 					if item.creater
 						-a;
