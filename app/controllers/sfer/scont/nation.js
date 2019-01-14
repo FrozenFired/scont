@@ -1,6 +1,10 @@
 var Index = require('../index')
 var Nation = require('../../../models/scont/nation')
 var Brand = require('../../../models/scont/brand')
+
+var Filter = require('../../../middle/filter');
+
+let moment = require('moment')
 var _ = require('underscore')
 
 exports.nationsFilter = function(req, res, next) {
@@ -25,6 +29,45 @@ exports.nationList = function(req, res) {
 		crSfer: req.session.crSfer,
 		objects: objects
 	})
+}
+exports.nationListPrint = function(req, res) {
+	let objects = req.body.objects;
+	let xl = require('excel4node');
+	let wb = new xl.Workbook({
+		defaultFont: {
+			size: 12,
+			color: '333333'
+		},
+		dateFormat: 'yyyy-mm-dd hh:mm:ss'
+	});
+	
+	let ws = wb.addWorksheet('Sheet 1');
+	ws.column(1).setWidth(8);
+	ws.column(2).setWidth(20);
+	ws.column(3).setWidth(20);
+	ws.column(4).setWidth(20);
+	ws.column(5).setWidth(15);
+	ws.column(6).setWidth(10);
+	
+	// header
+	ws.cell(1,1).string('Code');
+	ws.cell(1,2).string('Name');
+	ws.cell(1,3).string('English');
+	ws.cell(1,4).string('中文名');
+	ws.cell(1,5).string('TEL');
+	ws.cell(1,6).string('Brand Number');
+
+	for(let i=0; i<objects.length; i++){
+		let item = objects[i];
+		if(item.code) ws.cell((i+2), 1).string(item.code);
+		if(item.name) ws.cell((i+2), 2).string(item.name);
+		if(item.nameEN) ws.cell((i+2), 3).string(item.nameEN);
+		if(item.nameCN) ws.cell((i+2), 4).string(item.nameCN);
+		if(item.tel) ws.cell((i+2), 5).string(String(item.tel));
+		if(item.numbrand) ws.cell((i+2), 6).string(String(item.numbrand));
+	}
+
+	wb.write('Nation_'+req.session.crSfer.code+'_'+ moment(new Date()).format('YYYYMMDD-HHmmss') + '.xlsx', res);
 }
 
 

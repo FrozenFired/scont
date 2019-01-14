@@ -16,7 +16,6 @@ exports.brandsFilter = function(req, res, next) {
 
 	// 分页
 	let slipCond = ""; // 分页时用到的其他条件
-
 	let page = 0, entry = 10;
 	[entry, page, slipCond] = Filter.slipPage(req, entry, slipCond)
 	let index = page * entry;
@@ -46,13 +45,8 @@ exports.brandsFilter = function(req, res, next) {
 			'createAt': {[at.symCrtStart]: at.condCrtStart, [at.symCrtEnded]: at.condCrtEnded},
 			'updateAt': {[at.symUpdStart]: at.condUpdStart, [at.symUpdEnded]: at.condUpdEnded},
 			'status': condStatus  // 'status': {[symStatus]: condStatus}
-		})
-		.skip(index)
-		.limit(entry)
-		.populate('bcateg')
-		.populate('nation')
-		.populate('creater')
-		.populate('updater')
+		}).skip(index).limit(entry)
+		.populate('bcateg').populate('nation').populate('creater').populate('updater')
 		.sort({'status': 1, 'updateAt': -1})
 		.exec(function(err, objects){
 			if(err) console.log(err);
@@ -224,7 +218,9 @@ exports.headerBrand = function(req, res) {
 
 
 exports.brandAdd = function(req, res) {
-	Nation.find(function(err, nations) {
+	Nation.find()
+	.sort({"numbrand": -1})
+	.exec(function(err, nations) {
 		if(err) console.log(err);
 		res.render('./sfer/scont/brand/add', {
 			title: 'BrandAdd',
@@ -265,17 +261,15 @@ exports.addBrand = function(req, res) {
 
 
 exports.brandFilter = function(req, res, next){
-	let id = req.params.id
+	let id = req.params.id;
 	Brand.findOne({_id: id})
-	.populate('bcateg')
-	.populate('nation')
+	.populate('bcateg').populate('nation')
 	.populate({
 		path: 'sconts',
 		options: {sort: {'status': 1} },
 		populate: {path: 'vendor' } 
 	})
-	.populate('creater')
-	.populate('updater')
+	.populate('creater').populate('updater')
 	.exec(function(err, object){
 		if(err) console.log(err);
 		if(object) {
@@ -287,8 +281,16 @@ exports.brandFilter = function(req, res, next){
 		}
 	})
 }
+
 exports.brandDetail = function(req, res){
 	let object = req.body.object;
+	// For sort
+	object.sconts.sort(function (x, y) {
+		if(x.status == 2) return -1;
+		else if(y.status == 2) return 1;
+		else if(x.status < y.status) return -1;
+		else return 1;
+	})
 	res.render('./sfer/scont/brand/detail', {
 		title: 'Brand Detail',
 		crSfer: req.session.crSfer,

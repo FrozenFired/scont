@@ -231,6 +231,12 @@ exports.vendorFilter = function(req, res, next){
 
 exports.vendorDetail = function(req, res){
 	let object = req.body.object;
+	object.sconts.sort(function (x, y) {
+		if(x.status == 2) return -1;
+		else if(y.status == 2) return 1;
+		else if(x.status < y.status) return -1;
+		else return 1;
+	})
 	res.render('./sfer/scont/vendor/detail', {
 		title: 'Vendorory Detail',
 		crSfer: req.session.crSfer,

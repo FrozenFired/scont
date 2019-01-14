@@ -5,25 +5,8 @@ block content
 		a.btn.btn-info.btn-lg.btn-block(href="/bcategAdd") Add Bcateg
 		hr
 		.row
-			table.table.table-hover.table-bordered
-				thead
-					tr
-						th Bcate code
-						th Weight(for sort)
-						th English Name
-						th Chinese Name
-						th Father Cate
-						th Brand Numbers
-						th delete
-				tbody
-					each item in objects
-						-let a;
-						tr(class="item-id-"+item._id)
-							td: a(href="/bcategDetail/"+item._id) #{item.code}
-							td #{item.weight}
-							td #{item.nameEN}
-							td #{item.nameCN}
-							td #{Conf.bcate[item.bcate]}
-							td #{item.numbrand}
-							td: button.btn.btn-danger.del(type="button", data-urldel="/bcategDel", data-id=item._id) delete
-	script(src="/js/delete.js")
+			.col-sm-8
+			.col-sm-4
+				a.btn.btn-bg.btn-block.btn-warning(href="/bcategListPrint") Download Excel
+		hr
+		include ./list/selfList

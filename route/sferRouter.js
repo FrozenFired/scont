@@ -53,6 +53,7 @@ module.exports = function(app){
 
 	// Nation ------------------------------------------------------------------------------
 	app.get('/nationList', MiddleRole.sferIsLogin, Nation.nationsFilter, Nation.nationList)
+	app.get('/nationListPrint', MiddleRole.sferIsLogin, Nation.nationsFilter, Nation.nationListPrint)
 	app.get('/nationDetail/:id', MiddleRole.sferIsLogin, Nation.nationDetail)
 	app.get('/nationAdd', MiddleRole.bnerIsLogin, Nation.nationAdd)
 	app.post('/addNation', multipartMiddleware, MiddleRole.bnerIsLogin, Nation.addNation)
@@ -60,7 +61,8 @@ module.exports = function(app){
 	app.post('/updateNation', multipartMiddleware, MiddleRole.bnerIsLogin, Nation.updateNation)
 	app.delete('/nationDel', MiddleRole.bnerIsLogin, Nation.nationDel)
 	// Bcateg ------------------------------------------------------------------------------
-	app.get('/bcategList', MiddleRole.sferIsLogin, Bcateg.bcategList)
+	app.get('/bcategList', MiddleRole.sferIsLogin, Bcateg.bcategsFilter, Bcateg.bcategList)
+	app.get('/bcategListPrint', MiddleRole.sferIsLogin, Bcateg.bcategsFilter, Bcateg.bcategListPrint)
 	app.get('/bcategDetail/:id', MiddleRole.sferIsLogin, Bcateg.bcategDetail)
 	app.get('/bcategAdd', MiddleRole.bnerIsLogin, Bcateg.bcategAdd)
 	app.post('/addBcateg', multipartMiddleware, MiddleRole.bnerIsLogin, Bcateg.addBcateg)
