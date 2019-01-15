@@ -26,7 +26,7 @@ table.table.table-hover.table-bordered
 					button.btn.btn-link.btnEdit(class="edit-"+item._id, type="button", data-id=item._id) edit
 					if item.note
 						-a;
-						span(class="text-"+item._id) &nbsp;->&nbsp #{item.note}
+						span(class="text-"+item._id) &nbsp;->&nbsp; #{item.note}
 					form(class="form-"+item._id, method="post", action="/updateTask", style="display:none")
 						input.form-control(type="hidden", name="object[_id]", value=item._id)
 						input.form-control(class="ipt-"+item._id, type="hidden", value=item.note)
