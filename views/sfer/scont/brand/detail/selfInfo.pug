@@ -85,7 +85,7 @@ hr
 				br
 				span #{moment(object.updateAt).format('MM/DD/YYYY HH:mm')}
 				
-			td #{object.weight}
+			td #{Conf.weight[object.weight]}
 			td
 				a.btn.btn-dark.btn-lg(href="/brandUpdate/"+object._id) update
 				button.btn.btn-warning.btn-lg#mark(type="button") Mark

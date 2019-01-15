@@ -13,7 +13,7 @@ table.table.table-hover.table-bordered
 			-let a;
 			tr(class="item-id-"+item._id)
 				td: a(href="/bcategDetail/"+item._id) #{item.code}
-				td #{item.weight}
+				td #{Conf.weight[item.weight]}
 				td #{item.nameEN}
 				td #{item.nameCN}
 				td #{Conf.bcate[item.bcate]}

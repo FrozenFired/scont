@@ -17,7 +17,7 @@ table.table.table-hover.table-bordered
 			tr(class="item-id-"+item._id)
 				td <strong> #{i} </strong>
 				td: a(href="/nationDetail/"+item._id) #{item.code}
-				td #{item.weight}
+				td #{Conf.weight[item.weight]}
 				td #{item.name}
 				td #{item.nameEN}
 				td #{item.nameCN}

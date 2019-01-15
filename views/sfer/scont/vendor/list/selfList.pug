@@ -2,7 +2,7 @@ table.table.table-hover.table-bordered
 	thead
 		tr
 			th vendor code
-			//- th Weight(for sort)
+			th Weight(for sort)
 			th vtype
 			th contacts
 			th ac/sa
@@ -21,7 +21,7 @@ table.table.table-hover.table-bordered
 				-objBg ="bg-secondary";
 			tr(class=objBg+" item-id-"+item._id)
 				td #{item.code}
-				//- td #{item.weight}
+				td #{Conf.weight[item.weight]}
 				td #{Conf.vtype[item.vtype]}
 				td
 					if item.contacts && item.contacts.length > 0

@@ -9,7 +9,7 @@
 			th nation telCode
 		tr
 			td: a(href="/nationDetail/"+object._id) #{object.code}
-			td #{object.weight}
+			td #{Conf.weight[object.weight]}
 			td #{object.name}
 			td #{object.nameEN}
 			td #{object.nameCN}

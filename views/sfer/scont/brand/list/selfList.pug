@@ -2,7 +2,7 @@ table.table.table-hover.table-bordered
 	thead
 		tr
 			th brand code
-			//- th Weight(sort)
+			th Weight(sort)
 			th nation <br/> firm name
 			th category1 / category2 <br/> material Description
 			th website <br/> Note
@@ -21,7 +21,7 @@ table.table.table-hover.table-bordered
 				-objBg ="bg-secondary";
 			tr(class=objBg+" item-id-"+item._id)
 				td #{item.code}
-				//- td #{item.weight}
+				td #{Conf.weight[item.weight]}
 				td
 					if item.nation
 						-a;

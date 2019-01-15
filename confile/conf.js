@@ -3,6 +3,9 @@ var Conf = {
 		sferAvatar: '/avatar/sfer/',
 	},
 	home: { homePage: '', option: 'option', brand: 'brandList', scont: 'scontList', vendor: 'vendorList', task: 'taskList' },
+
+	weight: {0: 'general', 1: 'usual', 2: 'often', 3: 'always', 4: 'important'},
+
 	//员工角色
 	sfRole: { 5: 'brand', 10: 'quotation', 15: '中国报价', 20: 'leave'},
 

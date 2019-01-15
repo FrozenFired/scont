@@ -24,7 +24,7 @@ hr
 			th Summary
 		tr
 			td.text-primary <strong>#{object.code}</strong>
-			td #{object.weight}
+			td #{Conf.weight[object.weight]}
 			td #{Conf.vtype[object.vtype]}
 			td
 				if object.contacts && object.contacts.length > 0

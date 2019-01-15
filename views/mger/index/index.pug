@@ -40,7 +40,7 @@ block content
 			.form-group.row.udPhoto
 				label.col-md-2.col-form-label(for="uplVendor") 批量上传供应商
 				.col-md-6
-					input#uplBrand.btn.btn-info.btn-block(type="file", name="mulFile")
+					input#uplVendor.btn.btn-info.btn-block(type="file", name="mulFile")
 				.col-md-2
 					input.btn.btn-warning(type="submit" value="开始上传")
 
@@ -49,6 +49,16 @@ block content
 			.form-group.row.udPhoto
 				label.col-md-2.col-form-label(for="uplScont") 批量上传Scont
 				.col-md-6
-					input#uplBrand.btn.btn-info.btn-block(type="file", name="mulFile")
+					input#uplScont.btn.btn-info.btn-block(type="file", name="mulFile")
+				.col-md-2
+					input.btn.btn-warning(type="submit" value="开始上传")
+
+		hr
+		hr
+		form(method="post", action="/multyTask", enctype="multipart/form-data")
+			.form-group.row.udPhoto
+				label.col-md-2.col-form-label(for="uplTask") 批量上传Task
+				.col-md-6
+					input#uplTask.btn.btn-info.btn-block(type="file", name="mulFile")
 				.col-md-2
 					input.btn.btn-warning(type="submit" value="开始上传")

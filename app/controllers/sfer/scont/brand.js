@@ -47,7 +47,7 @@ exports.brandsFilter = function(req, res, next) {
 			'status': condStatus  // 'status': {[symStatus]: condStatus}
 		}).skip(index).limit(entry)
 		.populate('bcateg').populate('nation').populate('creater').populate('updater')
-		.sort({'status': 1, 'updateAt': -1})
+		.sort({'status': 1, 'weight': -1, 'updateAt': -1})
 		.exec(function(err, objects){
 			if(err) console.log(err);
 			if(objects){
@@ -253,7 +253,7 @@ exports.addBrand = function(req, res) {
 				categChangeBrandnum(objSave.bcateg, 1)
 				nationChangeBrandnum(objSave.nation, 1)
 
-				res.redirect('/brandList')
+				res.redirect('/brandDetail/'+objSave._id)
 			})
 		}
 	})
@@ -346,7 +346,7 @@ exports.updateBrand = function(req, res) {
 							nationChangeBrandnum(objSave.nation, 1)
 							nationChangeBrandnum(orgNation, -1)
 						}
-						res.redirect('/brandList')
+						res.redirect('/brandDetail/'+objSave._id)
 					})
 				}
 			})

@@ -2,7 +2,10 @@ extends ../../aalayout/layout
 
 block content
 	.container
-		h1 nation Information:
+		.row(class=objBg)
+			h1.col-sm-6 nation Information: [#{object.code}]
+			.col-sm-6.text-right
+				a.btn.btn-link(href="/nationList") nation list
 		hr
 		include ./detail/selfInfo
 		if crSfer.role == 5 || crSfer.role == 10

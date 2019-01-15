@@ -75,6 +75,16 @@ block content
 			//- 				else
 			//- 					option(value=key) #{Conf.stsVendor[key]}
 			.form-group.row
+				label.col-md-2.col-form-label Weight
+				.col-md-8
+					select.form-control(name="object[weight]", data-style="btn-info")
+						each key in Object.keys(Conf.weight)
+							if object.weight == key
+								option(value=key, selected="selected") #{Conf.weight[key]}
+							else
+								option(value=key) #{Conf.weight[key]}
+						- a;
+			.form-group.row
 				.offset-md-2.col-md-10
 					input.btn.btn-default(type="submit" value="Update Vendor")
 	script(src='/js/scont/vendor/update.js')

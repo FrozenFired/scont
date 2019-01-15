@@ -49,7 +49,7 @@ exports.vendorsFilter = function(req, res, next) {
 		.limit(entry)
 		.populate('creater')
 		.populate('updater')
-		.sort({'status': 1, 'updateAt': -1})
+		.sort({'status': 1, 'weight': -1, 'updateAt': -1})
 		.exec(function(err, objects){
 			if(err) console.log(err);
 			if(objects){
@@ -199,7 +199,7 @@ exports.addVendor = function(req, res) {
 			let _object = new Vendor(objBody)
 			_object.save(function(err, objSave) {
 				if(err) console.log(err);
-				res.redirect('/vendorList')
+				res.redirect('/vendorDetail/'+objSave._id)
 			})
 		}
 	})
@@ -272,9 +272,9 @@ exports.updateVendor = function(req, res) {
 					Index.sfOptionWrong(req, res, info)
 				} else {
 					let _object = _.extend(object, objBody)
-					_object.save(function(err, object) {
+					_object.save(function(err, objSave) {
 						if(err) console.log(err);
-						res.redirect('/vendorList')
+						res.redirect('/vendorDetail/'+objSave._id)
 					})
 				}
 			})

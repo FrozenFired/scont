@@ -9,7 +9,7 @@ var _ = require('underscore')
 
 exports.nationsFilter = function(req, res, next) {
 	Nation.find()
-	.sort({'weight': -1}).sort({'numbrand': -1})
+	.sort({'weight': -1, 'numbrand': -1})
 	.exec(function(err, objects){
 		if(err) console.log(err);
 		if(objects) {
@@ -94,7 +94,7 @@ exports.addNation = function(req, res) {
 			_object.creater = req.session.crSfer._id
 			_object.save(function(err, objSave) {
 				if(err) console.log(err);
-				res.redirect('/nationList')
+				res.redirect('/nationDetail/'+objSave._id)
 			})
 		}
 	})

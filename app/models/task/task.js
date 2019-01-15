@@ -28,11 +28,11 @@ let dbSchema = new Schema({
 });
 
 dbSchema.pre('save', function(next) {	
-	if(this.isNew) {
-		this.updateAt = this.createAt = Date.now();
-	} else {
-		this.updateAt = Date.now();
-	}
+	// if(this.isNew) {
+	// 	this.updateAt = this.createAt = Date.now();
+	// } else {
+	// 	this.updateAt = Date.now();
+	// }
 	next()
 });
 

@@ -2,7 +2,10 @@ extends ../../aalayout/layout
 
 block content
 	.container
-		h1 Brand Category:
+		.row(class=objBg)
+			h1.col-sm-6 Brand Category: [#{object.code}]
+			.col-sm-6.text-right
+				a.btn.btn-link(href="/bcategList") category list
 		hr
 		include ./detail/selfInfo
 		if brands && brands.length > 0

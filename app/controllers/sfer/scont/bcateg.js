@@ -8,7 +8,7 @@ let _ = require('underscore')
 
 exports.bcategsFilter = function(req, res, next) {
 	Bcateg.find()
-	.sort({"bcate": 1, "numbrand": -1})
+	.sort({"bcate": 1, "weight": -1, "numbrand": -1})
 	.exec(function(err, objects){
 		if(err) console.log(err);
 		if(objects) {
@@ -89,7 +89,7 @@ exports.addBcateg = function(req, res) {
 			_object.save(function(err, objSave) {
 				if(err) console.log(err);
 
-				res.redirect('/bcategList')
+				res.redirect('/bcategDetail/'+objSave._id)
 			})
 		}
 	})
@@ -169,7 +169,7 @@ exports.updateBcateg = function(req, res) {
 					_object.save(function(err, objSave) {
 						if(err) console.log(err);
 
-						res.redirect('/bcategList')
+						res.redirect('/bcategDetail/'+objSave._id)
 					})
 				}
 			})

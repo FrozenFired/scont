@@ -12,6 +12,7 @@ let MtyBcateg = require('../app/controllers/mger/multy/bcateg');
 let MtyBrand = require('../app/controllers/mger/multy/brand');
 let MtyVendor = require('../app/controllers/mger/multy/vendor');
 let MtyScont = require('../app/controllers/mger/multy/scont');
+let MtyTask = require('../app/controllers/mger/multy/task');
 
 let MiddleBcrypt = require('../app/middle/middleBcrypt');
 let MiddleRole = require('../app/middle/middleRole');
@@ -71,5 +72,8 @@ module.exports = function(app){
 	app.post('/multyBrand', multipartMiddleware, MiddleExcel.loadFile, MtyBrand.multyBrand)
 	app.post('/multyVendor', multipartMiddleware, MiddleExcel.loadFile, MtyVendor.multyVendor)
 	app.post('/multyScont', multipartMiddleware, MiddleExcel.loadFile, MtyScont.multyScont)
+
+	
+	app.post('/multyTask', multipartMiddleware, MiddleExcel.loadFile, MtyTask.multyTask)
 
 };
