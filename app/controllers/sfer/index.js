@@ -1,5 +1,5 @@
-var Sfer = require('../../models/user/sfer');
-var bcrypt = require('bcryptjs');
+let Sfer = require('../../models/user/sfer');
+let bcrypt = require('bcryptjs');
 
 
 exports.sfer = function(req, res) {
@@ -43,8 +43,11 @@ exports.sferLogin = function(req, res) {
 
 
 exports.loginSfer = function(req, res) {
-	var code = req.body.code.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
-	var password = req.body.password.replace(/(\s*$)/g, "").replace( /^\s*/, '');
+	let code = req.body.code.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+	let password = String(req.body.password).replace(/(\s*$)/g, "").replace( /^\s*/, '');
+	if(password.length == 0) {
+		password = " ";
+	}
 	Sfer.findOne({code: code}, function(err, sfer) {
 		if(err) console.log(err);
 		if(!sfer){
@@ -55,7 +58,7 @@ exports.loginSfer = function(req, res) {
 			bcrypt.compare(password, sfer.password, function(err, isMatch) {
 				if(err) console.log(err);
 				if(isMatch) {
-					var loginTime = Date.now()
+					let loginTime = Date.now()
 
 					sfer.loginTime = loginTime
 					sfer.save(function(err, sfer){

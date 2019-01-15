@@ -2,7 +2,6 @@ extends ../../aalayout/layout
 
 block content
 	.container
-		
 		include ./detail/selfInfo
 
 		include ./detail/mark
@@ -10,3 +9,4 @@ block content
 		if crSfer.role == 5 || crSfer.role == 10
 			-a;
 			include ./detail/vendors
+	script(src="/js/responsive.js")
