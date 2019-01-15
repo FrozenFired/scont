@@ -23,8 +23,8 @@
 			th brand Numbers
 			th option
 		tr
-			td #{moment(object.createAt).format('DD/MM/YYYY')}
-			td #{moment(object.updateAt).format('DD/MM/YYYY')}
+			td #{moment(object.createAt).format('YYYY/MM/DD')}
+			td #{moment(object.updateAt).format('YYYY/MM/DD')}
 			td
 				if object.creater
 					-a;

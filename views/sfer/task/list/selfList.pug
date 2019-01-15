@@ -33,7 +33,7 @@ table.table.table-hover.table-bordered
 						textarea.form-control.rounded-0(class="tar-"+item._id, rows="3", name="object[note]")
 						button.btn.btn-default.btnCancel(class="cancel-"+item._id, type="button", data-id=item._id, style="display:none") cancel
 						input.btn.btn-info(type="submit" value="Edit Note")
-				td #{moment(item.createAt).format('MM/DD/YYYY')}
+				td #{moment(item.createAt).format('YYYY/MM/DD')}
 				td #{item.finishAt}
 				//- td #{Conf.stsTask[item.status]}
 				td

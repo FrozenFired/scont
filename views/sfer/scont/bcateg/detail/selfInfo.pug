@@ -21,8 +21,8 @@
 			th option
 		tr
 			td #{object.numbrand}
-			td #{moment(object.createAt).format('DD/MM/YYYY')}
-			td #{moment(object.updateAt).format('DD/MM/YYYY')}
+			td #{moment(object.createAt).format('YYYY/MM/DD')}
+			td #{moment(object.updateAt).format('YYYY/MM/DD')}
 			if object.creater && object.creater.name
 				-a;
 				td #{object.creater.name}

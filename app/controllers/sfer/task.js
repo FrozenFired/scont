@@ -302,7 +302,7 @@ exports.taskStatus = function(req, res) {
 		if(object){
 			object.status = parseInt(newStatus)
 			if(object.status == 1) {
-				object.finishAt = moment(Date.now()).format('MM/DD/YYYY HH:mm')
+				object.finishAt = moment(Date.now()).format('YYYY/MM/DD HH:mm')
 			} else {
 				object.finishAt = ""
 			}

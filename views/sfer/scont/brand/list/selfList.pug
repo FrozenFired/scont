@@ -42,8 +42,8 @@ table.table.table-hover.table-bordered
 					td 0
 				-a;
 				td
-					li #{moment(item.createAt).format('MM/DD/YYYY')}
-					li #{moment(item.updateAt).format('MM/DD/YYYY')}
+					li #{moment(item.createAt).format('YYYY/MM/DD')}
+					li #{moment(item.updateAt).format('YYYY/MM/DD')}
 				td
 					a.btn.btn-primary(href="/brandDetail/"+item._id) view
 					if item.sconts && item.sconts.length == 0

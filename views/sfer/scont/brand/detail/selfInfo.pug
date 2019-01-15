@@ -81,9 +81,9 @@ hr
 					br
 					span updater: #{object.updater.code}
 			td 
-				span #{moment(object.createAt).format('MM/DD/YYYY HH:mm')}
+				span #{moment(object.createAt).format('YYYY/MM/DD')}
 				br
-				span #{moment(object.updateAt).format('MM/DD/YYYY HH:mm')}
+				span #{moment(object.updateAt).format('YYYY/MM/DD')}
 				
 			td #{Conf.weight[object.weight]}
 			td

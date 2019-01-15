@@ -53,7 +53,7 @@ hr
 				if object.updater
 					-a;
 					span #{object.updater.code}
-			td #{moment(object.createAt).format('MM/DD/YYYY HH:mm')} <br/> #{moment(object.updateAt).format('MM/DD/YYYY HH:mm')}
+			td #{moment(object.createAt).format('YYYY/MM/DD')} <br/> #{moment(object.updateAt).format('YYYY/MM/DD')}
 			td(class=scontBg) #{Conf.stsScont[object.status]}
 			
 			td
