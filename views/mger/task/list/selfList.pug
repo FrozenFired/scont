@@ -1,0 +1,40 @@
+table.table.table-hover.table-bordered
+	thead
+		tr
+			th code
+			th title
+			th order
+			th description
+			th(style="min-width: 200px") note
+			th createAt
+			th finishAt
+			//- th status
+			th changeStatus
+	tbody
+		each item in objects
+			-a;
+			if item.status == 1
+				- bgr="bg-white";
+			else
+				- bgr="bg-light";
+			tr(class="item-id-"+item._id+" "+bgr)
+				td: a(href="/mgTaskDetail/"+item._id) #{item.code}
+				td #{item.title}
+				td #{item.order}
+				td #{item.description}
+				td #{item.note}
+				td #{moment(item.createAt).format('MM/DD/YYYY')}
+				td #{item.finishAt}
+				//- td #{Conf.stsTask[item.status]}
+
+				if item.status == 0
+					-a;
+					td.bg-info progress
+					
+				else if item.status == 1
+					-a;
+					td.bg-warning finish
+				else
+					-a;
+					td.bg-danger status error
+				

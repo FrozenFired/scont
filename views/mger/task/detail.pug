@@ -2,17 +2,25 @@ extends ../aalayout/layout
 
 block content
 	.container
+		.row
+			h1.col-sm-6
+				span Task Information:
+			.col-sm-4.text-right
+				a.btn.btn-link(href="/mgTaskList") task list
+		hr
 		form(method="post", action="updateTask", enctype="multipart/form-data")
 			.form-group.row
 				label.col-sm-2.col-form-label TaskCode
 				.col-sm-3
 					input.form-control(type="text", value=object.code, readonly="readonly")
+
 				label.col-sm-2.col-form-label User
 				.col-sm-3
-					if object.user
-						input.form-control(type="text", value=object.user.code, readonly="readonly")
+					if object.staff
+						-let a;
+						input.form-control(type="text", value=object.staff.code, readonly="readonly")
 					else
-						input.form-control(type="text", value="Staff is deleted", readonly="readonly")
+						input.form-control(type="text", value="user lost", readonly="readonly")
 			hr
 			.form-group.row
 				label.col-sm-2.col-form-label Title
@@ -24,12 +32,16 @@ block content
 					input.form-control(type="text", value=object.order, readonly="readonly")
 
 			.form-group.row
-				input#iptDesc(type="hidden",  value=object.description, readonly="readonly")
+				input#valDesc(type="hidden",  value=object.description, readonly="readonly")
 				label.col-sm-2.col-form-label description
 				.col-sm-8
-					textarea#tarDesc.form-control.rounded-0(rows="3", readonly="readonly")
+					textarea#iptDesc.form-control.rounded-0(rows="3", readonly="readonly")
 			.form-group.row
-				input#iptNote(type="hidden",  value=object.note, readonly="readonly")
+				input#valNote(type="hidden",  value=object.note, readonly="readonly")
 				label.col-sm-2.col-form-label note
 				.col-sm-8
-					textarea#tarNote.form-control.rounded-0(rows="3", readonly="readonly")
+					textarea#iptNote.form-control.rounded-0(rows="3", readonly="readonly")
+		.row
+			.col-sm-6
+				a.btn.btn-danger(href="/mgTaskDel/"+object._id) delete
+	script(src="/js/task/detail.js")

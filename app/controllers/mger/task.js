@@ -1,122 +1,96 @@
 let Index = require('./index')
 
 let Task = require('../../models/task/task')
+var Filter = require('../../middle/filter');
 
+let Conf = require('../../../confile/conf.js')
 let moment = require('moment')
 
-exports.mgTaskListCheck = function(req, res, next) {
-
+exports.mgTasksFilter = function(req, res, next) {
+	let title = 'task List';
+	let url = "/mgTaskList";
+	
 	// 分页
-	let page = parseInt(req.query.page) || 0
-	let count = 20
-	let index = page * count
+	let slipCond = ""; // 分页时用到的其他条件
+
+	let page = 0, entry = 10;
+	[entry, page, slipCond] = Filter.slipPage(req, entry, slipCond)
+	let index = page * entry;
 
 	// 条件判断   ----------------
 	// 查找关键字
-	let ktype = "code"
-	let keyword = "";
-	if(req.query.keyword) keyword = req.query.keyword.replace(/(\s*$)/g, "").replace( /^\s*/, '')
-	if(req.query.ktype) ktype = req.query.ktype
-	// 根据订单状态筛选   为了在前端显示所选则的状态 selStatus要在后面做一下转换
-	let selStatus = req.query.status;
-	let condStatus = "$lte";
-	if(!selStatus) {
-		selStatus = 1
-	} else if(selStatus == 2){
-		condStatus = "$gte";
-	} else if(selStatus == 3) {
-		condStatus = "$ne";
-	}
-	// console.log(selStatus)
-	// console.log(condStatus)
-	// 根据开始时间筛选
-	let selStart, condStart;
-	if(req.query.start && req.query.start.length == 10){
-		condStart = "$gt";
-		selStart = new Date(req.query.start).setHours(0,0,0,0);
-	} else {
-		condStart = "$ne";
-		selStart = null;
-	}
-	// 根据结束时间筛选
-	let selEnded, condEnded;
-	if(req.query.ended && req.query.ended.length == 10){
-		condEnded = "$lt";
-		selEnded = new Date(req.query.ended).setHours(23,59,59,0)
-	} else {
-		condEnded = "$ne";
-		selEnded = null;
-	}
-	// console.log(condEnded)
-	// console.log(selEnded)
+	let keytype = "code", keyword = "";
+	[keytype, keyword, slipCond] = Filter.key(req, keytype, keyword, slipCond)
+	// 根据状态筛选
+	// let condStatus = Object.keys(Conf.stsTask);
+	let condStatus = 0;
+	[condStatus, slipCond] = Filter.status(req.query.status, condStatus, slipCond);
+
+	// 根据创建更新时间筛选
+	let at = Filter.at(req);
+	slipCond+=at.slipCond;
 
 	Task.count({
-		[ktype]: new RegExp(keyword + '.*'),
-		'createAt': {[condStart]: selStart, [condEnded]: selEnded},
-		'status': {[condStatus]: selStatus}
+		[keytype]: new RegExp(keyword + '.*'),
+		'createAt': {[at.symCrtStart]: at.condCrtStart, [at.symCrtEnded]: at.condCrtEnded},
+		'updateAt': {[at.symUpdStart]: at.condUpdStart, [at.symUpdEnded]: at.condUpdEnded},
+		'status': condStatus  // 'status': {[symStatus]: condStatus}
 	})
-	.exec(function(err, amount) {
+	.exec(function(err, count) {
 		if(err) console.log(err);
 		Task.find({
-			[ktype]: new RegExp(keyword + '.*'),
-			'createAt': { [condStart]: selStart, [condEnded]: selEnded },
-			'status': {[condStatus]: selStatus}
+			[keytype]: new RegExp(keyword + '.*'),
+			'createAt': {[at.symCrtStart]: at.condCrtStart, [at.symCrtEnded]: at.condCrtEnded},
+			'updateAt': {[at.symUpdStart]: at.condUpdStart, [at.symUpdEnded]: at.condUpdEnded},
+			'status': condStatus  // 'status': {[symStatus]: condStatus}
 		})
-		.populate('staff')
 		.skip(index)
-		.limit(count)
+		.limit(entry)
+		.populate('staff')
 		.sort({"createAt": -1})
 		.exec(function(err, objects) {
 			if(err) console.log(err);
+			if(objects){
+				// console.log(objects)
+				let list = new Object()
+				list.title = title;
+				list.url = url;
+				list.crMger = req.session.crMger;
 
-			let object = new Object()
-			object.objects = objects;
-			object.selStatus = selStatus;
-			object.selStart = selStart;
-			object.selEnded = selEnded;
-			object.ktype = ktype;
-			object.keyword = keyword;
+				list.count = count;
+				list.objects = objects;
 
-			object.amount = amount;
-			object.count = count;
-			object.page = page;
-			req.body.object = object;
-			next();
-			
+				list.keytype = req.query.keytype;
+				list.keyword = req.query.keyword;
+
+				list.condStatus = condStatus;
+
+				list.condCrtStart = req.query.crtStart;
+				list.condCrtEnded = req.query.crtEnded;
+				list.condUpdStart = req.query.updStart;
+				list.condUpdEnded = req.query.updEnded;
+
+				list.currentPage = (page + 1);
+				list.entry = entry;
+				list.totalPage = Math.ceil(count / entry);
+
+				list.slipCond = slipCond;
+
+				req.body.list = list;
+				next();
+			} else {
+				info = "Option error, Please Contact Manger"
+				Index.mgOptionWrong(req, res, info)
+			}
 		})
 	})
 }
 
 exports.mgTaskList = function(req, res) {
-	let object = req.body.object
-	let slipCond = "&ktype="+object.ktype;
-		slipCond += "&keyword="+object.keyword;
-		slipCond += "&start="+moment(object.selStart).format('MM/DD/YYYY');
-		slipCond += "&ended="+moment(object.selEnded).format('MM/DD/YYYY');
-		slipCond += "&status="+object.selStatus;
-	res.render('./mger/task/list', {
-		title: '任务列表',
-		crMger : req.session.crMger,
-		objects: object.objects,
-		amount: object.amount,
-
-		selStatus: object.selStatus,
-		selStart: object.selStart,
-		selEnded: object.selEnded,
-		ktype: object.ktype,
-		keyword: object.keyword,
-
-		currentPage: (object.page + 1),
-		totalPage: Math.ceil(object.amount / object.count),
-		slipUrl: '/mgTaskList?',
-		slipCond: slipCond,
-
-		filterAction: '/mgTaskList',
-		printAction: '/mgTaskListPrint'
-	})
+	res.render('./mger/task/list', req.body.list)
 }
 exports.mgTaskListPrint = function(req, res) {
-	let objects = req.body.object.objects
+	let objects = req.body.list.objects
 	
 	let xl = require('excel4node');
 	let wb = new xl.Workbook({
@@ -162,7 +136,7 @@ exports.mgTaskListPrint = function(req, res) {
 
 
 
-exports.mgTaskDetailCheck = function(req, res, next) {
+exports.mgTaskFilter = function(req, res, next) {
 	let id = req.params.id
 	Task.findOne({_id: id})
 	.populate('staff')
@@ -184,5 +158,13 @@ exports.mgTaskDetail = function(req, res) {
 		title: 'task Infomation',
 		crMger : req.session.crMger,
 		object: objBody
+	})
+}
+
+exports.mgTaskDel = function(req, res) {
+	let objBody = req.body.object;
+	Task.remove({_id: objBody._id}, function(err, taskRm) {
+		if(err) console.log(err);
+		res.redirect('/mgTaskList')
 	})
 }

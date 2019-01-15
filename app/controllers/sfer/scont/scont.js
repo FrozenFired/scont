@@ -249,8 +249,8 @@ createBrand = function(req, res) {
 		} else {
 			// console.log('brand不存在')
 			let brandBody = req.body.brand
-			brandBody.code = brandBody.code.replace(/(\s*$)/g, "").replace( /^\s*/, '')
-			brandBody.code = brandBody.code.toUpperCase()
+			brandBody.code = brandBody.code.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+			brandBody.createAt = brandBody.updateAt = Date.now();
 			// console.log(brandBody.bcateg)
 			if(brandBody.nation.length < 15 || brandBody.bcateg.length < 15){
 				info = "Your brand nation or category is not complete, Please Reopration";
@@ -285,8 +285,8 @@ createVendor = function(req, res) {
 			createScont(req, res)
 		} else {
 			let vendorBody = req.body.vendor
-			vendorBody.code = vendorBody.code.replace(/(\s*$)/g, "").replace( /^\s*/, '')
-			vendorBody.code = vendorBody.code.toUpperCase()
+			vendorBody.code = vendorBody.code.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+			vendorBody.createAt = vendorBody.updateAt = Date.now();
 			Vendor.findOne({code: vendorBody.code}, function(err, vendor) {
 				if(err) console.log(err);
 				if(vendor) {

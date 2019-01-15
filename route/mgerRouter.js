@@ -57,11 +57,10 @@ module.exports = function(app){
 	app.delete('/mgSferDel', MiddleRole.mgerIsLogin, Sfer.mgSferDel)
 
 	// Task         ----------------------------------------------------------------------
-	app.get('/mgTaskList', MiddleRole.mgerIsLogin, Task.mgTaskListCheck, Task.mgTaskList)
-	app.get('/mgTaskDetail/:id', MiddleRole.mgerIsLogin, Task.mgTaskDetailCheck, Task.mgTaskDetail)
-
-	app.get('/mgTaskListPrint', MiddleRole.mgerIsLogin, Task.mgTaskListCheck, Task.mgTaskListPrint)
-
+	app.get('/mgTaskList', MiddleRole.mgerIsLogin, Task.mgTasksFilter, Task.mgTaskList)
+	app.get('/mgTaskListPrint', MiddleRole.mgerIsLogin, Task.mgTasksFilter, Task.mgTaskListPrint)
+	app.get('/mgTaskDetail/:id', MiddleRole.mgerIsLogin, Task.mgTaskFilter, Task.mgTaskDetail)
+	app.get('/mgTaskDel/:id', MiddleRole.mgerIsLogin, Task.mgTaskFilter, Task.mgTaskDel)
 
 
 	// Multy ---------------------------------------------------------------------------------

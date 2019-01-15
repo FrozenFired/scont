@@ -25,7 +25,12 @@ let dbSchema = new Schema({
 });
 
 dbSchema.pre('save', function(next) {	
-	next();
+	if(this.isNew) {
+		this.createAt = this.updateAt = Date.now()
+	} else {
+		this.updateAt = Date.now()
+	}
+	next()
 });
 
 let db = mongoose.model(colection, dbSchema);

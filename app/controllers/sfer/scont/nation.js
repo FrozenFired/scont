@@ -1,11 +1,11 @@
-var Index = require('../index')
-var Nation = require('../../../models/scont/nation')
-var Brand = require('../../../models/scont/brand')
+let Index = require('../index')
+let Nation = require('../../../models/scont/nation')
+let Brand = require('../../../models/scont/brand')
 
-var Filter = require('../../../middle/filter');
+let Filter = require('../../../middle/filter');
 
 let moment = require('moment')
-var _ = require('underscore')
+let _ = require('underscore')
 
 exports.nationsFilter = function(req, res, next) {
 	Nation.find()
@@ -80,17 +80,17 @@ exports.nationAdd = function(req, res) {
 
 
 exports.addNation = function(req, res) {
-	var objBody = req.body.object
+	let objBody = req.body.object
 
-	var code = objBody.code.replace(/(\s*$)/g, "")
-	objBody.code = code.replace( /^\s*/, '')
+	objBody.code = objBody.code.replace(/(\s*$)/g, "").replace( /^\s*/, '');
+	objBody.updateAt = objBody.createAt = Date.now();
 	Nation.findOne({code: objBody.code}, function(err, object) {
 		if(err) console.log(err);
 		if(object) {
 			info = "This Nation Code is Exist"
 			Index.sfOptionWrong(req, res, info)
 		} else {
-			var _object = new Nation(objBody)
+			let _object = new Nation(objBody)
 			_object.creater = req.session.crSfer._id
 			_object.save(function(err, objSave) {
 				if(err) console.log(err);
@@ -104,7 +104,7 @@ exports.addNation = function(req, res) {
 
 
 exports.nationDetail = function(req, res){
-	var id = req.params.id
+	let id = req.params.id
 	Nation.findOne({_id: id})
 	// .populate({path: 'brands', options: {sort: {'weight': -1} } } )
 	.populate('creater')
@@ -135,7 +135,7 @@ exports.nationDetail = function(req, res){
 }
 
 exports.nationUpdate = function(req, res){
-	var id = req.params.id
+	let id = req.params.id
 	Nation.findOne({_id: id})
 	.exec(function(err, object){
 		if(err) console.log(err);
@@ -153,8 +153,9 @@ exports.nationUpdate = function(req, res){
 }
 
 exports.updateNation = function(req, res) {
-	var objBody = req.body.object
+	let objBody = req.body.object
 	objBody.code = objBody.code.replace(/(\s*$)/g, "").replace( /^\s*/, '')
+	objBody.updateAt = Date.now();
 
 	Nation.findOne({_id: objBody._id}, function(err, object) {
 		if(err) console.log(err);
@@ -167,7 +168,7 @@ exports.updateNation = function(req, res) {
 					info = "This Nation Code is Exist"
 					Index.sfOptionWrong(req, res, info)
 				} else {
-					var _object = _.extend(object, objBody)
+					let _object = _.extend(object, objBody)
 					_object.updateUser = req.session.crSfer._id
 					_object.save(function(err, object) {
 						if(err) console.log(err);
@@ -183,7 +184,7 @@ exports.updateNation = function(req, res) {
 }
 
 exports.nationDel = function(req, res) {
-	var id = req.query.id
+	let id = req.query.id
 	Nation.findOne({_id: id})
 	.exec(function(err, nation){
 		if(err) console.log(err);

@@ -77,7 +77,9 @@ exports.bcategAdd = function(req, res) {
 exports.addBcateg = function(req, res) {
 	let objBody = req.body.object
 
-	objBody.code = objBody.code.replace(/(\s*$)/g, "").replace( /^\s*/, '')
+	objBody.code = objBody.code.replace(/(\s*$)/g, "").replace( /^\s*/, '');
+	objBody.updateAt = objBody.createAt = Date.now();
+
 	Bcateg.findOne({code: objBody.code}, function(err, object) {
 		if(err) console.log(err);
 		if(object) {
@@ -150,8 +152,9 @@ exports.bcategUpdate = function(req, res){
 }
 
 exports.updateBcateg = function(req, res) {
-	let objBody = req.body.object
-	objBody.code = objBody.code.replace(/(\s*$)/g, "").replace( /^\s*/, '')
+	let objBody = req.body.object;
+	objBody.code = objBody.code.replace(/(\s*$)/g, "").replace( /^\s*/, '');
+	objBody.updateAt = Date.now();
 
 	Bcateg.findOne({_id: objBody._id}, function(err, object) {
 		if(err) console.log(err);

@@ -2,13 +2,18 @@ extends ../aalayout/layout
 
 block content
 	.container
-		#selectOption
-			include ../../sfer/sfer/task/list/selectList
-		hr
 		.row
-			include ../../sfer/sfer/aalayout/pageSlip
-		.row
-			include ./list/taskList
-
+			h1.col-sm-6 Tasks [#{count}]
+			.col-sm-6.text-right
+				a.btn.btn-primary.btn-lg(href="/taskAdd") new Task
 		hr
-		include ../../sfer/sfer/task/list/selectPrint
+		#selectOption.bg-light.pt-2
+			include ./list/filter
+		hr
+		include ../../aaPlugin/pageSlip
+		include ./list/selfList
+		.row
+			.col-sm-8
+			.col-sm-4
+				include ./list/print
+	script(src="/js/responsive.js")
