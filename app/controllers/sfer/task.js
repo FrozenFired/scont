@@ -192,6 +192,7 @@ getNewTaskCode = function(lastTask, userCode) {
 exports.addTask = function(req, res) {
 	let objBody = req.body.object
 	objBody.status = 0
+	objBody.updateAt = objBody.createAt = Date.now();
 	Task.findOne({code: objBody.code}, function(err, object) {
 		if(err) console.log(err);
 		if(object) {
@@ -260,6 +261,7 @@ exports.taskUpdate = function(req, res) {
 exports.updateTask = function(req, res) {
 	let objBody = req.body.object
 	// console.log(objBody)
+	objBody.updateAt = Date.now();
 	Task.findOne({_id: objBody._id}, function(err, object) {
 		if(err) console.log(err);
 		if(!object) {
