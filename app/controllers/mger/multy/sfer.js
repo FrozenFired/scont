@@ -2,10 +2,10 @@ let rtPath = require('path').join(__dirname, "../../../../");
 let Sfer = require("../../../models/user/sfer");
 let Conf = require('../../../../confile/conf.js')
 
-var _ = require('underscore')
+let _ = require('underscore')
 
-var bcrypt = require('bcryptjs')
-var SALT_WORK_FACTOR = 10
+let bcrypt = require('bcryptjs')
+let SALT_WORK_FACTOR = 10
 
 exports.multySfer = function(req, res) {
 	let filePath = req.body.filePath;
@@ -45,7 +45,7 @@ saveSfers = function(i, n, arrs){
 						bcrypt.hash(sfer.password, salt, function(err, hash) {
 							if(err) console.log(err)
 							sfer.password = hash
-							var _sfer = new Sfer(sfer)
+							let _sfer = new Sfer(sfer)
 							_sfer.save(function(err, SferObj){
 								if(err) console.log(err);
 								saveSfers(i+1, n, arrs);

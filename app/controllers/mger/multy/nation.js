@@ -1,7 +1,7 @@
 let rtPath = require('path').join(__dirname, "../../../../");
 let Nation = require("../../../models/scont/nation");
 
-var _ = require('underscore')
+let _ = require('underscore')
 
 exports.multyNation = function(req, res) {
 	let filePath = req.body.filePath;
@@ -29,7 +29,7 @@ saveNations = function(i, n, arrs){
 				console.log(nation.code + " is already existed");
 				saveNations(i+1, n, arrs)
 			} else {
-				var _nation = new Nation(nation)
+				let _nation = new Nation(nation)
 				_nation.save(function(err, nationObj) {
 					if(err) console.log(err);
 					saveNations(i+1, n, arrs)

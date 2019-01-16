@@ -1,7 +1,7 @@
 let Index = require('./index')
 
 let Task = require('../../models/task/task')
-var Filter = require('../../middle/filter');
+let Filter = require('../../middle/filter');
 
 let Conf = require('../../../confile/conf.js')
 let moment = require('moment')

@@ -1,8 +1,8 @@
-var Scont = require('../../../models/scont/scont')
-var Vendor = require('../../../models/scont/vendor')
-var Brand = require('../../../models/scont/brand')
+let Scont = require('../../../models/scont/scont')
+let Vendor = require('../../../models/scont/vendor')
+let Brand = require('../../../models/scont/brand')
 
-var SctRelate = {
+let SctRelate = {
 	// brandDel
 	brandUnrelScontVendor : function(i, n, sconts){
 		if(i == n) return;

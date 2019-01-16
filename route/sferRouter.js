@@ -1,21 +1,21 @@
-var Index = require('../app/controllers/sfer/index');
+let Index = require('../app/controllers/sfer/index');
 
-var Sfer = require('../app/controllers/sfer/sfer');
-var Task = require('../app/controllers/sfer/task');
+let Sfer = require('../app/controllers/sfer/sfer');
+let Task = require('../app/controllers/sfer/task');
 
-var Nation = require('../app/controllers/sfer/scont/nation');
-var Bcateg = require('../app/controllers/sfer/scont/bcateg');
+let Nation = require('../app/controllers/sfer/scont/nation');
+let Bcateg = require('../app/controllers/sfer/scont/bcateg');
 
-var Brand = require('../app/controllers/sfer/scont/brand');
-var Vendor = require('../app/controllers/sfer/scont/vendor');
-var Scont = require('../app/controllers/sfer/scont/scont');
+let Brand = require('../app/controllers/sfer/scont/brand');
+let Vendor = require('../app/controllers/sfer/scont/vendor');
+let Scont = require('../app/controllers/sfer/scont/scont');
 
-var MiddleBcrypt = require('../app/middle/middleBcrypt');
-var MiddleRole = require('../app/middle/middleRole');
-var MiddlePicture = require('../app/middle/middlePicture');
+let MiddleBcrypt = require('../app/middle/middleBcrypt');
+let MiddleRole = require('../app/middle/middleRole');
+let MiddlePicture = require('../app/middle/middlePicture');
 
-var multipart = require('connect-multiparty');
-var multipartMiddleware = multipart();
+let multipart = require('connect-multiparty');
+let multipartMiddleware = multipart();
 
 module.exports = function(app){
 
@@ -73,12 +73,12 @@ module.exports = function(app){
 	app.get('/ajaxBcateg', MiddleRole.sfitIsLogin, Bcateg.ajaxBcateg)
 
 	// Brand ------------------------------------------------------------------------------
-	app.get('/brandAdd', MiddleRole.sfitIsLogin, Brand.brandAdd)
+	app.get('/brandAdd', MiddleRole.bnerIsLogin, Brand.brandAdd)
 	app.get('/brandList', MiddleRole.sferIsLogin, Brand.brandsFilter, Brand.brandList)
 	app.get('/brandListPrint', MiddleRole.sfitIsLogin, Brand.brandsFilter, Brand.brandListPrint)
 	app.get('/brandDetail/:id', MiddleRole.sferIsLogin, Brand.brandFilter, Brand.brandDetail)
 	app.get('/brandUpdate/:id', MiddleRole.bnerIsLogin, Brand.brandFilter, Brand.brandUpdate)
-	app.post('/addBrand', multipartMiddleware, MiddleRole.sfitIsLogin, Brand.addBrand)
+	app.post('/addBrand', multipartMiddleware, MiddleRole.bnerIsLogin, Brand.addBrand)
 	app.post('/updateBrand', multipartMiddleware, MiddleRole.bnerIsLogin, Brand.updateBrand)
 	app.delete('/brandDel', MiddleRole.bnerIsLogin, Brand.brandDel)
 
@@ -86,12 +86,12 @@ module.exports = function(app){
 	app.get('/ajaxBrandSts', MiddleRole.bnerIsLogin, Brand.ajaxBrandSts)
 
 	// Vendor ------------------------------------------------------------------------------
-	app.get('/vendorAdd', MiddleRole.sfitIsLogin, Vendor.vendorAdd)
+	app.get('/vendorAdd', MiddleRole.bnerIsLogin, Vendor.vendorAdd)
 	app.get('/vendorList', MiddleRole.sfitIsLogin, Vendor.vendorsFilter, Vendor.vendorList)
 	app.get('/vendorListPrint', MiddleRole.sfitIsLogin, Vendor.vendorsFilter, Vendor.vendorListPrint)
 	app.get('/vendorDetail/:id', MiddleRole.sfitIsLogin, Vendor.vendorFilter, Vendor.vendorDetail)
 	app.get('/vendorUpdate/:id', MiddleRole.bnerIsLogin, Vendor.vendorFilter, Vendor.vendorUpdate)
-	app.post('/addVendor', multipartMiddleware, MiddleRole.sfitIsLogin, Vendor.addVendor)
+	app.post('/addVendor', multipartMiddleware, MiddleRole.bnerIsLogin, Vendor.addVendor)
 	app.post('/updateVendor', multipartMiddleware, MiddleRole.bnerIsLogin, Vendor.updateVendor)
 	app.delete('/vendorDel', MiddleRole.bnerIsLogin, Vendor.vendorDel)
 

@@ -2,7 +2,7 @@ let rtPath = require('path').join(__dirname, "../../../../");
 let Bcateg = require("../../../models/scont/bcateg");
 let Conf = require('../../../../confile/conf.js')
 
-var _ = require('underscore')
+let _ = require('underscore')
 
 exports.multyBcateg = function(req, res) {
 	let filePath = req.body.filePath;
@@ -32,7 +32,7 @@ saveBcategs = function(i, n, arrs){
 					console.log(bcateg.code + " is already existed");
 					saveBcategs(i+1, n, arrs)
 				} else {
-					var _bcateg = new Bcateg(bcateg)
+					let _bcateg = new Bcateg(bcateg)
 					_bcateg.save(function(err, bcategObj) {
 						if(err) console.log(err);
 						saveBcategs(i+1, n, arrs)

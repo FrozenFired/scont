@@ -3,7 +3,7 @@ let Brand = require('../../../models/scont/brand');
 let Bcateg = require('../../../models/scont/bcateg');
 let Nation = require('../../../models/scont/nation');
 
-var Filter = require('../../../middle/filter');
+let Filter = require('../../../middle/filter');
 
 let Conf = require('../../../../confile/conf.js')
 let _ = require('underscore');
@@ -235,6 +235,7 @@ exports.addBrand = function(req, res) {
 	let objBody = req.body.object
 
 	objBody.code = objBody.code.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+	
 	// objBody.status = 0;
 	objBody.updater = objBody.creater = req.session.crSfer._id;
 	objBody.updateAt = objBody.createAt = Date.now();

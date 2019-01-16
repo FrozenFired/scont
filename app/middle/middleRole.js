@@ -1,4 +1,5 @@
-// let Conf = require('../../confile/conf')
+// 更加安全的话可以每次验证都经过数据库, 现在的实际情况不需要
+
 let AdIndex = require('../controllers/ader/index')
 exports.aderIsLogin = function(req, res, next) {
 	let crAder = req.session.crAder
@@ -35,7 +36,7 @@ exports.sferIsLogin = function(req, res, next) {
 }
 
 exports.singleSferLogin = function(req, res, next){
-	var crSfer = req.session.crSfer
+	let crSfer = req.session.crSfer
 	Sfer.findById(crSfer._id, function(err, sfer){
 		if(err) {console.log(err)}
 

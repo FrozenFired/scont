@@ -6,7 +6,9 @@ block content
 			h1.col-sm-6
 				span Brands [#{count}]
 			.col-sm-3.text-right
-				span: a.btn.btn-info.btn-lg(href="/brandAdd") Add Brand
+				if crSfer && crSfer.role == 5
+					-a;
+					span: a.btn.btn-info.btn-lg(href="/brandAdd") Add Brand
 			.col-sm-3.text-right
 				span: a.btn.btn-info.btn-lg(href="/scontAdd") Add Scont
 		hr

@@ -6,7 +6,9 @@ block content
 			h1.col-sm-6
 				span Vendors [#{count}]
 			.col-sm-3.text-right
-				span: a.btn.btn-info.btn-lg(href="/vendorAdd") Add Vendor
+				if crSfer && crSfer.role == 5
+					-a;
+					span: a.btn.btn-info.btn-lg(href="/vendorAdd") Add Vendor
 			.col-sm-3.text-right
 				span: a.btn.btn-info.btn-lg(href="/scontAdd") Add Scont
 		hr

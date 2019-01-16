@@ -3,7 +3,7 @@ let Sfer = require("../../../models/user/sfer");
 let Task = require("../../../models/task/task");
 let Conf = require('../../../../confile/conf.js')
 
-var _ = require('underscore')
+let _ = require('underscore')
 
 exports.multyTask = function(req, res) {
 	let filePath = req.body.filePath;
@@ -55,7 +55,7 @@ saveTasks = function(i, n, arrs, sferId){
 				console.log(task.code + " is already existed");
 				saveTasks(i+1, n, arrs, sferId)
 			} else {
-				var _task = new Task(task)
+				let _task = new Task(task)
 				_task.save(function(err, taskObj) {
 					if(err) console.log(err);
 					saveTasks(i+1, n, arrs, sferId)

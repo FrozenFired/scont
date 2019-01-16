@@ -1,4 +1,4 @@
-var Conf = {
+let Conf = {
 	photoPath: {
 		sferAvatar: '/avatar/sfer/',
 	},

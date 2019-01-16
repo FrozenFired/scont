@@ -1,7 +1,7 @@
 let Index = require('../index')
 let Vendor = require('../../../models/scont/vendor')
 
-var Filter = require('../../../middle/filter');
+let Filter = require('../../../middle/filter');
 
 let Conf = require('../../../../confile/conf.js')
 let _ = require('underscore')
