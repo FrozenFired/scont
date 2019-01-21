@@ -1,0 +1,19 @@
+extends ../aalayout/layout
+
+block content
+	.container
+		.row
+			h1 #{title}
+		hr
+		form(method="post", action=action)
+			.form-group.row
+				label.col-md-2.col-form-label(for="sgnCode") Code
+				.col-md-6
+					input.form-control#sgnCode(type="text", name=code, placeholder="Please input your code")
+			.form-group.row
+				label.col-md-2.col-form-label(for="sgnPw") Password
+				.col-md-6
+					input.form-control#sgnPw(type="password", name=password, placeholder="Your password")
+			.form-group.row
+				.offset-md-7.col-md-5
+					button.btn.btn-default(type="submit") SignIn

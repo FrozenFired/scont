@@ -7,7 +7,12 @@ let Conf = {
 	weight: {0: 'general', 1: 'usual', 2: 'often', 3: 'always', 4: 'important'},
 
 	//员工角色
-	sfRole: { 5: 'brand', 10: 'quotation', 15: '中国报价', 20: 'leave'},
+	sfRole: { 
+		1: 'Contabilita',
+		5: 'brand', 10: 'quotation', 15: '中国报价', 20: 'leave',
+	},
+	/* --------------------- payment ---------------------*/
+	stsPayment: {0: 'nopaid', 1: 'ac paid', 2 : 'all paid'},
 
 	/* ------------------ task staus ------------------ */
 	stsTask:{ 0: 'progress', 1: 'finish'},

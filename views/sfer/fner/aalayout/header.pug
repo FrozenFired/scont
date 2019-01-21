@@ -1,0 +1,57 @@
+.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
+	a.navbar-brand(href="/") Home 
+	button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation")
+		<span class="navbar-toggler-icon"></span>
+
+	.collapse.navbar-collapse#navbarTogglerDemo02
+		ul.navbar-nav.mr-auto.mt-2.mt-lg-0
+			if crFner
+				-a;
+				li.nav-item.active
+					a.nav-link(href="/fnPaymentList") Payment <span class="sr-only">(current)</span>
+		ul.navbar-nav
+			if crFner
+				-a;
+				//- li
+				//- 	form.form-inline(method="get", action="/headerBrand", enctype="multipart/form-data")
+				//- 		input(type="hidden", name="keytpye", value="code")
+				//- 		input.form-control.mr-sm-2(type="search", name='keyword',  placeholder="Brand Code",  aria-label="Search")
+				//- 		button.btn.btn-outline-success.my-2.my-sm-0(type="submit") Search
+
+				li.text-info
+					span &nbsp;
+					a.btn.btn-info(href="/sferDetail/"+crFner._id) hello: 
+						if crFner.name && crFner.name.length > 0
+							span #{crFner.name}
+						else
+							span #{crFner.code}
+						if crFner.role
+							span &nbsp;(#{Conf.sfRole[crFner.role]})
+						if crFner.photo
+							img(src=ServerAddress+crFner.photo, width="30")
+						-a;
+				span &nbsp;&nbsp;&nbsp;&nbsp;
+				li: a.btn.btn-danger(href="/sferLogout") Logout
+			else
+				li: a(href="#", data-toggle="modal", data-target="#signIn") manager
+
+.container
+	.row
+		div(style="height:80px") 
+
+
+#signIn.modal.fade
+	.modal-dialog
+		.modal-content
+			form(method="post", action="/loginMger")
+				.modal-header: h3 Manager Signin
+				.modal-body
+					.form-group
+						label.col-form-label(for="iptCode") Code
+						input#iptCodeModal.form-control(type="text", class="iptCode", name="code")
+					.form-group
+						label.col-form-label(for="iptPassword") Password
+						input#iptPasswordModal.form-control(type="password", class="iptPassword", name="password")
+				.modal-footer
+					button.btn.btn-default(type="button" data-dismiss="modal") 关闭
+					button.btn.btn-success(type="submit") 提交

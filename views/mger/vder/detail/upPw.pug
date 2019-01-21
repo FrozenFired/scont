@@ -1,0 +1,21 @@
+a.btn.btn-default(href="#", data-toggle="modal", data-target="#upVderPw") updatePw
+
+#upVderPw.modal.fade
+	.modal-dialog
+		.modal-content
+			form#updateInfo(method="post", action="/mgUpdateVderPw", enctype="multipart/form-data")
+				.modal-header: h3 update Information
+				.modal-body
+					input(type="hidden", name="object[_id]", value=object._id)
+					.form-group
+						label.col-form-label(for="iptCode") Code
+						input#iptCode.form-control(type="text", class="iptCode", value=object.code, readonly="readonly")
+					.form-group
+						label.col-form-label(for="iptPassword") Password
+						input#iptPassword.form-control(type="text", class="iptPassword", name="object[password]")
+					.form-group
+						label.col-form-label(for="iptCheckPw") CheckPw
+						input#iptCheckPw.form-control(type="text", class="iptCheckPw")
+				.modal-footer
+					button.btn.btn-default(type="button" data-dismiss="modal") 关闭
+					button.btn.btn-success(type="submit") 提交

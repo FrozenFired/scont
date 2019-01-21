@@ -41,7 +41,6 @@ module.exports = function(app){
 
 	// task ------------------------------------------------------------------------------
 	app.get('/taskAdd', MiddleRole.sferIsLogin, MiddleRole.singleSferLogin, Task.taskAdd)
-
 	app.post('/addTask', multipartMiddleware, MiddleRole.sferIsLogin, Task.addTask)
 	app.get('/taskList', MiddleRole.sferIsLogin, Task.tasksFilter, Task.taskList)
 	app.get('/taskListPrint', MiddleRole.sferIsLogin, Task.tasksFilter, Task.taskListPrint)

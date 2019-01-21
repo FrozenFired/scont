@@ -2,6 +2,7 @@ let Index = require('../app/controllers/mger/index');
 
 let Mger = require('../app/controllers/mger/mger');
 let Sfer = require('../app/controllers/mger/sfer');
+let Vder = require('../app/controllers/mger/vder');
 
 let Task = require('../app/controllers/mger/task');
 
@@ -55,6 +56,23 @@ module.exports = function(app){
 		Sfer.mgCheckSferUp, MiddleBcrypt.rqBcrypt, 
 		Sfer.mgUpdateSferPw)
 	app.delete('/mgSferDel', MiddleRole.mgerIsLogin, Sfer.mgSferDel)
+
+	// Vder ---------------------------------------------------------------------------------
+	app.get('/mgVderAdd', MiddleRole.mgerIsLogin, Vder.mgVderAdd)
+
+	app.post('/mgAddVder', MiddleRole.mgerIsLogin, multipartMiddleware,
+		MiddleBcrypt.rqBcrypt, Vder.mgExistVderN,
+		Vder.mgAddVder)
+
+	app.get('/mgVderList', MiddleRole.mgerIsLogin, Vder.mgVderList)
+	app.get('/mgVderDetail/:id', MiddleRole.mgerIsLogin, Vder.mgExistVderY, Vder.mgVderDetail)
+	app.post('/mgUpdateVderInfo',
+		MiddleRole.mgerIsLogin, multipartMiddleware, Vder.mgCheckVderUp, 
+		Vder.mgUpdateVderInfo)
+	app.post('/mgUpdateVderPw', MiddleRole.mgerIsLogin, multipartMiddleware,
+		Vder.mgCheckVderUp, MiddleBcrypt.rqBcrypt, 
+		Vder.mgUpdateVderPw)
+	app.delete('/mgVderDel', MiddleRole.mgerIsLogin, Vder.mgVderDel)
 
 	// Task         ----------------------------------------------------------------------
 	app.get('/mgTaskList', MiddleRole.mgerIsLogin, Task.mgTasksFilter, Task.mgTaskList)

@@ -3,19 +3,29 @@ let bcrypt = require('bcryptjs');
 
 
 exports.sfer = function(req, res) {
+	// 判断是否登录
 	if(!req.session.crSfer) {
 		res.redirect('/sferLogin');
 	} else {
-		if(req.session.crSfer.home) {
-			let url = req.session.crSfer.home.replace(/(\s*$)/g, "").replace( /^\s*/, '')
-			res.redirect('/'+url)
-		} else {
-			res.render('./sfer/index/index', {
-				title: 'Staff',
-				crSfer : req.session.crSfer,
+		// 判断登录角色
+		if(req.session.crSfer.role == 1 && req.session.crFner) {
+			// 财务部
+			res.render('./sfer/fner/index/index', {
+				title: 'Contabilita',
+				crFner : req.session.crFner,
 			});
+		} else {
+			// 品牌报价部
+			if(req.session.crSfer.home) {
+				let url = req.session.crSfer.home.replace(/(\s*$)/g, "").replace( /^\s*/, '')
+				res.redirect('/'+url)
+			} else {
+				res.render('./sfer/index/index', {
+					title: 'Staff',
+					crSfer : req.session.crSfer,
+				});
+			}
 		}
-		
 	}
 }
 
@@ -70,7 +80,9 @@ exports.loginSfer = function(req, res) {
 						sfWrongpage(req, res, info);
 					} else {
 						req.session.crSfer = sfer
-						if(sfer.role == 5) {
+						if(sfer.role == 1) {
+							req.session.crFner = sfer
+						}else if(sfer.role == 5) {
 							req.session.crBner = sfer
 						}else if(sfer.role == 10) {
 							req.session.crQter = sfer
@@ -91,8 +103,9 @@ exports.loginSfer = function(req, res) {
 
 exports.sferLogout = function(req, res) {
 	if(req.session.crSfer) delete req.session.crSfer;
-	if(req.session.crQter) delete req.session.crQter;
+	if(req.session.crBner) delete req.session.crFner;
 	if(req.session.crBner) delete req.session.crBner;
+	if(req.session.crQter) delete req.session.crQter;
 	if(req.session.crCner) delete req.session.crCner;
 	
 	res.redirect('/');

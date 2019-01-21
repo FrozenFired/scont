@@ -1,0 +1,20 @@
+extends ../aalayout/layout
+
+block content
+	.container
+		.row
+			a.btn.btn-lg.btn-success.btn-block(href="/mgVderAdd") 添加供应商
+		hr
+		.row
+			table.table.table-hover.table-bordered
+				thead
+					tr
+						th 账户
+						th delete
+				tbody
+					each item in objects
+						-a;
+						tr(class="item-id-"+item._id)
+							td: a(href="/mgVderDetail/"+item._id) #{item.code}
+							td: button.btn.btn-danger.del(type="button", data-urldel="/mgVderDel", data-id=item._id) delete
+	script(src="/js/delete.js")

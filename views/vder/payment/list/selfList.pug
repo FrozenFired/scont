@@ -1,0 +1,60 @@
+table.table.table-hover.table-bordered
+	thead
+		tr
+			th status
+			th order
+			th brand
+			th price
+			th ac
+			th acAt
+			th sa
+			th saAt
+			th(style="min-width: 200px") note
+	tbody
+		each item in objects
+			-acTime = moment(item.acAt).format('YYYYMMDD');
+			-saTime = moment(item.saAt).format('YYYYMMDD');
+			-nowTime = moment(new Date()).format('YYYYMMDD');
+			if (item.status == 0) && (acTime < nowTime)
+				- bgd0="bg-danger";
+			else if (item.status == 1) && (saTime < nowTime)
+				- bgd0="bg-danger";
+			else
+				- bgd0="bg-default";
+			if item.status == 1
+				- bgd1="bg-warning";
+			else
+				- bgd1="bg-default";
+			if item.status == 2
+				- bgr="bg-warning";
+			else
+				- bgr="bg-white";
+			tr(class="item-id-"+item._id+" "+bgr)
+				td(class=bgd0) #{Conf.stsPayment[item.status]}
+				td #{item.order}
+				td #{item.brand}
+				td #{item.price}
+				td(class=bgd1) #{item.ac}
+				td(class=bgd1)
+					if item.acAt
+						-a;
+						span #{moment(item.acAt).format('YYYY/MM/DD')}
+				td #{item.sa}
+				td
+					if item.saAt
+						-a;
+						span #{moment(item.saAt).format('YYYY/MM/DD')}
+				td
+					button.btn.btn-link.btnEdit(class="edit-"+item._id, type="button", data-id=item._id) edit
+					if item.note
+						-a;
+						span(class="text-"+item._id) &nbsp;->&nbsp; #{item.note}
+					form(class="form-"+item._id, method="post", action="/updatePayment", style="display:none")
+						input.form-control(type="hidden", name="object[_id]", value=item._id)
+						input.form-control(class="ipt-"+item._id, type="hidden", value=item.note)
+						textarea.form-control.rounded-0(class="tar-"+item._id, rows="3", name="object[note]")
+						button.btn.btn-default.btnCancel(class="cancel-"+item._id, type="button", data-id=item._id, style="display:none") cancel
+						input.btn.btn-info(type="submit" value="Edit Note")
+
+				
+script(src="/js/payment/list.js")
