@@ -1,6 +1,37 @@
 $( function() {
 	$(".datepicker").datepicker();
 
+	$("#addPayment").submit(function(e) {
+		if($("#iptOrder").val().length < 1) {
+			$("#optOrder").show();
+			e.preventDefault();
+		}
+		else if($("#iptBrand").val().length < 1) {
+			$("#optBrand").show();
+			e.preventDefault();
+		}
+		else if($("#iptBrand").val().length < 1) {
+			$("#optBrand").show();
+			e.preventDefault();
+		}
+		else if(!isFloat($("#iptPrice").val())) {
+			$("#optPrice").show();
+			e.preventDefault();
+		}
+		else if(!isFloat($("#iptAc").val())) {
+			$("#optAc").show();
+			e.preventDefault();
+		}
+		else if($("#iptAcAt").val().length < 3) {
+			$("#optAcAt").show();
+			e.preventDefault();
+		}
+		else if(!isFloat($("#iptSa").val())) {
+			$("#optSa").show();
+			e.preventDefault();
+		}
+	})
+
 	$("#iptOrder").blur(function(e) {
 		let str = $(this).val();
 		// 突然想自己写个逻辑，就没有用正则

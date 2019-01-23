@@ -8,8 +8,6 @@ let Filter = require('../../../middle/filter');
 let Conf = require('../../../../confile/conf.js')
 let moment = require('moment')
 
-
-
 exports.fnPaymentsFilter = function(req, res, next) {
 	let title = 'Payment List';
 	let url = "/fnPaymentList";
@@ -155,12 +153,6 @@ exports.fnPaymentListPrint = function(req, res) {
 
 	wb.write('Payment_'+req.session.crSfer.code+'_'+ moment(new Date()).format('YYYYMMDD-HHmmss') + '.xlsx', res);
 }
-
-
-
-
-
-
 
 
 
