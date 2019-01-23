@@ -14,4 +14,18 @@ $( function() {
 	$("#imgUpdEnded").click(function(e) {
 		$("#updEndedTime").val("")
 	})
+
+	$("#imgAcStart").click(function(e) {
+		$("#acStartTime").val("")
+	})
+	$("#imgAcEnded").click(function(e) {
+		$("#acEndedTime").val("")
+	})
+
+	$("#imgSaStart").click(function(e) {
+		$("#saStartTime").val("")
+	})
+	$("#imgSaEnded").click(function(e) {
+		$("#saEndedTime").val("")
+	})
 } );

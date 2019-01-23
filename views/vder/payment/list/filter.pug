@@ -8,11 +8,11 @@ form(method="get", action=url, enctype="multipart/form-data")
 					option(value="order", selected="selected") Order
 				else
 					option(value="order") Order
-				if keytype == "description"
+				if keytype == "brand"
 					-a;
-					option(value="description", selected="selected") Description
+					option(value="brand", selected="selected") brand
 				else
-					option(value="description") Description
+					option(value="brand") brand
 				if keytype == "note"
 					-a;
 					option(value="note", selected="selected") Note

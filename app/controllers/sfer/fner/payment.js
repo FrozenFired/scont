@@ -33,10 +33,17 @@ exports.fnPaymentsFilter = function(req, res, next) {
 	// 根据创建更新时间筛选
 	let at = Filter.at(req);
 	slipCond+=at.slipCond;
+
+	// 根据首位款筛选
+	let cs = Filter.cs(req);
+	slipCond+=cs.slipCond;
+
 	Payment.count({
 		[keytype]: new RegExp(keyword + '.*'),
 		'createAt': {[at.symCrtStart]: at.condCrtStart, [at.symCrtEnded]: at.condCrtEnded},
 		'updateAt': {[at.symUpdStart]: at.condUpdStart, [at.symUpdEnded]: at.condUpdEnded},
+		'acAt': {[cs.symAcStart]: cs.condAcStart, [cs.symAcEnded]: cs.condAcEnded},
+		'saAt': {[cs.symSaStart]: cs.condSaStart, [cs.symSaEnded]: cs.condSaEnded},
 		'status': condStatus  // 'status': {[symStatus]: condStatus}
 	})
 	.exec(function(err, count) {
@@ -45,10 +52,11 @@ exports.fnPaymentsFilter = function(req, res, next) {
 			[keytype]: new RegExp(keyword + '.*'),
 			'createAt': {[at.symCrtStart]: at.condCrtStart, [at.symCrtEnded]: at.condCrtEnded},
 			'updateAt': {[at.symUpdStart]: at.condUpdStart, [at.symUpdEnded]: at.condUpdEnded},
+			'acAt': {[cs.symAcStart]: cs.condAcStart, [cs.symAcEnded]: cs.condAcEnded},
+			'saAt': {[cs.symSaStart]: cs.condSaStart, [cs.symSaEnded]: cs.condSaEnded},
 			'status': condStatus  // 'status': {[symStatus]: condStatus}
 		})
-		.skip(index)
-		.limit(entry)
+		.skip(index).limit(entry)
 		.populate('vder')
 		.sort({"createAt": -1})
 		.exec(function(err, objects) {
@@ -73,6 +81,11 @@ exports.fnPaymentsFilter = function(req, res, next) {
 				list.condUpdStart = req.query.updStart;
 				list.condUpdEnded = req.query.updEnded;
 
+				list.condAcStart = req.query.acStart;
+				list.condAcEnded = req.query.acEnded;
+				list.condSaStart = req.query.saStart;
+				list.condSaEnded = req.query.saEnded;
+
 				list.currentPage = (page + 1);
 				list.entry = entry;
 				list.totalPage = Math.ceil(count / entry);
@@ -90,7 +103,12 @@ exports.fnPaymentsFilter = function(req, res, next) {
 }
 
 exports.fnPaymentList = function(req, res) {
-	res.render('./sfer/fner/payment/list', req.body.list)
+	let list = req.body.list;
+	let today = new Date();
+	list.today = moment(today).format('YYYYMMDD');
+	let weekday = new Date(today.getTime() + 7*24*60*60*1000)
+	list.weekday = moment(weekday).format('YYYYMMDD');
+	res.render('./sfer/fner/payment/list', list)
 }
 
 

@@ -1,6 +1,6 @@
 $( function() {
 	$(".datepicker").datepicker();
-
+	// alert(1)
 	$('.btnEdit').click(function(e) {
 		var target = $(e.target)
 		var id = target.data('id')

@@ -92,6 +92,11 @@ exports.paymentsFilter = function(req, res, next) {
 }
 
 exports.paymentList = function(req, res) {
+	let list = req.body.list;
+	let today = new Date();
+	list.today = moment(today).format('YYYYMMDD');
+	let weekday = new Date(today.getTime() + 7*24*60*60*1000)
+	list.weekday = moment(weekday).format('YYYYMMDD');
 	res.render('./vder/payment/list', req.body.list)
 }
 

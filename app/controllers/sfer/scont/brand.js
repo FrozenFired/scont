@@ -210,7 +210,7 @@ exports.headerBrand = function(req, res) {
 			res.redirect('/brandList?keyword='+keyword)
 		}
 	} else {
-		info = "Option Error~!"
+		info = "Non Trovato!"
 		Index.sfOptionWrong(req, res, info)
 	}
 }

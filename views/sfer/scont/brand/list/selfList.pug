@@ -34,7 +34,10 @@ table.table.table-hover.table-bordered
 					if item. matDesp && item.matDesp.length > 0
 						-a;
 						span [ #{item.matDesp} ]
-				td #{item.website} <br/> #{item.webNote}
+				td 
+					a(href=item.website, target="view_window") #{item.website}
+					br
+					span #{item.webNote}
 				//- td #{Conf.stsBrand[item.status]}
 				if item.sconts
 					td #{item.sconts.length}

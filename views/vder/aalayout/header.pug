@@ -1,5 +1,5 @@
 .navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
-	a.navbar-brand(href="/vder") Home 
+	a.navbar-brand(href="/vder"): img(src="/imgs/casaLogo.jpg", width="40")
 	button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation")
 		<span class="navbar-toggler-icon"></span>
 
@@ -22,14 +22,16 @@
 					span &nbsp;
 					a.btn.btn-info(href="/vderDetail/"+crVder._id) hello: 
 						if crVder.name && crVder.name.length > 0
+							-a;
 							span #{crVder.name}
 						else
 							span #{crVder.code}
 						if crVder.role
+							-a;
 							span &nbsp;(#{Conf.sfRole[crVder.role]})
 						if crVder.photo
+							-a;
 							img(src=ServerAddress+crVder.photo, width="30")
-						-a;
 				span &nbsp;&nbsp;&nbsp;&nbsp;
 				li: a.btn.btn-danger(href="/vderLogout") Logout
 

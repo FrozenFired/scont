@@ -1,0 +1,29 @@
+.form-group.row
+	label.col-md-2.col-form-label acAt
+	label.col-md-1.col-form-label: img#imgAcStart(src="/imgs/clockStart.jpg", width="50px")
+	.col-md-4
+		input#acStartTime.datepicker.form-control(type="text", name="acStart", placeholder="startDate format:month/day/year", readonly="readonly", value=condAcStart)
+	label.col-md-1.col-form-label: img#imgAcEnded(src="/imgs/clockEnd.jpg", width="50px")
+	.col-md-4
+		input#acEndedTime.datepicker.form-control(type="text", name="acEnded", placeholder="endDate format : month/day/year", readonly="readonly", value=condAcEnded)
+
+.form-group.row
+	label.col-md-2.col-form-label saAt
+	label.col-md-1.col-form-label: img#imgSaStart(src="/imgs/clockStart.jpg", width="50px")
+	.col-md-4
+		input#saStartTime.datepicker.form-control(type="text", name="saStart", placeholder="startDate format:month/day/year", readonly="readonly", value=condSaStart)
+	label.col-md-1.col-form-label: img#imgSaEnded(src="/imgs/clockEnd.jpg", width="50px")
+	.col-md-4
+		input#saEndedTime.datepicker.form-control(type="text", name="saEnded", placeholder="endDate format : month/day/year", readonly="readonly", value=condSaEnded)
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+//- <link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+//- timepicker
+link(rel="stylesheet", href="/libs/jt.timepicker/jquery.timepicker.css")
+script(src="/libs/jt.timepicker/jquery.timepicker.min.js")
+
+
+script(src="/js/plugin/filter.js")

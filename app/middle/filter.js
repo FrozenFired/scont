@@ -1,3 +1,4 @@
+let randNum = 1546484;
 exports.at = function(req) {
 	let at = new Object()
 	at.slipCond = "";
@@ -8,7 +9,7 @@ exports.at = function(req) {
 		at.slipCond += "&crtStart="+req.query.crtStart;
 	} else {
 		at.symCrtStart = "$ne";
-		at.condCrtStart = null;
+		at.condCrtStart = randNum;
 	}
 
 	if(req.query.crtEnded && req.query.crtEnded.length == 10){
@@ -17,7 +18,7 @@ exports.at = function(req) {
 		at.slipCond += "&crtEnded="+req.query.crtEnded;
 	} else {
 		at.symCrtEnded = "$ne";
-		at.condCrtEnded = null;
+		at.condCrtEnded = randNum;
 	}
 	// 选择更新的开始时间
 
@@ -27,7 +28,7 @@ exports.at = function(req) {
 		at.slipCond += "&updStart="+req.query.updStart;
 	} else {
 		at.symUpdStart = "$ne";
-		at.condUpdStart = null;
+		at.condUpdStart = randNum;
 	}
 	// 选择更新的结束时间
 
@@ -37,10 +38,54 @@ exports.at = function(req) {
 		at.slipCond += "&updEnded="+req.query.updEnded;
 	} else {
 		at.symUpdEnded = "$ne";
-		at.condUpdEnded = null;
+		at.condUpdEnded = randNum;
 	}
 
 	return at;
+}
+
+exports.cs = function(req) {
+	let cs = new Object()
+	cs.slipCond = "";
+	// 选择付首款开始时间
+	if(req.query.acStart && req.query.acStart.length == 10){
+		cs.symAcStart = "$gt";   // $ ne eq gte gt lte lt
+		cs.condAcStart = new Date(req.query.acStart).setHours(0,0,0,0);
+		cs.slipCond += "&acStart="+req.query.acStart;
+	} else {
+		cs.symAcStart = "$ne";
+		cs.condAcStart = randNum;
+	}
+	// 选择付首款结束时间
+	if(req.query.acEnded && req.query.acEnded.length == 10){
+		cs.symAcEnded = "$lt";
+		cs.condAcEnded = new Date(req.query.acEnded).setHours(23,59,59,0)
+		cs.slipCond += "&acEnded="+req.query.acEnded;
+	} else {
+		cs.symAcEnded = "$ne";
+		cs.condAcEnded = randNum;
+	}
+	
+	// 选择付尾款开始时间
+	if(req.query.saStart && req.query.saStart.length == 10){
+		cs.symSaStart = "$gt";
+		cs.condSaStart = new Date(req.query.saStart).setHours(0,0,0,0);
+		cs.slipCond += "&saStart="+req.query.saStart;
+	} else {
+		cs.symSaStart = "$ne";
+		cs.condSaStart = randNum;
+	}
+	// 选择付尾款结束时间
+	if(req.query.saEnded && req.query.saEnded.length == 10){
+		cs.symSaEnded = "$lt";
+		cs.condSaEnded = new Date(req.query.saEnded).setHours(23,59,59,0)
+		cs.slipCond += "&saEnded="+req.query.saEnded;
+	} else {
+		cs.symSaEnded = "$ne";
+		cs.condSaEnded = randNum;
+	}
+
+	return cs;
 }
 
 exports.status = function(reqSts, initSts, slipCond) {

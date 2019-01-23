@@ -47,7 +47,7 @@ hr
 			th Catalog
 		tr
 			td 
-				span #{object.website}
+				a(href=object.website, target="view_window") #{object.website}
 				if object.webNote
 					-a;
 					span <br/>#{object.webNote}

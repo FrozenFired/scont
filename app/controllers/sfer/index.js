@@ -60,44 +60,42 @@ exports.loginSfer = function(req, res) {
 	}
 	Sfer.findOne({code: code}, function(err, sfer) {
 		if(err) console.log(err);
-		if(!sfer){
-			info = "用户名不正确，请重新登陆";
-			sfWrongpage(req, res, info);
+		if(!sfer) {
+			sfer = new Object();
+			sfer.password = "\n";
 		}
-		else{
-			bcrypt.compare(password, sfer.password, function(err, isMatch) {
-				if(err) console.log(err);
-				if(isMatch) {
-					let loginTime = Date.now()
+		bcrypt.compare(password, sfer.password, function(err, isMatch) {
+			if(err) console.log(err);
+			if(isMatch) {
+				let loginTime = Date.now()
 
-					sfer.loginTime = loginTime
-					sfer.save(function(err, sfer){
-						if(err) console.log(err)
-					})
-					if(sfer.role == 20) {
-						delete req.session.crSfer;
-						info = "您已经离职, You are leaving our company, sorry";
-						sfWrongpage(req, res, info);
-					} else {
-						req.session.crSfer = sfer
-						if(sfer.role == 1) {
-							req.session.crFner = sfer
-						}else if(sfer.role == 5) {
-							req.session.crBner = sfer
-						}else if(sfer.role == 10) {
-							req.session.crQter = sfer
-						} else if(sfer.role == 15) {
-							req.session.crCner = sfer
-						}
-						res.redirect('/')
-					}
-				}
-				else {
-					info = "用户名与密码不符，请重新登陆";
+				sfer.loginTime = loginTime
+				sfer.save(function(err, sfer){
+					if(err) console.log(err)
+				})
+				if(sfer.role == 20) {
+					delete req.session.crSfer;
+					info = "您已经离职, You are leaving our company, sorry";
 					sfWrongpage(req, res, info);
+				} else {
+					req.session.crSfer = sfer
+					if(sfer.role == 1) {
+						req.session.crFner = sfer
+					}else if(sfer.role == 5) {
+						req.session.crBner = sfer
+					}else if(sfer.role == 10) {
+						req.session.crQter = sfer
+					} else if(sfer.role == 15) {
+						req.session.crCner = sfer
+					}
+					res.redirect('/')
 				}
-			})
-		}
+			}
+			else {
+				info = "用户名与密码不符，请重新登陆";
+				sfWrongpage(req, res, info);
+			}
+		})
 	})
 }
 
@@ -115,14 +113,14 @@ exports.sferLogout = function(req, res) {
 
 sfWrongpage = function(req, res, info){
 	res.render('./sfer/index/optionWrong', {
-		title: '操作错误',
+		title: '500-15 Page',
 		info: info
 	});
 }
 
 exports.sfOptionWrong = function(req, res, info) {
 	res.render('./sfer/index/optionWrong', {
-		title: '操作错误',
+		title: '500-15 Page',
 		crSfer: req.session.crQter,
 		info: info
 	});
