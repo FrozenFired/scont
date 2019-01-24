@@ -8,6 +8,11 @@ form(method="get", action=url, enctype="multipart/form-data")
 					option(value="order", selected="selected") Order
 				else
 					option(value="order") Order
+				if keytype == "pi"
+					-a;
+					option(value="pi", selected="selected") P/I
+				else
+					option(value="pi") P/I
 				if keytype == "brand"
 					-a;
 					option(value="brand", selected="selected") brand

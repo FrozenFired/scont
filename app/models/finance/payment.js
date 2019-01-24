@@ -7,6 +7,7 @@ const colection = 'Payment';
 let dbSchema = new Schema({
 	vder: {type: ObjectId, ref: 'Vder'},
 	order: String,
+	pi: String, // proforma invoice
 	brand: String,
 	note: String,
 	ourNote: String,

@@ -16,10 +16,12 @@ function serverUrlSet(port, ip) {
 	return url;
 }
 let dbUrl = 'mongodb://localhost/' + InitSet.dbName;
+// let dbUrl = 'mongodb://' + InitSet.ip + '/' + InitSet.dbName;
+// let dbUrl = 'mongodb://78.159.221.74/' + InitSet.dbName;
 let InitConf = {
 	port: InitSet.port,
 	dbName: InitSet.dbName,
-	dbUrl : 	'mongodb://localhost/' + InitSet.dbName,
+	dbUrl : dbUrl,
 	serverUrl : serverUrlSet(InitSet.port, InitSet.ip),
 }
 

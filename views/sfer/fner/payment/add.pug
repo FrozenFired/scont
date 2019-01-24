@@ -23,6 +23,13 @@ block content
 					span#optOrder.text-danger(style="display:none") Pleas complete order
 
 			.form-group.row
+				label.col-sm-2.col-form-label P/I
+				.col-sm-8
+					input#iptPi.form-control(type="text", name="object[pi]")
+				.col-sm-2
+					span#optPi.text-danger(style="display:none") Pleas complete proforma invoice
+
+			.form-group.row
 				label.col-sm-2.col-form-label Brand
 				.col-sm-8
 					input#iptBrand.form-control(type="text", name="object[brand]")
@@ -44,7 +51,7 @@ block content
 					input#iptAcAt.datepicker.form-control(type="text", name="object[acAt]", placeholder="payment date [format:month/day/year]", readonly="readonly")
 				.col-sm-2
 					span#optAc.text-danger(style="display:none") Pleas complete Ac
-					span#optAcAt.text-danger(style="display:none") Pleas complete acAt
+					span#optAcAt.text-danger
 			.form-group.row
 				label.col-sm-2.col-form-label Sa
 				.col-sm-4

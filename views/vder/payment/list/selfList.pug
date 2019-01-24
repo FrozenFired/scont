@@ -4,6 +4,7 @@ table.table.table-hover.table-bordered
 			th status
 			th order
 			th brand
+			th P/I
 			th price
 			th ac
 			th acAt
@@ -15,36 +16,51 @@ table.table.table-hover.table-bordered
 			-acTime = moment(item.acAt).format('YYYYMMDD');
 			-saTime = moment(item.saAt).format('YYYYMMDD');
 
-			if (today < acTime && acTime < weekday) || (today < saTime && saTime < weekday)
-				- bgw="bg-info";
+			//- 判断近一周是否有要付款的
+			if (today < acTime && acTime < weekday)
+				- bgacWeek="bg-info";
 			else
-				- bgw="bg-default";
+				- bgacWeek="bg-default";
+			if today < saTime && saTime < weekday
+				- bgsaWeek="bg-info";
+			else
+				- bgsaWeek="bg-default";
+
+			//- 错误状态
 			if (item.status == 0) && (acTime < today)
-				- bgd0="bg-danger";
+				- bgErr="bg-danger";
 			else if (item.status == 1) && (saTime < today)
-				- bgd0="bg-danger";
+				- bgErr="bg-danger";
 			else
-				- bgd0="bg-default";
+				- bgErr="bg-default";
+
+			//- 状态标记
 			if item.status == 1
-				- bgd1="bg-warning";
+				- bgSts1="bg-warning";
 			else
-				- bgd1="bg-default";
+				- bgSts1="bg-default";
 			if item.status == 2
-				- bgr="bg-warning";
+				- bgSts2="bg-warning";
 			else
-				- bgr="bg-white";
-			tr(class="item-id-"+item._id+" "+bgr)
-				td(class=bgd0) #{Conf.stsPayment[item.status]}
-				td(class=bgw) #{item.order}
+				- bgSts2="bg-white";
+			tr(class="item-id-"+item._id+" "+bgSts2)
+				td(class=bgErr) #{Conf.stsPayment[item.status]}
+				td #{item.order}
 				td #{item.brand}
+				td #{item.pi}
 				td #{item.price}
-				td(class=bgd1) #{item.ac}
-				td(class=bgd1)
+				td(class=bgSts1)
+					if (acTime == today) && (item.status == 0)
+						-a;
+						span(class="bg-info") #{item.ac}
+					else
+						span #{item.ac}
+				td(class=bgSts1+" "+ bgacWeek)
 					if item.acAt
 						-a;
 						span #{moment(item.acAt).format('YYYY/MM/DD')}
 				td #{item.sa}
-				td
+				td(class=bgsaWeek)
 					if item.saAt
 						-a;
 						span #{moment(item.saAt).format('YYYY/MM/DD')}

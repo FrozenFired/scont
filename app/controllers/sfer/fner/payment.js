@@ -215,10 +215,18 @@ exports.fnPaymentFilter = function(req, res, next) {
 exports.fnPaymentDetail = function(req, res) {
 	let objBody = req.body.object
 	// console.log(objBody)
+	let list = req.body.list;
+	let now = new Date();
+	today = moment(now).format('YYYYMMDD');
+	let weekday = new Date(now.getTime() + 7*24*60*60*1000)
+	weekday = moment(weekday).format('YYYYMMDD');
+
 	res.render('./sfer/fner/payment/detail', {
 		title: 'fnPayment Infomation',
 		crFner : req.session.crFner,
-		object: objBody
+		object: objBody,
+		today: today,
+		weekday: weekday
 	})
 }
 
