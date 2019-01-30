@@ -6,15 +6,20 @@ table.table.table-hover.table-bordered
 			th order
 			th brand
 			th P/I
-			th note
-			th(style="min-width: 200px") ourNote
 			th price
 			th ac
 			th acAt
 			th sa
 			th saAt
+			th note
+			th(style="min-width: 200px") ourNote
 	tbody
+		- let pTot = 0, acTot = 0, saTot = 0;
 		each item in objects
+			- pTot += item.price
+			- acTot += item.ac
+			- saTot += item.sa
+
 			-acTime = moment(item.acAt).format('YYYYMMDD');
 			-saTime = moment(item.saAt).format('YYYYMMDD');
 			
@@ -66,18 +71,6 @@ table.table.table-hover.table-bordered
 				td #{item.order}
 				td #{item.brand}
 				td #{item.pi}
-				td #{item.note}
-				td
-					button.btn.btn-link.btnEdit(class="edit-"+item._id, type="button", data-id=item._id) edit
-					if item.ourNote
-						-a;
-						span(class="text-"+item._id) &nbsp;->&nbsp; #{item.ourNote}
-					form(class="form-"+item._id, method="post", action="/fnUpdatePayment", style="display:none")
-						input.form-control(type="hidden", name="object[_id]", value=item._id)
-						input.form-control(class="ipt-"+item._id, type="hidden", value=item.ourNote)
-						textarea.form-control.rounded-0(class="tar-"+item._id, rows="3", name="object[ourNote]")
-						button.btn.btn-default.btnCancel(class="cancel-"+item._id, type="button", data-id=item._id, style="display:none") cancel
-						input.btn.btn-info(type="submit" value="Edit Note")
 				td #{item.price}
 				td(class=bgSts1)
 					if (acTime == today) && (item.status == 0)
@@ -104,10 +97,36 @@ table.table.table-hover.table-bordered
 						form#upSaAt(method="post", action="/fnUpdatePayment", enctype="multipart/form-data")
 							input.form-control(type="hidden", name="object[_id]", value=item._id)
 							.form-group.row
-								.col-sm-10
+								.col-sm-12
 									input#iptSaAt.datepicker.form-control(type="text", name="object[saAt]", placeholder="ayment date [format:month/day/year]", readonly="readonly")
-								.col-sm-2
-									input.btn.btn-info(type="submit" value="up")
-
+							.form-group.row
+								.col-sm-6
+								.col-sm-6
+									input.btn.btn-info.btn-block(type="submit" value="up")
+				td #{item.note}
+				td
+					button.btn.btn-link.btnEdit(class="edit-"+item._id, type="button", data-id=item._id) edit
+					if item.ourNote
+						-a;
+						span(class="text-"+item._id) &nbsp;->&nbsp; #{item.ourNote}
+					form(class="form-"+item._id, method="post", action="/fnUpdatePayment", style="display:none")
+						input.form-control(type="hidden", name="object[_id]", value=item._id)
+						input.form-control(class="ipt-"+item._id, type="hidden", value=item.ourNote)
+						textarea.form-control.rounded-0(class="tar-"+item._id, rows="3", name="object[ourNote]")
+						button.btn.btn-default.btnCancel(class="cancel-"+item._id, type="button", data-id=item._id, style="display:none") cancel
+						input.btn.btn-info(type="submit" value="Edit Note")
+		tr
+			th 
+			th 
+			th 
+			th 
+			th 
+			th #{pTot}
+			th #{acTot}
+			th 
+			th #{saTot}
+			th 
+			th 
+			th
 script(src="/js/changeStatus.js")
 script(src="/js/payment/list.js")

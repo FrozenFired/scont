@@ -12,7 +12,12 @@ table.table.table-hover.table-bordered
 			th saAt
 			th(style="min-width: 100px") note
 	tbody
+		- let pTot = 0, acTot = 0, saTot = 0;
 		each item in objects
+			- pTot += item.price
+			- acTot += item.ac
+			- saTot += item.sa
+
 			-acTime = moment(item.acAt).format('YYYYMMDD');
 			-saTime = moment(item.saAt).format('YYYYMMDD');
 
@@ -79,5 +84,16 @@ table.table.table-hover.table-bordered
 						textarea.form-control.rounded-0(class="tar-"+item._id, rows="3", name="object[note]")
 						button.btn.btn-default.btnCancel(class="cancel-"+item._id, type="button", data-id=item._id, style="display:none") cancel
 						input.btn.btn-info(type="submit" value="Edit Note")
+		tr
+			th Total
+			th
+			th
+			th
+			th #{pTot}
+			th #{acTot}
+			th
+			th #{saTot}
+			th
+			th(style="min-width: 100px") note
 
 script(src="/js/payment/list.js")
