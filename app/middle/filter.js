@@ -4,7 +4,7 @@ exports.at = function(req) {
 	at.slipCond = "";
 
 	if(req.query.crtStart && req.query.crtStart.length == 10){
-		at.symCrtStart = "$gt";   // $ ne eq gte gt lte lt
+		at.symCrtStart = "$gte";   // $ ne eq gte gt lte lt
 		at.condCrtStart = new Date(req.query.crtStart).setHours(0,0,0,0);
 		at.slipCond += "&crtStart="+req.query.crtStart;
 	} else {
@@ -13,7 +13,7 @@ exports.at = function(req) {
 	}
 
 	if(req.query.crtEnded && req.query.crtEnded.length == 10){
-		at.symCrtEnded = "$lt";
+		at.symCrtEnded = "$lte";
 		at.condCrtEnded = new Date(req.query.crtEnded).setHours(23,59,59,0)
 		at.slipCond += "&crtEnded="+req.query.crtEnded;
 	} else {
@@ -23,7 +23,7 @@ exports.at = function(req) {
 	// 选择更新的开始时间
 
 	if(req.query.updStart && req.query.updStart.length == 10){
-		at.symUpdStart = "$gt";
+		at.symUpdStart = "$gte";
 		at.condUpdStart = new Date(req.query.updStart).setHours(0,0,0,0);
 		at.slipCond += "&updStart="+req.query.updStart;
 	} else {
@@ -33,7 +33,7 @@ exports.at = function(req) {
 	// 选择更新的结束时间
 
 	if(req.query.updEnded && req.query.updEnded.length == 10){
-		at.symUpdEnded = "$lt";
+		at.symUpdEnded = "$lte";
 		at.condUpdEnded = new Date(req.query.updEnded).setHours(23,59,59,0)
 		at.slipCond += "&updEnded="+req.query.updEnded;
 	} else {
@@ -49,7 +49,7 @@ exports.cs = function(req) {
 	cs.slipCond = "";
 	// 选择付首款开始时间
 	if(req.query.acStart && req.query.acStart.length == 10){
-		cs.symAcStart = "$gt";   // $ ne eq gte gt lte lt
+		cs.symAcStart = "$gte";   // $ ne eq gte gt lte lt
 		cs.condAcStart = new Date(req.query.acStart).setHours(0,0,0,0);
 		cs.slipCond += "&acStart="+req.query.acStart;
 	} else {
@@ -58,7 +58,7 @@ exports.cs = function(req) {
 	}
 	// 选择付首款结束时间
 	if(req.query.acEnded && req.query.acEnded.length == 10){
-		cs.symAcEnded = "$lt";
+		cs.symAcEnded = "$lte";
 		cs.condAcEnded = new Date(req.query.acEnded).setHours(23,59,59,0)
 		cs.slipCond += "&acEnded="+req.query.acEnded;
 	} else {
@@ -68,7 +68,7 @@ exports.cs = function(req) {
 	
 	// 选择付尾款开始时间
 	if(req.query.saStart && req.query.saStart.length == 10){
-		cs.symSaStart = "$gt";
+		cs.symSaStart = "$gte";
 		cs.condSaStart = new Date(req.query.saStart).setHours(0,0,0,0);
 		cs.slipCond += "&saStart="+req.query.saStart;
 	} else {
@@ -77,7 +77,7 @@ exports.cs = function(req) {
 	}
 	// 选择付尾款结束时间
 	if(req.query.saEnded && req.query.saEnded.length == 10){
-		cs.symSaEnded = "$lt";
+		cs.symSaEnded = "$lte";
 		cs.condSaEnded = new Date(req.query.saEnded).setHours(23,59,59,0)
 		cs.slipCond += "&saEnded="+req.query.saEnded;
 	} else {

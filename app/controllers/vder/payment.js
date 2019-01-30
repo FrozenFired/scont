@@ -33,10 +33,16 @@ exports.paymentsFilter = function(req, res, next) {
 	let at = Filter.at(req);
 	slipCond+=at.slipCond;
 
+	// 根据首位款筛选
+	let cs = Filter.cs(req);
+	slipCond+=cs.slipCond;
+
 	Payment.count({
 		[keytype]: new RegExp(keyword + '.*'),
 		'createAt': {[at.symCrtStart]: at.condCrtStart, [at.symCrtEnded]: at.condCrtEnded},
 		'updateAt': {[at.symUpdStart]: at.condUpdStart, [at.symUpdEnded]: at.condUpdEnded},
+		'acAt': {[cs.symAcStart]: cs.condAcStart, [cs.symAcEnded]: cs.condAcEnded},
+		'saAt': {[cs.symSaStart]: cs.condSaStart, [cs.symSaEnded]: cs.condSaEnded},
 		'status': condStatus  // 'status': {[symStatus]: condStatus}
 	})
 	.where('vder').equals(req.session.crVder._id)
@@ -46,6 +52,8 @@ exports.paymentsFilter = function(req, res, next) {
 			[keytype]: new RegExp(keyword + '.*'),
 			'createAt': {[at.symCrtStart]: at.condCrtStart, [at.symCrtEnded]: at.condCrtEnded},
 			'updateAt': {[at.symUpdStart]: at.condUpdStart, [at.symUpdEnded]: at.condUpdEnded},
+			'acAt': {[cs.symAcStart]: cs.condAcStart, [cs.symAcEnded]: cs.condAcEnded},
+			'saAt': {[cs.symSaStart]: cs.condSaStart, [cs.symSaEnded]: cs.condSaEnded},
 			'status': condStatus  // 'status': {[symStatus]: condStatus}
 		})
 		.where('vder').equals(req.session.crVder._id)
@@ -74,6 +82,11 @@ exports.paymentsFilter = function(req, res, next) {
 				list.condCrtEnded = req.query.crtEnded;
 				list.condUpdStart = req.query.updStart;
 				list.condUpdEnded = req.query.updEnded;
+
+				list.condAcStart = req.query.acStart;
+				list.condAcEnded = req.query.acEnded;
+				list.condSaStart = req.query.saStart;
+				list.condSaEnded = req.query.saEnded;
 
 				list.currentPage = (page + 1);
 				list.entry = entry;
