@@ -26,9 +26,9 @@ app.set('view engine', 'pug')
 let serveStatic = require('serve-static')
 
 let path = require('path');
-app.use(serveStatic(path.join(__dirname, "./public")))
+app.use(serveStatic(path.join(__dirname, "./public")));
 
-app.use(bodyParser.urlencoded( { extended: true } ) )
+app.use(bodyParser.urlencoded( { extended: true } ) );
 app.use(bodyParser.json())
 
 app.use(cookieParser())	

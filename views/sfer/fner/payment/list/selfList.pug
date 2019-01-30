@@ -18,6 +18,15 @@ table.table.table-hover.table-bordered
 			-acTime = moment(item.acAt).format('YYYYMMDD');
 			-saTime = moment(item.saAt).format('YYYYMMDD');
 			
+			//- 判断是否今日付款
+			if (acTime == today) && (item.status == 0)
+				- bgacToday="bg-primary";
+			else
+				- bgacToday="bg-default";
+			if (saTime == today) && (item.status == 1)
+				- bgsaToday="bg-primary";
+			else
+				- bgsaToday="bg-default";
 			//- 判断近一周是否有要付款的
 			if (today < acTime && acTime < weekday)
 				- bgacWeek="bg-info";
@@ -80,7 +89,7 @@ table.table.table-hover.table-bordered
 					if item.acAt
 						-a;
 						span #{moment(item.acAt).format('YYYY/MM/DD')}
-				td(class=bgd2)
+				td
 					if (saTime == today) && (item.status == 1)
 						-a;
 						button.btn.btn-info.change(type="button", data-url="/fnPaymentStatus", data-sts=2, data-id=item._id) #{item.sa}

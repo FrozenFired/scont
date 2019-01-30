@@ -62,10 +62,11 @@ module.exports = function(app){
 	// Bcateg ------------------------------------------------------------------------------
 	app.get('/bcategList', MiddleRole.sferIsLogin, Bcateg.bcategsFilter, Bcateg.bcategList)
 	app.get('/bcategListPrint', MiddleRole.sferIsLogin, Bcateg.bcategsFilter, Bcateg.bcategListPrint)
-	app.get('/bcategDetail/:id', MiddleRole.sferIsLogin, Bcateg.bcategDetail)
 	app.get('/bcategAdd', MiddleRole.bnerIsLogin, Bcateg.bcategAdd)
 	app.post('/addBcateg', multipartMiddleware, MiddleRole.bnerIsLogin, Bcateg.addBcateg)
-	app.get('/bcategUpdate/:id', MiddleRole.bnerIsLogin, Bcateg.bcategUpdate)
+	app.get('/bcategDetail/:id', MiddleRole.sferIsLogin, Bcateg.bcategFilter, Bcateg.bcategDetail)
+	app.get('/bcategPrint/:id', MiddleRole.sferIsLogin, Bcateg.bcategFilter, Bcateg.bcategPrint)
+	app.get('/bcategUpdate/:id', MiddleRole.bnerIsLogin, Bcateg.bcategFilter, Bcateg.bcategUpdate)
 	app.post('/updateBcateg', multipartMiddleware, MiddleRole.bnerIsLogin, Bcateg.updateBcateg)
 	app.delete('/bcategDel', MiddleRole.bnerIsLogin, Bcateg.bcategDel)
 

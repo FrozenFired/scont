@@ -62,7 +62,7 @@ exports.bcategListPrint = function(req, res) {
 		if(item.numbrand) ws.cell((i+2), 6).string(String(item.numbrand));
 	}
 
-	wb.write('Category_'+req.session.crSfer.code+'_'+ moment(new Date()).format('YYYYMMDD-HHmmss') + '.xlsx', res);
+	wb.write('CategoryList_'+req.session.crSfer.code+'_'+ moment(new Date()).format('YYYYMMDD-HHmmss') + '.xlsx', res);
 }
 
 
@@ -98,9 +98,7 @@ exports.addBcateg = function(req, res) {
 }
 
 
-
-
-exports.bcategDetail = function(req, res){
+exports.bcategFilter = function(req, res, next) {
 	let id = req.params.id
 	Bcateg.findOne({_id: id})
 	// .populate({path: 'brands', options: {sort: {'weight': -1} } } )
@@ -109,23 +107,8 @@ exports.bcategDetail = function(req, res){
 	.exec(function(err, object){
 		if(err) console.log(err);
 		if(object) {
-			Brand.find({bcateg: object._id})
-			.populate('nation')
-			.exec(function(err, brands) {
-				if(err) console.log(err);
-				if(object.numbrand != brands.length) {
-					object.numbrand = brands.length;
-					object.save(function(err, objSave) {
-						if(err) console.log(err);
-					})
-				}
-				res.render('./sfer/scont/bcateg/detail', {
-					title: 'Bcategory Detail',
-					crSfer: req.session.crSfer,
-					object: object,
-					brands: brands
-				})
-			})
+			req.body.object = object;
+			next();
 		} else {
 			info = "This BcategI is deleted, Please reflesh"
 			Index.sfOptionWrong(req, res, info)
@@ -133,21 +116,85 @@ exports.bcategDetail = function(req, res){
 	})
 }
 
-exports.bcategUpdate = function(req, res){
-	let id = req.params.id
-	Bcateg.findOne({_id: id})
-	.exec(function(err, object){
+
+exports.bcategDetail = function(req, res){
+	let object = req.body.object;
+	Brand.find({bcateg: object._id})
+	.populate('nation')
+	.exec(function(err, brands) {
 		if(err) console.log(err);
-		if(object) {
-			res.render('./sfer/scont/bcateg/update', {
-				title: 'Bcategory Update',
-				crSfer: req.session.crSfer,
-				object: object,
+		if(object.numbrand != brands.length) {
+			object.numbrand = brands.length;
+			object.save(function(err, objSave) {
+				if(err) console.log(err);
 			})
-		} else {
-			info = "This BcategI is deleted, Please reflesh"
-			Index.sfOptionWrong(req, res, info)
 		}
+		res.render('./sfer/scont/bcateg/detail', {
+			title: 'Bcategory Detail',
+			crSfer: req.session.crSfer,
+			object: object,
+			brands: brands
+		})
+	})
+}
+
+exports.bcategPrint = function(req, res) {
+	let object = req.body.object;
+	Brand.find({bcateg: object._id})
+	.populate('nation')
+	.exec(function(err, brands) {
+		if(err) console.log(err);
+		if(object.numbrand != brands.length) {
+			object.numbrand = brands.length;
+			object.save(function(err, objSave) {
+				if(err) console.log(err);
+			})
+		}
+		bcategPrintFunc(req, res, object, brands);
+	})
+}
+bcategPrintFunc = function(req, res, object, brands) {
+	let xl = require('excel4node');
+	let wb = new xl.Workbook({
+		defaultFont: {
+			size: 12,
+			color: '333333'
+		},
+		dateFormat: 'yyyy-mm-dd hh:mm:ss'
+	});
+	
+	let ws = wb.addWorksheet('Sheet 1');
+	ws.column(1).setWidth(20);
+	ws.column(2).setWidth(10);
+	ws.column(3).setWidth(25);
+	ws.column(4).setWidth(15);
+	ws.column(5).setWidth(10);
+	
+	// header
+	ws.cell(3,1).string('Brand');
+	ws.cell(3,2).string('Country');
+	ws.cell(3,3).string('material Description');
+	ws.cell(3,4).string('status');
+	ws.cell(3,5).string('Supplier');
+
+	for(let i=0; i<brands.length; i++){
+		let item = brands[i];
+		if(item.code) ws.cell((i+4), 1).string(String(item.code));
+		if(item.nation && item.nation.code) ws.cell((i+2), 2).string(item.nation.code);
+		if(item.matDesp) ws.cell((i+4), 3).string(String(item.matDesp));
+		if(item.status || item.status==0) ws.cell((i+4), 4).string(String(Conf.stsBrand[item.status]));
+		if(item.sconts) ws.cell((i+4), 5).string(String(item.sconts.length));
+	}
+
+	wb.write('Category_'+req.session.crSfer.code+'_'+ moment(new Date()).format('YYYYMMDD-HHmmss') + '.xlsx', res);
+}
+
+exports.bcategUpdate = function(req, res){
+	let object = req.body.object;
+	res.render('./sfer/scont/bcateg/update', {
+		title: 'Bcategory Update',
+		crSfer: req.session.crSfer,
+		object: object,
 	})
 }
 
