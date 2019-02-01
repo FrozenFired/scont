@@ -58,21 +58,13 @@ module.exports = function(app){
 	app.delete('/mgSferDel', MiddleRole.mgerIsLogin, Sfer.mgSferDel)
 
 	// Vder ---------------------------------------------------------------------------------
-	app.get('/mgVderAdd', MiddleRole.mgerIsLogin, Vder.mgVderAdd)
-
-	app.post('/mgAddVder', MiddleRole.mgerIsLogin, multipartMiddleware,
-		MiddleBcrypt.rqBcrypt, Vder.mgExistVderN,
-		Vder.mgAddVder)
-
-	app.get('/mgVderList', MiddleRole.mgerIsLogin, Vder.mgVderList)
-	app.get('/mgVderDetail/:id', MiddleRole.mgerIsLogin, Vder.mgExistVderY, Vder.mgVderDetail)
-	app.post('/mgUpdateVderInfo',
-		MiddleRole.mgerIsLogin, multipartMiddleware, Vder.mgCheckVderUp, 
-		Vder.mgUpdateVderInfo)
+	app.get('/mgVderList', MiddleRole.mgerIsLogin, Vder.mgVdersFilter, Vder.mgVderList)
+	app.get('/mgVderDetail/:id', MiddleRole.mgerIsLogin, Vder.mgVderFilter, Vder.mgVderDetail)
+	app.post('/mgUpdateVderInfo', MiddleRole.mgerIsLogin, multipartMiddleware, 
+		Vder.mgCheckVderUp, Vder.mgUpdateVderInfo)
 	app.post('/mgUpdateVderPw', MiddleRole.mgerIsLogin, multipartMiddleware,
 		Vder.mgCheckVderUp, MiddleBcrypt.rqBcrypt, 
 		Vder.mgUpdateVderPw)
-	app.delete('/mgVderDel', MiddleRole.mgerIsLogin, Vder.mgVderDel)
 
 	// Task         ----------------------------------------------------------------------
 	app.get('/mgTaskList', MiddleRole.mgerIsLogin, Task.mgTasksFilter, Task.mgTaskList)

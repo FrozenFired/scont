@@ -5,7 +5,7 @@ let Float = require('mongoose-float').loadType(mongoose, 2)
 let ObjectId = Schema.Types.ObjectId
 const colection = 'Payment';
 let dbSchema = new Schema({
-	vder: {type: ObjectId, ref: 'Vder'},
+	vder: {type: ObjectId, ref: 'Vendor'},
 	order: String,
 	pi: String, // proforma invoice
 	brand: String,

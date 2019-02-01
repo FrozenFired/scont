@@ -112,3 +112,12 @@ exports.fnerIsLogin = function(req, res, next) {
 	}
 	next()
 }
+
+exports.oderIsLogin = function(req, res, next) {
+	let crOder = req.session.crOder
+	if(!crOder) {
+		info = "Need permission from the Order department";
+		return sfIndex.sfOptionWrong(req, res, info)
+	}
+	next()
+}

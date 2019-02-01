@@ -1,4 +1,4 @@
-let Vder = require('../../models/user/vder');
+let Vder = require('../../models/scont/vendor');
 let bcrypt = require('bcryptjs');
 
 
@@ -34,7 +34,9 @@ exports.vderLogin = function(req, res) {
 exports.loginVder = function(req, res) {
 	let code = req.body.code.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
 	let password = req.body.password.replace(/(\s*$)/g, "").replace( /^\s*/, '');
-	Vder.findOne({code: code}, function(err, object) {
+	Vder.findOne({code: code})
+	.where({'role': 0})
+	.exec(function(err, object) {
 		if(err) console.log(err);
 		// console.log(object)
 		if(!object){

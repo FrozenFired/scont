@@ -45,9 +45,10 @@ exports.brandsFilter = function(req, res, next) {
 			'createAt': {[at.symCrtStart]: at.condCrtStart, [at.symCrtEnded]: at.condCrtEnded},
 			'updateAt': {[at.symUpdStart]: at.condUpdStart, [at.symUpdEnded]: at.condUpdEnded},
 			'status': condStatus  // 'status': {[symStatus]: condStatus}
-		}).skip(index).limit(entry)
-		.populate('bcateg').populate('nation').populate('creater').populate('updater')
+		})
 		.sort({'status': 1, 'weight': -1, 'updateAt': -1})
+		.skip(index).limit(entry)
+		.populate('bcateg').populate('nation').populate('creater').populate('updater')
 		.exec(function(err, objects){
 			if(err) console.log(err);
 			if(objects){

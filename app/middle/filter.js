@@ -112,6 +112,7 @@ exports.status = function(reqSts, initSts, slipCond) {
 	return [condStatus, slipCond]
 }
 
+
 exports.key = function(req, initType, initWord, slipCond) {
 	let keytype = initType, keyword = initWord;
 	if(req.query.keytype) { 

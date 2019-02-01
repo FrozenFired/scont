@@ -8,9 +8,10 @@ let Conf = {
 
 	//员工角色
 	sfRole: { 
-		1: 'Contabilita',
+		1: 'Order', 2: 'Contabilita',
 		5: 'brand', 10: 'quotation', 15: '中国报价', 20: 'leave',
 	},
+	vdRole: {0: 'register', 1: 'unregister', 2: 'logout'},
 	/* --------------------- payment ---------------------*/
 	stsPayment: {0: 'nopaid', 1: 'ac paid', 2 : 'all paid'},
 

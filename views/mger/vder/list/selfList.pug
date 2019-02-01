@@ -1,0 +1,16 @@
+table.table.table-hover.table-bordered
+	thead
+		tr
+			th 账户
+			th type
+			th status
+			th role
+	tbody
+		each item in objects
+			-a;
+			tr(class="item-id-"+item._id)
+				td: a(href="/mgVderDetail/"+item._id) #{item.code}
+				td #{Conf.vtype[item.vtype]}
+				td #{Conf.stsVendor[item.status]}
+				td #{Conf.vdRole[item.role]}
+script(src="/js/delete.js")

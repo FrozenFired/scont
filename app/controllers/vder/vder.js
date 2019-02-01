@@ -1,5 +1,5 @@
 let Index = require('./index');
-let Vder = require('../../models/user/vder');
+let Vder = require('../../models/scont/vendor');
 let _ = require('underscore');
 
 exports.vderDetail = function(req, res) {

@@ -8,7 +8,14 @@ exports.sfer = function(req, res) {
 		res.redirect('/sferLogin');
 	} else {
 		// 判断登录角色
-		if(req.session.crSfer.role == 1 && req.session.crFner) {
+		if(req.session.crSfer.role == 1 && req.session.crOder) {
+			// 财务部
+			res.render('./sfer/oder/index/index', {
+				title: 'Contabilita',
+				crOder : req.session.crOder,
+			});
+		}
+		else if(req.session.crSfer.role == 2 && req.session.crFner) {
 			// 财务部
 			res.render('./sfer/fner/index/index', {
 				title: 'Contabilita',
@@ -80,7 +87,9 @@ exports.loginSfer = function(req, res) {
 				} else {
 					req.session.crSfer = sfer
 					if(sfer.role == 1) {
-						req.session.crFner = sfer
+						req.session.crOder = sfer
+					}else if(sfer.role == 2) {
+						req.session.crBner = sfer
 					}else if(sfer.role == 5) {
 						req.session.crBner = sfer
 					}else if(sfer.role == 10) {
@@ -101,7 +110,8 @@ exports.loginSfer = function(req, res) {
 
 exports.sferLogout = function(req, res) {
 	if(req.session.crSfer) delete req.session.crSfer;
-	if(req.session.crBner) delete req.session.crFner;
+	if(req.session.crOder) delete req.session.crOder;
+	if(req.session.crFner) delete req.session.crFner;
 	if(req.session.crBner) delete req.session.crBner;
 	if(req.session.crQter) delete req.session.crQter;
 	if(req.session.crCner) delete req.session.crCner;

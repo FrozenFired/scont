@@ -8,9 +8,9 @@ let Filter = require('../../../middle/filter');
 let Conf = require('../../../../confile/conf.js')
 let moment = require('moment')
 
-exports.fnPaymentsFilter = function(req, res, next) {
+exports.odPaymentsFilter = function(req, res, next) {
 	let title = 'Payment List';
-	let url = "/fnPaymentList";
+	let url = "/odPaymentList";
 	
 	// 分页
 	let slipCond = ""; // 分页时用到的其他条件
@@ -64,7 +64,7 @@ exports.fnPaymentsFilter = function(req, res, next) {
 				let list = new Object()
 				list.title = title;
 				list.url = url;
-				list.crFner = req.session.crFner;
+				list.crOder = req.session.crOder;
 
 				list.count = count;
 				list.objects = objects;
@@ -100,17 +100,17 @@ exports.fnPaymentsFilter = function(req, res, next) {
 	})
 }
 
-exports.fnPaymentList = function(req, res) {
+exports.odPaymentList = function(req, res) {
 	let list = req.body.list;
 	let today = new Date();
 	list.today = moment(today).format('YYYYMMDD');
 	let weekday = new Date(today.getTime() + 7*24*60*60*1000)
 	list.weekday = moment(weekday).format('YYYYMMDD');
-	res.render('./sfer/fner/payment/list', list)
+	res.render('./sfer/oder/payment/list', list)
 }
 
 
-exports.fnPaymentListPrint = function(req, res) {
+exports.odPaymentListPrint = function(req, res) {
 	let objects = req.body.list.objects
 	
 	let xl = require('excel4node');
@@ -157,15 +157,17 @@ exports.fnPaymentListPrint = function(req, res) {
 
 
 
-exports.fnPaymentAdd =function(req, res) {
-	Vder.find(function(err, vders) {
+exports.odPaymentAdd =function(req, res) {
+	Vder.find()
+	.sort({'role': -1})
+	.exec(function(err, vders) {
 		if(err) console.log(err);
-		res.render('./sfer/fner/payment/add', {
+		res.render('./sfer/oder/payment/add', {
 			title: 'Add Payment',
-			crFner : req.session.crFner,
+			crOder : req.session.crOder,
 			// code: code,
 			vders: vders,
-			action: "/fnAddPayment",
+			action: "/odAddPayment",
 		})
 	})
 }
@@ -173,7 +175,7 @@ exports.fnPaymentAdd =function(req, res) {
 
 
 
-exports.fnAddPayment = function(req, res) {
+exports.odAddPayment = function(req, res) {
 	let objBody = req.body.object
 	// console.log(objBody)
 	objBody.status = 0
@@ -181,13 +183,13 @@ exports.fnAddPayment = function(req, res) {
 	objBody.ac = parseFloat(objBody.ac)
 	objBody.sa = parseFloat(objBody.sa)
 	objBody.updateAt = objBody.createAt = Date.now();
-	objBody.updater = objBody.creater = req.session.crFner._id;
+	objBody.updater = objBody.creater = req.session.crOder._id;
 
 	let _object = new Payment(objBody)
 	_object.save(function(err, objSave) {
 		if(err) console.log(err)
-		// res.redirect('/fnPaymentDetail/'+objSave._id)
-		res.redirect('/fnPaymentList')
+		// res.redirect('/odPaymentDetail/'+objSave._id)
+		res.redirect('/odPaymentList')
 	})
 }
 
@@ -195,7 +197,7 @@ exports.fnAddPayment = function(req, res) {
 
 
 
-exports.fnPaymentFilter = function(req, res, next) {
+exports.odPaymentFilter = function(req, res, next) {
 	let id = req.params.id;
 	Payment.findOne({_id: id})
 	.populate('vder')
@@ -212,7 +214,7 @@ exports.fnPaymentFilter = function(req, res, next) {
 		}
 	})
 }
-exports.fnPaymentDetail = function(req, res) {
+exports.odPaymentDetail = function(req, res) {
 	let objBody = req.body.object
 	// console.log(objBody)
 	let list = req.body.list;
@@ -221,21 +223,21 @@ exports.fnPaymentDetail = function(req, res) {
 	let weekday = new Date(now.getTime() + 7*24*60*60*1000)
 	weekday = moment(weekday).format('YYYYMMDD');
 
-	res.render('./sfer/fner/payment/detail', {
-		title: 'fnPayment Infomation',
-		crFner : req.session.crFner,
+	res.render('./sfer/oder/payment/detail', {
+		title: 'odPayment Infomation',
+		crOder : req.session.crOder,
 		object: objBody,
 		today: today,
 		weekday: weekday
 	})
 }
 
-exports.fnPaymentUpdate = function(req, res) {
+exports.odPaymentUpdate = function(req, res) {
 	let objBody = req.body.object
 
-	res.render('./sfer/fner/payment/update', {
-		title: 'fnPayment Update',
-		crFner : req.session.crFner,
+	res.render('./sfer/oder/payment/update', {
+		title: 'odPayment Update',
+		crOder : req.session.crOder,
 		object: objBody
 	})
 }
@@ -243,11 +245,11 @@ exports.fnPaymentUpdate = function(req, res) {
 
 
 
-exports.fnUpdatePayment = function(req, res) {
+exports.odUpdatePayment = function(req, res) {
 	let objBody = req.body.object
 	// console.log(objBody)
 	objBody.updateAt = Date.now();
-	objBody.updater = req.session.crFner._id;
+	objBody.updater = req.session.crOder._id;
 	Payment.findOne({_id: objBody._id}, function(err, object) {
 		if(err) console.log(err);
 		if(!object) {
@@ -257,7 +259,7 @@ exports.fnUpdatePayment = function(req, res) {
 			let _object = _.extend(object, objBody);
 			_object.save(function(err, objSave) {
 				if(err) console.log(err);
-				res.redirect('/fnPaymentList');
+				res.redirect('/odPaymentList');
 			});	
 		}
 	})
@@ -266,11 +268,11 @@ exports.fnUpdatePayment = function(req, res) {
 
 
 
-exports.fnPaymentDel = function(req, res) {
+exports.odPaymentDel = function(req, res) {
 	let objBody = req.body.object;
-	Payment.remove({_id: objBody._id}, function(err, fnPaymentRm) {
+	Payment.remove({_id: objBody._id}, function(err, odPaymentRm) {
 		if(err) console.log(err);
-		res.redirect('/fnPaymentList')
+		res.redirect('/odPaymentList')
 	})
 }
 
@@ -280,7 +282,7 @@ exports.fnPaymentDel = function(req, res) {
 
 
 
-exports.fnPaymentStatus = function(req, res) {
+exports.odPaymentStatus = function(req, res) {
 	let id = req.query.id
 	let newStatus = req.query.newStatus
 	Payment.findOne({_id: id}, function(err, object){
@@ -288,9 +290,9 @@ exports.fnPaymentStatus = function(req, res) {
 		if(object){
 			object.status = parseInt(newStatus)
 			if(object.status == 1) {
-				object.acer = req.session.crFner._id;
+				object.acer = req.session.crOder._id;
 			} else if(object.status == 2) {
-				object.saer = req.session.crFner._id;
+				object.saer = req.session.crOder._id;
 			}
 			object.save(function(err,objSave) {
 				if(err) console.log(err);
