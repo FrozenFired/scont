@@ -14,15 +14,22 @@ table.table.table-hover.table-bordered
 			th note
 			th(style="min-width: 200px") ourNote
 	tbody
-		- let pTot = 0, acTot = 0, saTot = 0;
+		- let pTot = 0, acTot = 0, saTot = 0, nopay=0, paid=0;
 		each item in objects
-			- pTot += item.price
-			- acTot += item.ac
-			- saTot += item.sa
+			- pTot += item.price;
+			- acTot += item.ac;
+			- saTot += item.sa;
+			if item.status == 0
+				- nopay += (item.sa + item.ac);
+			else if item.status == 1
+				- nopay += item.sa;
+				- paid += item.ac;
+			else
+				- paid += (item.sa + item.ac);
 
 			-acTime = moment(item.acAt).format('YYYYMMDD');
 			-saTime = moment(item.saAt).format('YYYYMMDD');
-			
+
 			//- 判断是否今日付款
 			if (acTime == today) && (item.status == 0)
 				- bgacToday="bg-primary";
@@ -100,8 +107,7 @@ table.table.table-hover.table-bordered
 								.col-sm-12
 									input#iptSaAt.datepicker.form-control(type="text", name="object[saAt]", placeholder="ayment date [format:month/day/year]", readonly="readonly")
 							.form-group.row
-								.col-sm-6
-								.col-sm-6
+								.col-sm-12
 									input.btn.btn-info.btn-block(type="submit" value="up")
 				td #{item.note}
 				td
@@ -116,17 +122,17 @@ table.table.table-hover.table-bordered
 						button.btn.btn-default.btnCancel(class="cancel-"+item._id, type="button", data-id=item._id, style="display:none") cancel
 						input.btn.btn-info(type="submit" value="Edit Note")
 		tr
-			th 
-			th 
-			th 
-			th 
-			th 
-			th #{pTot}
-			th #{acTot}
-			th 
-			th #{saTot}
-			th 
-			th 
+			th
+			th paid: #{paid}
+			th nopay: #{nopay}
+			th
+			th
+			th price: #{pTot}
+			th ac: #{acTot}
+			th
+			th sa: #{saTot}
+			th
+			th
 			th
 script(src="/js/changeStatus.js")
 script(src="/js/payment/list.js")
