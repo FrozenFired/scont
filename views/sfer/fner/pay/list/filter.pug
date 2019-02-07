@@ -1,0 +1,34 @@
+form(method="get", action=url, enctype="multipart/form-data")
+	.form-group.row
+		label.col-sm-2.col-form-label Keywords
+		.col-md-2
+			select.form-control(name="keytype", data-style="btn-info")
+				if keytype == "code"
+					-a;
+					option(value="code", selected="selected") code
+				else
+					option(value="code") code
+				if keytype == "agCode"
+					-a;
+					option(value="agCode", selected="selected") Assegno Code
+				else
+					option(value="agCode") Assegno Code
+		.col-md-8
+			input.form-control(type="text", name='keyword', value=keyword, placeholder="input the keywords to find your jobs")
+	-let objMethod = Conf.payMethod;
+	.form-group.row
+		label.col-sm-2.col-form-label Pay Method
+		.col-sm-6
+			select#iptWay.form-control(name="method", data-style="btn-info")
+				option(value=-1) please select
+				each key in Object.keys(objMethod)
+					-a;
+					if key == condMethod
+						-a;
+						option(value=key, selected="selected") #{Conf.payMethod[key]} #{key}
+					else
+						option(value=key) #{Conf.payMethod[key]} #{key}
+
+	- let objStatus = Conf.stsPay;
+	include ../../../../aaPlugin/filter/status
+	include ../../../../aaPlugin/filter/footer

@@ -1,0 +1,36 @@
+extends ../aalayout/layout
+
+block content
+	.container
+		.row(class=bgErr)
+			h1.col-sm-6
+				span Order Information: 
+			.col-sm-4.text-right
+				a.btn.btn-link(href="/fnOrderList") back order list
+		hr
+		include ./detail/selfInfo
+		hr
+		if object.status == 0
+			-a;
+			dl
+				if object.payAc
+					-a;
+					dt ac:
+					dd #{object.payAc.price}
+				if object.payMd
+					-a;
+					dt md:
+					dd #{object.payMd.price}
+				if object.paySa
+					-a;
+					dt sa:
+					dd #{object.paySa.price}
+			button.btn.btn-warning.change(type="button", data-url="/fnOrderStatus", data-id=object._id, data-sts=1) 确定订单信息正确
+		else
+			include ./detail/acsaInfo
+		hr
+		.row
+			.col-sm-6
+				a.btn.btn-danger(href="/fnOrderDel/"+object._id) delete
+			.col-sm-6
+	script(src="/js/changeStatus.js")

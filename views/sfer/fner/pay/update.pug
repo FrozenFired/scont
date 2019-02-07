@@ -1,0 +1,103 @@
+extends ../aalayout/layout
+
+block content
+	.container
+		.row
+			h1.col-sm-6 Pay Update
+			.col-sm-6.text-right
+				a.btn.btn-link.btn-lg(href="/fnOrderDetail/"+order._id) back to Order Detail
+		hr
+		h3 supplier: <strong> #{vder.code}</strong> (taxFree: #{vder.taxFree})
+
+		table.table.table-hover.table-bordered
+			tr
+				th order
+				th brand
+				th P/I
+				th price
+				th staff
+				th taxType
+				th status
+			tr
+				td #{order.order}
+				td #{order.brand}
+				td #{order.pi}
+				td #{order.price}
+				td #{order.staff}
+				td #{Conf.taxType[order.taxType]}
+				td #{Conf.stsOrder[order.status]}
+		form#fnUpPay(method="post", action=action, enctype="multipart/form-data")
+			input.form-control(type="hidden", name="object[_id]", value=object._id)
+			hr
+			.form-group.row
+				label.col-sm-2.col-form-label CreateAt
+				.col-sm-6
+					input.datepicker.form-control(type="text", name="object[createAt]", value=moment(object.createAt).format('MM/DD/YYYY'), readonly="readonly")
+			.form-group.row
+				label.col-sm-2.col-form-label #{object.code} Price
+				.col-sm-6
+					input#iptAcPrice.form-control(type="text", name="object[price]", value=object.price)
+				.col-sm-4
+					span#optAcPrice.text-danger(style="display:none") Pleas complete Ac Price
+			.form-group.row
+				label.col-sm-2.col-form-label paidAt
+				.col-sm-6
+					input.datepicker.form-control(type="text", name="object[paidAt]", value=moment(object.paidAt).format('MM/DD/YYYY'), readonly="readonly")
+			.form-group.row
+				label.col-sm-2.col-form-label Pay Method
+				.col-sm-6
+					select#iptWay.form-control(name="object[method]", data-style="btn-info")
+						option(value=-2) please select
+						each key in Object.keys(Conf.payMethod)
+							-a;
+							if key == object.method
+								-a;
+								option(value=key, selected="selected") #{Conf.payMethod[key]} #{key}
+							else
+								option(value=key) #{Conf.payMethod[key]} #{key}
+			.form-group.row
+				label.col-sm-2.col-form-label #{object.code} Assegno Code
+				.col-sm-6
+					input#iptAssegnoCode.form-control(type="text", name="object[agCode]", value=object.agCode)
+				.col-sm-4
+					span#optAssegnoCode.text-danger(style="display:none") Pleas complete Ac Price
+			- let picUrl = "";
+			if object.order && object.order.order
+				-picUrl += object.order.order;
+			if object.order && object.order.brand
+				-picUrl += '-' + object.order.brand;
+			if object.code
+				-picUrl += '-' +object.code;
+			if object.price
+				-picUrl += '-' + object.price;
+			if object.picUrl
+				-picUrl = object.picUrl;
+			.form-group.row
+				label.col-sm-2.col-form-label #{object.code} Picture Path
+				.col-sm-6
+					input#iptPicUrl.form-control(type="text", name="object[picUrl]", value=picUrl)
+				.col-sm-4
+					span#optPicUrl.text-danger(style="display:none") Pleas complete Picture Path
+			.form-group.row
+				label.col-sm-2.col-form-label Pay
+				.col-sm-6
+					select#iptStatus.form-control(name="object[status]", data-style="btn-info")
+						each key in Object.keys(Conf.stsPay)
+							-a;
+							if key == object.status
+								-a;
+								option(value=key, selected="selected") #{Conf.stsPay[key]} #{key}
+							else
+								option(value=key) #{Conf.stsPay[key]} #{key}
+			.form-group.row
+				.offset-md-2.col-md-10
+					input.btn.btn-default(type="submit" value="Pay")
+
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	//- <link rel="stylesheet" href="/resources/demos/style.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	//- timepicker
+	link(rel="stylesheet", href="/libs/jt.timepicker/jquery.timepicker.css")
+	script(src="/libs/jt.timepicker/jquery.timepicker.min.js")
+	script(src="/js/fner/pay/update.js")

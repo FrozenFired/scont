@@ -1,0 +1,99 @@
+table.table.table-hover.table-bordered
+	thead
+		tr
+			th status
+			th order
+			th brand
+			th P/I
+			th price
+			th ac
+			th acAt
+			th sa
+			th saAt
+			th(style="min-width: 100px") note
+	tbody
+		- let pTot = 0, acTot = 0, saTot = 0;
+		each item in objects
+			- pTot += item.price
+			- acTot += item.ac
+			- saTot += item.sa
+
+			-acTime = moment(item.acAt).format('YYYYMMDD');
+			-saTime = moment(item.saAt).format('YYYYMMDD');
+
+			//- 判断是否今日付款
+			if (acTime == today) && (item.status == 0)
+				- bgacToday="bg-primary";
+			else
+				- bgacToday="bg-default";
+			if (saTime == today) && (item.status == 1)
+				- bgsaToday="bg-primary";
+			else
+				- bgsaToday="bg-default";
+			//- 判断近一周是否有要付款的
+			if (today < acTime && acTime < weekday)
+				- bgacWeek="bg-info";
+			else
+				- bgacWeek="bg-default";
+			if today < saTime && saTime < weekday
+				- bgsaWeek="bg-info";
+			else
+				- bgsaWeek="bg-default";
+
+			//- 错误状态
+			if (item.status == 0) && (acTime < today)
+				- bgErr="bg-danger";
+			else if (item.status == 1) && (saTime < today)
+				- bgErr="bg-danger";
+			else
+				- bgErr="bg-default";
+
+			//- 状态标记
+			if item.status == 1
+				- bgSts1="bg-warning";
+			else
+				- bgSts1="bg-default";
+			if item.status == 2
+				- bgSts2="bg-warning";
+			else
+				- bgSts2="bg-white";
+			tr(class="item-id-"+item._id+" "+bgSts2)
+				td(class=bgErr) #{Conf.stsOrder[item.status]}
+				td #{item.order}
+				td #{item.brand}
+				td #{item.pi}
+				td #{item.price}
+				td(class=bgSts1+" "+bgacToday) #{item.ac}
+				td(class=bgSts1+" "+ bgacWeek)
+					if item.acAt
+						-a;
+						span #{moment(item.acAt).format('YYYY/MM/DD')}
+				td(class=bgsaToday) #{item.sa}
+				td(class=bgsaWeek)
+					if item.saAt
+						-a;
+						span #{moment(item.saAt).format('YYYY/MM/DD')}
+				td
+					button.btn.btn-link.btnEdit(class="edit-"+item._id, type="button", data-id=item._id) edit
+					if item.note
+						-a;
+						span(class="text-"+item._id) &nbsp;->&nbsp; #{item.note}
+					form(class="form-"+item._id, method="post", action="/updateOrder", style="display:none")
+						input.form-control(type="hidden", name="object[_id]", value=item._id)
+						input.form-control(class="ipt-"+item._id, type="hidden", value=item.note)
+						textarea.form-control.rounded-0(class="tar-"+item._id, rows="3", name="object[note]")
+						button.btn.btn-default.btnCancel(class="cancel-"+item._id, type="button", data-id=item._id, style="display:none") cancel
+						input.btn.btn-info(type="submit" value="Edit Note")
+		tr
+			th Total
+			th
+			th
+			th
+			th #{pTot}
+			th #{acTot}
+			th
+			th #{saTot}
+			th
+			th(style="min-width: 100px") note
+
+script(src="/js/order/list.js")

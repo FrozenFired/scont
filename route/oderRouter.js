@@ -1,4 +1,4 @@
-let Payment = require('../app/controllers/sfer/oder/payment');
+let Order = require('../app/controllers/sfer/oder/order');
 
 
 let MiddleBcrypt = require('../app/middle/middleBcrypt');
@@ -10,14 +10,14 @@ let multipartMiddleware = multipart();
 
 module.exports = function(app){
 
-	// Payment         ----------------------------------------------------------------------
-	app.get('/odPaymentList', MiddleRole.oderIsLogin, Payment.odPaymentsFilter, Payment.odPaymentList)
-	app.get('/odPaymentListPrint', MiddleRole.oderIsLogin, Payment.odPaymentsFilter, Payment.odPaymentListPrint)
-	app.get('/odPaymentAdd', MiddleRole.oderIsLogin, MiddleRole.singleSferLogin, Payment.odPaymentAdd)
-	app.post('/odAddPayment', multipartMiddleware, MiddleRole.singleSferLogin, Payment.odAddPayment)
-	app.post('/odUpdatePayment', multipartMiddleware, MiddleRole.singleSferLogin, Payment.odUpdatePayment)
-	app.get('/odPaymentDetail/:id', MiddleRole.oderIsLogin, Payment.odPaymentFilter, Payment.odPaymentDetail)
-	app.get('/odPaymentDel/:id', MiddleRole.oderIsLogin, Payment.odPaymentFilter, Payment.odPaymentDel)
+	// Order         ----------------------------------------------------------------------
+	app.get('/odOrderList', MiddleRole.oderIsLogin, Order.odOrdersFilter, Order.odOrderList)
+	app.get('/odOrderListPrint', MiddleRole.oderIsLogin, Order.odOrdersFilter, Order.odOrderListPrint)
+	app.get('/odOrderAdd', MiddleRole.oderIsLogin, MiddleRole.singleSferLogin, Order.odOrderAdd)
+	app.post('/odAddOrder', multipartMiddleware, MiddleRole.singleSferLogin, Order.odAddOrder)
+	app.post('/odUpdateOrder', multipartMiddleware, MiddleRole.singleSferLogin, Order.odUpdateOrder)
+	app.get('/odOrderDetail/:id', MiddleRole.oderIsLogin, Order.odOrderFilter, Order.odOrderDetail)
+	app.get('/odOrderDel/:id', MiddleRole.oderIsLogin, Order.odOrderFilter, Order.odOrderDel)
 
-	app.get('/odPaymentStatus', MiddleRole.oderIsLogin, Payment.odPaymentStatus)
+	app.get('/odOrderStatus', MiddleRole.oderIsLogin, Order.odOrderStatus)
 };

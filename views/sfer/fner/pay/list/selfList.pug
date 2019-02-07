@@ -1,0 +1,47 @@
+table.table.table-hover.table-bordered
+	thead
+		tr
+			th view
+			th code
+			th createAt
+			th price
+			th paidAt
+			th Method
+			th status
+			th Assegno
+			th Picture
+			th note
+	tbody
+		each item in objects
+			-paidAt="";
+			if item.paidAt
+				-paidAt = moment(item.paidAt).format('YYYYMMDD');
+
+			- bgRecent = 'bg-default';
+			if paidAt < weekday && paidAt > today
+				- bgRecent = 'bg-info';
+
+			-bgStatus = Conf.stsPayBg[item.status];
+			tr(class="item-id-"+item._id+" "+bgStatus)
+				td(class=bgErr): a(href="/fnPayDetail/"+item._id) view
+				td #{item.code}
+				td 
+					if item.createAt
+						-a;
+						span #{moment(item.createAt).format("MM/DD/YYYY")}
+				td 
+					if (paidAt == today) && (item.status == 0)
+						-a;
+						a.btn.btn-info(href="/fnPayUpdate/"+item._id) #{item.price}
+						//- button.btn.btn-info.change(type="button", data-url="/fnPayStatus", data-sts=1, data-id=item._id) #{item.price}
+					else
+						span #{item.price}
+				td(class=bgRecent) 
+					if item.paidAt
+						-a;
+						span #{moment(item.paidAt).format("MM/DD/YYYY")}
+				td #{Conf.payMethod[item.method]}
+				td #{Conf.stsPay[item.status]}
+				td #{item.agCode}
+				td #{item.picUrl}
+				td #{item.note}

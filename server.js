@@ -47,9 +47,9 @@ app.use(require('express-pdf'))
 require('./route/aderRouter')(app)
 require('./route/mgerRouter')(app)
 require('./route/sferRouter')(app)
-require('./route/oderRouter')(app)
-require('./route/fnerRouter')(app)
-require('./route/vderRouter')(app)
+// require('./route/oderRouter')(app)
+// require('./route/fnerRouter')(app)
+// require('./route/vderRouter')(app)
 
 app.use(function(req, res, next) {
 	res.render("404")

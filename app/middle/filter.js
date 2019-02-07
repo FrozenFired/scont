@@ -91,27 +91,32 @@ exports.cs = function(req) {
 exports.status = function(reqSts, initSts, slipCond) {
 	let condStatus;
 	if(!reqSts) {
-		// console.log("not req")
 		condStatus = initSts;
 	} else {
-		// console.log("yes req")
 		condStatus = reqSts
 	}
-
 	if(condStatus instanceof Array){
-		// console.log("not Array")
 		for(status in condStatus){
 			slipCond += "&status="+condStatus[status];
 		}
 	} else {
-		// console.log("yes Array")
 		condStatus = [condStatus];
 		slipCond += "&status="+condStatus;
 	}
-
 	return [condStatus, slipCond]
 }
-
+exports.method = function(reqMethod, initMethod, slipCond) {
+	let condMethod;
+	if(!reqMethod || reqMethod == initMethod){
+		symMethod = "$ne";
+		condMethod = initMethod;
+	} else{
+		symMethod = "$eq";   // $ ne eq gte gt lte lt
+		condMethod = reqMethod;
+		slipCond += "&method="+reqMethod;
+	}
+	return [symMethod, condMethod, slipCond];
+}
 
 exports.key = function(req, initType, initWord, slipCond) {
 	let keytype = initType, keyword = initWord;
@@ -121,7 +126,7 @@ exports.key = function(req, initType, initWord, slipCond) {
 	}
 
 	if(req.query.keyword) {
-		keyword = req.query.keyword.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+		keyword = req.query.keyword.replace(/(\s*$)/g, "").replace( /^\s*/, '');
 		slipCond += "&keyword="+keyword;
 	}
 

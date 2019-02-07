@@ -22,6 +22,7 @@ exports.vendorsFilter = function(req, res, next) {
 	// 条件判断   ----------------
 	// 查找关键字
 	let keytype = "code", keyword = "";
+	if(req.query.keyword) req.query.keyword = req.query.keyword.toUpperCase();
 	[keytype, keyword, slipCond] = Filter.key(req, keytype, keyword, slipCond)
 	// 根据状态筛选
 	let condStatus = Object.keys(Conf.stsVendor);

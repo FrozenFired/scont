@@ -1,12 +1,15 @@
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
+let Float = require('mongoose-float').loadType(mongoose, 2);
 let ObjectId = Schema.Types.ObjectId
 const colection = 'Vendor';
 let dbSchema = new Schema({
 	password: {type: String, default: 0},
 	role: {type: Number, default: 1},
 	loginTime:  {type: Number, default: 1485100000000},
+
+	taxFree: Float,
 
 	code: {unique: true, type: String},
 	vtype: Number,

@@ -89,7 +89,7 @@ exports.loginSfer = function(req, res) {
 					if(sfer.role == 1) {
 						req.session.crOder = sfer
 					}else if(sfer.role == 2) {
-						req.session.crBner = sfer
+						req.session.crFner = sfer
 					}else if(sfer.role == 5) {
 						req.session.crBner = sfer
 					}else if(sfer.role == 10) {

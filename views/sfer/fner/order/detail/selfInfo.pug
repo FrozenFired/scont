@@ -1,0 +1,52 @@
+h3 supplier: 
+	if object.vder
+		-a;
+		strong #{object.vder.code}
+	else
+		span loss supplier
+
+table.table.table-hover.table-bordered
+	tr
+		th order
+		th brand
+		th P/I
+		th
+			if action
+				-a;
+				span price
+			else
+				a.btn.btn-info(href="/fnOrderUpPrice/"+object._id) change price
+		th status
+		th taxType
+		th staff
+	tr(class="object-id-"+object._id+" "+bgSts2)
+		td #{object.order}
+		td #{object.brand}
+		td #{object.pi}
+		td 
+			span #{object.price}
+			if object.priceHis
+				-a;
+				span -(#{object.priceHis})
+		td #{Conf.stsOrder[object.status]}
+		td #{Conf.taxType[object.taxType]}
+		td #{object.staff}
+.form-group.row
+	label.col-sm-2.col-form-label createAt
+	.col-sm-4
+		input.form-control(type="text", value=moment(object.createAt).format('YYYY/MM/DD'), readonly="readonly")
+	label.col-sm-2.col-form-label updateAt
+	.col-sm-4
+		input.form-control(type="text", value=moment(object.updateAt).format('YYYY/MM/DD'), readonly="readonly")
+dl.dl-horizontal
+	dt Note:
+	dd #{object.note}
+	dt ourNote:
+	dd #{object.ourNote}
+	dt creater:
+	dd
+		if object.creater
+			- createrCode = object.creater.code;
+			span #{createrCode}
+		else 
+			span loss

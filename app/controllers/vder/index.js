@@ -6,7 +6,7 @@ exports.vder = function(req, res) {
 	if(!req.session.crVder) {
 		res.redirect('/vderLogin');
 	} else {
-		res.redirect('/paymentList');
+		res.redirect('/orderList');
 		// res.render('./vder/index/index', {
 		// 	title: 'Manage Home',
 		// 	crVder : req.session.crVder,
