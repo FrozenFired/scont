@@ -28,9 +28,8 @@ exports.brandsFilter = function(req, res, next) {
 	[keytype, keyword, slipCond] = Filter.key(req, keytype, keyword, slipCond);
 
 	// 根据用户筛选
-	let condCreater = -1;
+	let condCreater = '5c3ef60de52ed9187adbc322';
 	[symCreater, condCreater, slipCond] = Filter.creater(req.query.creater, condCreater, slipCond);
-
 	// 根据状态筛选
 	// let condStatus = 0;
 	let condStatus = Object.keys(Conf.stsBrand);
@@ -41,7 +40,7 @@ exports.brandsFilter = function(req, res, next) {
 
 	Brand.count({
 		[keytype]: new RegExp(keyword + '.*'),
-		// 'creater': {[symCreater]: condCreater},
+		'creater': {[symCreater]: condCreater},
 		'createAt': {[at.symCrtStart]: at.condCrtStart, [at.symCrtEnded]: at.condCrtEnded},
 		'updateAt': {[at.symUpdStart]: at.condUpdStart, [at.symUpdEnded]: at.condUpdEnded},
 		'status': condStatus  // 'status': {[symStatus]: condStatus}
@@ -50,7 +49,7 @@ exports.brandsFilter = function(req, res, next) {
 		if(err) console.log(err);
 		Brand.find({
 			[keytype]: new RegExp(keyword + '.*'),
-			// 'creater': {[symCreater]: condCreater},
+			'creater': {[symCreater]: condCreater},
 			'createAt': {[at.symCrtStart]: at.condCrtStart, [at.symCrtEnded]: at.condCrtEnded},
 			'updateAt': {[at.symUpdStart]: at.condUpdStart, [at.symUpdEnded]: at.condUpdEnded},
 			'status': condStatus  // 'status': {[symStatus]: condStatus}
