@@ -1,4 +1,5 @@
 let Index = require('../index');
+let Sfer = require('../../../models/user/sfer');
 let Brand = require('../../../models/scont/brand');
 let Bcateg = require('../../../models/scont/bcateg');
 let Nation = require('../../../models/scont/nation');
@@ -24,10 +25,15 @@ exports.brandsFilter = function(req, res, next) {
 	// 查找关键字
 	let keytype = "code", keyword = "";
 	if(req.query.keyword) req.query.keyword = req.query.keyword.toUpperCase();
-	[keytype, keyword, slipCond] = Filter.key(req, keytype, keyword, slipCond)
+	[keytype, keyword, slipCond] = Filter.key(req, keytype, keyword, slipCond);
+
+	// 根据用户筛选
+	let condCreater = -1;
+	[symCreater, condCreater, slipCond] = Filter.creater(req.query.creater, condCreater, slipCond);
+
 	// 根据状态筛选
-	let condStatus = Object.keys(Conf.stsBrand);
 	// let condStatus = 0;
+	let condStatus = Object.keys(Conf.stsBrand);
 	[condStatus, slipCond] = Filter.status(req.query.status, condStatus, slipCond);
 	// 根据创建更新时间筛选
 	let at = Filter.at(req);
@@ -35,6 +41,7 @@ exports.brandsFilter = function(req, res, next) {
 
 	Brand.count({
 		[keytype]: new RegExp(keyword + '.*'),
+		'creater': {[symCreater]: condCreater},
 		'createAt': {[at.symCrtStart]: at.condCrtStart, [at.symCrtEnded]: at.condCrtEnded},
 		'updateAt': {[at.symUpdStart]: at.condUpdStart, [at.symUpdEnded]: at.condUpdEnded},
 		'status': condStatus  // 'status': {[symStatus]: condStatus}
@@ -43,6 +50,7 @@ exports.brandsFilter = function(req, res, next) {
 		if(err) console.log(err);
 		Brand.find({
 			[keytype]: new RegExp(keyword + '.*'),
+			'creater': {[symCreater]: condCreater},
 			'createAt': {[at.symCrtStart]: at.condCrtStart, [at.symCrtEnded]: at.condCrtEnded},
 			'updateAt': {[at.symUpdStart]: at.condUpdStart, [at.symUpdEnded]: at.condUpdEnded},
 			'status': condStatus  // 'status': {[symStatus]: condStatus}
@@ -64,6 +72,7 @@ exports.brandsFilter = function(req, res, next) {
 				list.keytype = req.query.keytype;
 				list.keyword = req.query.keyword;
 
+				list.condCreater = condCreater;
 				list.condStatus = condStatus;
 
 				list.condCrtStart = req.query.crtStart;
@@ -87,7 +96,13 @@ exports.brandsFilter = function(req, res, next) {
 	})
 }
 exports.brandList = function(req, res) {
-	res.render('./sfer/scont/brand/list', req.body.list)
+	Sfer.find()
+	.exec(function(err, users) {
+		if(err) console.log(err);
+		let list = req.body.list
+		list.users = users;
+		res.render('./sfer/scont/brand/list', req.body.list)
+	})
 }
 exports.brandListPrint = function(req, res) {
 	let objects = req.body.list.objects

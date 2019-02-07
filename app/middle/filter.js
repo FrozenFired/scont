@@ -117,6 +117,18 @@ exports.method = function(reqMethod, initMethod, slipCond) {
 	}
 	return [symMethod, condMethod, slipCond];
 }
+exports.creater = function(reqCreater, initCreater, slipCond) {
+	let condCreater;
+	if(!reqCreater || reqCreater == initCreater){
+		symCreater = "$ne";
+		condCreater = initCreater;
+	} else{
+		symCreater = "$eq";   // $ ne eq gte gt lte lt
+		condCreater = reqCreater;
+		slipCond += "&creater="+reqCreater;
+	}
+	return [symCreater, condCreater, slipCond];
+}
 
 exports.key = function(req, initType, initWord, slipCond) {
 	let keytype = initType, keyword = initWord;

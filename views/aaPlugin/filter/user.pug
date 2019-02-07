@@ -1,0 +1,12 @@
+.form-group.row
+	label.col-sm-2.col-form-label creater
+	.col-sm-6
+		select#iptCreater.form-control(name="creater", data-style="btn-info")
+			option(value=-1) please select
+			each user in users
+				-a;
+				if user._id == condCreater
+					-a;
+					option(value=user._id, selected="selected") #{user.code}
+				else
+					option(value=user._id) #{user.code}
