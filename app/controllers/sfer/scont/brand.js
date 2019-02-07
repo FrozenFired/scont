@@ -41,7 +41,7 @@ exports.brandsFilter = function(req, res, next) {
 
 	Brand.count({
 		[keytype]: new RegExp(keyword + '.*'),
-		'creater': {[symCreater]: condCreater},
+		// 'creater': {[symCreater]: condCreater},
 		'createAt': {[at.symCrtStart]: at.condCrtStart, [at.symCrtEnded]: at.condCrtEnded},
 		'updateAt': {[at.symUpdStart]: at.condUpdStart, [at.symUpdEnded]: at.condUpdEnded},
 		'status': condStatus  // 'status': {[symStatus]: condStatus}
@@ -50,7 +50,7 @@ exports.brandsFilter = function(req, res, next) {
 		if(err) console.log(err);
 		Brand.find({
 			[keytype]: new RegExp(keyword + '.*'),
-			'creater': {[symCreater]: condCreater},
+			// 'creater': {[symCreater]: condCreater},
 			'createAt': {[at.symCrtStart]: at.condCrtStart, [at.symCrtEnded]: at.condCrtEnded},
 			'updateAt': {[at.symUpdStart]: at.condUpdStart, [at.symUpdEnded]: at.condUpdEnded},
 			'status': condStatus  // 'status': {[symStatus]: condStatus}
