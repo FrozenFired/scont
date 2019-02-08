@@ -51,7 +51,7 @@ exports.bcategListPrint = function(req, res) {
 	ws.cell(1,2).string('Category2');
 	ws.cell(1,3).string('English');
 	ws.cell(1,4).string('中文名');
-	ws.cell(1,6).string('Brand Number');
+	ws.cell(1,5).string('Brand Number');
 
 	for(let i=0; i<objects.length; i++){
 		let item = objects[i];
@@ -59,7 +59,7 @@ exports.bcategListPrint = function(req, res) {
 		if(item.code) ws.cell((i+2), 2).string(String(item.code));
 		if(item.nameEN) ws.cell((i+2), 3).string(String(item.nameEN));
 		if(item.nameCN) ws.cell((i+2), 4).string(String(item.nameCN));
-		if(item.numbrand) ws.cell((i+2), 6).string(String(item.numbrand));
+		if(item.numbrand) ws.cell((i+2), 5).string(String(item.numbrand));
 	}
 
 	wb.write('CategoryList_'+req.session.crSfer.code+'_'+ moment(new Date()).format('YYYYMMDD-HHmmss') + '.xlsx', res);
@@ -180,7 +180,7 @@ bcategPrintFunc = function(req, res, object, brands) {
 	for(let i=0; i<brands.length; i++){
 		let item = brands[i];
 		if(item.code) ws.cell((i+4), 1).string(String(item.code));
-		if(item.nation && item.nation.code) ws.cell((i+2), 2).string(item.nation.code);
+		if(item.nation && item.nation.code) ws.cell((i+4), 2).string(item.nation.code);
 		if(item.matDesp) ws.cell((i+4), 3).string(String(item.matDesp));
 		if(item.status || item.status==0) ws.cell((i+4), 4).string(String(Conf.stsBrand[item.status]));
 		if(item.sconts) ws.cell((i+4), 5).string(String(item.sconts.length));

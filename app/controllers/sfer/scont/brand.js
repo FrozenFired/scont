@@ -95,7 +95,8 @@ exports.brandsFilter = function(req, res, next) {
 	})
 }
 exports.brandList = function(req, res) {
-	Sfer.find()
+	Sfer.find({role: [5, 10, 20]})
+	.sort({'role': 1})
 	.exec(function(err, users) {
 		if(err) console.log(err);
 		let list = req.body.list
