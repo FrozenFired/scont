@@ -13,6 +13,21 @@ form(method="get", action=url, enctype="multipart/form-data")
 					option(value="agCode", selected="selected") Assegno Code
 				else
 					option(value="agCode") Assegno Code
+				if keytype == "price"
+					-a;
+					option(value="price", selected="selected") Price
+				else
+					option(value="price") Price
+				if keytype == "order"
+					-a;
+					option(value="order", selected="selected") Order
+				else
+					option(value="order") Order
+				if keytype == "vder"
+					-a;
+					option(value="vder", selected="selected") Supplier
+				else
+					option(value="vder") Supplier
 		.col-md-8
 			input.form-control(type="text", name='keyword', value=keyword, placeholder="input the keywords to find your jobs")
 	-let objMethod = Conf.payMethod;

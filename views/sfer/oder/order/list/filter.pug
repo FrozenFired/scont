@@ -13,11 +13,11 @@ form(method="get", action=url, enctype="multipart/form-data")
 					option(value="brand", selected="selected") brand
 				else
 					option(value="brand") brand
-				//- if keytype == "price"
-				//- 	-a;
-				//- 	option(value="price", selected="selected") Price
-				//- else
-				//- 	option(value="price") Price
+				if keytype == "price"
+					-a;
+					option(value="price", selected="selected") Price
+				else
+					option(value="price") Price
 				if keytype == "pi"
 					-a;
 					option(value="pi", selected="selected") P/I
@@ -28,6 +28,11 @@ form(method="get", action=url, enctype="multipart/form-data")
 					option(value="ourNote", selected="selected") ourNote
 				else
 					option(value="ourNote") ourNote
+				if keytype == "vder"
+					-a;
+					option(value="vder", selected="selected") Supplier
+				else
+					option(value="vder") Supplier
 		.col-md-8
 			input.form-control(type="text", name='keyword', value=keyword, placeholder="input the keywords to find your jobs")
 	- let objStatus = Conf.stsOrder;
