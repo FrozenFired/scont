@@ -26,9 +26,6 @@ module.exports = function(app){
 
 	// index ---------------Manager 首页 登录页面 登录 登出--------------------------------
 	app.get('/mger', Index.mgerCheck, Index.mger);
-	app.get('/mgerLogin', Index.mgerLogin);
-	app.post('/loginMger', Index.loginMger);
-	app.get('/mgerLogout', Index.mgerLogout);
 
 	// Manager ------------------------------------------------------------------------
 	app.get('/mgerDetail/:id', MiddleRole.mgerIsLogin, Mger.mgerDetail);

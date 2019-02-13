@@ -8,7 +8,6 @@ let moment = require('moment');
 
 exports.vdBrandList = function(req, res) {
 	let title = 'brand List';
-	let url = "/brandList";
 	let crVder = req.session.crVder;
 
 	Vder.findOne({_id: crVder._id})
@@ -25,9 +24,8 @@ exports.vdBrandList = function(req, res) {
 		if(object) {
 			res.render('./vder/brand/list', {
 				title: title,
-				url : url,
 				crVder: crVder,
-
+				vendor: object,
 				sconts: object.sconts
 			})
 		} else {

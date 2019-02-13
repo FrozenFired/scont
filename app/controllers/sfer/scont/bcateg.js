@@ -38,14 +38,14 @@ exports.bcategListPrint = function(req, res) {
 		},
 		dateFormat: 'yyyy-mm-dd hh:mm:ss'
 	});
-	
+
 	let ws = wb.addWorksheet('Sheet 1');
 	ws.column(1).setWidth(20);
 	ws.column(2).setWidth(20);
 	ws.column(3).setWidth(20);
 	ws.column(4).setWidth(20);
 	ws.column(5).setWidth(15);
-	
+
 	// header
 	ws.cell(1,1).string('Category1');
 	ws.cell(1,2).string('Category2');
@@ -162,14 +162,14 @@ bcategPrintFunc = function(req, res, object, brands) {
 		},
 		dateFormat: 'yyyy-mm-dd hh:mm:ss'
 	});
-	
+
 	let ws = wb.addWorksheet('Sheet 1');
 	ws.column(1).setWidth(20);
 	ws.column(2).setWidth(10);
 	ws.column(3).setWidth(25);
 	ws.column(4).setWidth(15);
 	ws.column(5).setWidth(10);
-	
+
 	// header
 	ws.cell(3,1).string('Brand');
 	ws.cell(3,2).string('Country');
@@ -218,37 +218,36 @@ exports.updateBcateg = function(req, res) {
 					_object.updateUser = req.session.crSfer._id
 					_object.save(function(err, objSave) {
 						if(err) console.log(err);
-
-						res.redirect('/bcategDetail/'+objSave._id)
+						res.redirect('/bcategDetail/'+objSave._id);
 					})
 				}
 			})
 		} else {
-			info = "This Bcateg is deleted, Please reflesh"
-			Index.sfOptionWrong(req, res, info)
+			info = "This Bcateg is deleted, Please reflesh";
+			Index.sfOptionWrong(req, res, info);
 		}
 	})
 }
 
 exports.bcategDel = function(req, res) {
-	let id = req.query.id
+	let id = req.query.id;
 	Bcateg.findOne({_id: id})
 	.exec(function(err, bcateg){
 		if(err) console.log(err);
 		if(bcateg){
 			if(bcateg.numbrand > 0){
-				res.json({success: 0, failDel: "Attention! You can't delete this bcateg"})
+				res.json({success: 0, failDel: "Attention! You can't delete this bcateg"});
 			}else{
 				Bcateg.remove({_id: id}, function(err, brander) {
 					if(err) {
-						res.json({success: 0, failDel: "删除失败,原因不明,联系管理员"})
+						res.json({success: 0, failDel: "删除失败,原因不明,联系管理员"});
 					} else {
-						res.json({success: 1})
+						res.json({success: 1});
 					}
 				})
 			}
 		} else {
-			res.json({success: 0, failDel: "已被删除，按F5刷新页面查看"})
+			res.json({success: 0, failDel: "已被删除，按F5刷新页面查看"});
 		}
 	})
 }
@@ -258,7 +257,7 @@ exports.bcategDel = function(req, res) {
 
 // Ajax
 exports.ajaxBcateg = function(req, res) {
-	let keytpye = req.query.keytype
+	let keytpye = req.query.keytype;
 	let keyword = req.query.keyword.toUpperCase();
 	// console.log(keytpye)
 	// console.log(keyword)
@@ -267,7 +266,7 @@ exports.ajaxBcateg = function(req, res) {
 	.exec(function(err, bcategs) {
 		if(err) console.log(err);
 		if(bcategs && bcategs.length > 0){
-			res.json({success: 1, bcategs: bcategs})
+			res.json({success: 1, bcategs: bcategs});
 		} else {
 			res.json({success: 0, info: "此分类下，无子分类"});
 		}

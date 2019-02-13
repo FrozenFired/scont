@@ -4,96 +4,92 @@ table.table.table-hover.table-bordered
 			th status
 			th order
 			th brand
-			th P/I
+			//- th P/I
 			th price
 			th ac
 			th acAt
+			th md
+			th mdAt
 			th sa
 			th saAt
 			th(style="min-width: 100px") note
 	tbody
 		- let pTot = 0, acTot = 0, saTot = 0;
 		each item in objects
-			- pTot += item.price
-			- acTot += item.ac
-			- saTot += item.sa
+			-let stsOrderBg = Conf.stsOrderBg[item.status];
 
-			-acTime = moment(item.acAt).format('YYYYMMDD');
-			-saTime = moment(item.saAt).format('YYYYMMDD');
+			-let payAc, acPrice, payMd, mdPrice, paySa, saPrice;
+			-let bgAcPaid = bgMdPaid = bgSaPaid = "bg-default";
+			-let bgAcToday = bgMdToday = bgSaToday = "bg-default";
+			-let bgAcWeek = bgMdWeek = bgSaWeek = "bg-default";
+			if item.payAc
+				-payAc = item.payAc;
+				-acPrice = payAc.price;
 
-			//- 判断是否今日付款
-			if (acTime == today) && (item.status == 0)
-				- bgacToday="bg-primary";
-			else
-				- bgacToday="bg-default";
-			if (saTime == today) && (item.status == 1)
-				- bgsaToday="bg-primary";
-			else
-				- bgsaToday="bg-default";
-			//- 判断近一周是否有要付款的
-			if (today < acTime && acTime < weekday)
-				- bgacWeek="bg-info";
-			else
-				- bgacWeek="bg-default";
-			if today < saTime && saTime < weekday
-				- bgsaWeek="bg-info";
-			else
-				- bgsaWeek="bg-default";
+				if payAc.status > 0
+					- bgAcPaid = "bg-warning";
 
-			//- 错误状态
-			if (item.status == 0) && (acTime < today)
-				- bgErr="bg-danger";
-			else if (item.status == 1) && (saTime < today)
-				- bgErr="bg-danger";
-			else
-				- bgErr="bg-default";
+				if payAc.paidAt
+					-acTime = moment(payAc.paidAt).format('YYYYMMDD');
+					if today == acTime
+						- bgAcToday="bg-info";
+					else if today < acTime && acTime < weekday
+						- bgAcWeek="bg-info";
+			if item.payMd
+				-payMd = item.payMd;
+				-mdPrice = payMd.price;
 
-			//- 状态标记
-			if item.status == 1
-				- bgSts1="bg-warning";
-			else
-				- bgSts1="bg-default";
-			if item.status == 2
-				- bgSts2="bg-warning";
-			else
-				- bgSts2="bg-white";
-			tr(class="item-id-"+item._id+" "+bgSts2)
-				td(class=bgErr) #{Conf.stsOrder[item.status]}
+				if payMd.status > 0
+					- bgMdPaid = "bg-warning";
+
+				if payMd.paidAt
+					-mdTime = moment(payMd.paidAt).format('YYYYMMDD');
+					if today == mdTime
+						- bgMdToday="bg-info";
+					else if today < mdTime && mdTime < weekday
+						- bgMdWeek="bg-info";
+			if item.paySa
+				-paySa = item.paySa;
+				-saPrice = paySa.price;
+
+				if paySa.status > 0
+					- bgSaPaid = "bg-warning";
+
+				if paySa.paidAt
+					-saTime = moment(paySa.paidAt).format('YYYYMMDD');
+					if today == saTime
+						- bgSaToday="bg-info";
+					else if today < saTime && saTime < weekday
+						- bgSaWeek="bg-info";
+
+			tr(class="item-id-"+item._id)
+				td(class=stsOrderBg)
+					if item.status == 3
+						-a;
+						button.btn.btn-warning.change(type="button", , data-url="/vdOrderStatus", data-id=item._id, data-sts=4) 确认完全付款
+					else
+						span #{Conf.stsOrder[item.status]}
 				td #{item.order}
 				td #{item.brand}
-				td #{item.pi}
+				//- td #{item.pi}
 				td #{item.price}
-				td(class=bgSts1+" "+bgacToday) #{item.ac}
-				td(class=bgSts1+" "+ bgacWeek)
-					if item.acAt
+				td(class=bgAcPaid + " " + bgAcToday) #{acPrice}
+				td(class=bgAcWeek)
+					if payAc && payAc.paidAt
 						-a;
-						span #{moment(item.acAt).format('YYYY/MM/DD')}
-				td(class=bgsaToday) #{item.sa}
-				td(class=bgsaWeek)
-					if item.saAt
+						span #{moment(payAc.paidAt).format('YYYY/MM/DD')}
+				td(class=bgMdPaid + " " + bgMdToday) #{mdPrice}
+				td(class=bgMdWeek)
+					if payMd && payMd.paidAt
 						-a;
-						span #{moment(item.saAt).format('YYYY/MM/DD')}
+						span #{moment(payMd.paidAt).format('YYYY/MM/DD')}
+				td(class=bgSaPaid + " " + bgSaToday) #{saPrice}
+				td(class=bgSaWeek)
+					if paySa && paySa.paidAt
+						-a;
+						span #{moment(paySa.paidAt).format('YYYY/MM/DD')}
 				td
-					button.btn.btn-link.btnEdit(class="edit-"+item._id, type="button", data-id=item._id) edit
-					if item.note
-						-a;
-						span(class="text-"+item._id) &nbsp;->&nbsp; #{item.note}
-					form(class="form-"+item._id, method="post", action="/updateOrder", style="display:none")
-						input.form-control(type="hidden", name="object[_id]", value=item._id)
-						input.form-control(class="ipt-"+item._id, type="hidden", value=item.note)
-						textarea.form-control.rounded-0(class="tar-"+item._id, rows="3", name="object[note]")
-						button.btn.btn-default.btnCancel(class="cancel-"+item._id, type="button", data-id=item._id, style="display:none") cancel
-						input.btn.btn-info(type="submit" value="Edit Note")
-		tr
-			th Total
-			th
-			th
-			th
-			th #{pTot}
-			th #{acTot}
-			th
-			th #{saTot}
-			th
-			th(style="min-width: 100px") note
+					include ./editNote
 
 script(src="/js/order/list.js")
+script(src="/js/changeStatus.js")

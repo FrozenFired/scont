@@ -25,8 +25,7 @@ form(method="get", action=url, enctype="multipart/form-data")
 					option(value="note") Note
 		.col-md-8
 			input.form-control(type="text", name='keyword', value=keyword, placeholder="input the keywords to find your jobs")
-	include ../../../aaPlugin/filter/acsa
-
-	- let objStatus = Conf.stsOrder;
+	
+	- let objStatus = {1: 'checked', 2: 'part paid', 3: 'all paid', 4: 'History'};
 	include ../../../aaPlugin/filter/status
 	include ../../../aaPlugin/filter/footer

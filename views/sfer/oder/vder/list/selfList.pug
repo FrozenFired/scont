@@ -1,0 +1,18 @@
+table.table.table-hover.table-bordered
+	thead
+		tr
+			th 账户
+			th type
+			th status
+			th role
+			th TaxFree
+	tbody
+		each item in objects
+			-a;
+			tr(class="item-id-"+item._id)
+				td: a(href="/odVderDetail/"+item._id) #{item.code}
+				td #{Conf.vtype[item.vtype]}
+				td #{Conf.stsVendor[item.status]}
+				td #{Conf.vdRole[item.role]}
+				td #{item.taxFree}
+script(src="/js/delete.js")

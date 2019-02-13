@@ -7,7 +7,7 @@ if object.paySa
 	- pays.push(object.paySa);
 
 
-
+h3.bg-success.p-2 Payment Information (此订单付款信息)
 table.table.table-hover.table-bordered
 	tr
 		th ac/sa
@@ -56,7 +56,7 @@ table.table.table-hover.table-bordered
 			td #{Conf.payMethod[pay.method]}
 			td #{pay.agCode}
 			td #{pay.note}
-	if !object.payMd
+	if !object.payMd && object.status < 3
 		-a;
 		tr
 			td: a.btn.btn-info.btn-block(href="/fnOrderUpMd/"+object._id) split sa md

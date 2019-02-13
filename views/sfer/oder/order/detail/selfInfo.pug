@@ -1,0 +1,50 @@
+h3 supplier: 
+	if object.vder
+		-a;
+		strong.text-info #{object.vder.code}
+	else
+		span loss supplier
+
+table.table.table-hover.table-bordered
+	tr
+		th order (订单号)
+		td #{object.order}
+	tr
+		th brand (品牌名)
+		td #{object.brand}
+	tr
+		th P/I (形式发票号)
+		td #{object.pi}
+	tr
+		th span price (价格)
+		td 
+			span #{object.price}
+			if object.priceHis
+				-a;
+				span -(#{object.priceHis})
+	tr
+		th status (付款状态)
+		td #{Conf.stsOrder[object.status]}
+	tr
+		th taxType (免税方式)
+		td #{Conf.taxType[object.taxType]}
+	tr
+		th staff (报价员)
+		td #{object.staff}
+	tr
+		th Note(供应商备注):
+		td #{object.note}
+	tr
+		th ourNote(我们的备注):
+		td #{object.ourNote}
+	tr
+		th creater(订单创建人):
+		td
+			if object.creater
+				- createrCode = object.creater.code;
+				span #{createrCode}
+			else 
+				span loss
+	tr
+		th createAt(创建于)
+		td #{moment(object.createAt).format('YYYY/MM/DD')}

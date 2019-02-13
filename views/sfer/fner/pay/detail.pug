@@ -49,7 +49,10 @@ block content
 		table.table.table-hover.table-bordered
 			tr
 				td: strong CreateAt
-				td #{moment(object.createAt).format('MM/DD/YYYY')}
+				-let createAt = "";
+				if object.createAt
+					- createAt = moment(object.createAt).format('MM/DD/YYYY');
+				td #{createAt}
 			tr
 				td: strong Price
 				td 
@@ -60,7 +63,7 @@ block content
 						span #{object.price}
 			tr
 				td: strong paidAt
-				td(class=bgRecent) #{moment(object.paidAt).format('MM/DD/YYYY')}
+				td(class=bgRecent) #{paidAt}
 			tr
 				td: strong Method
 				td #{Conf.payMethod[object.method]}

@@ -47,6 +47,7 @@ exports.fnPaysFilter = function(req, res, next) {
 		})
 		.skip(index).limit(entry)
 		.populate('vder')
+		.populate({path: 'order', populate: {path: 'vder'} } )
 		.sort({"status": 1, "paidAt": 1})
 		.exec(function(err, objects) {
 			if(err) console.log(err);
@@ -224,16 +225,29 @@ exports.fnUpdatePay = function(req, res) {
 	let objBody = req.body.object
 	if(objBody.price) objBody.price = parseFloat(objBody.price)
 	// console.log(objBody.createAt)
-	Pay.findOne({_id: objBody._id}, function(err, object) {
+	Pay.findOne({_id: objBody._id})
+	.populate('order')
+	.exec(function(err, object) {
 		if(err) console.log(err);
 		if(!object) {
 			info = "更新付款信息时，没有找到这个付款信息: Please contact Manager";
 			Index.sfOptionWrong(req, res, info);
 		} else {
+
+			// 付款后，订单状态相应改变
+			if(object.status != objBody.status && objBody.status == 2) {
+				let order = object.order;
+				if(object.code == 'ac') order.status = 2;
+				else if(object.code == 'sa') order.status = 3;
+				order.save(function(err, ordSave) {
+					if(err) console.log(err);
+				})
+			}
+
 			let _object = _.extend(object, objBody);
 			_object.save(function(err, objSave) {
 				if(err) console.log(err);
-				res.redirect('/fnOrderDetail/'+object.order);
+				res.redirect('/fnOrderDetail/'+object.order._id);
 			});	
 		}
 	})

@@ -20,10 +20,7 @@ let multipartMiddleware = multipart();
 module.exports = function(app){
 
 	// index ---------------Sfer 首页 登录页面 登录 登出---------------------------------------
-	app.get('/', Index.sfer);
-	app.get('/sferLogin', Index.sferLogin);
-	app.post('/loginSfer', Index.loginSfer);
-	app.get('/sferLogout', Index.sferLogout);
+	app.get('/sfer', Index.sfer);
 
 	app.get('/option', MiddleRole.sferIsLogin, Index.option);
 	app.get('/headerBrand', MiddleRole.sferIsLogin, Brand.brandsFilter, Brand.headerBrand)

@@ -24,35 +24,33 @@ exports.fnOrdersFilter = function(req, res, next) {
 	// 查找关键字
 	let keytype = "order", keyword = "";
 	[keytype, keyword, slipCond] = Filter.key(req, keytype, keyword, slipCond)
+
+	let varNum = "price";
+	symNumb = "$ne";
+	condNumb = 'condNumb';
+	if(keytype == varNum) {
+		symNumb = "$eq";
+		condNumb = parseFloat(keyword);
+		keytype = "order";
+		keyword = "";
+	}
+
 	// 根据状态筛选
 	// let condStatus = Object.keys(Conf.stsOrder);
 	let condStatus = ['0', '1', '2'];
 	[condStatus, slipCond] = Filter.status(req.query.status, condStatus, slipCond);
 
-	// 根据创建更新时间筛选
-	let at = Filter.at(req);
-	slipCond+=at.slipCond;
-
-	// 根据首位款筛选
-	let cs = Filter.cs(req);
-	slipCond+=cs.slipCond;
 
 	Order.count({
+		[varNum]: {[symNumb]: condNumb},
 		[keytype]: new RegExp(keyword + '.*'),
-		'createAt': {[at.symCrtStart]: at.condCrtStart, [at.symCrtEnded]: at.condCrtEnded},
-		'updateAt': {[at.symUpdStart]: at.condUpdStart, [at.symUpdEnded]: at.condUpdEnded},
-		'acAt': {[cs.symAcStart]: cs.condAcStart, [cs.symAcEnded]: cs.condAcEnded},
-		'saAt': {[cs.symSaStart]: cs.condSaStart, [cs.symSaEnded]: cs.condSaEnded},
 		'status': condStatus  // 'status': {[symStatus]: condStatus}
 	})
 	.exec(function(err, count) {
 		if(err) console.log(err);
 		Order.find({
+			'price': {[symNumb]: condNumb},
 			[keytype]: new RegExp(keyword + '.*'),
-			'createAt': {[at.symCrtStart]: at.condCrtStart, [at.symCrtEnded]: at.condCrtEnded},
-			'updateAt': {[at.symUpdStart]: at.condUpdStart, [at.symUpdEnded]: at.condUpdEnded},
-			'acAt': {[cs.symAcStart]: cs.condAcStart, [cs.symAcEnded]: cs.condAcEnded},
-			'saAt': {[cs.symSaStart]: cs.condSaStart, [cs.symSaEnded]: cs.condSaEnded},
 			'status': condStatus  // 'status': {[symStatus]: condStatus}
 		})
 		.skip(index).limit(entry)
@@ -76,16 +74,6 @@ exports.fnOrdersFilter = function(req, res, next) {
 
 				list.condStatus = condStatus;
 
-				list.condCrtStart = req.query.crtStart;
-				list.condCrtEnded = req.query.crtEnded;
-				list.condUpdStart = req.query.updStart;
-				list.condUpdEnded = req.query.updEnded;
-
-				list.condAcStart = req.query.acStart;
-				list.condAcEnded = req.query.acEnded;
-				list.condSaStart = req.query.saStart;
-				list.condSaEnded = req.query.saEnded;
-
 				list.currentPage = (page + 1);
 				list.entry = entry;
 				list.totalPage = Math.ceil(count / entry);
@@ -106,7 +94,7 @@ exports.fnOrderList = function(req, res) {
 	let list = req.body.list;
 	let today = new Date();
 	list.today = moment(today).format('YYYYMMDD');
-	let weekday = new Date(today.getTime() + 7*24*60*60*1000)
+	let weekday = new Date(today.getTime() + 7*24*60*60*1000);
 	list.weekday = moment(weekday).format('YYYYMMDD');
 
 	// console.log(list.objects[0])
@@ -178,23 +166,38 @@ exports.fnAddOrder = function(req, res) {
 	// console.log(objBody)
 	objBody.status = 0
 	objBody.price = parseFloat(objBody.price)
+	if(isNaN(objBody.price)){
+		info = "订单价格设置错误";
+		Index.sfOptionWrong(req, res, info);
+	} else {
+		objBody.updateAt = objBody.createAt = Date.now();
+		objBody.updater = objBody.creater = req.session.crSfer._id;
 
-	objBody.updateAt = objBody.createAt = Date.now();
-	objBody.updater = objBody.creater = req.session.crSfer._id;
+		let _object = new Order(objBody)
+		fnAddPayFunc(objBody, _object)
+		if(objBody.taxType == 0) {
 
-	let _object = new Order(objBody)
-	fnAcSaFunc(objBody, _object)
-	
-	_object.save(function(err, objSave) {
-		if(err) {
-			console.log(err);
-		} else {
-			res.redirect('/fnOrderDetail/'+objSave._id)
+			Vder.findOne({_id: objBody.vder}, function(err, vder) {
+				if(err) console.log(err);
+				if(vder) {
+					vder.taxFree -= objBody.price;
+					vder.save(function(err, vderSave) {
+						if(err) console.log(err);
+					})
+				}
+			})
 		}
-	})
+		_object.save(function(err, objSave) {
+			if(err) {
+				console.log(err);
+			} else {
+				res.redirect('/fnOrderDetail/'+objSave._id)
+			}
+		})
+	}
 }
 
-fnAcSaFunc = function(objBody, _object) {
+fnAddPayFunc = function(objBody, _object) {
 	let objAc = new Object();
 	objAc.price = parseFloat(objBody.acPrice);
 	objAc.code = "ac";
@@ -358,11 +361,6 @@ exports.fnOrderStatus = function(req, res) {
 		if(err) console.log(err);
 		if(object){
 			object.status = parseInt(newStatus)
-			if(object.status == 1) {
-				object.acer = req.session.crFner._id;
-			} else if(object.status == 2) {
-				object.saer = req.session.crFner._id;
-			}
 			object.save(function(err,objSave) {
 				if(err) console.log(err);
 				res.json({success: 1, info: "已经更改"});

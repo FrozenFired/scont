@@ -1,5 +1,6 @@
 let Index = require('../index')
 let Order = require('../../../models/finance/order')
+let Pay = require('../../../models/finance/pay')
 let Vder = require('../../../models/scont/vendor')
 let _ = require('underscore')
 
@@ -25,36 +26,22 @@ exports.odOrdersFilter = function(req, res, next) {
 	[keytype, keyword, slipCond] = Filter.key(req, keytype, keyword, slipCond)
 	// 根据状态筛选
 	// let condStatus = Object.keys(Conf.stsOrder);
-	let condStatus = ['0', '1'];
+	let condStatus = ['0', '1', '2'];
 	[condStatus, slipCond] = Filter.status(req.query.status, condStatus, slipCond);
 
-	// 根据创建更新时间筛选
-	let at = Filter.at(req);
-	slipCond+=at.slipCond;
-
-	// 根据首位款筛选
-	let cs = Filter.cs(req);
-	slipCond+=cs.slipCond;
 
 	Order.count({
 		[keytype]: new RegExp(keyword + '.*'),
-		'createAt': {[at.symCrtStart]: at.condCrtStart, [at.symCrtEnded]: at.condCrtEnded},
-		'updateAt': {[at.symUpdStart]: at.condUpdStart, [at.symUpdEnded]: at.condUpdEnded},
-		'acAt': {[cs.symAcStart]: cs.condAcStart, [cs.symAcEnded]: cs.condAcEnded},
-		'saAt': {[cs.symSaStart]: cs.condSaStart, [cs.symSaEnded]: cs.condSaEnded},
 		'status': condStatus  // 'status': {[symStatus]: condStatus}
 	})
 	.exec(function(err, count) {
 		if(err) console.log(err);
 		Order.find({
 			[keytype]: new RegExp(keyword + '.*'),
-			'createAt': {[at.symCrtStart]: at.condCrtStart, [at.symCrtEnded]: at.condCrtEnded},
-			'updateAt': {[at.symUpdStart]: at.condUpdStart, [at.symUpdEnded]: at.condUpdEnded},
-			'acAt': {[cs.symAcStart]: cs.condAcStart, [cs.symAcEnded]: cs.condAcEnded},
-			'saAt': {[cs.symSaStart]: cs.condSaStart, [cs.symSaEnded]: cs.condSaEnded},
 			'status': condStatus  // 'status': {[symStatus]: condStatus}
 		})
 		.skip(index).limit(entry)
+		.populate('payAc').populate('payMd').populate('paySa')
 		.populate('vder')
 		.sort({"createAt": -1})
 		.exec(function(err, objects) {
@@ -73,16 +60,6 @@ exports.odOrdersFilter = function(req, res, next) {
 				list.keyword = req.query.keyword;
 
 				list.condStatus = condStatus;
-
-				list.condCrtStart = req.query.crtStart;
-				list.condCrtEnded = req.query.crtEnded;
-				list.condUpdStart = req.query.updStart;
-				list.condUpdEnded = req.query.updEnded;
-
-				list.condAcStart = req.query.acStart;
-				list.condAcEnded = req.query.acEnded;
-				list.condSaStart = req.query.saStart;
-				list.condSaEnded = req.query.saEnded;
 
 				list.currentPage = (page + 1);
 				list.entry = entry;
@@ -104,8 +81,10 @@ exports.odOrderList = function(req, res) {
 	let list = req.body.list;
 	let today = new Date();
 	list.today = moment(today).format('YYYYMMDD');
-	let weekday = new Date(today.getTime() + 7*24*60*60*1000)
+	let weekday = new Date(today.getTime() + 7*24*60*60*1000);
 	list.weekday = moment(weekday).format('YYYYMMDD');
+
+	// console.log(list.objects[0])
 	res.render('./sfer/oder/order/list', list)
 }
 
@@ -158,17 +137,11 @@ exports.odOrderListPrint = function(req, res) {
 
 
 exports.odOrderAdd =function(req, res) {
-	Vder.find()
-	.sort({'role': -1})
-	.exec(function(err, vders) {
-		if(err) console.log(err);
-		res.render('./sfer/oder/order/add', {
-			title: 'Add Order',
-			crOder : req.session.crOder,
-			// code: code,
-			vders: vders,
-			action: "/odAddOrder",
-		})
+	res.render('./sfer/oder/order/add', {
+		title: 'Add Order',
+		crOder : req.session.crOder,
+		// code: code,
+		action: "/odAddOrder",
 	})
 }
 
@@ -180,29 +153,66 @@ exports.odAddOrder = function(req, res) {
 	// console.log(objBody)
 	objBody.status = 0
 	objBody.price = parseFloat(objBody.price)
-	objBody.ac = parseFloat(objBody.ac)
-	objBody.sa = parseFloat(objBody.sa)
-	objBody.updateAt = objBody.createAt = Date.now();
-	objBody.updater = objBody.creater = req.session.crOder._id;
+	if(isNaN(objBody.price)){
+		info = "订单价格设置错误";
+		Index.sfOptionWrong(req, res, info);
+	} else {
+		objBody.updateAt = objBody.createAt = Date.now();
+		objBody.updater = objBody.creater = req.session.crSfer._id;
 
-	let _object = new Order(objBody)
-	_object.save(function(err, objSave) {
-		if(err) console.log(err)
-		// res.redirect('/odOrderDetail/'+objSave._id)
-		res.redirect('/odOrderList')
-	})
+		let _object = new Order(objBody)
+		odAddPayFunc(objBody, _object)
+		if(objBody.taxType == 0) {
+
+			Vder.findOne({_id: objBody.vder}, function(err, vder) {
+				if(err) console.log(err);
+				if(vder) {
+					vder.taxFree -= objBody.price;
+					vder.save(function(err, vderSave) {
+						if(err) console.log(err);
+					})
+				}
+			})
+		}
+		_object.save(function(err, objSave) {
+			if(err) {
+				console.log(err);
+			} else {
+				res.redirect('/odOrderDetail/'+objSave._id)
+			}
+		})
+	}
 }
 
+odAddPayFunc = function(objBody, _object) {
+	let objAc = new Object();
+	objAc.price = parseFloat(objBody.acPrice);
+	objAc.code = "ac";
+	objAc.status = 0;
 
+	let objSa = new Object();
+	objSa.price = parseFloat(objBody.saPrice);
+	objSa.code = "sa";
+	objSa.status = 0;
+
+	objAc.order = objSa.order = _object._id;
+	let _payAc = new Pay(objAc);
+	_payAc.save(function(err, acSave) {});
+	let _paySa = new Pay(objSa);
+	_paySa.save(function(err, saSave) {});
+
+	_object.payAc = _payAc._id;
+	_object.paySa = _paySa._id;
+}
 
 
 
 exports.odOrderFilter = function(req, res, next) {
 	let id = req.params.id;
 	Order.findOne({_id: id})
+	.populate('payAc').populate('payMd').populate('paySa')
 	.populate('vder')
 	.populate('creater').populate('updater')
-	.populate('acer').populate('saer')
 	.exec(function(err, object) {
 		if(err) console.log(err);
 		if(!object) {
@@ -232,24 +242,39 @@ exports.odOrderDetail = function(req, res) {
 	})
 }
 
-exports.odOrderUpdate = function(req, res) {
+
+exports.odOrderUpMd = function(req, res) {
+	let title = "odOrder splite Md"
+	let fontUrl = './sfer/oder/order/update/slipMd';
+
+	odOrderUpdate(req, res, fontUrl, title)
+}
+exports.odOrderUpPrice = function(req, res) {
+	let title = "odOrder update Price"
+	let fontUrl = './sfer/oder/order/update/upPrice';
+
+	odOrderUpdate(req, res, fontUrl, title)
+}
+odOrderUpdate = function(req, res, fontUrl, title) {
 	let objBody = req.body.object
 
-	res.render('./sfer/oder/order/update', {
-		title: 'odOrder Update',
+	res.render(fontUrl, {
+		title: title,
 		crOder : req.session.crOder,
-		object: objBody
+		object: objBody,
+
+		action: '/odUpOrder',
 	})
 }
 
 
 
-
-exports.odUpdateOrder = function(req, res) {
+exports.odUpOrder = function(req, res) {
 	let objBody = req.body.object
 	// console.log(objBody)
 	objBody.updateAt = Date.now();
 	objBody.updater = req.session.crOder._id;
+	if(objBody.price) objBody.price = parseFloat(objBody.price);
 	Order.findOne({_id: objBody._id}, function(err, object) {
 		if(err) console.log(err);
 		if(!object) {
@@ -257,6 +282,9 @@ exports.odUpdateOrder = function(req, res) {
 			Index.sfOptionWrong(req, res, info)
 		} else {
 			let _object = _.extend(object, objBody);
+
+			if(objBody.mdPrice) odMdFunc(objBody, _object);
+			
 			_object.save(function(err, objSave) {
 				if(err) console.log(err);
 				res.redirect('/odOrderList');
@@ -264,12 +292,43 @@ exports.odUpdateOrder = function(req, res) {
 		}
 	})
 }
+odMdFunc = function(objBody, _object) {
+	if(_object.payMd) {
+		Pay.findOne({_id: _object.payMd}, function(err, payMd) {
+			if(err) console.log(err);
+			payMd.price = parseFloat(objBody.mdPrice);
+			payMd.save(function(err, mdSave) {});
+		})
+	} else {
+		let objMd = new Object();
+		objMd.price = parseFloat(objBody.mdPrice);
+		objMd.code = "md";
+		objMd.status = 0;
+		objMd.order = _object._id;
+		let _payMd = new Pay(objMd);
+		_payMd.save(function(err, mdSave) {});
+		_object.payMd = _payMd._id;
+	}
 
+	Pay.findOne({_id: _object.paySa}, function(err, paySa) {
+		if(err) console.log(err);
+		paySa.price = parseFloat(objBody.saPrice);
+		paySa.save(function(err, saSave) {});
+	})
+
+
+}
 
 
 
 exports.odOrderDel = function(req, res) {
 	let objBody = req.body.object;
+	payAc = objBody.payAc
+	payMd = objBody.payMd
+	paySa = objBody.paySa
+	if(payAc) Pay.remove({_id: payAc}, function(err, rmPayAc) {});
+	if(payMd) Pay.remove({_id: payMd}, function(err, rmPayMd) {});
+	if(paySa) Pay.remove({_id: paySa}, function(err, rmPaySa) {});
 	Order.remove({_id: objBody._id}, function(err, odOrderRm) {
 		if(err) console.log(err);
 		res.redirect('/odOrderList')
@@ -289,11 +348,6 @@ exports.odOrderStatus = function(req, res) {
 		if(err) console.log(err);
 		if(object){
 			object.status = parseInt(newStatus)
-			if(object.status == 1) {
-				object.acer = req.session.crOder._id;
-			} else if(object.status == 2) {
-				object.saer = req.session.crOder._id;
-			}
 			object.save(function(err,objSave) {
 				if(err) console.log(err);
 				res.json({success: 1, info: "已经更改"});

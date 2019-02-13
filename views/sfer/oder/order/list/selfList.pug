@@ -5,70 +5,67 @@ table.table.table-hover.table-bordered
 			th supplier
 			th order
 			th brand
-			th P/I
+			//- th P/I
 			th price
 			th ac
 			th acAt
+			th md
+			th mdAt
 			th sa
 			th saAt
 			th note
 			th(style="min-width: 200px") ourNote
 	tbody
-		- let pTot = 0, acTot = 0, saTot = 0, nopay=0, paid=0;
+		- let pTot = 0, acTot = 0, saTot = 0;
 		each item in objects
-			- pTot += item.price;
-			- acTot += item.ac;
-			- saTot += item.sa;
-			if item.status == 0
-				- nopay += (item.sa + item.ac);
-			else if item.status == 1
-				- nopay += item.sa;
-				- paid += item.ac;
-			else
-				- paid += (item.sa + item.ac);
+			-let stsOrderBg = Conf.stsOrderBg[item.status];
 
-			-acTime = moment(item.acAt).format('YYYYMMDD');
-			-saTime = moment(item.saAt).format('YYYYMMDD');
+			-let payAc, acPrice, payMd, mdPrice, paySa, saPrice;
+			-let bgAcPaid = bgMdPaid = bgSaPaid = "bg-default";
+			-let bgAcToday = bgMdToday = bgSaToday = "bg-default";
+			-let bgAcWeek = bgMdWeek = bgSaWeek = "bg-default";
+			if item.payAc
+				-payAc = item.payAc;
+				-acPrice = payAc.price;
 
-			//- 判断是否今日付款
-			if (acTime == today) && (item.status == 0)
-				- bgacToday="bg-primary";
-			else
-				- bgacToday="bg-default";
-			if (saTime == today) && (item.status == 1)
-				- bgsaToday="bg-primary";
-			else
-				- bgsaToday="bg-default";
-			//- 判断近一周是否有要付款的
-			if (today < acTime && acTime < weekday)
-				- bgacWeek="bg-info";
-			else
-				- bgacWeek="bg-default";
-			if today < saTime && saTime < weekday
-				- bgsaWeek="bg-info";
-			else
-				- bgsaWeek="bg-default";
+				if payAc.status > 0
+					- bgAcPaid = "bg-warning";
 
-			//- 错误状态
-			if (item.status == 0) && (acTime < today)
-				- bgErr="bg-danger";
-			else if (item.status == 1) && (saTime < today)
-				- bgErr="bg-danger";
-			else
-				- bgErr="bg-default";
+				if payAc.paidAt
+					-acTime = moment(payAc.paidAt).format('YYYYMMDD');
+					if today == acTime
+						- bgAcToday="bg-info";
+					else if today < acTime && acTime < weekday
+						- bgAcWeek="bg-info";
+			if item.payMd
+				-payMd = item.payMd;
+				-mdPrice = payMd.price;
 
-			//- 状态标记
-			if item.status == 1
-				- bgSts1="bg-warning";
-			else
-				- bgSts1="bg-default";
-			if item.status == 2
-				- bgSts2="bg-warning";
-			else
-				- bgSts2="bg-white";
+				if payMd.status > 0
+					- bgMdPaid = "bg-warning";
 
-			tr(class="item-id-"+item._id+" "+bgSts2)
-				td(class=bgErr): a(href="/odOrderDetail/"+item._id) view
+				if payMd.paidAt
+					-mdTime = moment(payMd.paidAt).format('YYYYMMDD');
+					if today == mdTime
+						- bgMdToday="bg-info";
+					else if today < mdTime && mdTime < weekday
+						- bgMdWeek="bg-info";
+			if item.paySa
+				-paySa = item.paySa;
+				-saPrice = paySa.price;
+
+				if paySa.status > 0
+					- bgSaPaid = "bg-warning";
+
+				if paySa.paidAt
+					-saTime = moment(paySa.paidAt).format('YYYYMMDD');
+					if today == saTime
+						- bgSaToday="bg-info";
+					else if today < saTime && saTime < weekday
+						- bgSaWeek="bg-info";
+
+			tr(class="item-id-"+item._id)
+				td(class=stsOrderBg): a(href="/odOrderDetail/"+item._id) view
 				td
 					if item.vder
 						-a;
@@ -77,62 +74,25 @@ table.table.table-hover.table-bordered
 						span loss supplier
 				td #{item.order}
 				td #{item.brand}
-				td #{item.pi}
+				//- td #{item.pi}
 				td #{item.price}
-				td(class=bgSts1)
-					if (acTime == today) && (item.status == 0)
+				td(class=bgAcPaid + " " + bgAcToday) #{acPrice}
+				td(class=bgAcWeek)
+					if payAc && payAc.paidAt
 						-a;
-						button.btn.btn-info.change(type="button", data-url="/odOrderStatus", data-sts=1, data-id=item._id) #{item.ac}
-					else
-						span #{item.ac}
-				td(class=bgSts1+" "+ bgacWeek)
-					if item.acAt
+						span #{moment(payAc.paidAt).format('YYYY/MM/DD')}
+				td(class=bgMdPaid + " " + bgMdToday) #{mdPrice}
+				td(class=bgMdWeek)
+					if payMd && payMd.paidAt
 						-a;
-						span #{moment(item.acAt).format('YYYY/MM/DD')}
-				td
-					if (saTime == today) && (item.status == 1)
+						span #{moment(payMd.paidAt).format('YYYY/MM/DD')}
+				td(class=bgSaPaid + " " + bgSaToday) #{saPrice}
+				td(class=bgSaWeek)
+					if paySa && paySa.paidAt
 						-a;
-						button.btn.btn-info.change(type="button", data-url="/odOrderStatus", data-sts=2, data-id=item._id) #{item.sa}
-					else
-						span #{item.sa}
-				td(class=bgsaWeek)
-					if item.saAt
-						-a;
-						span #{moment(item.saAt).format('YYYY/MM/DD')}
-					else if item.status == 1
-						-a;
-						form#upSaAt(method="post", action="/odUpdateOrder", enctype="multipart/form-data")
-							input.form-control(type="hidden", name="object[_id]", value=item._id)
-							.form-group.row
-								.col-sm-12
-									input#iptSaAt.datepicker.form-control(type="text", name="object[saAt]", placeholder="[format:month/day/year]", readonly="readonly")
-							.form-group.row
-								.col-sm-12
-									input.btn.btn-info.btn-block(type="submit" value="up")
+						span #{moment(paySa.paidAt).format('YYYY/MM/DD')}
 				td #{item.note}
 				td
-					button.btn.btn-link.btnEdit(class="edit-"+item._id, type="button", data-id=item._id) edit
-					if item.ourNote
-						-a;
-						span(class="text-"+item._id) &nbsp;->&nbsp; #{item.ourNote}
-					form(class="form-"+item._id, method="post", action="/fnUpdateOrder", style="display:none")
-						input.form-control(type="hidden", name="object[_id]", value=item._id)
-						input.form-control(class="ipt-"+item._id, type="hidden", value=item.ourNote)
-						textarea.form-control.rounded-0(class="tar-"+item._id, rows="3", name="object[ourNote]")
-						button.btn.btn-default.btnCancel(class="cancel-"+item._id, type="button", data-id=item._id, style="display:none") cancel
-						input.btn.btn-info(type="submit" value="Edit Note")
-		tr
-			th
-			th paid: #{paid}
-			th nopay: #{nopay}
-			th
-			th
-			th price: #{pTot}
-			th ac: #{acTot}
-			th
-			th sa: #{saTot}
-			th
-			th
-			th
-script(src="/js/changeStatus.js")
+					include ./editOurnote
+//- script(src="/js/changeStatus.js")
 script(src="/js/order/list.js")

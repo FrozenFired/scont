@@ -1,8 +1,9 @@
 table.table.table-hover.table-bordered
 	thead
 		tr
-			th view
-			th code
+			th order
+			th vendor
+			th acsa
 			th createAt
 			th price
 			th paidAt
@@ -23,8 +24,18 @@ table.table.table-hover.table-bordered
 
 			-bgStatus = Conf.stsPayBg[item.status];
 			tr(class="item-id-"+item._id+" "+bgStatus)
-				td(class=bgErr): a(href="/fnPayDetail/"+item._id) view
-				td #{item.code}
+				if item.order
+					-order = item.order;
+					td(class=bgErr): a.btn.btn-info(href="/fnOrderDetail/"+order._id) #{order.order}
+					if order.vder
+						-vder = order.vder;
+						td #{vder.code}
+					else
+						td
+				else
+					td(class=bgErr)
+					td
+				td: a(href="/fnPayDetail/"+item._id) #{item.code}
 				td 
 					if item.createAt
 						-a;

@@ -32,7 +32,10 @@ block content
 			.form-group.row
 				label.col-sm-2.col-form-label CreateAt
 				.col-sm-6
-					input.datepicker.form-control(type="text", name="object[createAt]", value=moment(object.createAt).format('MM/DD/YYYY'), readonly="readonly")
+					- let createAt = "";
+					if object.createAt
+						- createAt = moment(object.createAt).format('MM/DD/YYYY');
+					input.datepicker.form-control(type="text", name="object[createAt]", value=createAt, placeholder="click here", readonly="readonly")
 			.form-group.row
 				label.col-sm-2.col-form-label #{object.code} Price
 				.col-sm-6
@@ -42,7 +45,10 @@ block content
 			.form-group.row
 				label.col-sm-2.col-form-label paidAt
 				.col-sm-6
-					input.datepicker.form-control(type="text", name="object[paidAt]", value=moment(object.paidAt).format('MM/DD/YYYY'), readonly="readonly")
+					- let paidAt = "";
+					if object.paidAt
+						- paidAt = moment(object.paidAt).format('MM/DD/YYYY');
+					input.datepicker.form-control(type="text", name="object[paidAt]", value=paidAt, placeholder="click here", readonly="readonly")
 			.form-group.row
 				label.col-sm-2.col-form-label Pay Method
 				.col-sm-6

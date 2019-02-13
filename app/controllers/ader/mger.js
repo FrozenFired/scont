@@ -14,8 +14,7 @@ exports.adMgerAdd =function(req, res) {
 
 exports.adExistMgerN = function(req, res, next) {
 	let objBody = req.body.object;
-	objBody.code = objBody.code.replace(/(\s*$)/g, "").replace( /^\s*/, '');
-
+	objBody.code = objBody.code.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
 	Mger.findOne({code: objBody.code}, function(err, object) {
 		if(err) console.log(err);
 		if(object) {

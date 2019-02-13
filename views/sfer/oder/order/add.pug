@@ -9,72 +9,78 @@ block content
 		hr
 		form#addOrder(method="post", action=action, enctype="multipart/form-data")
 			.form-group.row
-				label.col-sm-2.col-form-label Supplier
+				label.col-sm-2.com-form-label Input Vendor Code
 				.col-sm-8
-					select#iptVder.form-control(name="object[vder]", data-style="btn-info")
-						each vder in vders
-							-a;
-							option(value=vder._id) #{vder.code}
+					input#ajaxIptVendorCode.form-control(type="text", data-router="/ajaxOdVendor")
+				.col-sm-2
+					span.text-danger#ajaxOptVendorCode
+			input#iptVder(type="hidden", name="object[vder]")
+			table#filterVendor.table.table-hover.table-bordered
 			.form-group.row
 				label.col-sm-2.col-form-label Order
 				.col-sm-8
 					input#iptOrder.form-control(type="text", name="object[order]")
 				.col-sm-2
-					span#optOrder.text-danger(style="display:none") Pleas complete order
+					span#optOrder.text-danger(style="display:none") Please complete order
 
 			.form-group.row
 				label.col-sm-2.col-form-label P/I
 				.col-sm-8
 					input#iptPi.form-control(type="text", name="object[pi]")
 				.col-sm-2
-					span#optPi.text-danger(style="display:none") Pleas complete proforma invoice
+					span#optPi.text-danger(style="display:none") Please complete proforma invoice
 
 			.form-group.row
 				label.col-sm-2.col-form-label Brand
 				.col-sm-8
 					input#iptBrand.form-control(type="text", name="object[brand]")
 				.col-sm-2
-					span#optBrand.text-danger(style="display:none") Pleas complete Brand
+					span#optBrand.text-danger(style="display:none") Please complete Brand
 
 			.form-group.row
 				label.col-sm-2.col-form-label Price
 				.col-sm-8
 					input#iptPrice.form-control(type="text", name="object[price]")
 				.col-sm-2
-					span#optPrice.text-danger(style="display:none") Pleas complete Price
+					span#optPrice.text-danger(style="display:none") Please complete Price
 
 			.form-group.row
-				label.col-sm-2.col-form-label Ac
-				.col-sm-4
-					input#iptAc.form-control(type="text", name="object[ac]")
-				.col-sm-4
-					input#iptAcAt.datepicker.form-control(type="text", name="object[acAt]", placeholder="[format:month/day/year]", readonly="readonly")
+				label.col-sm-2.col-form-label taxType
+				.col-sm-8
+					select#iptTaxType.form-control(name="object[taxType]", data-style="btn-info")
+						each key in Object.keys(Conf.taxType)
+							-a;
+							option(value=key) #{Conf.taxType[key]} - #{key}
 				.col-sm-2
-					span#optAc.text-danger(style="display:none") Pleas complete Ac
-					span#optAcAt.text-danger
+					span#optTaxType.text-danger
 			.form-group.row
-				label.col-sm-2.col-form-label Sa
-				.col-sm-4
-					input#iptSa.form-control(type="text", name="object[sa]")
-				.col-sm-4
-					input#iptSaAt.datepicker.form-control(type="text", name="object[saAt]", placeholder="[format:month/day/year]", readonly="readonly")
+				label.col-sm-2.col-form-label Staff Name
+				.col-sm-8
+					input#iptStaff.form-control(type="text", name="object[staff]")
 				.col-sm-2
-					span#optSa.text-danger(style="display:none") Pleas complete Sa
+					span#optStaff.text-danger(style="display:none") Please complete Staff
+
 
 			.form-group.row
 				label.col-sm-2.col-form-label ourNote
 				.col-sm-8
 					textarea.form-control.rounded-0(rows="3", name="object[ourNote]")
+			hr
+			.form-group.row
+				label.col-sm-2.col-form-label Ac
+				.col-sm-6
+					input#iptAc.form-control(type="text", name="object[acPrice]")
+				.col-sm-4
+					span#optAc.text-danger(style="display:none") Pleas complete Ac Price
+			.form-group.row
+				label.col-sm-2.col-form-label Sa
+				.col-sm-6
+					input#iptSa.form-control(type="text", name="object[saPrice]")
+				.col-sm-4
+					span#optSa.text-danger(style="display:none") Pleas complete Sa Price
 
 			.form-group.row
 				.offset-md-2.col-md-10
 					input.btn.btn-default(type="submit" value="Add Order")
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	//- <link rel="stylesheet" href="/resources/demos/style.css">
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	//- timepicker
-	link(rel="stylesheet", href="/libs/jt.timepicker/jquery.timepicker.css")
-	script(src="/libs/jt.timepicker/jquery.timepicker.min.js")
 
 	script(src="/js/order/add.js")

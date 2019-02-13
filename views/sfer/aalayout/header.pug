@@ -1,5 +1,5 @@
 .navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
-	a.navbar-brand(href="/") Home 
+	a.navbar-brand(href="/sfer") Home 
 	button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation")
 		<span class="navbar-toggler-icon"></span>
 
@@ -33,9 +33,7 @@
 							img(src=ServerAddress+crSfer.photo, width="30")
 						-a;
 				span &nbsp;&nbsp;&nbsp;&nbsp;
-				li: a.btn.btn-danger(href="/sferLogout") Logout
-			else
-				li: a(href="#", data-toggle="modal", data-target="#signIn") manager
+				li: a.btn.btn-danger(href="/logout") Logout
 
 .container
 	.row

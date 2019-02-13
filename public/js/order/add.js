@@ -1,6 +1,5 @@
 $( function() {
 	// $(".datepicker").datepicker();
-
 	$("#ajaxIptVendorCode").focus();
 
 	// let now = new Date();
@@ -162,7 +161,9 @@ $( function() {
 
 
 
-	$('#ajaxIptVendorCode').blur(function() {
+	$('#ajaxIptVendorCode').blur(function(e) {
+		var target = $(e.target)
+		var router = target.data('router')
 		$('#filterVendor tr').remove()				// 先移除table下的其他信息
 		var vendorCode = $(this).val()
 		vendorCode = vendorCode.replace(/(\s*$)/g, "").replace( /^\s*/, '')
@@ -170,7 +171,7 @@ $( function() {
 			var code = encodeURIComponent(vendorCode)
 			$.ajax({
 				type: 'get',
-				url: '/ajaxFnVendor?keytype=code&keyword=' + code
+				url: router+'?keytype=code&keyword=' + code
 			})
 			.done(function(results) {
 				if(results.success === 1) {

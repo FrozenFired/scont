@@ -1,0 +1,37 @@
+extends ../aalayout/layout
+
+block content
+	.container
+		form(method="post", action=action, enctype="multipart/form-data")
+			.form-group.row
+				label.col-md-2.col-form-label(for="iptCode") 帐号
+				.col-md-6
+					input#iptCode.form-control(type="text",class="iptCode", name="object[code]")
+			.form-group.row
+				label.col-md-2.col-form-label(for="iptPassword") 密码
+				.col-md-6
+					input#iptPassword.form-control(type="text", class="iptPassword", name="object[password]")
+			hr
+			.form-group.row
+				label.col-md-2.col-form-label(for="iptDocu") Document Number
+				.col-md-6
+					input#iptDocu.form-control(type="text", class="iptDocu", name="object[document]")
+			.form-group.row
+				label.col-md-2.col-form-label(for="iptTel") Tel
+				.col-md-6
+					input#iptTel.form-control(type="text", class="iptTel", name="object[telephone]")
+			.form-group.row
+				label.col-md-2.col-form-label(for="iptAddr") Address
+				.col-md-6
+					input#iptAddr.form-control(type="text", class="iptAddr", name="object[address]")
+			.form-group.row
+				label.col-md-2.col-form-label(for="iptPost") Post
+				.col-md-6
+					input#iptPost.form-control(type="text", class="iptPost", name="object[post]")
+			.form-group.row
+				label.col-md-2.col-form-label(for="iptIva") IVA
+				.col-md-6
+					input#iptIva.form-control(type="text", class="iptIva", name="object[ivaNumber]")
+			.form-group.row
+				.offset-md-2.col-md-10
+					input.btn.btn-default(type="submit" value="添加sfer")

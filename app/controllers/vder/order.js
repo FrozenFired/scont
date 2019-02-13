@@ -10,7 +10,7 @@ let moment = require('moment')
 
 
 exports.ordersFilter = function(req, res, next) {
-	let title = 'order List';
+	let title = 'Order List';
 	let url = "/orderList";
 	
 	// 分页
@@ -26,7 +26,7 @@ exports.ordersFilter = function(req, res, next) {
 	[keytype, keyword, slipCond] = Filter.key(req, keytype, keyword, slipCond)
 	// 根据状态筛选
 	// let condStatus = Object.keys(Conf.stsOrder);
-	let condStatus = ['0', '1'];
+	let condStatus = ['1', '2', '3'];
 	[condStatus, slipCond] = Filter.status(req.query.status, condStatus, slipCond);
 
 	// 根据创建更新时间筛选
@@ -57,9 +57,9 @@ exports.ordersFilter = function(req, res, next) {
 			'status': condStatus  // 'status': {[symStatus]: condStatus}
 		})
 		.where('vder').equals(req.session.crVder._id)
-		.skip(index)
-		.limit(entry)
-		.populate('staff')
+		.skip(index).limit(entry)
+		.populate('payAc').populate('payMd').populate('paySa')
+		.populate('vder')
 		.sort({"createAt": -1})
 		.exec(function(err, objects) {
 			if(err) console.log(err);
@@ -110,6 +110,8 @@ exports.orderList = function(req, res) {
 	list.today = moment(today).format('YYYYMMDD');
 	let weekday = new Date(today.getTime() + 7*24*60*60*1000)
 	list.weekday = moment(weekday).format('YYYYMMDD');
+
+	// console.log(list.objects[0])
 	res.render('./vder/order/list', req.body.list)
 }
 
@@ -214,6 +216,24 @@ exports.updateOrder = function(req, res) {
 				if(err) console.log(err);
 				res.redirect('/orderList');
 			});	
+		}
+	})
+}
+
+exports.vdOrderStatus = function(req, res) {
+	let id = req.query.id
+	let newStatus = req.query.newStatus
+	console.log(id)
+	Order.findOne({_id: id}, function(err, object){
+		if(err) console.log(err);
+		if(object){
+			object.status = parseInt(newStatus)
+			object.save(function(err,objSave) {
+				if(err) console.log(err);
+				res.json({success: 1, info: "已经更改"});
+			})
+		} else {
+			res.json({success: 0, info: "已被删除，按F5刷新页面查看"});
 		}
 	})
 }

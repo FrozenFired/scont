@@ -4,18 +4,17 @@ block content
 	.container
 		.row
 			h1.col-sm-6 Brand [#{sconts.length}]
+			h2.col-sm-3 ac: #{vendor.ac} %
+			h2.col-sm-3 sa: #{vendor.sa} %
 		hr
 		.row
 			table.table.table-hover.table-bordered
 				thead
 					tr
 						th brand code
-						th Weight(sort)
-						th nation <br/> firm name
-						th category1 / category2 <br/> material Description
-						th website <br/> Note
-						//- th status
-						th createAt <br/> updateAt
+						th scont
+						th status
+						th createAt
 				tbody
 					each scont in sconts
 						- let item = scont.brand;
@@ -26,24 +25,10 @@ block content
 						else if item.status == 2
 							-objBg ="bg-secondary";
 						tr(class=objBg+" item-id-"+item._id)
-							td: a(href="/brandDetail/"+item._id) #{item.code}
-							td #{Conf.weight[item.weight]}
-							td
-								if item.nation
-									-a;
-									span #{item.nation.code}<br/>#{item.firmName}
+							td #{item.code}
 							td 
-								if item.bcateg
+								if scont.scont != 'undefined'
 									-a;
-									li #{Conf.bcate[item.bcateg.bcate]}
-									li #{item.bcateg.code}
-								if item. matDesp && item.matDesp.length > 0
-									-a;
-									span [ #{item.matDesp} ]
-							td 
-								a(href=item.website, target="view_window") #{item.website}
-								br
-								span #{item.webNote}
-							td
-								li #{moment(item.createAt).format('YYYY/MM/DD')}
-								li #{moment(item.updateAt).format('YYYY/MM/DD')}
+									span #{scont.scont}
+							td #{Conf.stsBrand[item.status]}
+							td #{moment(item.createAt).format('YYYY/MM/DD')}

@@ -14,10 +14,6 @@ module.exports = function(app){
 
 	// index ---------------Vder 首页 登录页面 登录 登出---------------------------------------
 	app.get('/vder', Index.vder);
-	app.get('/vderLogin', Index.vderLogin);
-	app.post('/loginVder', Index.loginVder);
-	app.get('/vderLogout', Index.vderLogout);
-
 	// app.get('/headerBrand', MiddleRole.vderIsLogin, Brand.brandsFilter, Brand.headerBrand)
 
 	// Vder -------------------------------------------------------------------------------
@@ -35,6 +31,7 @@ module.exports = function(app){
 	app.get('/orderListPrint', MiddleRole.vderIsLogin, Order.ordersFilter, Order.orderListPrint)
 	app.get('/orderDetail/:id', MiddleRole.vderIsLogin, Order.orderFilter, Order.orderDetail)
 	app.post('/updateOrder', multipartMiddleware, MiddleRole.vderIsLogin, Order.updateOrder)
+	app.get('/vdOrderStatus', multipartMiddleware, MiddleRole.vderIsLogin, Order.vdOrderStatus)
 
 	// brand ---------------------------------------
 	app.get('/vdBrandList', MiddleRole.vderIsLogin, Brand.vdBrandList)

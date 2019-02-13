@@ -16,6 +16,7 @@ table.table.table-hover.table-bordered
 			th note
 			th(style="min-width: 200px") ourNote
 	tbody
+		- let pTot = 0, acTot = 0, saTot = 0;
 		each item in objects
 			-let stsOrderBg = Conf.stsOrderBg[item.status];
 

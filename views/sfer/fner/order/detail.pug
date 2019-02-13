@@ -2,7 +2,8 @@ extends ../aalayout/layout
 
 block content
 	.container
-		.row(class=bgErr)
+		-let stsOrderBg = Conf.stsOrderBg[object.status];
+		.row(class=stsOrderBg)
 			h1.col-sm-6
 				span Order Information: 
 			.col-sm-4.text-right
