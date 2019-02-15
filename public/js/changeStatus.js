@@ -1,5 +1,6 @@
 $( function() {
 	// 异步传输更改状态
+	// alert("/js/changeStatus.js");
 	$('.change').click(function(e) {
 		var target = $(e.target)
 		var url = target.data('url')
@@ -11,7 +12,7 @@ $( function() {
 		})
 		.done(function(results) {
 			if(results.success === 1) {
-				alert(results.info)
+				// alert(results.info)
 				location.reload();
 			} else if(results.success === 0) {
 				alert(results.info)

@@ -9,43 +9,111 @@ let Filter = require('../../../middle/filter');
 let Conf = require('../../../../confile/conf.js')
 let moment = require('moment')
 
+let randID = '5c63ecf72430bf23f7280ba3';
 exports.odPaysFilter = function(req, res, next) {
-	let title = 'Pay List';
-	let url = "/odPayList";
-	
-	// 分页
-	let slipCond = ""; // 分页时用到的其他条件
+	if(req.query && req.query.keyword) {
+		req.query.keyword = req.query.keyword.replace(/(\s*$)/g, "").replace( /^\s*/, '');
+	}
 
+	let condition = new Object();
+	condition.slipCond = ""; // 分页时用到的其他条件
+
+	// 分页
 	let page = 0, entry = 10;
-	[entry, page, slipCond] = Filter.slipPage(req, entry, slipCond)
-	let index = page * entry;
+	[condition.entry, condition.page, condition.slipCond] = Filter.slipPage(req, entry, condition.slipCond)
+	condition.index = condition.page * condition.entry;
 
 	// 条件判断   ----------------
 	// 查找关键字
 	let keytype = "code", keyword = "";
-	[keytype, keyword, slipCond] = Filter.key(req, keytype, keyword, slipCond)
-	// 根据状态筛选
-	// let condStatus = Object.keys(Conf.stsPay);
-	let condStatus = 0;
-	[condStatus, slipCond] = Filter.status(req.query.status, condStatus, slipCond);
+	[condition.keytype, condition.keyword, condition.slipCond] = Filter.key(req, keytype, keyword, condition.slipCond)
+	
+	condition.varNumb = "price";
+	condition.symNumb = "$ne";
+	condition.condNumb = 'condNumb';
+
+	if(condition.keytype == condition.varNumb) {
+		condition.symNumb = "$eq";
+		condition.condNumb = parseFloat(condition.keyword);
+		condition.keytype = "code";
+		condition.keyword = "";
+	}
 
 	// let condMethod = Object.keys(Conf.payMethod);
 	let condMethod = -1;
-	[symMethod, condMethod, slipCond] = Filter.method(req.query.method, condMethod, slipCond);
-	// console.log(condMethod)
+	[condition.symMethod, condition.condMethod, condition.slipCond] = Filter.method(req.query.method, condMethod, condition.slipCond);
+	// 根据状态筛选
+	let condStatus = 0;
+	[condition.condStatus, condition.slipCond] = Filter.status(req.query.status, condStatus, condition.slipCond);
+
+	if(req.query && req.query.keytype == "vder"){
+		condition.keytype = "code";
+		condition.keyword = "";
+		condition.symPul = "$eq";
+		condition.condPul = req.query.keyword;
+		odPayFindVder(req, res, next, condition);
+	} 
+	else if(req.query && req.query.keytype == "order"){
+		condition.keytype = "code";
+		condition.keyword = "";
+		condition.varPul = 'order'
+		condition.symPul = "$eq";
+		condition.condPul = req.query.keyword;
+		odPayFindOrders(req, res, next, condition);
+	}
+	else {
+		condition.varPul = 'order'
+		condition.symPul = '$ne';
+		condition.condPul = randID;
+		odPayFindPays(req, res, next, condition);
+	}
+}
+odPayFindVder = function(req, res, next, condition) {
+	Vder.findOne({code: condition.condPul}, function(err, vder) {
+		if(err) console.log(err);
+		condition.varPul = 'vder'
+		condition.symPul = '$eq';
+		if(vder) {
+			condition.condPul = vder._id;
+		} else {
+			condition.condPul = randID;
+		}
+		odPayFindOrders(req, res, next, condition);
+	})
+}
+odPayFindOrders = function(req, res, next, condition) {
+	// 因为order.order不是order的唯一标识符 所以不能只查找一个
+	Order.find({[condition.varPul]: condition.condPul}, function(err, orders) {
+		if(err) console.log(err);
+		condition.varPul = 'order'
+		if(orders && orders.length > 0) {
+			condition.symPul = '$in';
+			condition.condPul = orders;
+		} else {
+			condition.symPul = '$eq';
+			condition.condPul = randID;
+		}
+		odPayFindPays(req, res, next, condition);
+	})
+}
+odPayFindPays = function(req, res, next, condition) {
 	Pay.count({
-		[keytype]: new RegExp(keyword + '.*'),
-		'method': {[symMethod]: condMethod},
-		'status': condStatus  // 'status': {[symStatus]: condStatus}
+		[condition.varNumb]: {[condition.symNumb]: condition.condNumb},
+		[condition.varPul]: {[condition.symPul]: condition.condPul},
+		[condition.keytype]: new RegExp(condition.keyword + '.*'),
+		'method': {[condition.symMethod]: condition.condMethod},
+		'status': condition.condStatus  // 'status': {[symStatus]: condStatus}
 	})
 	.exec(function(err, count) {
 		if(err) console.log(err);
 		Pay.find({
-			[keytype]: new RegExp(keyword + '.*'),
-			'method': {[symMethod]: condMethod},
-			'status': condStatus  // 'status': {[symStatus]: condStatus}
+			[condition.varNumb]: {[condition.symNumb]: condition.condNumb},
+			'order': {[condition.symPul]: condition.condPul},
+			[condition.keytype]: new RegExp(condition.keyword + '.*'),
+			'method': {[condition.symMethod]: condition.condMethod},
+			'status': condition.condStatus  // 'status': {[symStatus]: condStatus}
 		})
-		.skip(index).limit(entry)
+		.skip(condition.index).limit(condition.entry)
 		.populate('vder')
 		.populate({path: 'order', populate: {path: 'vder'} } )
 		.sort({"status": 1, "paidAt": 1})
@@ -54,9 +122,6 @@ exports.odPaysFilter = function(req, res, next) {
 			if(objects){
 				// console.log(objects[0])
 				let list = new Object()
-				list.title = title;
-				list.url = url;
-				list.crOder = req.session.crOder;
 
 				list.count = count;
 				list.objects = objects;
@@ -64,15 +129,15 @@ exports.odPaysFilter = function(req, res, next) {
 				list.keytype = req.query.keytype;
 				list.keyword = req.query.keyword;
 
-				list.condStatus = condStatus;
-				list.condMethod = condMethod;
+				list.condStatus = condition.condStatus;
+				list.condMethod = condition.condMethod;
 
 
-				list.currentPage = (page + 1);
-				list.entry = entry;
-				list.totalPage = Math.ceil(count / entry);
+				list.currentPage = (condition.page + 1);
+				list.entry = condition.entry;
+				list.totalPage = Math.ceil(count / condition.entry);
 
-				list.slipCond = slipCond;
+				list.slipCond = condition.slipCond;
 
 				req.body.list = list;
 				next();
@@ -86,6 +151,10 @@ exports.odPaysFilter = function(req, res, next) {
 
 exports.odPayList = function(req, res) {
 	let list = req.body.list;
+	list.title = 'Pay List';
+	list.url = "/odPayList";
+	list.crOder = req.session.crOder;
+
 	let today = new Date();
 	list.today = moment(today).format('YYYYMMDD');
 	let weekday = new Date(today.getTime() + 7*24*60*60*1000)

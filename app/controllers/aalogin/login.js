@@ -96,8 +96,7 @@ loginSfer = function(req, res, code, password) {
 					}
 				}
 				else {
-					info = "用户名与密码不符，请重新登陆";
-					wrongPage(req, res, info);
+					loginMger(req, res, code, password);
 				}
 			})
 		}

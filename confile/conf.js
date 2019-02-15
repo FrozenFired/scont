@@ -13,7 +13,8 @@ let Conf = {
 	},
 	vdRole: {0: 'register', 1: 'unregister', 2: 'logout'},
 	/* --------------------- order ---------------------*/
-	stsOrder: {0: 'refer', 1: 'checked', 2: 'part paid', 3: 'all paid', 4: 'History'},
+	stsOrder: {0: 'refer', 1: 'checked', 2: 'partPaid', 3: 'allPaid', 4: 'History'},
+	stsOrderVder: {1: 'noPaid', 2: 'partPaid', 3: 'all paid', 4: 'History'},
 	stsOrderBg: {0: 'bg-success', 1: 'bg-default', 2: 'bg-default', 3: 'bg-default', 4: 'bg-secondary'},
 	taxType: {0: 'D.I.', 1: 'Tre', 2: 'Undefine'},
 	payMethod: {0: 'Certification', 1: 'Assegno', 2: 'Bonifico', 3: 'Credit Card'},

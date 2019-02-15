@@ -25,8 +25,14 @@ exports.fnPaysFilter = function(req, res, next) {
 
 	// 条件判断   ----------------
 	// 查找关键字
-	let keytype = "code", keyword = "";
-	[condition.keytype, condition.keyword, condition.slipCond] = Filter.key(req, keytype, keyword, condition.slipCond)
+	condition.keytype = "code";
+	condition.keyword = "";
+	if(req.query.keyword) {
+		condition.keytype = req.query.keytype;
+		condition.slipCond += "&keytype="+condition.keytype;
+		condition.keyword = req.query.keyword.replace(/(\s*$)/g, "").replace( /^\s*/, '');
+		condition.slipCond += "&keyword="+condition.keyword;
+	}
 	
 	condition.varNumb = "price";
 	condition.symNumb = "$ne";
@@ -39,6 +45,39 @@ exports.fnPaysFilter = function(req, res, next) {
 		condition.keyword = "";
 	}
 
+	// 根据创建时间筛选
+	let today = new Date();
+	let begin = today.setHours(0, 0, 0, 0);
+	condition.symPaidS = "$ne"; condition.condPaidS = begin + 24*60*60*1000;
+	condition.symPaidF = "$ne"; condition.condPaidF = begin + 24*60*60*1000;
+	if(req.query.paidS) {
+		condition.slipCond += "&paidS="+req.query.paidS;
+
+		condition.symPaidS = "$gte";
+		condition.condPaidS = new Date(req.query.paidS).setHours(0,0,0,0);
+	}
+	if(req.query.paidF) {
+		condition.slipCond += "&paidF="+req.query.paidF;
+
+		condition.symPaidF = "$lt";
+		condition.condPaidF = new Date(req.query.paidF).setHours(0,0,0,0) + 24*60*60*1000;
+	}
+
+	condition.symCrtS = "$ne"; condition.condCrtS = begin + 24*60*60*1000;
+	condition.symCrtF = "$ne"; condition.condCrtF = begin + 24*60*60*1000;
+	if(req.query.crtS) {
+		condition.slipCond += "&crtS="+req.query.crtS;
+
+		condition.symCrtS = "$gte";
+		condition.condCrtS = new Date(req.query.crtS).setHours(0,0,0,0);
+	}
+	if(req.query.crtF) {
+		condition.slipCond += "&crtF="+req.query.crtF;
+
+		condition.symCrtF = "$lt";
+		condition.condCrtF = new Date(req.query.crtF).setHours(0,0,0,0) + 24*60*60*1000;
+	}
+
 	// let condMethod = Object.keys(Conf.payMethod);
 	let condMethod = -1;
 	[condition.symMethod, condition.condMethod, condition.slipCond] = Filter.method(req.query.method, condMethod, condition.slipCond);
@@ -46,18 +85,20 @@ exports.fnPaysFilter = function(req, res, next) {
 	let condStatus = 0;
 	[condition.condStatus, condition.slipCond] = Filter.status(req.query.status, condStatus, condition.slipCond);
 
-	if(req.query && req.query.keytype == "vder"){
+
+
+	if(req.query && req.query.keytype == "vder"){			// 如果是查找供应商 则先进入供应商数据库
 		condition.keytype = "code";
-		condition.keyword = "";
 		condition.symPul = "$eq";
+		condition.keyword = "";
 		condition.condPul = req.query.keyword;
 		fnPayFindVder(req, res, next, condition);
 	} 
-	else if(req.query && req.query.keytype == "order"){
+	else if(req.query && req.query.keytype == "order"){		//如果查找订单号，则先进入供应商 数据库
 		condition.keytype = "code";
 		condition.keyword = "";
-		condition.varPul = 'order'
 		condition.symPul = "$eq";
+		condition.varPul = 'order'
 		condition.condPul = req.query.keyword;
 		fnPayFindOrders(req, res, next, condition);
 	}
@@ -99,7 +140,9 @@ fnPayFindOrders = function(req, res, next, condition) {
 fnPayFindPays = function(req, res, next, condition) {
 	Pay.count({
 		[condition.varNumb]: {[condition.symNumb]: condition.condNumb},
-		[condition.varPul]: {[condition.symPul]: condition.condPul},
+		'order': {[condition.symPul]: condition.condPul},
+		'paidAt': {[condition.symPaidS]: condition.condPaidS, [condition.symPaidF]: condition.condPaidF},
+		'createAt': {[condition.symCrtS]: condition.condCrtS, [condition.symCrtF]: condition.condCrtF},
 		[condition.keytype]: new RegExp(condition.keyword + '.*'),
 		'method': {[condition.symMethod]: condition.condMethod},
 		'status': condition.condStatus  // 'status': {[symStatus]: condStatus}
@@ -109,6 +152,8 @@ fnPayFindPays = function(req, res, next, condition) {
 		Pay.find({
 			[condition.varNumb]: {[condition.symNumb]: condition.condNumb},
 			'order': {[condition.symPul]: condition.condPul},
+			'paidAt': {[condition.symPaidS]: condition.condPaidS, [condition.symPaidF]: condition.condPaidF},
+			'createAt': {[condition.symCrtS]: condition.condCrtS, [condition.symCrtF]: condition.condCrtF},
 			[condition.keytype]: new RegExp(condition.keyword + '.*'),
 			'method': {[condition.symMethod]: condition.condMethod},
 			'status': condition.condStatus  // 'status': {[symStatus]: condStatus}
@@ -128,6 +173,11 @@ fnPayFindPays = function(req, res, next, condition) {
 
 				list.keytype = req.query.keytype;
 				list.keyword = req.query.keyword;
+
+				list.paidS = req.query.paidS;
+				list.paidF = req.query.paidF;
+				list.crtS = req.query.crtS;
+				list.crtF = req.query.crtF;
 
 				list.condStatus = condition.condStatus;
 				list.condMethod = condition.condMethod;
@@ -316,7 +366,7 @@ exports.fnUpdatePay = function(req, res) {
 			let _object = _.extend(object, objBody);
 			_object.save(function(err, objSave) {
 				if(err) console.log(err);
-				res.redirect('/fnOrderDetail/'+object.order._id);
+				res.redirect('/fnPayDetail/'+object._id);
 			});	
 		}
 	})
@@ -345,17 +395,58 @@ exports.fnPayStatus = function(req, res) {
 	let newStatus = req.query.newStatus
 	Pay.findOne({_id: id}, function(err, object){
 		if(err) console.log(err);
-		if(object){
+		if(object && object.order){
+			fnPayChangeOrderStatus(object.order);
 			object.status = parseInt(newStatus)
-			// 更新付款状态时，自动更新订单状态。 方案：
-			// 当ac状态变为已付状态时 订单自动变为部分付款，
-			// 当sa状态变更为已付状态时 订单自动变为全部付款。
 			object.save(function(err,objSave) {
 				if(err) console.log(err);
 				res.json({success: 1, info: "已经更改"});
 			})
 		} else {
-			res.json({success: 0, info: "已被删除，按F5刷新页面查看"});
+			res.json({success: 0, info: "已被删除，按F5刷新页面查看, 再次操作不成功，可能因为此付款的订单信息被删除。请联系管理员"});
+		}
+	})
+}
+
+fnPayChangeOrderStatus = function(orderId) {
+	Order.findOne({_id: orderId})
+	.populate('payAc')
+	.populate('payMd')
+	.populate('paySa')
+	.exec(function(err, order) {
+		if(err) console.log(err);
+		if(order) {
+			let flag = 0;
+			if(order.payAc && order.payAc.status != 0) {
+				flag += 1
+			}
+			if(order.payMd) {
+				if(order.payMd.status != 0) {
+					flag += 2	
+				}
+			} else {
+				flag += 2
+			}
+			if(order.paySa && order.paySa.status != 0) {
+				flag += 4
+			}
+
+			let status = order.status
+			if(flag == 0) {
+				status = 1;
+			}
+			else if(flag == 7) {
+				status = 3
+			}
+			else{
+				status = 2;
+			}
+			if(order.status != status) {
+				order.status = status;
+				order.save(function(err, orderSave) {
+					if(err) console.log(err);
+				})
+			}
 		}
 	})
 }

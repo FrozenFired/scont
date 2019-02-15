@@ -7,7 +7,7 @@ if object.paySa
 	- pays.push(object.paySa);
 
 
-h3.bg-success.p-2 Payment Information (此订单付款信息)
+h3 Payment Information (此订单付款信息)
 table.table.table-hover.table-bordered
 	tr
 		th ac/sa
@@ -35,41 +35,39 @@ table.table.table-hover.table-bordered
 				if pay.createAt
 					-a;
 					span #{moment(pay.createAt).format('YYYY/MM/DD')}
-				else
-					-objStr = "object[createAt]";
-					include ./editAt
+				//- else
+				//- 	-objStr = "object[createAt]";
+				//- 	include ./editAt
 			td
 				if (paidAt == today) && (pay.status == 0)
 					-a;
 					a.btn.btn-info(href="/fnPayUpdate/"+pay._id) #{pay.price}
-					//- button.btn.btn-info.change(type="button", data-url="/fnPayStatus", data-sts=1, data-id=pay._id) #{pay.price}
 				else
 					span #{pay.price}
 			td(class=bgRecent)
 				if pay.paidAt
 					-a;
 					span #{moment(pay.paidAt).format('YYYY/MM/DD')}
-				else
-					-objStr = "object[paidAt]";
-					include ./editAt
+				//- else
+				//- 	-objStr = "object[paidAt]";
+				//- 	include ./editAt
 			td #{Conf.stsPay[pay.status]}
 			td #{Conf.payMethod[pay.method]}
 			td #{pay.agCode}
 			td #{pay.note}
-	if !object.payMd && object.status < 3
+	if !object.payMd && object.status == 2
 		-a;
 		tr
 			td: a.btn.btn-info.btn-block(href="/fnOrderUpMd/"+object._id) split sa md
 			td 添加中款 点击左边按钮
 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-//- <link rel="stylesheet" href="/resources/demos/style.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-//- timepicker
-link(rel="stylesheet", href="/libs/jt.timepicker/jquery.timepicker.css")
-script(src="/libs/jt.timepicker/jquery.timepicker.min.js")
+//- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+//- //- <link rel="stylesheet" href="/resources/demos/style.css">
+//- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+//- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+//- //- timepicker
+//- link(rel="stylesheet", href="/libs/jt.timepicker/jquery.timepicker.css")
+//- script(src="/libs/jt.timepicker/jquery.timepicker.min.js")
 
 
-script(src="/js/order/detail.js")
-script(src="/js/changeStatus.js")
+//- script(src="/js/order/detail.js")

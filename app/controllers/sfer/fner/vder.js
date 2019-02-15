@@ -31,14 +31,9 @@ exports.fnVdersFilter = function(req, res, next) {
 	if(condRole == -1) symRole = "$ne";
 	slipCond += "&role="+condRole;
 
-	// 根据创建更新时间筛选
-	let at = Filter.at(req);
-	slipCond+=at.slipCond;
 
 	Vder.count({
 		[keytype]: new RegExp(keyword + '.*'),
-		'createAt': {[at.symCrtStart]: at.condCrtStart, [at.symCrtEnded]: at.condCrtEnded},
-		'updateAt': {[at.symUpdStart]: at.condUpdStart, [at.symUpdEnded]: at.condUpdEnded},
 		'role': {[symRole]: condRole},
 		'status': condStatus,  // 'status': {[symStatus]: condStatus}
 	})
@@ -46,8 +41,6 @@ exports.fnVdersFilter = function(req, res, next) {
 		if(err) console.log(err);
 		Vder.find({
 			[keytype]: new RegExp(keyword + '.*'),
-			'createAt': {[at.symCrtStart]: at.condCrtStart, [at.symCrtEnded]: at.condCrtEnded},
-			'updateAt': {[at.symUpdStart]: at.condUpdStart, [at.symUpdEnded]: at.condUpdEnded},
 			'role': {[symRole]: condRole},
 			'status': condStatus,  // 'status': {[symStatus]: condStatus}
 		})
@@ -73,11 +66,6 @@ exports.fnVdersFilter = function(req, res, next) {
 
 				list.condStatus = condStatus;
 				list.condRole = condRole;
-
-				list.condCrtStart = req.query.crtStart;
-				list.condCrtEnded = req.query.crtEnded;
-				list.condUpdStart = req.query.updStart;
-				list.condUpdEnded = req.query.updEnded;
 
 				list.currentPage = (page + 1);
 				list.entry = entry;

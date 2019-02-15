@@ -14,7 +14,7 @@ exports.at = function(req) {
 
 	if(req.query.crtEnded && req.query.crtEnded.length == 10){
 		at.symCrtEnded = "$lte";
-		at.condCrtEnded = new Date(req.query.crtEnded).setHours(23,59,59,0)
+		at.condCrtEnded = new Date(req.query.crtEnded).setHours(23,59,59,0);
 		at.slipCond += "&crtEnded="+req.query.crtEnded;
 	} else {
 		at.symCrtEnded = "$ne";

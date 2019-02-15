@@ -333,7 +333,7 @@ exports.fnUpdateOrder = function(req, res) {
 			
 			_object.save(function(err, objSave) {
 				if(err) console.log(err);
-				res.redirect('/fnOrderList');
+				res.redirect('/fnOrderDetail/'+objSave._id);
 			});	
 		}
 	})

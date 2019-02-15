@@ -9,10 +9,9 @@ block content
 			.col-sm-4.text-right
 				a.btn.btn-link(href="/fnOrderList") back order list
 		hr
-		include ./detail/selfInfo
-		hr
 		if object.status == 0
 			-a;
+			button.btn.btn-warning.change(type="button", data-url="/fnOrderStatus", data-id=object._id, data-sts=1) 确定订单信息正确
 			dl
 				if object.payAc
 					-a;
@@ -26,9 +25,10 @@ block content
 					-a;
 					dt sa:
 					dd #{object.paySa.price}
-			button.btn.btn-warning.change(type="button", data-url="/fnOrderStatus", data-id=object._id, data-sts=1) 确定订单信息正确
 		else
 			include ./detail/acsaInfo
+		hr
+		include ./detail/selfInfo
 		hr
 		.row
 			.col-sm-6

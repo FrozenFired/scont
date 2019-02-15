@@ -1,11 +1,14 @@
-h3 supplier: 
-	if object.vder
-		-a;
-		strong.text-info #{object.vder.code}
-	else
-		span loss supplier
+h3.bg-info.p-2 #{object.order} 订单信息
 
 table.table.table-hover.table-bordered
+	tr
+		th supplier:
+		td
+			if object.vder
+				-a;
+				strong.text-info #{object.vder.code}
+			else
+				span loss supplier
 	tr
 		th order (订单号)
 		td #{object.order}
