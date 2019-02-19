@@ -1,23 +1,30 @@
-dl.dl-horizontal
-	dt Code:
-	dd #{object.code}
-	dt Name:
-	dd #{object.name}
-	hr
-	dt Document
-	dd #{object.document}
-	dt Telephone
-	dd #{object.telephone}
-	dt Address
-	dd #{object.address}
-	dt Post
-	dd #{object.post}
-	dt IVA
-	dd #{object.ivaNumber}
-	hr
-	dt createAt:
-	dd #{moment(object.createAt).format('YYYY/MM/DD')}
-	dt updateAt:
-	dd #{moment(object.updateAt).format('YYYY/MM/DD')}
+table.table.table-hover
+	tr
+		td: strong Code:
+		td #{object.code}
+	tr
+		td: strong Name:
+		td #{object.name}
+	tr
+		td: strong Document
+		td #{object.document}
+	tr
+		td: strong Telephone
+		td #{object.telephone}
+	tr
+		td: strong Address
+		td #{object.address}
+	tr
+		td: strong Post
+		td #{object.post}
+	tr
+		td: strong IVA
+		td #{object.ivaNumber}
+	tr
+		td: strong createAt:
+		td #{moment(object.createAt).format('YYYY/MM/DD')}
+	tr
+		td: strong updateAt:
+		td #{moment(object.updateAt).format('YYYY/MM/DD')}
 	
-img(src=object.photo, width="50")
+img(src=object.photo, width="200px", height="200px")

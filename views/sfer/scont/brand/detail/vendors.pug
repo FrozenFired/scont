@@ -7,7 +7,9 @@ if object.sconts && object.sconts.length > 0
 			tr
 				th Vendor
 				th Type
-				th contacts
+				if crSfer.role != 15
+					-a;
+					th contacts
 				th ac/sa
 				th DISCOUNT
 				th Note
@@ -37,15 +39,17 @@ if object.sconts && object.sconts.length > 0
 							-vdBg ="bg-default";
 						td(class=vdBg): a.btn.btn-primary(href="/vendorDetail/"+vendor._id) #{vendor.code}
 						td(class=vdBg) #{Conf.vtype[vendor.vtype]}
-						td(class=vdBg)
-							if vendor.contacts && vendor.contacts.length > 0
-								-contacts = vendor.contacts;
-								each contact in contacts
-									-a;
-									ul
-										li #{contact.contacter} 
-										li #{contact.tel} 
-										li #{contact.email}
+						if crSfer.role != 15
+							-a;
+							td(class=vdBg)
+								if vendor.contacts && vendor.contacts.length > 0
+									-contacts = vendor.contacts;
+									each contact in contacts
+										-a;
+										ul
+											li #{contact.contacter} 
+											li #{contact.tel} 
+											li #{contact.email}
 						td(class=vdBg) #{vendor.ac} / #{vendor.sa}
 					else
 						td

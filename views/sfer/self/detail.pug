@@ -3,9 +3,11 @@ extends ../aalayout/layout
 block content
 	.container
 		.row
-			.col-sm-6
-				include ./detail/info
-			.col-sm-2
+			.col-sm-4
 				include ./detail/upInfo
+			.col-sm-4
 				include ./detail/upDocu
+			.col-sm-4
 				include ./detail/upPw
+		.row
+			include ./detail/info
