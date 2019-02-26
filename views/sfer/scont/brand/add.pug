@@ -18,14 +18,14 @@ block content
 							option(value=nation._id) #{nation.code}
 						- a;
 			.form-group.row
-				label.col-sm-2.col-form-label select CategI
+				label.col-sm-2.col-form-label CATEGORY 1
 				.col-sm-3
 					select.form-control#iptCateFir(data-style="btn-info")
 						option#cateSel(value=-1) Please Select
 						each key in Object.keys(Conf.bcate)
 							- a;
 							option(value=key) #{Conf.bcate[key]} #{key}
-				label.col-sm-2.col-form-label select CategII
+				label.col-sm-2.col-form-label CATEGORY 2
 				.col-sm-3
 					select.form-control#iptCateg(name="object[bcateg]", data-style="btn-info")
 						option(value=-1) Please Select

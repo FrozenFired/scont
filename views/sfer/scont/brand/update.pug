@@ -29,7 +29,7 @@ block content
 							else
 								option(value=nation._id) #{nation.code}
 			.form-group.row
-				label.col-md-2.col-form-label select CategI
+				label.col-md-2.col-form-label CATEGORY 1
 				if object.bcateg
 					-let bcateg = object.bcateg;
 					input#orgBcate(type="hidden", value=object.bcateg.bcate)
@@ -42,7 +42,7 @@ block content
 								option(value=key selected="selected") #{Conf.bcate[key]} #{key}
 							else
 								option(value=key) #{Conf.bcate[key]} #{key}
-				label.col-md-2.col-form-label select CategII
+				label.col-md-2.col-form-label CATEGORY 2
 				if object.bcateg
 					-let bcateg = object.bcateg;
 					input#orgBcateg(type="hidden", name="orgBcateg", value=bcateg._id)
