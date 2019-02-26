@@ -28,7 +28,7 @@ let Conf = {
 	// 品牌分类
 	bcate: { 0: 'PROFESSIONISTI', 1: 'ACCESSORI', 2: 'COSTRUZIONE', 3: 'MOBILI'},
 	// 厂家类型
-	vtype: { 0: 'RIVENDITORE', 1: 'AGENTE', 2: 'PRO.+AGE.', 3: 'PRODUTTORE', 5: 'OTHER'},
+	vtype: { 0: 'RESELLER', 1: 'AGENT', 2: 'PRO.+AGE.', 3: 'PRODUCER', 5: 'OTHER'},
 	// 品牌状态
 	stsBrand: { 0: 'refer', 1: 'common', 2: 'gray'},
 	// 厂家状态
