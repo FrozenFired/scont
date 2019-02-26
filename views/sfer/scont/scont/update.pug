@@ -4,7 +4,7 @@ block content
 	.container
 		.row
 			h1.col-sm-6
-				span Scont Update
+				span Discount Update
 			.col-sm-6.text-right
 				a.btn.btn-link(href="/scontDetail/"+object._id) scont Detail
 		hr
@@ -26,7 +26,7 @@ block content
 						.col-sm-4
 							span.text-danger#optUpdater
 					.form-group.row
-						label.col-sm-2.col-form-label Sconto
+						label.col-sm-2.col-form-label Discount
 						input#orgScont(type="hidden", value=object.scont)
 						.col-sm-6.input-group
 							input#iptScont.form-control(type="text", name="object[scont]", value=object.scont)
@@ -50,7 +50,7 @@ block content
 								- a;
 					.form-group.row
 						.offset-md-2.col-md-10
-							input.btn.btn-default(type="submit" value="Update Scont")
+							input.btn.btn-default(type="submit" value="Update Discount")
 			.col-sm-4#matchSfer(style="display:none")
 				table#filterSfer.table.table-hover.table-bordered
 	script(src="/js/scont/scont/update.js")
