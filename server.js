@@ -52,6 +52,8 @@ require('./route/oderRouter')(app)
 require('./route/fnerRouter')(app)
 require('./route/vderRouter')(app)
 
+// require('./route/cnerRouter')(app)
+
 app.use(function(req, res, next) {
 	res.render("404")
 })

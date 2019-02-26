@@ -36,7 +36,7 @@ let Conf = {
 	// 折扣状态
 	stsScont: { 0: 'refer', 1: 'common', 2: 'green', 3: 'yellow', 4: 'gray', 5: 'deleted'},
 	// 折扣原因
-	sctCause: { 1:'NEW BRAND', 3: 'NEW DEALER', 6: 'MULTY', 7: 'fixScont'},
+	sctCause: { 1:'NEW BRAND', 3: 'NEW DEALER', 4: "AGENT", 5: "PRODUCER", 6: 'MULTY', 7: 'UPDATE DISCOUNT'},
 }
 
 module.exports = Conf
