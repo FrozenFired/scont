@@ -27,9 +27,9 @@ block content
 			.form-group.row.contact0
 				label.col-md-2.col-form-label contacts
 				.col-md-3
-					a.btn.btn-block.btn-warning#addContact(href="#") plus
+					a.btn.btn-block.btn-warning#addContact(href="#") ADD
 				.col-md-3
-					a.btn.btn-block.btn-danger#delContact(href="#") minus
+					a.btn.btn-block.btn-danger#delContact(href="#") DELETE
 			input#contactsLen(type="hidden" value=object.contacts.length)
 			-for(j=0; j<object.contacts.length; j++) {
 				<div class="form-group row contact#{j+1}" id="contact#{j+1}">
