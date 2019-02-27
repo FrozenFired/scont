@@ -17,7 +17,7 @@ let moment = require('moment');
 
 
 exports.scontsFilter = function(req, res, next) {
-	let title = 'scont List';
+	let title = 'Discount List';
 	let url = "/scontList";
 
 	// 分页
@@ -229,7 +229,7 @@ exports.scontAdd = function(req, res) {
 	Nation.find(function(err, nations) {
 		if(err) console.log(err);
 		res.render('./sfer/scont/scont/add', {
-			title: 'ScontAdd',
+			title: 'Discount Add',
 			crSfer: req.session.crSfer,
 			nations: nations,
 		})
@@ -375,7 +375,7 @@ exports.scontDetail = function(req, res){
 	// scontSingleFilter
 	let object = req.body.object
 	res.render('./sfer/scont/scont/detail', {
-		title: 'Scontory Detail',
+		title: 'Discount Detail',
 		crSfer: req.session.crSfer,
 		object: object,
 	})
@@ -390,7 +390,7 @@ exports.scontUpdate = function(req, res){
 		updater = object.updater;
 	}
 	res.render('./sfer/scont/scont/update', {
-		title: 'Scontory Update',
+		title: 'Discount Update',
 		crSfer: req.session.crSfer,
 		object: object,
 		updater: updater
@@ -472,7 +472,7 @@ exports.ajaxScontSts = function(req, res) {
 
 
 // res.render('./sfer/scont/scont/detail', {
-// 	title: 'Scontory Detail',
+// 	title: 'Discount Detail',
 // 	crSfer: req.session.crSfer,
 // 	object: object,
 // })
@@ -490,7 +490,7 @@ exports.scontPdf = function(req, res) {
 			publicPath: "file://"+rtPath + 'public',
 			moment : require('moment'),
 			crSfer: req.session.crSfer,
-			title: 'scont Pdf',
+			title: 'Discount Pdf',
 
 			object: object,
 			brand: brand,
