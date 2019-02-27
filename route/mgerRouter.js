@@ -63,7 +63,7 @@ module.exports = function(app){
 		Vder.mgCheckVderUp, MiddleBcrypt.rqBcrypt, 
 		Vder.mgUpdateVderPw)
 
-	// Task         ----------------------------------------------------------------------
+	// Task ----------------------------------------------------------------------------------
 	app.get('/mgTaskList', MiddleRole.mgerIsLogin, Task.mgTasksFilter, Task.mgTaskList)
 	app.get('/mgTaskListPrint', MiddleRole.mgerIsLogin, Task.mgTasksFilter, Task.mgTaskListPrint)
 	app.get('/mgTaskDetail/:id', MiddleRole.mgerIsLogin, Task.mgTaskFilter, Task.mgTaskDetail)

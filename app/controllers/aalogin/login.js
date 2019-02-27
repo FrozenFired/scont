@@ -79,10 +79,7 @@ loginSfer = function(req, res, code, password) {
 					if(sfer.role == 20) {
 						delete req.session.crSfer;
 						loginMger(req, res, code, password);
-					} else if(sfer.role == 15) {
-						req.session.crCner = sfer
-						res.redirect('/cner')
-					}else {
+					} else {
 						req.session.crSfer = sfer
 						if(sfer.role == 1) {
 							req.session.crOder = sfer
@@ -92,7 +89,9 @@ loginSfer = function(req, res, code, password) {
 							req.session.crBner = sfer
 						}else if(sfer.role == 10) {
 							req.session.crQter = sfer
-						} 
+						} else if(sfer.role == 15) {
+							req.session.crCner = sfer
+						}
 						res.redirect('/sfer')
 					}
 				}
