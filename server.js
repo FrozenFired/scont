@@ -43,6 +43,7 @@ app.use(session({
 }))
 
 app.use(require('express-pdf'))
+app.use(require('compression'))
 
 require('./route/aaRouter')(app)
 require('./route/aderRouter')(app)
@@ -60,5 +61,6 @@ app.use(function(req, res, next) {
 
 
 server.listen(InitConf.port, function(){
+	console.log(InitConf.serverUrl)
 	console.log('Server start on port : ' + InitConf.serverUrl)
 });
