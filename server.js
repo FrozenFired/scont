@@ -45,8 +45,8 @@ app.use(session({
 app.use(require('express-pdf'))
 app.use(require('compression')())
 
+// require('./route/aderRouter')(app)
 require('./route/aaRouter')(app)
-require('./route/aderRouter')(app)
 require('./route/mgerRouter')(app)
 require('./route/sferRouter')(app)
 require('./route/oderRouter')(app)
