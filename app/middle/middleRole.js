@@ -44,7 +44,7 @@ exports.sferIsLogin = function(req, res, next) {
 	next()
 }
 
-exports.singleSferLogin = function(req, res, next){
+exports.sfUniLog = function(req, res, next){
 	let crSfer = req.session.crSfer
 	if(crSfer) {
 		Sfer.findById(crSfer._id, function(err, sfer){

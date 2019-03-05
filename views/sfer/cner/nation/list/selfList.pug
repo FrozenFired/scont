@@ -1,0 +1,22 @@
+table.table.table-hover.table-bordered
+	thead
+		tr
+			th 序号
+			th 国家代号
+			th 源国家名称
+			th 英文名
+			th 中文名
+			th 国家区号
+			th 包含品牌
+	tbody
+		-let i = 0;
+		each item in objects
+			- i++;
+			tr(class="item-id-"+item._id)
+				td <strong> #{i} </strong>
+				td: a(href="/cnNation/"+item._id) #{item.code}
+				td #{item.name}
+				td #{item.nameEN}
+				td #{item.nameCN}
+				td #{item.tel}
+				td #{item.numbrand}

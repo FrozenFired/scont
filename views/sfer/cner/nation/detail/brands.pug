@@ -1,0 +1,26 @@
+table.table.table-hover.table-bordered
+	thead
+		tr
+			th(width="20%") 品牌
+			th(width="20%") 种类1/种类2
+			th(width="20%") 材料描述
+			th(width="10%") 状态
+			th(width="10%") 供应商数
+	tbody
+		each brand in brands
+			-let a;
+			tr(class="brand-id-"+brand._id)
+				td: a(href="/cnBrand/"+brand._id) #{brand.code}
+				td 
+					if brand.bcateg
+						-a;
+						span #{Conf.bcate[brand.bcateg.bcate]}<br/>#{brand.bcateg.code}
+					if brand. matDesp && brand.matDesp.length > 0
+						-a;
+				td <br/>#{brand.matDesp}
+				td #{Conf.stsBrand[brand.status]}
+				if brand.sconts
+					td #{brand.sconts.length}
+				else
+					td 0
+				-a;

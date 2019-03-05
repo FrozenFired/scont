@@ -76,11 +76,14 @@ loginSfer = function(req, res, code, password) {
 					sfer.save(function(err, sfer){
 						if(err) console.log(err)
 					})
+					req.session.crSfer = sfer
 					if(sfer.role == 20) {
 						delete req.session.crSfer;
 						loginMger(req, res, code, password);
+					} else if(sfer.role == 15) {
+						req.session.crCner = sfer;
+						res.redirect('/cner')
 					} else {
-						req.session.crSfer = sfer
 						if(sfer.role == 1) {
 							req.session.crOder = sfer
 						}else if(sfer.role == 2) {
@@ -89,8 +92,6 @@ loginSfer = function(req, res, code, password) {
 							req.session.crBner = sfer
 						}else if(sfer.role == 10) {
 							req.session.crQter = sfer
-						} else if(sfer.role == 15) {
-							req.session.crCner = sfer
 						}
 						res.redirect('/sfer')
 					}

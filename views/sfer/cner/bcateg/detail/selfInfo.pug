@@ -1,0 +1,14 @@
+.bg-light
+	table.table.table-hover.table-bordered
+		tr
+			th 二级分类
+			th English Name
+			th 中文翻译
+			th 一级分类
+			th 品牌数量
+		tr
+			td #{object.code}
+			td #{object.nameEN}
+			td #{object.nameCN}
+			td #{Conf.bcate[object.bcate]}
+			td #{object.numbrand}

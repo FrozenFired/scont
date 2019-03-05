@@ -1,0 +1,87 @@
+-let objBg = "bg-light";
+
+if object.status == 0
+	-objBg ="bg-info";
+else if object.status == 1
+	-objBg ="bg-white";
+else if object.status == 2
+	-objBg ="bg-secondary";
+.row(class=objBg)
+	h1.col-sm-8
+		span 品牌: [#{object.code}]
+	.col-sm-4.text-right
+		a.btn.btn-link(href="/cnBrands") 返回列表
+
+hr
+.bg-light
+	table.table.table-hover.table-bordered
+		tr
+			th 品牌
+			th 国家
+			th 公司名
+			th 一级分类
+			th 二级分类
+			th 材料描述
+
+		tr
+			td.text-primary <strong>#{object.code}</strong>
+			td
+				if object.nation
+					-a;
+					span #{object.nation.code}<br/>
+			td #{object.firmName}
+			if object.bcateg
+				-a;
+				td #{Conf.bcate[object.bcateg.bcate]}
+				td #{object.bcateg.code}
+			else
+				td
+				td
+			td #{object.matDesp}
+	table.table.table-hover.table-bordered
+		tr
+			th 网站
+			th 税
+			th 生产周期
+			th 价目表
+			th 图册
+		tr
+			td 
+				a(href=object.website, target="view_window") #{object.website}
+				if object.webNote
+					-a;
+					span <br/>#{object.webNote}
+			td #{object.iva}
+			td #{object.pTime}
+			td 
+				span #{object.plist} 
+				if object.plNote && object.plNote.length > 0
+					-a;
+					span : #{object.plNote}
+			td 
+				span #{object.atlas} 
+				if object.atNote && object.atNote.length > 0
+					-a;
+					span : #{object.atNote}
+	table.table.table-hover.table-bordered
+		tr
+			th 种类
+			th 创建者<br/>更新者
+			th 创建时间<br/>更新时间
+			th 权重
+		tr
+			td(class=objBg) #{Conf.stsBrand[object.status]}
+			td
+				if object.creater
+					-a;
+					span 创建者: #{object.creater.code}
+				if object.updater
+					-a;
+					br
+					span 更新者: #{object.updater.code}
+			td 
+				span #{moment(object.createAt).format('YYYY/MM/DD')}
+				br
+				span #{moment(object.updateAt).format('YYYY/MM/DD')}
+				
+			td #{Conf.weight[object.weight]}

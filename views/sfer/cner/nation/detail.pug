@@ -1,0 +1,14 @@
+extends ../aalayout/layout
+
+block content
+	.container
+		.row(class=objBg)
+			h1.col-sm-6 详情: [#{object.code}]
+			.col-sm-6.text-right
+				a.btn.btn-link(href="/cnNations") 返回列表
+		hr
+		include ./detail/selfInfo
+		if brands.length > 0 
+			-a;
+			hr
+			include ./detail/brands

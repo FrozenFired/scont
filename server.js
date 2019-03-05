@@ -15,7 +15,8 @@ let server = require('http').createServer(app);
 // 前端读取配置数据
 app.locals.moment = require('moment');// 时间格式化
 app.locals.Conf = require('./confile/conf');// 
-app.locals.ServerAddress = InitConf.serverUrl;// 
+app.locals.Svaddr = InitConf.serverUrl;// 
+app.locals.cdn = InitConf.cdn;// 
 
 mongoose.Promise = global.Promise;
 mongoose.connect(InitConf.dbUrl);
@@ -53,7 +54,7 @@ require('./route/oderRouter')(app)
 require('./route/fnerRouter')(app)
 require('./route/vderRouter')(app)
 
-// require('./route/cnerRouter')(app)
+require('./route/cnerRouter')(app)
 
 app.use(function(req, res, next) {
 	res.render("404")
@@ -61,6 +62,5 @@ app.use(function(req, res, next) {
 
 
 server.listen(InitConf.port, function(){
-	console.log(InitConf.serverUrl)
 	console.log('Server start on port : ' + InitConf.serverUrl)
 });

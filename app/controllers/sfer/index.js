@@ -17,6 +17,9 @@ exports.sfer = function(req, res) {
 				crFner : req.session.crFner,
 			});
 		}
+		else if(req.session.crSfer.role == 15 && req.session.crCner) {	// 财务部
+			res.redirect('/cner')
+		}
 		else {														// 品牌报价部
 			if(req.session.crSfer.home) {
 				let url = req.session.crSfer.home.replace(/(\s*$)/g, "").replace( /^\s*/, '')

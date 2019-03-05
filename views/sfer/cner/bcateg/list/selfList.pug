@@ -1,0 +1,20 @@
+table.table.table-hover.table-bordered
+	thead
+		tr
+			th 二级分类
+			//- th Weight(for sort)
+			th English Name
+			th 中文翻译
+			th 一级分类
+			th 品牌数量
+	tbody
+		each item in objects
+			-let a;
+			tr(class="item-id-"+item._id)
+				td: a(href="/cnBcateg/"+item._id) #{item.code}
+				//- td #{Conf.weight[item.weight]}
+				td #{item.nameEN}
+				td #{item.nameCN}
+				td #{Conf.bcate[item.bcate]}
+				td #{item.numbrand}
+script(src="/js/delete.js")

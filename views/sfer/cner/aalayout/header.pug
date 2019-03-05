@@ -1,43 +1,39 @@
 .navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
-	a.navbar-brand(href="/") Home 
+	a.navbar-brand(href="/cner") Home 
 	button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation")
 		<span class="navbar-toggler-icon"></span>
 
 	.collapse.navbar-collapse#navbarTogglerDemo02
 		ul.navbar-nav.mr-auto.mt-2.mt-lg-0
-			if crFner
-				-a;
-				li.nav-item.active
-					a.nav-link(href="/fnOrderList") Order <span class="sr-only">(current)</span>
-				li.nav-item.active
-					a.nav-link(href="/fnPayList") Pay <span class="sr-only">(current)</span>
-				li.nav-item.active
-					a.nav-link(href="/fnVderList") Vder <span class="sr-only">(current)</span>
+			li.nav-item.active
+				a.nav-link(href="/cnBrands") 品牌列表 <span class="sr-only">(current)</span>
+			li.nav-item.active
+				a.nav-link(href="/cnNations") 国家列表 <span class="sr-only">(current)</span>
+			li.nav-item.active
+				a.nav-link(href="/cnBcategs") 类型列表 <span class="sr-only">(current)</span>
 		ul.navbar-nav
-			if crFner
+			if crCner
 				-a;
-				//- li
-				//- 	form.form-inline(method="get", action="/headerBrand", enctype="multipart/form-data")
-				//- 		input(type="hidden", name="keytpye", value="code")
-				//- 		input.form-control.mr-sm-2(type="search", name='keyword',  placeholder="Brand Code",  aria-label="Search")
-				//- 		button.btn.btn-outline-success.my-2.my-sm-0(type="submit") Search
+				li
+					form.form-inline(method="get", action="/headercnBrand", enctype="multipart/form-data")
+						input(type="hidden", name="keytpye", value="code")
+						input.form-control.mr-sm-2(type="search", name='keyword', placeholder="Brand Code",  aria-label="Search")
+						button.btn.btn-outline-success.my-2.my-sm-0(type="submit") Search
 
 				li.text-info
 					span &nbsp;
-					a.btn.btn-info(href="/sferDetail/"+crFner._id) hello: 
-						if crFner.name && crFner.name.length > 0
-							span #{crFner.name}
+					a.btn.btn-info(href="/cnerInfo") 你好: 
+						if crCner.name && crCner.name.length > 0
+							span #{crCner.name}
 						else
-							span #{crFner.code}
-						if crFner.role
-							span &nbsp;(#{Conf.sfRole[crFner.role]})
-						if crFner.photo
-							img(src=Svaddr+crFner.photo, width="30")
+							span #{crCner.code}
+						if crCner.role
+							span &nbsp;(#{Conf.sfRole[crCner.role]})
+						if crCner.photo
+							img(src=Svaddr+crCner.photo, width="30")
 						-a;
 				span &nbsp;&nbsp;&nbsp;&nbsp;
 				li: a.btn.btn-danger(href="/logout") Logout
-			else
-				li: a(href="#", data-toggle="modal", data-target="#signIn") manager
 
 .container
 	.row

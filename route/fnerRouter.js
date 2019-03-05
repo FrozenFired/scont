@@ -3,44 +3,44 @@ let Pay = require('../app/controllers/sfer/fner/pay');
 let Vder = require('../app/controllers/sfer/fner/vder');
 
 
-let MiddleBcrypt = require('../app/middle/middleBcrypt');
-let MiddleRole = require('../app/middle/middleRole');
-let MiddlePicture = require('../app/middle/middlePicture');
+let MdBcrypt = require('../app/middle/middleBcrypt');
+let MdRole = require('../app/middle/middleRole');
+let MdPicture = require('../app/middle/middlePicture');
 
 let multipart = require('connect-multiparty');
-let multipartMiddleware = multipart();
+let PostForm = multipart();
 
 module.exports = function(app){
 
 	// Order         ----------------------------------------------------------------------
-	app.get('/fnOrderList', MiddleRole.fnerIsLogin, Order.fnOrdersFilter, Order.fnOrderList)
-	app.get('/fnOrderListPrint', MiddleRole.fnerIsLogin, Order.fnOrdersFilter, Order.fnOrderListPrint)
-	app.get('/fnOrderAdd', MiddleRole.fnerIsLogin, MiddleRole.singleSferLogin, Order.fnOrderAdd)
-	app.post('/fnAddOrder', multipartMiddleware, MiddleRole.fnerIsLogin, MiddleRole.singleSferLogin, Order.fnAddOrder)
-	app.get('/fnOrderDetail/:id', MiddleRole.fnerIsLogin, Order.fnOrderFilter, Order.fnOrderDetail)
-	app.get('/fnOrderUpMd/:id', MiddleRole.fnerIsLogin, Order.fnOrderFilter, Order.fnOrderUpMd)
-	app.get('/fnOrderUpPrice/:id', MiddleRole.fnerIsLogin, Order.fnOrderFilter, Order.fnOrderUpPrice)
-	app.post('/fnUpdateOrder', multipartMiddleware, MiddleRole.fnerIsLogin, MiddleRole.singleSferLogin, Order.fnUpdateOrder)
-	app.get('/fnOrderDel/:id', MiddleRole.fnerIsLogin, Order.fnOrderFilter, Order.fnOrderDel)
+	app.get('/fnOrderList', MdRole.fnerIsLogin, Order.fnOrdersFilter, Order.fnOrderList)
+	app.get('/fnOrderListPrint', MdRole.fnerIsLogin, Order.fnOrdersFilter, Order.fnOrderListPrint)
+	app.get('/fnOrderAdd', MdRole.fnerIsLogin, MdRole.sfUniLog, Order.fnOrderAdd)
+	app.post('/fnAddOrder', PostForm, MdRole.fnerIsLogin, MdRole.sfUniLog, Order.fnAddOrder)
+	app.get('/fnOrderDetail/:id', MdRole.fnerIsLogin, Order.fnOrderFilter, Order.fnOrderDetail)
+	app.get('/fnOrderUpMd/:id', MdRole.fnerIsLogin, Order.fnOrderFilter, Order.fnOrderUpMd)
+	app.get('/fnOrderUpPrice/:id', MdRole.fnerIsLogin, Order.fnOrderFilter, Order.fnOrderUpPrice)
+	app.post('/fnUpdateOrder', PostForm, MdRole.fnerIsLogin, MdRole.sfUniLog, Order.fnUpdateOrder)
+	app.get('/fnOrderDel/:id', MdRole.fnerIsLogin, Order.fnOrderFilter, Order.fnOrderDel)
 
-	app.get('/fnOrderStatus', MiddleRole.fnerIsLogin, Order.fnOrderStatus)
+	app.get('/fnOrderStatus', MdRole.fnerIsLogin, Order.fnOrderStatus)
 
 	// Pay         ----------------------------------------------------------------------
-	app.get('/fnPayList', MiddleRole.fnerIsLogin, Pay.fnPaysFilter, Pay.fnPayList)
-	app.get('/fnPayListPrint', MiddleRole.fnerIsLogin, Pay.fnPaysFilter, Pay.fnPayListPrint)
-	// app.get('/fnPayAdd', MiddleRole.fnerIsLogin, MiddleRole.singleSferLogin, Pay.fnPayAdd)
-	// app.post('/fnAddPay', multipartMiddleware, MiddleRole.fnerIsLogin, MiddleRole.singleSferLogin, Pay.fnAddPay)
-	app.post('/fnUpdatePay', multipartMiddleware, MiddleRole.fnerIsLogin, MiddleRole.singleSferLogin, Pay.fnUpdatePay)
-	app.get('/fnPayDetail/:id', MiddleRole.fnerIsLogin, Pay.fnPayFilter, Pay.fnPayDetail)
-	app.get('/fnPayUpdate/:id', MiddleRole.fnerIsLogin, Pay.fnPayFilter, Pay.fnPayUpdate)
-	// app.get('/fnPayDel/:id', MiddleRole.fnerIsLogin, Pay.fnPayFilter, Pay.fnPayDel)
+	app.get('/fnPayList', MdRole.fnerIsLogin, Pay.fnPaysFilter, Pay.fnPayList)
+	app.get('/fnPayListPrint', MdRole.fnerIsLogin, Pay.fnPaysFilter, Pay.fnPayListPrint)
+	// app.get('/fnPayAdd', MdRole.fnerIsLogin, MdRole.sfUniLog, Pay.fnPayAdd)
+	// app.post('/fnAddPay', PostForm, MdRole.fnerIsLogin, MdRole.sfUniLog, Pay.fnAddPay)
+	app.post('/fnUpdatePay', PostForm, MdRole.fnerIsLogin, MdRole.sfUniLog, Pay.fnUpdatePay)
+	app.get('/fnPayDetail/:id', MdRole.fnerIsLogin, Pay.fnPayFilter, Pay.fnPayDetail)
+	app.get('/fnPayUpdate/:id', MdRole.fnerIsLogin, Pay.fnPayFilter, Pay.fnPayUpdate)
+	// app.get('/fnPayDel/:id', MdRole.fnerIsLogin, Pay.fnPayFilter, Pay.fnPayDel)
 
-	app.get('/fnPayStatus', MiddleRole.fnerIsLogin, Pay.fnPayStatus)
+	app.get('/fnPayStatus', MdRole.fnerIsLogin, Pay.fnPayStatus)
 
 	// Vder ---------------------------------------------------------------------------------
-	app.get('/fnVderList', MiddleRole.fnerIsLogin, Vder.fnVdersFilter, Vder.fnVderList)
-	app.get('/fnVderDetail/:id', MiddleRole.fnerIsLogin, Vder.fnVderFilter, Vder.fnVderDetail)
-	app.post('/fnUpVderInfo', MiddleRole.fnerIsLogin, multipartMiddleware, 
+	app.get('/fnVderList', MdRole.fnerIsLogin, Vder.fnVdersFilter, Vder.fnVderList)
+	app.get('/fnVderDetail/:id', MdRole.fnerIsLogin, Vder.fnVderFilter, Vder.fnVderDetail)
+	app.post('/fnUpVderInfo', MdRole.fnerIsLogin, PostForm, 
 		Vder.fnCheckVderUp, Vder.fnUpVderInfo)
-	app.get('/ajaxFnVendor', MiddleRole.fnerIsLogin, Vder.ajaxFnVendor)
+	app.get('/ajaxFnVendor', MdRole.fnerIsLogin, Vder.ajaxFnVendor)
 };

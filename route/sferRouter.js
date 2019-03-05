@@ -10,103 +10,103 @@ let Brand = require('../app/controllers/sfer/scont/brand');
 let Vendor = require('../app/controllers/sfer/scont/vendor');
 let Scont = require('../app/controllers/sfer/scont/scont');
 
-let MiddleBcrypt = require('../app/middle/middleBcrypt');
-let MiddleRole = require('../app/middle/middleRole');
-let MiddlePicture = require('../app/middle/middlePicture');
+let MdBcrypt = require('../app/middle/middleBcrypt');
+let MdRole = require('../app/middle/middleRole');
+let MdPicture = require('../app/middle/middlePicture');
 
 let multipart = require('connect-multiparty');
-let multipartMiddleware = multipart();
+let PostForm = multipart();
 
 module.exports = function(app){
 
 	// index ---------------Sfer 首页 登录页面 登录 登出---------------------------------------
 	app.get('/sfer', Index.sfer);
 
-	app.get('/option', MiddleRole.sferIsLogin, Index.option);
-	app.get('/headerBrand', MiddleRole.sferIsLogin, Brand.brandsFilter, Brand.headerBrand)
+	app.get('/option', MdRole.sfitIsLogin, Index.option);
+	app.get('/headerBrand', MdRole.sfitIsLogin, Brand.brandsFilter, Brand.headerBrand)
 
 	// Sfer -------------------------------------------------------------------------------
-	app.get('/sferDetail/:id', MiddleRole.sferIsLogin, MiddleRole.singleSferLogin, Sfer.sferDetail);
-	app.post('/updateSferInfo', multipartMiddleware, MiddleRole.sferIsLogin,
-		MiddlePicture.addNewPhoto, Sfer.checkSferUp, 
+	app.get('/sferDetail/:id', MdRole.sfitIsLogin, MdRole.sfUniLog, Sfer.sferDetail);
+	app.post('/updateSferInfo', PostForm, MdRole.sfitIsLogin,
+		MdPicture.addNewPhoto, Sfer.checkSferUp, 
 		Sfer.updateSferInfo);
-	app.post('/updateSferPw', multipartMiddleware, MiddleRole.sferIsLogin,
-		Sfer.checkSferOrgPw, MiddleBcrypt.rqBcrypt, 
+	app.post('/updateSferPw', PostForm, MdRole.sfitIsLogin,
+		Sfer.checkSferOrgPw, MdBcrypt.rqBcrypt, 
 		Sfer.updateSferPw);
 
-	app.get('/ajaxSfer', MiddleRole.sfitIsLogin, Sfer.ajaxSfer)
+	app.get('/ajaxSfer', MdRole.sfitIsLogin, Sfer.ajaxSfer)
 
 	// task ------------------------------------------------------------------------------
-	app.get('/taskAdd', MiddleRole.sferIsLogin, MiddleRole.singleSferLogin, Task.taskAdd)
-	app.post('/addTask', multipartMiddleware, MiddleRole.sferIsLogin, Task.addTask)
-	app.get('/taskList', MiddleRole.sferIsLogin, Task.tasksFilter, Task.taskList)
-	app.get('/taskListPrint', MiddleRole.sferIsLogin, Task.tasksFilter, Task.taskListPrint)
-	app.get('/taskDetail/:id', MiddleRole.sferIsLogin, Task.taskFilter, Task.taskDetail)
-	app.get('/taskUpdate/:id', MiddleRole.sferIsLogin, Task.taskFilter, Task.taskUpdate)
-	app.post('/updateTask', multipartMiddleware, MiddleRole.sferIsLogin, Task.updateTask)
-	app.get('/taskDel/:id', MiddleRole.sferIsLogin, Task.taskFilter, Task.taskDel)
-	app.get('/taskStatus', MiddleRole.sferIsLogin, Task.taskStatus)
+	app.get('/taskAdd', MdRole.sfitIsLogin, MdRole.sfUniLog, Task.taskAdd)
+	app.post('/addTask', PostForm, MdRole.sfitIsLogin, Task.addTask)
+	app.get('/taskList', MdRole.sfitIsLogin, Task.tasksFilter, Task.taskList)
+	app.get('/taskListPrint', MdRole.sfitIsLogin, Task.tasksFilter, Task.taskListPrint)
+	app.get('/taskDetail/:id', MdRole.sfitIsLogin, Task.taskFilter, Task.taskDetail)
+	app.get('/taskUpdate/:id', MdRole.sfitIsLogin, Task.taskFilter, Task.taskUpdate)
+	app.post('/updateTask', PostForm, MdRole.sfitIsLogin, Task.updateTask)
+	app.get('/taskDel/:id', MdRole.sfitIsLogin, Task.taskFilter, Task.taskDel)
+	app.get('/taskStatus', MdRole.sfitIsLogin, Task.taskStatus)
 
 	// Nation ------------------------------------------------------------------------------
-	app.get('/nationList', MiddleRole.sferIsLogin, Nation.nationsFilter, Nation.nationList)
-	app.get('/nationListPrint', MiddleRole.sferIsLogin, Nation.nationsFilter, Nation.nationListPrint)
-	app.get('/nationDetail/:id', MiddleRole.sferIsLogin, Nation.nationDetail)
-	app.get('/nationAdd', MiddleRole.bnerIsLogin, Nation.nationAdd)
-	app.post('/addNation', multipartMiddleware, MiddleRole.bnerIsLogin, Nation.addNation)
-	app.get('/nationUpdate/:id', MiddleRole.bnerIsLogin, Nation.nationUpdate)
-	app.post('/updateNation', multipartMiddleware, MiddleRole.bnerIsLogin, Nation.updateNation)
-	app.delete('/nationDel', MiddleRole.bnerIsLogin, Nation.nationDel)
+	app.get('/nationList', MdRole.sfitIsLogin, Nation.nationsFilter, Nation.nationList)
+	app.get('/nationListPrint', MdRole.sfitIsLogin, Nation.nationsFilter, Nation.nationListPrint)
+	app.get('/nationDetail/:id', MdRole.sfitIsLogin, Nation.nationDetail)
+	app.get('/nationAdd', MdRole.bnerIsLogin, Nation.nationAdd)
+	app.post('/addNation', PostForm, MdRole.bnerIsLogin, Nation.addNation)
+	app.get('/nationUpdate/:id', MdRole.bnerIsLogin, Nation.nationUpdate)
+	app.post('/updateNation', PostForm, MdRole.bnerIsLogin, Nation.updateNation)
+	app.delete('/nationDel', MdRole.bnerIsLogin, Nation.nationDel)
 	// Bcateg ------------------------------------------------------------------------------
-	app.get('/bcategList', MiddleRole.sferIsLogin, Bcateg.bcategsFilter, Bcateg.bcategList)
-	app.get('/bcategListPrint', MiddleRole.sferIsLogin, Bcateg.bcategsFilter, Bcateg.bcategListPrint)
-	app.get('/bcategAdd', MiddleRole.bnerIsLogin, Bcateg.bcategAdd)
-	app.post('/addBcateg', multipartMiddleware, MiddleRole.bnerIsLogin, Bcateg.addBcateg)
-	app.get('/bcategDetail/:id', MiddleRole.sferIsLogin, Bcateg.bcategFilter, Bcateg.bcategDetail)
-	app.get('/bcategPrint/:id', MiddleRole.sferIsLogin, Bcateg.bcategFilter, Bcateg.bcategPrint)
-	app.get('/bcategUpdate/:id', MiddleRole.bnerIsLogin, Bcateg.bcategFilter, Bcateg.bcategUpdate)
-	app.post('/updateBcateg', multipartMiddleware, MiddleRole.bnerIsLogin, Bcateg.updateBcateg)
-	app.delete('/bcategDel', MiddleRole.bnerIsLogin, Bcateg.bcategDel)
+	app.get('/bcategList', MdRole.sfitIsLogin, Bcateg.bcategsFilter, Bcateg.bcategList)
+	app.get('/bcategListPrint', MdRole.sfitIsLogin, Bcateg.bcategsFilter, Bcateg.bcategListPrint)
+	app.get('/bcategAdd', MdRole.bnerIsLogin, Bcateg.bcategAdd)
+	app.post('/addBcateg', PostForm, MdRole.bnerIsLogin, Bcateg.addBcateg)
+	app.get('/bcategDetail/:id', MdRole.sfitIsLogin, Bcateg.bcategFilter, Bcateg.bcategDetail)
+	app.get('/bcategPrint/:id', MdRole.sfitIsLogin, Bcateg.bcategFilter, Bcateg.bcategPrint)
+	app.get('/bcategUpdate/:id', MdRole.bnerIsLogin, Bcateg.bcategFilter, Bcateg.bcategUpdate)
+	app.post('/updateBcateg', PostForm, MdRole.bnerIsLogin, Bcateg.updateBcateg)
+	app.delete('/bcategDel', MdRole.bnerIsLogin, Bcateg.bcategDel)
 
-	app.get('/ajaxBcateg', MiddleRole.sfitIsLogin, Bcateg.ajaxBcateg)
+	app.get('/ajaxBcateg', MdRole.sfitIsLogin, Bcateg.ajaxBcateg)
 
 	// Brand ------------------------------------------------------------------------------
-	app.get('/brandAdd', MiddleRole.bnerIsLogin, Brand.brandAdd)
-	app.get('/brandList', MiddleRole.sferIsLogin, Brand.brandsFilter, Brand.brandList)
-	app.get('/brandListPrint', MiddleRole.sfitIsLogin, Brand.brandsFilter, Brand.brandListPrint)
-	app.get('/brandDetail/:id', MiddleRole.sferIsLogin, Brand.brandFilter, Brand.brandDetail)
-	app.get('/brandUpdate/:id', MiddleRole.bnerIsLogin, Brand.brandFilter, Brand.brandUpdate)
-	app.post('/addBrand', multipartMiddleware, MiddleRole.bnerIsLogin, Brand.addBrand)
-	app.post('/updateBrand', multipartMiddleware, MiddleRole.bnerIsLogin, Brand.updateBrand)
-	app.delete('/brandDel', MiddleRole.bnerIsLogin, Brand.brandDel)
+	app.get('/brandAdd', MdRole.bnerIsLogin, Brand.brandAdd)
+	app.get('/brandList', MdRole.sfitIsLogin, Brand.brandsFilter, Brand.brandList)
+	app.get('/brandListPrint', MdRole.sfitIsLogin, Brand.brandsFilter, Brand.brandListPrint)
+	app.get('/brandDetail/:id', MdRole.sfitIsLogin, Brand.brandFilter, Brand.brandDetail)
+	app.get('/brandUpdate/:id', MdRole.bnerIsLogin, Brand.brandFilter, Brand.brandUpdate)
+	app.post('/addBrand', PostForm, MdRole.bnerIsLogin, Brand.addBrand)
+	app.post('/updateBrand', PostForm, MdRole.bnerIsLogin, Brand.updateBrand)
+	app.delete('/brandDel', MdRole.bnerIsLogin, Brand.brandDel)
 
-	app.get('/ajaxCodeBrand', MiddleRole.sfitIsLogin, Brand.ajaxCodeBrand)
-	app.get('/ajaxBrandSts', MiddleRole.bnerIsLogin, Brand.ajaxBrandSts)
+	app.get('/ajaxCodeBrand', MdRole.sfitIsLogin, Brand.ajaxCodeBrand)
+	app.get('/ajaxBrandSts', MdRole.bnerIsLogin, Brand.ajaxBrandSts)
 
 	// Vendor ------------------------------------------------------------------------------
-	app.get('/vendorAdd', MiddleRole.bnerIsLogin, Vendor.vendorAdd)
-	app.get('/vendorList', MiddleRole.sfitIsLogin, Vendor.vendorsFilter, Vendor.vendorList)
-	app.get('/vendorListPrint', MiddleRole.sfitIsLogin, Vendor.vendorsFilter, Vendor.vendorListPrint)
-	app.get('/vendorDetail/:id', MiddleRole.sfitIsLogin, Vendor.vendorFilter, Vendor.vendorDetail)
-	app.get('/vendorUpdate/:id', MiddleRole.bnerIsLogin, Vendor.vendorFilter, Vendor.vendorUpdate)
-	app.post('/addVendor', multipartMiddleware, MiddleRole.bnerIsLogin, Vendor.addVendor)
-	app.post('/updateVendor', multipartMiddleware, MiddleRole.bnerIsLogin, Vendor.updateVendor)
-	app.delete('/vendorDel', MiddleRole.bnerIsLogin, Vendor.vendorDel)
+	app.get('/vendorAdd', MdRole.bnerIsLogin, Vendor.vendorAdd)
+	app.get('/vendorList', MdRole.sfitIsLogin, Vendor.vendorsFilter, Vendor.vendorList)
+	app.get('/vendorListPrint', MdRole.sfitIsLogin, Vendor.vendorsFilter, Vendor.vendorListPrint)
+	app.get('/vendorDetail/:id', MdRole.sfitIsLogin, Vendor.vendorFilter, Vendor.vendorDetail)
+	app.get('/vendorUpdate/:id', MdRole.bnerIsLogin, Vendor.vendorFilter, Vendor.vendorUpdate)
+	app.post('/addVendor', PostForm, MdRole.bnerIsLogin, Vendor.addVendor)
+	app.post('/updateVendor', PostForm, MdRole.bnerIsLogin, Vendor.updateVendor)
+	app.delete('/vendorDel', MdRole.bnerIsLogin, Vendor.vendorDel)
 
-	app.get('/ajaxCodeVendor', MiddleRole.sfitIsLogin, Vendor.ajaxCodeVendor)
-	app.get('/ajaxVendorSts', MiddleRole.bnerIsLogin, Vendor.ajaxVendorSts)
+	app.get('/ajaxCodeVendor', MdRole.sfitIsLogin, Vendor.ajaxCodeVendor)
+	app.get('/ajaxVendorSts', MdRole.bnerIsLogin, Vendor.ajaxVendorSts)
 
 	// Scont ------------------------------------------------------------------------------
-	app.get('/scontAdd', MiddleRole.sfitIsLogin, Scont.scontAdd)
-	app.get('/scontList', MiddleRole.sfitIsLogin, Scont.scontsFilter, Scont.scontList)
-	app.get('/scontListPrint', MiddleRole.sfitIsLogin, Scont.scontsFilter, Scont.scontListPrint)
-	app.get('/scontDetail/:id', MiddleRole.sfitIsLogin, Scont.scontFilter, Scont.scontDetail)
-	app.get('/scontPdf/:id', MiddleRole.sfitIsLogin, Scont.scontFilter, Scont.scontPdf)
-	app.get('/scontUpdate/:id', MiddleRole.bnerIsLogin, Scont.scontFilter, Scont.scontUpdate)
-	app.post('/addScont', multipartMiddleware, MiddleRole.sfitIsLogin, Scont.addScont)
-	app.post('/updateScont', multipartMiddleware, MiddleRole.bnerIsLogin, Scont.updateScont)
-	app.delete('/scontDel', MiddleRole.bnerIsLogin, Scont.scontDel)
+	app.get('/scontAdd', MdRole.sfitIsLogin, Scont.scontAdd)
+	app.get('/scontList', MdRole.sfitIsLogin, Scont.scontsFilter, Scont.scontList)
+	app.get('/scontListPrint', MdRole.sfitIsLogin, Scont.scontsFilter, Scont.scontListPrint)
+	app.get('/scontDetail/:id', MdRole.sfitIsLogin, Scont.scontFilter, Scont.scontDetail)
+	app.get('/scontPdf/:id', MdRole.sfitIsLogin, Scont.scontFilter, Scont.scontPdf)
+	app.get('/scontUpdate/:id', MdRole.bnerIsLogin, Scont.scontFilter, Scont.scontUpdate)
+	app.post('/addScont', PostForm, MdRole.sfitIsLogin, Scont.addScont)
+	app.post('/updateScont', PostForm, MdRole.bnerIsLogin, Scont.updateScont)
+	app.delete('/scontDel', MdRole.bnerIsLogin, Scont.scontDel)
 
-	app.get('/ajaxScontSts', MiddleRole.bnerIsLogin, Scont.ajaxScontSts)
+	app.get('/ajaxScontSts', MdRole.bnerIsLogin, Scont.ajaxScontSts)
 	// Scont
 	// scont
 };
