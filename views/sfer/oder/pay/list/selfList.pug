@@ -26,7 +26,7 @@ table.table.table-hover.table-bordered
 			tr(class="item-id-"+item._id+" "+bgStatus)
 				if item.order
 					-order = item.order;
-					td(class=bgErr): a.btn.btn-info(href="/odOrderDetail/"+order._id) #{order.order}
+					td(class=bgErr): a.btn.btn-info(href="/odOrder/"+order._id) #{order.order}
 					if order.vder
 						-vder = order.vder;
 						td #{vder.code}
@@ -35,7 +35,7 @@ table.table.table-hover.table-bordered
 				else
 					td(class=bgErr)
 					td
-				td: a(href="/odPayDetail/"+item._id) #{item.code}
+				td: a(href="/odPay/"+item._id) #{item.code}
 				td 
 					if item.createAt
 						-a;

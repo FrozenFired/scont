@@ -1,0 +1,23 @@
+a.btn.btn-info(href="#", data-toggle="modal", data-target="#upSferInfo") updateInfo
+
+#upSferInfo.modal.fade
+	.modal-dialog
+		.modal-content
+			form#updateInfo(method="post", action="/oderUpInfo", enctype="multipart/form-data")
+				.modal-header: h3 update Basic Information
+				.modal-body
+					input(type="hidden", name="object[_id]", value=object._id)
+					.form-group
+						label.col-form-label(for="iptCode") Code
+						input.form-control(type="text", class="iptCode", name="object[code]", value=object.code, readonly="readonly")
+					.form-group
+						label.col-form-label(for="iptName") Name
+						input#iptName.form-control(type="text", class="iptName", name="object[name]", value=object.name)
+					.form-group.udPhoto
+						input(type="hidden", name="object[photoDir]", value=Conf.photoPath.sferAvatar)
+						input(type="hidden", name="object[orgPhoto]", value=object.photo)
+						label.col-form-label(for="uploadPhoto") 头像
+						input#uploadPhoto.btn.btn-info.btn-block(type="file", name="uploadPhoto")
+				.modal-footer
+					button.btn.btn-default(type="button" data-dismiss="modal") 关闭
+					button.btn.btn-success(type="submit") 提交

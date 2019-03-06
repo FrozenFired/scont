@@ -1,4 +1,4 @@
-let Index = require('../index')
+let Index = require('./index')
 let Pay = require('../../../models/finance/pay')
 let Order = require('../../../models/finance/order')
 let Vder = require('../../../models/scont/vendor')
@@ -10,7 +10,7 @@ let Conf = require('../../../../confile/conf.js')
 let moment = require('moment')
 
 let randID = '5c63ecf72430bf23f7280ba3';
-exports.odPaysFilter = function(req, res, next) {
+exports.paysFilter = function(req, res, next) {
 	if(req.query && req.query.keyword) {
 		req.query.keyword = req.query.keyword.replace(/(\s*$)/g, "").replace( /^\s*/, '');
 	}
@@ -68,7 +68,7 @@ exports.odPaysFilter = function(req, res, next) {
 		odPayFindPays(req, res, next, condition);
 	}
 }
-odPayFindVder = function(req, res, next, condition) {
+payFindVder = function(req, res, next, condition) {
 	Vder.findOne({code: condition.condPul}, function(err, vder) {
 		if(err) console.log(err);
 		condition.varPul = 'vder'
@@ -143,17 +143,17 @@ odPayFindPays = function(req, res, next, condition) {
 				next();
 			} else {
 				info = "Option error, Please Contact Manger"
-				Index.sfOptionWrong(req, res, info)
+				Index.odOptionWrong(req, res, info)
 			}
 		})
 	})
 }
 
-exports.odPayList = function(req, res) {
+exports.pays = function(req, res) {
 	let list = req.body.list;
 	list.title = 'Pay List';
-	list.url = "/odPayList";
-	list.crOder = req.session.crOder;
+	list.url = "/odPays";
+	list.crSfer = req.session.crSfer;
 
 	let today = new Date();
 	list.today = moment(today).format('YYYYMMDD');
@@ -164,7 +164,7 @@ exports.odPayList = function(req, res) {
 }
 
 
-exports.odPayListPrint = function(req, res) {
+exports.paysPrint = function(req, res) {
 	let objects = req.body.list.objects
 	
 	let xl = require('excel4node');
@@ -211,10 +211,10 @@ exports.odPayListPrint = function(req, res) {
 
 
 
-exports.odPayAdd =function(req, res) {
+exports.payAdd =function(req, res) {
 	res.render('./sfer/oder/pay/add', {
 		title: 'Add Pay',
-		crOder : req.session.crOder,
+		crSfer : req.session.crSfer,
 		// code: code,
 		action: "/odAddPay",
 	})
@@ -223,7 +223,7 @@ exports.odPayAdd =function(req, res) {
 
 
 
-exports.odAddPay = function(req, res) {
+exports.payNew = function(req, res) {
 	let objBody = req.body.object
 	// console.log(objBody)
 	objBody.status = 0
@@ -231,7 +231,7 @@ exports.odAddPay = function(req, res) {
 	objBody.ac = parseFloat(objBody.ac)
 	objBody.sa = parseFloat(objBody.sa)
 	objBody.updateAt = objBody.createAt = Date.now();
-	objBody.updater = objBody.creater = req.session.crOder._id;
+	objBody.updater = objBody.creater = req.session.crSfer._id;
 
 	let _object = new Pay(objBody)
 	_object.save(function(err, objSave) {
@@ -245,7 +245,7 @@ exports.odAddPay = function(req, res) {
 
 
 
-exports.odPayFilter = function(req, res, next) {
+exports.payFilter = function(req, res, next) {
 	let id = req.params.id;
 	Pay.findOne({_id: id})
 	.populate({path: 'order', populate: {path: 'vder'} } )
@@ -253,7 +253,7 @@ exports.odPayFilter = function(req, res, next) {
 		if(err) console.log(err);
 		if(!object) {
 			info = "此任务已经被删除"
-			Index.sfOptionWrong(req, res, info)
+			Index.odOptionWrong(req, res, info)
 		} else {
 			let list = new Object();
 
@@ -262,7 +262,7 @@ exports.odPayFilter = function(req, res, next) {
 			if(object.order) list.order = object.order;
 			list.vder = new Object();
 			if(list.order.vder) list.vder = list.order.vder;
-			list.crOder = req.session.crOder;
+			list.crSfer = req.session.crSfer;
 
 			let now = new Date();
 			list.today = moment(now).format('YYYYMMDD');
@@ -274,88 +274,10 @@ exports.odPayFilter = function(req, res, next) {
 		}
 	})
 }
-exports.odPayDetail = function(req, res) {
+exports.pay = function(req, res) {
 	let list = req.body.list
 
 	list.title = "odPay Infomation";
 
 	res.render('./sfer/oder/pay/detail', list)
-}
-exports.odPayUpdate = function(req, res) {
-	let list = req.body.list;
-	list.title = "odPay Update";
-	list.action = "/odUpdatePay";
-	res.render('./sfer/oder/pay/update', list)
-}
-
-
-
-exports.odUpdatePay = function(req, res) {
-	let objBody = req.body.object
-	if(objBody.price) objBody.price = parseFloat(objBody.price)
-	// console.log(objBody.createAt)
-	Pay.findOne({_id: objBody._id})
-	.populate('order')
-	.exec(function(err, object) {
-		if(err) console.log(err);
-		if(!object) {
-			info = "更新付款信息时，没有找到这个付款信息: Please contact Manager";
-			Index.sfOptionWrong(req, res, info);
-		} else {
-
-			// 付款后，订单状态相应改变
-			if(object.status != objBody.status && objBody.status == 2) {
-				let order = object.order;
-				if(object.code == 'ac') order.status = 2;
-				else if(object.code == 'sa') order.status = 3;
-				order.save(function(err, ordSave) {
-					if(err) console.log(err);
-				})
-			}
-
-			let _object = _.extend(object, objBody);
-			_object.save(function(err, objSave) {
-				if(err) console.log(err);
-				res.redirect('/odOrderDetail/'+object.order._id);
-			});	
-		}
-	})
-}
-
-
-
-
-
-exports.odPayDel = function(req, res) {
-	let objBody = req.body.object;
-	Pay.remove({_id: objBody._id}, function(err, odPayRm) {
-		if(err) console.log(err);
-		res.redirect('/odPayList')
-	})
-}
-
-
-
-
-
-
-
-exports.odPayStatus = function(req, res) {
-	let id = req.query.id
-	let newStatus = req.query.newStatus
-	Pay.findOne({_id: id}, function(err, object){
-		if(err) console.log(err);
-		if(object){
-			object.status = parseInt(newStatus)
-			// 更新付款状态时，自动更新订单状态。 方案：
-			// 当ac状态变为已付状态时 订单自动变为部分付款，
-			// 当sa状态变更为已付状态时 订单自动变为全部付款。
-			object.save(function(err,objSave) {
-				if(err) console.log(err);
-				res.json({success: 1, info: "已经更改"});
-			})
-		} else {
-			res.json({success: 0, info: "已被删除，按F5刷新页面查看"});
-		}
-	})
 }

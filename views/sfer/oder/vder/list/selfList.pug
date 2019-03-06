@@ -10,7 +10,7 @@ table.table.table-hover.table-bordered
 		each item in objects
 			-a;
 			tr(class="item-id-"+item._id)
-				td: a(href="/odVderDetail/"+item._id) #{item.code}
+				td: a(href="/odVder/"+item._id) #{item.code}
 				td #{Conf.vtype[item.vtype]}
 				td #{Conf.stsVendor[item.status]}
 				td #{Conf.vdRole[item.role]}

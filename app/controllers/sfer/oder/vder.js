@@ -6,9 +6,9 @@ let Filter = require('../../../middle/filter');
 
 
 
-exports.odVdersFilter = function(req, res, next) {
+exports.vdersFilter = function(req, res, next) {
 	let title = 'odVendor List';
-	let url = "/odVderList";
+	let url = "/odVders";
 	// 分页
 	let slipCond = ""; // 分页时用到的其他条件
 
@@ -56,7 +56,7 @@ exports.odVdersFilter = function(req, res, next) {
 				let list = new Object()
 				list.title = title;
 				list.url = url;
-				list.crOder = req.session.crOder;
+				list.crSfer = req.session.crSfer;
 
 				list.count = count;
 				list.objects = objects;
@@ -82,7 +82,7 @@ exports.odVdersFilter = function(req, res, next) {
 		})
 	})
 }
-exports.odVderList = function(req, res) {
+exports.vders = function(req, res) {
 	res.render('./sfer/oder/vder/list', req.body.list)
 }
 
@@ -92,7 +92,7 @@ exports.odVderList = function(req, res) {
 
 
 
-exports.odVderFilter = function(req, res, next) {
+exports.vderFilter = function(req, res, next) {
 	let id = req.params.id;
 	Vder.findOne({_id: id}, function(err, object) {
 		if(err) console.log(err);
@@ -106,48 +106,14 @@ exports.odVderFilter = function(req, res, next) {
 		}
 	})
 }
-exports.odVderDetail = function(req, res) {
+exports.vder = function(req, res) {
 	let object = req.body.object
 	res.render('./sfer/oder/vder/detail', {
 		title: 'vendor Info',
-		crOder : req.session.crOder,
+		crSfer : req.session.crSfer,
 		object: object
 	})
 }
-
-
-exports.odCheckVderUp = function(req, res, next) {
-	let objBody = req.body.object
-	objBody.taxFree = parseFloat(objBody.taxFree);
-	if(isNaN(objBody.taxFree)) {
-		info = "Tax Free amount must a number"
-		Index.sfOptionWrong(req, res, info)
-	} else {
-		Vder.findOne({_id: objBody._id}, function(err, object) {
-			if(err) console.log(err);
-			if(!object) {
-				info = "This vder is deleted"
-				Index.sfOptionWrong(req, res, info)
-			} else {
-				let _object = _.extend(object, objBody)
-				_object.loginTime = Date.now(); // 控制已经登录的用户
-				req.body.object = _object
-				next()
-			}
-		})
-	}
-}
-
-
-exports.odUpVderInfo = function(req, res) {
-	let objBody = req.body.object;
-	objBody.save(function(err, objSave) {
-		if(err) console.log(err)
-		res.redirect("/odVderDetail/"+objSave._id)
-	})
-}
-
-
 
 
 // Ajax

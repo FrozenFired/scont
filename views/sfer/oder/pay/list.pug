@@ -3,9 +3,9 @@ extends ../aalayout/layout
 block content
 	.container
 		.row
-			h1.col-sm-6 Pays [#{count}]
-			.col-sm-6.text-right
-				a.btn.btn-link.btn-lg(href="/odOrderList") Order List
+			h1.col-sm-9 Pays [#{count}]
+			.col-sm-3.text-right
+				a.btn.btn-link.btn-lg(href="/odPays") back to List
 		hr
 		#selectOption.bg-light.pt-2
 			include ./list/filter

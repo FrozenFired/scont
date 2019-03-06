@@ -20,10 +20,10 @@ let PostForm = multipart();
 
 module.exports = function(app){
 
+	app.get('/headerQtBrand', MdRole.qterIsLogin, Brand.brandsFilter, Brand.headerBrand)
 	// index ---------------Sfer 首页 登录页面 登录 登出---------------------------------------
 	app.get('/qter', MdRole.qterIsLogin, Index.qter);
 
-	app.get('/headerQtBrand', MdRole.qterIsLogin, Brand.brandsFilter, Brand.headerBrand)
 
 	// Sfer -------------------------------------------------------------------------------
 	app.get('/qterInfo', MdRole.qterIsLogin, Sfer.qterFilter, Sfer.qterInfo);

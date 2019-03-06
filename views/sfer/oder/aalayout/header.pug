@@ -1,43 +1,31 @@
 .navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
-	a.navbar-brand(href="/") Home 
+	a.navbar-brand(href="/oder") orderPart 
 	button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation")
 		<span class="navbar-toggler-icon"></span>
 
 	.collapse.navbar-collapse#navbarTogglerDemo02
 		ul.navbar-nav.mr-auto.mt-2.mt-lg-0
-			if crOder
-				-a;
-				li.nav-item.active
-					a.nav-link(href="/odOrderList") Order <span class="sr-only">(current)</span>
-				li.nav-item.active
-					a.nav-link(href="/odPayList") Pay <span class="sr-only">(current)</span>
-				li.nav-item.active
-					a.nav-link(href="/odVderList") Vder <span class="sr-only">(current)</span>
+			li.nav-item.active
+				a.nav-link(href="/odOrders") Order <span class="sr-only">(current)</span>
+			li.nav-item.active
+				a.nav-link(href="/odPays") Pay <span class="sr-only">(current)</span>
+			li.nav-item.active
+				a.nav-link(href="/odVders") Vder <span class="sr-only">(current)</span>
 		ul.navbar-nav
-			if crOder
-				-a;
-				//- li
-				//- 	form.form-inline(method="get", action="/headerBrand", enctype="multipart/form-data")
-				//- 		input(type="hidden", name="keytpye", value="code")
-				//- 		input.form-control.mr-sm-2(type="search", name='keyword',  placeholder="Brand Code",  aria-label="Search")
-				//- 		button.btn.btn-outline-success.my-2.my-sm-0(type="submit") Search
-
-				li.text-info
-					span &nbsp;
-					a.btn.btn-info(href="/sferDetail/"+crOder._id) hello: 
-						if crOder.name && crOder.name.length > 0
-							span #{crOder.name}
-						else
-							span #{crOder.code}
-						if crOder.role
-							span &nbsp;(#{Conf.sfRole[crOder.role]})
-						if crOder.photo
-							img(src=Svaddr+crOder.photo, width="30")
-						-a;
-				span &nbsp;&nbsp;&nbsp;&nbsp;
-				li: a.btn.btn-danger(href="/logout") Logout
-			else
-				li: a(href="#", data-toggle="modal", data-target="#signIn") manager
+			li.text-info
+				span &nbsp;
+				a.btn.btn-info(href="/oderInfo") hello: 
+					if crSfer.name && crSfer.name.length > 0
+						span #{crSfer.name}
+					else
+						span #{crSfer.code}
+					if crSfer.role
+						span &nbsp;(#{Conf.sfRole[crSfer.role]})
+					if crSfer.photo
+						img(src=Svaddr+crSfer.photo, width="30")
+					-a;
+			span &nbsp;&nbsp;&nbsp;&nbsp;
+			li: a.btn.btn-danger(href="/logout") Logout
 
 .container
 	.row

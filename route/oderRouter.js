@@ -1,45 +1,45 @@
+let Index = require('../app/controllers/sfer/oder/index');
+
+let Sfer = require('../app/controllers/sfer/oder/oder');
+
 let Order = require('../app/controllers/sfer/oder/order');
 let Vder = require('../app/controllers/sfer/oder/vder');
 let Pay = require('../app/controllers/sfer/oder/pay');
 
-let MiddleBcrypt = require('../app/middle/middleBcrypt');
-let MiddleRole = require('../app/middle/middleRole');
-let MiddlePicture = require('../app/middle/middlePicture');
+let MdBcrypt = require('../app/middle/middleBcrypt');
+let MdRole = require('../app/middle/middleRole');
+let MdPicture = require('../app/middle/middlePicture');
 
 let multipart = require('connect-multiparty');
-let multipartMiddleware = multipart();
+let PostForm = multipart();
 
 module.exports = function(app){
+	// index ---------------Sfer 首页 登录页面 登录 登出---------------------------------------
+	app.get('/oder', MdRole.oderIsLogin, Index.oder);
+
+
+	// Sfer -------------------------------------------------------------------------------
+	app.get('/oderInfo', MdRole.oderIsLogin, Sfer.oderFilter, Sfer.oderInfo);
+	app.post('/oderUpInfo', PostForm, MdRole.oderIsLogin, MdRole.sfUniLog, 
+		MdPicture.addNewPhoto, Sfer.oderUp);
+	app.post('/oderUpPw', PostForm, MdRole.oderIsLogin, MdRole.sfUniLog, 
+		MdBcrypt.rqBcrypt, Sfer.oderUp);
 
 	// Order         ----------------------------------------------------------------------
-	app.get('/odOrderList', MiddleRole.oderIsLogin, Order.odOrdersFilter, Order.odOrderList)
-	app.get('/odOrderListPrint', MiddleRole.oderIsLogin, Order.odOrdersFilter, Order.odOrderListPrint)
-	app.get('/odOrderAdd', MiddleRole.oderIsLogin, MiddleRole.sfUniLog, Order.odOrderAdd)
-	app.post('/odAddOrder', multipartMiddleware, MiddleRole.sfUniLog, Order.odAddOrder)
-	app.post('/odUpOrder', multipartMiddleware, MiddleRole.sfUniLog, Order.odUpOrder)
-	app.get('/odOrderDetail/:id', MiddleRole.oderIsLogin, Order.odOrderFilter, Order.odOrderDetail)
-	app.get('/odOrderDel/:id', MiddleRole.oderIsLogin, Order.odOrderFilter, Order.odOrderDel)
-	// app.get('/odOrderUpPrice/:id', MiddleRole.oderIsLogin, Order.odOrderFilter, Order.odOrderUpPrice)
-	// app.get('/odOrderUpMd/:id', MiddleRole.oderIsLogin, Order.odOrderFilter, Order.odOrderUpMd)
-	// app.post('/odUpOrder', multipartMiddleware, MiddleRole.oderIsLogin, MiddleRole.sfUniLog, Order.odUpOrder)
-	// app.get('/odOrderStatus', MiddleRole.oderIsLogin, Order.odOrderStatus)
+	app.get('/odOrders', MdRole.oderIsLogin, Order.ordersFilter, Order.orders)
+	app.get('/odOrdersPrint', MdRole.oderIsLogin, Order.ordersFilter, Order.ordersPrint)
+	app.get('/odOrderAdd', MdRole.oderIsLogin, MdRole.sfUniLog, Order.orderAdd)
+	app.post('/odOrderNew', PostForm, MdRole.sfUniLog, Order.orderNew)
+	app.get('/odOrder/:id', MdRole.oderIsLogin, Order.orderFilter, Order.order)
+	app.get('/odOrderDel/:id', MdRole.oderIsLogin, Order.orderFilter, Order.orderDel)
 
 	// Pay         ----------------------------------------------------------------------
-	app.get('/odPayList', MiddleRole.oderIsLogin, Pay.odPaysFilter, Pay.odPayList)
-	app.get('/odPayListPrint', MiddleRole.oderIsLogin, Pay.odPaysFilter, Pay.odPayListPrint)
-	// app.get('/odPayAdd', MiddleRole.oderIsLogin, MiddleRole.sfUniLog, Pay.odPayAdd)
-	// app.post('/odAddPay', multipartMiddleware, MiddleRole.oderIsLogin, MiddleRole.sfUniLog, Pay.odAddPay)
-	app.post('/odUpdatePay', multipartMiddleware, MiddleRole.oderIsLogin, MiddleRole.sfUniLog, Pay.odUpdatePay)
-	app.get('/odPayDetail/:id', MiddleRole.oderIsLogin, Pay.odPayFilter, Pay.odPayDetail)
-	app.get('/odPayUpdate/:id', MiddleRole.oderIsLogin, Pay.odPayFilter, Pay.odPayUpdate)
-	// app.get('/odPayDel/:id', MiddleRole.oderIsLogin, Pay.odPayFilter, Pay.odPayDel)
-
-	app.get('/odPayStatus', MiddleRole.oderIsLogin, Pay.odPayStatus)
+	app.get('/odPays', MdRole.oderIsLogin, Pay.paysFilter, Pay.pays)
+	app.get('/odPaysPrint', MdRole.oderIsLogin, Pay.paysFilter, Pay.paysPrint)
+	app.get('/odPay/:id', MdRole.oderIsLogin, Pay.payFilter, Pay.pay)
 
 	// Vder ---------------------------------------------------------------------------------
-	app.get('/odVderList', MiddleRole.oderIsLogin, Vder.odVdersFilter, Vder.odVderList)
-	app.get('/odVderDetail/:id', MiddleRole.oderIsLogin, Vder.odVderFilter, Vder.odVderDetail)
-	app.post('/odUpVderInfo', MiddleRole.oderIsLogin, multipartMiddleware, 
-		Vder.odCheckVderUp, Vder.odUpVderInfo)
-	app.get('/ajaxOdVendor', MiddleRole.oderIsLogin, Vder.ajaxOdVendor)
+	app.get('/odVders', MdRole.oderIsLogin, Vder.vdersFilter, Vder.vders)
+	app.get('/odVder/:id', MdRole.oderIsLogin, Vder.vderFilter, Vder.vder)
+	app.get('/ajaxOdVendor', MdRole.oderIsLogin, Vder.ajaxOdVendor)
 };
