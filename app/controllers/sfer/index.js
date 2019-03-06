@@ -4,6 +4,7 @@ let bcrypt = require('bcryptjs');
 
 exports.sfer = function(req, res) {
 	// 判断是否登录
+	// console.log(req.session.crSfer)
 	if(req.session.crSfer) {
 		if(req.session.crSfer.role == 1 && req.session.crOder) {		// 订单部
 			res.render('./sfer/oder/index/index', {
@@ -13,6 +14,9 @@ exports.sfer = function(req, res) {
 		}
 		else if(req.session.crSfer.role == 2 && req.session.crFner) {	// 财务部
 			res.redirect('/fner')
+		}
+		else if(req.session.crSfer.role == 10 && req.session.crQter) {	// 财务部
+			res.redirect('/qter')
 		}
 		else if(req.session.crSfer.role == 15 && req.session.crCner) {	// 财务部
 			res.redirect('/cner')

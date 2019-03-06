@@ -1,5 +1,8 @@
 $(function() {
-	$('#ajaxIptBrandCode').blur(function() {
+	$('#ajaxIptBrandCode').blur(function(e) {
+		var target = $(e.target)
+		var url = target.data('url')
+
 		$('#filterBrand tr').remove()				// 先移除table下的其他信息
 		var brandCode = $(this).val()
 		brandCode = brandCode.replace(/(\s*$)/g, "").replace( /^\s*/, '')
@@ -7,7 +10,7 @@ $(function() {
 			var code = encodeURIComponent(brandCode)
 			$.ajax({
 				type: 'get',
-				url: '/ajaxCodeBrand?keytype=code&keyword=' + code
+				url: url+'?keytype=code&keyword=' + code
 			})
 			.done(function(results) {
 				$("#alertBrand").hide()

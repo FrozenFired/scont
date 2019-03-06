@@ -1,0 +1,14 @@
+extends ../aalayout/layout
+
+block content
+	.container
+		.row(class=objBg)
+			h1.col-sm-6 nation Information: [#{object.code}]
+			.col-sm-6.text-right
+				a.btn.btn-link(href="/qtNations") nation list
+		hr
+		include ./detail/selfInfo
+		if brands.length > 0 
+			-a;
+			hr
+			include ./detail/brands

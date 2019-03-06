@@ -1,0 +1,13 @@
+extends ../aalayout/layout
+
+block content
+	.container.noprint
+		
+		include ./detail/selfInfo
+		
+		if object.logs && object.logs.length > 0
+			-let logs = object.logs;
+			hr
+			include ./detail/logs
+		hr
+	include ./detail/paperPrint

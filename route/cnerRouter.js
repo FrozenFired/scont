@@ -17,14 +17,14 @@ let PostForm = multipart();
 module.exports = function(app){
 
 	// index ---------------Cner 首页 登录页面 登录 登出---------------------------------------
-	app.get('/cner', Index.cner);
+	app.get('/cner', MdRole.cnerIsLogin, Index.cner);
 
 
 	// Cner -------------------------------------------------------------------------------
 	app.get('/cnerInfo', MdRole.cnerIsLogin, Cner.cnerFilter, Cner.cnerInfo);
 	app.post('/cnerUpInfo', PostForm, MdRole.cnerIsLogin, MdRole.sfUniLog, 
 		MdPicture.addNewPhoto, Cner.cnerUp);
-	app.post('/CnerUpPw', PostForm, MdRole.cnerIsLogin, MdRole.sfUniLog, 
+	app.post('/cnerUpPw', PostForm, MdRole.cnerIsLogin, MdRole.sfUniLog, 
 		MdBcrypt.rqBcrypt, Cner.cnerUp);
 
 	// Nation ------------------------------------------------------------------------------

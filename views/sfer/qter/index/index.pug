@@ -1,0 +1,32 @@
+extends ../aalayout/layout
+
+block content
+	.container
+		.row
+			.col-sm-4
+				a.nav-link(href="/qtBrands")
+					figure.figure
+						img.figure-img.img-fluid.rounded(src="/imgs/brand.jpg", width="150px", height="150px", alt="brand list")
+						figcaption.figure-caption.text-right brand list
+			.col-sm-4
+				a.nav-link(href="/qtVendors")
+					figure.figure
+						img.figure-img.img-fluid.rounded(src="/imgs/vendors.png", width="150px", height="150px", alt="vendor list")
+						figcaption.figure-caption.text-right vendor list
+			.col-sm-4
+				a.nav-link(href="/qtSconts")
+					figure.figure
+						img.figure-img.img-fluid.rounded(src="/imgs/scont.jpg", width="150px", height="150px", alt="scont list")
+						figcaption.figure-caption.text-right scont list
+		hr
+		.row
+			.col-sm-6
+				a.nav-link(href="/qtNations")
+					figure.figure
+						img.figure-img.img-fluid.rounded(src="/imgs/nations.jpg", width="200px", height="150px", alt="nation list")
+						figcaption.figure-caption.text-right nation list
+			.col-sm-6
+				a.nav-link(href="/qtBcategs")
+					figure.figure
+						img.figure-img.img-fluid.rounded(src="/imgs/categs.png", width="150px", height="150px", alt="brand Category")
+						figcaption.figure-caption.text-right brand Category

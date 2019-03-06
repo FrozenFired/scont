@@ -1,5 +1,9 @@
 $(function() {
-	$('#ajaxIptVendorCode').blur(function() {
+	$('#ajaxIptVendorCode').blur(function(e) {
+		var target = $(e.target)
+		var url = target.data('url')
+		// alert(url)
+
 		$('#filterVendor tr').remove()				// 先移除table下的其他信息
 		var vendorCode = $(this).val()
 		vendorCode = vendorCode.replace(/(\s*$)/g, "").replace( /^\s*/, '')
@@ -7,7 +11,7 @@ $(function() {
 			var code = encodeURIComponent(vendorCode)
 			$.ajax({
 				type: 'get',
-				url: '/ajaxCodeVendor?keytype=code&keyword=' + code
+				url: url+'?keytype=code&keyword=' + code
 			})
 			.done(function(results) {
 				$("#alertVendor").hide()

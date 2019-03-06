@@ -24,7 +24,7 @@ module.exports = function(app){
 		Vder.checkVderOrgPw, MiddleBcrypt.rqBcrypt, 
 		Vder.updateVderPw);
 
-	app.get('/ajaxVder', MiddleRole.sfitIsLogin, Vder.ajaxVder)
+	app.get('/ajaxVder', MiddleRole.sferIsLogin, Vder.ajaxVder)
 
 	// order ------------------------------------------------------------------------------
 	app.get('/orderList', MiddleRole.vderIsLogin, Order.ordersFilter, Order.orderList)

@@ -1,0 +1,56 @@
+-let objBg = "bg-light";
+
+if object.status == 0
+	-objBg ="bg-info";
+else if object.status == 1
+	-objBg ="bg-white";
+else if object.status == 2
+	-objBg ="bg-secondary";
+.row(class=objBg)
+	h1.col-sm-6
+		span vendor Information: [#{object.code}]
+	.col-sm-6.text-right
+			a.btn.btn-link(href="/vendorList") vendor list
+hr
+.bg-light
+	table.table.table-hover.table-bordered
+		tr
+			th code
+			th Weight(for sort)
+			th vtype
+			th contacts
+			th ac/sa <br/> acsaNote
+			th freight
+		tr
+			td.text-primary <strong>#{object.code}</strong>
+			td #{Conf.weight[object.weight]}
+			td #{Conf.vtype[object.vtype]}
+			td
+				if object.contacts && object.contacts.length > 0
+					-contacts = object.contacts;
+					each contact in contacts
+						-a;
+						ul
+							li #{contact.contacter} 
+							li #{contact.tel} 
+							li #{contact.email}
+			td #{object.ac} / #{object.sa}<br/>#{object.acsaNote}
+			td #{object.freight}
+	table.table.table-hover.table-bordered
+		tr
+			th Summary
+			th creater <br/> updater
+			th createAt <br/> updateAt
+			th status
+		tr
+			td #{object.note}
+			td
+				if object.creater
+					-a;
+					span #{object.creater.code}
+				br
+				if object.updater
+					-a;
+					span #{object.updater.code}
+			td #{moment(object.createAt).format('YYYY/MM/DD')} <br/> #{moment(object.updateAt).format('YYYY/MM/DD')}
+			td(class=objBg) #{Conf.stsScont[object.status]}

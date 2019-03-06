@@ -3,6 +3,9 @@ exports.index = function(req, res) {
 	if(req.session.crVder) {
 		res.redirect('/vder');
 	}
+	else if(req.session.crQter) {
+		res.redirect('/qter');
+	}
 	else if(req.session.crSfer) {
 		res.redirect('/sfer');
 	}
@@ -83,6 +86,9 @@ loginSfer = function(req, res, code, password) {
 					} else if(sfer.role == 15) {
 						req.session.crCner = sfer;
 						res.redirect('/cner')
+					} else if(sfer.role == 10) {
+						req.session.crQter = sfer;
+						res.redirect('/qter')
 					} else {
 						if(sfer.role == 1) {
 							req.session.crOder = sfer
@@ -90,8 +96,6 @@ loginSfer = function(req, res, code, password) {
 							req.session.crFner = sfer
 						}else if(sfer.role == 5) {
 							req.session.crBner = sfer
-						}else if(sfer.role == 10) {
-							req.session.crQter = sfer
 						}
 						res.redirect('/sfer')
 					}
@@ -149,8 +153,15 @@ exports.logout = function(req, res) {
 
 
 wrongPage = function(req, res, info){
-	res.render('./aaViews/index/wrongPage', {
+	res.render('./aaViews/index/optionError', {
 		title: '500-15 Page',
+		info: info
+	});
+}
+exports.optionError = function(req, res, info) {
+	res.render('./aaViews/index/optionError', {
+		title: '500-15 Page',
+		crCner: req.session.crQter,
 		info: info
 	});
 }
