@@ -193,7 +193,7 @@ fnPayFindPays = function(req, res, next, condition) {
 				next();
 			} else {
 				info = "Option error, Please Contact Manger"
-				Index.sfOptionWrong(req, res, info)
+				Index.fnOptionWrong(req, res, info)
 			}
 		})
 	})
@@ -303,7 +303,7 @@ exports.fnPayFilter = function(req, res, next) {
 		if(err) console.log(err);
 		if(!object) {
 			info = "此任务已经被删除"
-			Index.sfOptionWrong(req, res, info)
+			Index.fnOptionWrong(req, res, info)
 		} else {
 			let list = new Object();
 
@@ -350,7 +350,7 @@ exports.fnUpdatePay = function(req, res) {
 		if(err) console.log(err);
 		if(!object) {
 			info = "更新付款信息时，没有找到这个付款信息: Please contact Manager";
-			Index.sfOptionWrong(req, res, info);
+			Index.fnOptionWrong(req, res, info);
 		} else {
 
 			// 付款后，订单状态相应改变

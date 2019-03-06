@@ -77,7 +77,7 @@ exports.fnVdersFilter = function(req, res, next) {
 				next();
 			} else {
 				info = "Option error, Please Contact Manger"
-				Index.sfOptionWrong(req, res, info)
+				Index.fnOptionWrong(req, res, info)
 			}
 		})
 	})
@@ -98,7 +98,7 @@ exports.fnVderFilter = function(req, res, next) {
 		if(err) console.log(err);
 		if(!object) {
 			info = "此帐号已经被删除";
-			Index.sfOptionWrong(req, res, info);
+			Index.fnOptionWrong(req, res, info);
 		}
 		else {
 			req.body.object = object;
@@ -121,13 +121,13 @@ exports.fnCheckVderUp = function(req, res, next) {
 	objBody.taxFree = parseFloat(objBody.taxFree);
 	if(isNaN(objBody.taxFree)) {
 		info = "Tax Free amount must a number"
-		Index.sfOptionWrong(req, res, info)
+		Index.fnOptionWrong(req, res, info)
 	} else {
 		Vder.findOne({_id: objBody._id}, function(err, object) {
 			if(err) console.log(err);
 			if(!object) {
 				info = "This vder is deleted"
-				Index.sfOptionWrong(req, res, info)
+				Index.fnOptionWrong(req, res, info)
 			} else {
 				let _object = _.extend(object, objBody)
 				_object.loginTime = Date.now(); // 控制已经登录的用户

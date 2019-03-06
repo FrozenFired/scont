@@ -111,7 +111,7 @@ fnOrderFindOrders = function(req, res, next, condition) {
 			next();
 		} else {
 			info = "Option error, Please Contact Manger";
-			Index.sfOptionWrong(req, res, info);
+			Index.fnOptionWrong(req, res, info);
 		}
 	})
 
@@ -201,7 +201,7 @@ exports.fnAddOrder = function(req, res) {
 	objBody.price = parseFloat(objBody.price)
 	if(isNaN(objBody.price)){
 		info = "订单价格设置错误";
-		Index.sfOptionWrong(req, res, info);
+		Index.fnOptionWrong(req, res, info);
 	} else {
 		objBody.updateAt = objBody.createAt = Date.now();
 		objBody.updater = objBody.creater = req.session.crSfer._id;
@@ -263,7 +263,7 @@ exports.fnOrderFilter = function(req, res, next) {
 		if(err) console.log(err);
 		if(!object) {
 			info = "此任务已经被删除"
-			Index.sfOptionWrong(req, res, info)
+			Index.fnOptionWrong(req, res, info)
 		} else {
 			req.body.object = object
 			next()
@@ -325,7 +325,7 @@ exports.fnUpdateOrder = function(req, res) {
 		if(err) console.log(err);
 		if(!object) {
 			info = "此任务已经被删除"
-			Index.sfOptionWrong(req, res, info)
+			Index.fnOptionWrong(req, res, info)
 		} else {
 			let _object = _.extend(object, objBody);
 

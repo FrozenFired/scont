@@ -8,18 +8,16 @@ block content
 					figure.figure
 						img.figure-img.img-fluid.rounded(src="/imgs/brand.jpg", width="150px", height="150px", alt="brand list")
 						figcaption.figure-caption.text-right brand list
-			if crSfer.role == 5 || crSfer.role == 10
-				-a;
-				.col-sm-4
-					a.nav-link(href="/vendorList")
-						figure.figure
-							img.figure-img.img-fluid.rounded(src="/imgs/vendors.png", width="150px", height="150px", alt="vendor list")
-							figcaption.figure-caption.text-right vendor list
-				.col-sm-4
-					a.nav-link(href="/scontList")
-						figure.figure
-							img.figure-img.img-fluid.rounded(src="/imgs/scont.jpg", width="150px", height="150px", alt="scont list")
-							figcaption.figure-caption.text-right scont list
+			.col-sm-4
+				a.nav-link(href="/vendorList")
+					figure.figure
+						img.figure-img.img-fluid.rounded(src="/imgs/vendors.png", width="150px", height="150px", alt="vendor list")
+						figcaption.figure-caption.text-right vendor list
+			.col-sm-4
+				a.nav-link(href="/scontList")
+					figure.figure
+						img.figure-img.img-fluid.rounded(src="/imgs/scont.jpg", width="150px", height="150px", alt="scont list")
+						figcaption.figure-caption.text-right scont list
 		hr
 		.row
 			.col-sm-6

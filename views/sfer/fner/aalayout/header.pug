@@ -5,39 +5,27 @@
 
 	.collapse.navbar-collapse#navbarTogglerDemo02
 		ul.navbar-nav.mr-auto.mt-2.mt-lg-0
-			if crFner
-				-a;
-				li.nav-item.active
-					a.nav-link(href="/fnOrderList") Order <span class="sr-only">(current)</span>
-				li.nav-item.active
-					a.nav-link(href="/fnPayList") Pay <span class="sr-only">(current)</span>
-				li.nav-item.active
-					a.nav-link(href="/fnVderList") Vder <span class="sr-only">(current)</span>
+			li.nav-item.active
+				a.nav-link(href="/fnOrderList") Order <span class="sr-only">(current)</span>
+			li.nav-item.active
+				a.nav-link(href="/fnPayList") Pay <span class="sr-only">(current)</span>
+			li.nav-item.active
+				a.nav-link(href="/fnVderList") 供应商 <span class="sr-only">(current)</span>
 		ul.navbar-nav
-			if crFner
-				-a;
-				//- li
-				//- 	form.form-inline(method="get", action="/headerBrand", enctype="multipart/form-data")
-				//- 		input(type="hidden", name="keytpye", value="code")
-				//- 		input.form-control.mr-sm-2(type="search", name='keyword',  placeholder="Brand Code",  aria-label="Search")
-				//- 		button.btn.btn-outline-success.my-2.my-sm-0(type="submit") Search
-
-				li.text-info
-					span &nbsp;
-					a.btn.btn-info(href="/sferDetail/"+crFner._id) hello: 
-						if crFner.name && crFner.name.length > 0
-							span #{crFner.name}
-						else
-							span #{crFner.code}
-						if crFner.role
-							span &nbsp;(#{Conf.sfRole[crFner.role]})
-						if crFner.photo
-							img(src=Svaddr+crFner.photo, width="30")
-						-a;
-				span &nbsp;&nbsp;&nbsp;&nbsp;
-				li: a.btn.btn-danger(href="/logout") Logout
-			else
-				li: a(href="#", data-toggle="modal", data-target="#signIn") manager
+			li.text-info
+				span &nbsp;
+				a.btn.btn-info(href="/fnerInfo") hello: 
+					if crFner.name && crFner.name.length > 0
+						span #{crFner.name}
+					else
+						span #{crFner.code}
+					if crFner.role
+						span &nbsp;(#{Conf.sfRole[crFner.role]})
+					if crFner.photo
+						img(src=Svaddr+crFner.photo, width="30")
+					-a;
+			span &nbsp;&nbsp;&nbsp;&nbsp;
+			li: a.btn.btn-danger(href="/logout") Logout
 
 .container
 	.row

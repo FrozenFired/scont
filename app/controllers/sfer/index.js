@@ -12,10 +12,7 @@ exports.sfer = function(req, res) {
 			});
 		}
 		else if(req.session.crSfer.role == 2 && req.session.crFner) {	// 财务部
-			res.render('./sfer/fner/index/index', {
-				title: 'Contabilita',
-				crFner : req.session.crFner,
-			});
+			res.redirect('/fner')
 		}
 		else if(req.session.crSfer.role == 15 && req.session.crCner) {	// 财务部
 			res.redirect('/cner')
