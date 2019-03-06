@@ -1,0 +1,55 @@
+table.table.table-hover.table-bordered
+	thead
+		tr
+			th brand code
+			th Weight(sort)
+			th nation <br/> firm name
+			th category1 / category2 <br/> material Description
+			th website <br/> Note
+			//- th status
+			th number of <br/>Vendors
+			th createAt <br/> updateAt
+			th option
+	tbody
+		each item in objects
+			- let objBg;
+			if item.status == 0
+				-objBg ="bg-info";
+			else if item.status == 1
+				-objBg ="bg-default";
+			else if item.status == 2
+				-objBg ="bg-secondary";
+			tr(class=objBg+" item-id-"+item._id)
+				td #{item.code}
+				td #{Conf.weight[item.weight]}
+				td
+					if item.nation
+						-a;
+						span #{item.nation.code}<br/>#{item.firmName}
+				td 
+					if item.bcateg
+						-a;
+						li #{Conf.bcate[item.bcateg.bcate]}
+						li #{item.bcateg.code}
+					if item. matDesp && item.matDesp.length > 0
+						-a;
+						span [ #{item.matDesp} ]
+				td 
+					a(href=item.website, target="view_window") #{item.website}
+					br
+					span #{item.webNote}
+				//- td #{Conf.stsBrand[item.status]}
+				if item.sconts
+					td #{item.sconts.length}
+				else
+					td 0
+				-a;
+				td
+					li #{moment(item.createAt).format('YYYY/MM/DD')}
+					li #{moment(item.updateAt).format('YYYY/MM/DD')}
+				td
+					a.btn.btn-primary(href="/bnBrand/"+item._id) view
+					if item.sconts && item.sconts.length == 0
+						-a;
+						button.btn.btn-danger.del(type="button", data-urldel="/bnBrandDel", data-id=item._id) delete
+script(src="/js/delete.js")

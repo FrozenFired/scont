@@ -1,0 +1,50 @@
+table.table.table-hover.table-bordered
+	thead
+		tr
+			th vendor code
+			th Weight(for sort)
+			th vtype
+			th contacts
+			th ac/sa
+			//- th status
+			th number <br/>of brand
+			th createAt <br/>updateAt
+			th option
+	tbody
+		each item in objects
+			- let objBg;
+			if item.status == 0
+				-objBg ="bg-info";
+			else if item.status == 1
+				-objBg ="bg-default";
+			else if item.status == 2
+				-objBg ="bg-secondary";
+			tr(class=objBg+" item-id-"+item._id)
+				td #{item.code}
+				td #{Conf.weight[item.weight]}
+				td #{Conf.vtype[item.vtype]}
+				td
+					if item.contacts && item.contacts.length > 0
+						-contacts = item.contacts;
+						each contact in contacts
+							-a;
+							ul
+								li #{contact.contacter} 
+								li #{contact.tel} 
+								li #{contact.email}
+				td #{item.ac} / #{item.sa}
+				//- td #{Conf.stsVendor[item.status]}
+				if item.sconts
+					-a;
+					td #{item.sconts.length}
+				else
+					td 0
+				td
+					li #{moment(item.createAt).format('YYYY/MM/DD')}
+					li #{moment(item.updateAt).format('YYYY/MM/DD')}
+				td
+					a.btn.btn-primary(href="/bnVendor/"+item._id) view
+					if item.sconts && item.sconts.length == 0
+						-a;
+						button.btn.btn-danger.del(type="button", data-urldel="/bnVendorDel", data-id=item._id) delete
+script(src="/js/delete.js")

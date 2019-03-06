@@ -1,0 +1,123 @@
+extends ../aalayout/layout
+
+block content
+	.container
+		.row
+			h1.col-sm-9
+				span Brand Update: [#{object.code}]
+			.col-sm-3.text-right
+				a.btn.btn-link(href="/bnBrand/"+object._id) brand [#{object.code}] Detail
+		hr
+		form#update(method="post", action="/bnBrandUpd", enctype="multipart/form-data")
+			input(type="hidden", name="object[_id]", value=object._id)
+			.form-group.row
+				label.col-sm-2.col-form-label Code
+				input#orgCode(type="hidden", value=object.code)
+				.col-sm-8
+					input#iptCode.form-control(type="text", class="iptCode", name="object[code]", value=object.code, placeholder="Must fill it")
+				.col-sm-2
+					#optCode.text-danger
+			.form-group.row
+				label.col-md-2.col-form-label Nation
+				input(type="hidden", name="orgNation", value=object.nation._id)
+				.col-md-8
+					select.form-control(name="object[nation]", data-style="btn-info")
+						each nation in nations
+							if String(nation._id) == String(object.nation._id)
+								- a;
+								option(value=nation._id, selected="selected") #{nation.code}
+							else
+								option(value=nation._id) #{nation.code}
+			.form-group.row
+				label.col-md-2.col-form-label CATEGORY 1
+				if object.bcateg
+					-let bcateg = object.bcateg;
+					input#orgBcate(type="hidden", value=object.bcateg.bcate)
+				.col-md-3
+					select.form-control#iptCateFir(data-style="btn-info")
+						each key in Object.keys(Conf.bcate)
+							- a;
+							if key == object.bcateg.bcate
+								- a;
+								option(value=key selected="selected") #{Conf.bcate[key]} #{key}
+							else
+								option(value=key) #{Conf.bcate[key]} #{key}
+				label.col-md-2.col-form-label CATEGORY 2
+				if object.bcateg
+					-let bcateg = object.bcateg;
+					input#orgBcateg(type="hidden", name="orgBcateg", value=bcateg._id)
+				.col-md-3
+					select.form-control#iptCateg(name="object[bcateg]", data-style="btn-info")
+				.col-md-2
+					#optCateg.text-danger
+			.form-group.row
+				label.col-sm-2.col-form-label matDesp
+				.col-sm-8
+					input#iptmatDesp.form-control(type="text",class="iptmatDesp", name="object[matDesp]", value=object.matDesp)
+			.form-group.row
+				label.col-sm-2.col-form-label website
+				.col-sm-8
+					input#iptwebsite.form-control(type="text",class="iptwebsite", name="object[website]", value=object.website)
+			.form-group.row
+				label.col-sm-2.col-form-label webNote
+				.col-sm-8
+					input#iptwebNote.form-control(type="text",class="iptwebNote", name="object[webNote]", value=object.webNote)
+			.form-group.row
+				label.col-sm-2.col-form-label firmName
+				.col-sm-8
+					input#iptfirmName.form-control(type="text",class="iptfirmName", name="object[firmName]", value=object.firmName)
+			.form-group.row
+				label.col-md-2.col-form-label(for="iptIva") iva
+				.col-md-8
+					input.form-control#iptIva(type="text", name="object[iva]", value=object.iva)
+			.form-group.row
+				label.col-md-2.col-form-label pricelist
+				.col-md-2
+					select.form-control#selPL(name="object[plist]", data-style="btn-info")
+						if object.plist == 1
+							option(value=1, selected="selected") true
+							option(value=0) false
+						else
+							option(value=1) true
+							option(value=0, selected="selected") false
+						-a;
+				.col-md-6
+					input.form-control#iptPLN(type="text", name="object[plNote]", placeholder="pricelist NOTE", value=object.plNote)
+			.form-group.row
+				label.col-md-2.col-form-label CATALOG
+				.col-md-2
+					select.form-control#selCL(name="object[atlas]", data-style="btn-info")
+						if object.atlas == 1
+							option(value=1, selected="selected") true
+							option(value=0) false
+						else
+							option(value=1) true
+							option(value=0, selected="selected") false
+						-a;
+				.col-md-6
+					input.form-control#iptCLN(type="text", name="object[atNote]", placeholder="cataloglist NOTE", value=object.atNote)
+			.form-group.row
+				label.col-md-2.col-form-label(for="iptPDT") productTime
+				.col-md-8
+					input.form-control#iptPDT(type="text", name="object[pTime]", value=object.pTime)
+			.form-group.row
+				label.col-md-2.col-form-label(for="iptCartace") cartace
+				.col-md-3
+					input.form-control#iptCartace(type="number", name="object[cartace]", value=object.cartace)
+				label.col-md-2.col-form-label(for="iptVideo") video
+				.col-md-3
+					input.form-control#iptVideo(type="number", name="object[video]", value=object.video)
+			.form-group.row
+				label.col-md-2.col-form-label Weight
+				.col-md-8
+					select.form-control(name="object[weight]", data-style="btn-info")
+						each key in Object.keys(Conf.weight)
+							if object.weight == key
+								option(value=key, selected="selected") #{Conf.weight[key]}
+							else
+								option(value=key) #{Conf.weight[key]}
+						- a;
+			.form-group.row
+				.offset-md-2.col-md-10
+					input.btn.btn-default(type="submit" value="Update Brand")
+	script(src="/js/scont/brand/update.js")

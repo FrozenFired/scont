@@ -1,0 +1,22 @@
+table.table.table-hover.table-bordered
+	thead
+		tr
+			th Bcate code
+			th Weight(for sort)
+			th English Name
+			th Chinese Name
+			th Father Cate
+			th Brand Numbers
+			th delete
+	tbody
+		each item in objects
+			-let a;
+			tr(class="item-id-"+item._id)
+				td: a(href="/bnBcateg/"+item._id) #{item.code}
+				td #{Conf.weight[item.weight]}
+				td #{item.nameEN}
+				td #{item.nameCN}
+				td #{Conf.bcate[item.bcate]}
+				td #{item.numbrand}
+				td: button.btn.btn-danger.del(type="button", data-urldel="/bnBcategDel", data-id=item._id) delete
+script(src="/js/delete.js")

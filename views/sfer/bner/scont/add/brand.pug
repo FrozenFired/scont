@@ -1,0 +1,74 @@
+.form-group.row
+	input.form-control#brandCode(type="hidden", name="brand[code]", readonly="readonly")
+.form-group.row
+	label.col-md-2.col-form-label Nation
+	.col-md-8
+		select.form-control(name="brand[nation]", data-style="btn-info")
+			each nation in nations
+				option(value=nation._id) #{nation.code}
+			- a;
+.form-group.row
+	label.col-sm-2.col-form-label CATEGORY 1
+	.col-sm-3
+		select.form-control#iptCateFir(data-style="btn-info")
+			option#cateSel(value=-1) Please Select
+			each key in Object.keys(Conf.bcate)
+				- a;
+				option(value=key) #{Conf.bcate[key]} #{key}
+	label.col-sm-2.col-form-label CATEGORY 2
+	.col-sm-3
+		select.form-control#iptCateg(name="brand[bcateg]", data-style="btn-info")
+			option(value=-1) Please Select
+			//- each bcateg in bcategs
+			//- 	option(value=bcateg._id) #{bcateg.code}
+			//- - a;
+	.col-sm-2
+		#optCateg.text-danger
+.form-group.row
+	label.col-sm-2.col-form-label matDesp
+	.col-sm-8
+		input#iptmatDesp.form-control(type="text",class="iptmatDesp", name="brand[matDesp]")
+.form-group.row
+	label.col-sm-2.col-form-label website
+	.col-sm-8
+		input#iptwebsite.form-control(type="text",class="iptwebsite", name="brand[website]")
+.form-group.row
+	label.col-sm-2.col-form-label webSum
+	.col-sm-8
+		input#iptwebSum.form-control(type="text",class="iptwebSum", name="brand[webSum]")
+.form-group.row
+	label.col-sm-2.col-form-label firmName
+	.col-sm-8
+		input#iptfirmName.form-control(type="text",class="iptfirmName", name="brand[firmName]")
+.form-group.row
+	label.col-md-2.col-form-label(for="iptIva") iva
+	.col-md-8
+		input.form-control#iptIva(type="text", name="brand[iva]")
+.form-group.row
+	label.col-md-2.col-form-label pricelist
+	.col-md-2
+		select.form-control#selPL(name="brand[plist]", data-style="btn-info")
+			option(value=1) true
+			option(value=0) false
+	.col-md-6
+		input.form-control#iptPLN(type="text", name="brand[plNote]", placeholder="pricelist NOTE")
+.form-group.row
+	label.col-md-2.col-form-label CATALOG
+	.col-md-2
+		select.form-control#selCL(name="brand[atlas]", data-style="btn-info")
+			option(value=1) true
+			option(value=0) false
+	.col-md-6
+		input.form-control#iptCLN(type="text", name="brand[atNote]", placeholder="cataloglist NOTE")
+.form-group.row
+	label.col-md-2.col-form-label(for="iptPDT") productTime
+	.col-md-8
+		input.form-control#iptPDT(type="text", name="brand[pTime]")
+.form-group.row
+	label.col-md-2.col-form-label(for="iptCartace") cartace
+	.col-md-3
+		input.form-control#iptCartace(type="number", name="brand[cartace]")
+	label.col-md-2.col-form-label(for="iptVideo") video
+	.col-md-3
+		input.form-control#iptVideo(type="number", name="brand[video]")
+script(src="/js/scont/scont/add/brandAdd.js")

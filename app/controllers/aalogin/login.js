@@ -3,8 +3,14 @@ exports.index = function(req, res) {
 	if(req.session.crVder) {
 		res.redirect('/vder');
 	}
+	else if(req.session.crCner) {
+		res.redirect('/cner');
+	}
 	else if(req.session.crQter) {
 		res.redirect('/qter');
+	}
+	else if(req.session.crBner) {
+		res.redirect('/bner');
 	}
 	else if(req.session.crSfer) {
 		res.redirect('/sfer');
@@ -89,13 +95,14 @@ loginSfer = function(req, res, code, password) {
 					} else if(sfer.role == 10) {
 						req.session.crQter = sfer;
 						res.redirect('/qter')
+					} else if(sfer.role == 5) {
+						req.session.crBner = sfer;
+						res.redirect('/bner')
 					} else {
 						if(sfer.role == 1) {
 							req.session.crOder = sfer
 						}else if(sfer.role == 2) {
 							req.session.crFner = sfer
-						}else if(sfer.role == 5) {
-							req.session.crBner = sfer
 						}
 						res.redirect('/sfer')
 					}

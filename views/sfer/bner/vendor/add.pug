@@ -1,0 +1,60 @@
+extends ../aalayout/layout
+
+block content
+	.container
+		h1 Vendor Add
+		hr
+		form#add(method="post", action="/bnVendorNew", enctype="multipart/form-data")
+			.form-group.row
+				label.col-sm-2.col-form-label Code
+				.col-sm-8
+					input#iptCode.form-control(type="text", class="iptCode", name="object[code]", placeholder="Must fill it")
+				.col-sm-2
+					#optCode.text-danger
+			.form-group.row
+				label.col-md-2.col-form-label select Type
+				.col-md-3
+					select.form-control#iptVtype(name="object[vtype]", data-style="btn-info")
+						option(value=-1) Please Select
+						each key in Object.keys(Conf.vtype)
+							- a;
+							option(value=key) #{Conf.vtype[key]}
+				.col-md-3
+					#optVtype.text-danger
+			.form-group.row.contact0
+				label.col-md-2.col-form-label contacts
+				.col-md-3
+					a.btn.btn-block.btn-warning#addContact(href="#") ADD
+				.col-md-3
+					a.btn.btn-block.btn-danger#delContact(href="#") DELETE
+			.form-group.row
+				label.col-sm-2.col-form-label AC/SA
+				.col-sm-2
+					input.form-control(type="number", name="object[ac]", placeholder="ac")
+				.col-sm-1
+					span /
+				.col-sm-2
+					input.form-control(type="number", name="object[sa]", placeholder="sa")
+				.col-sm-5
+					input.form-control(type="text", name="object[acsaNote]", placeholder="ac/sa NOTE")
+			.form-group.row
+				label.col-sm-2.col-form-label freight
+				.col-sm-8
+					input.form-control(type="text", name="object[freight]")
+			.form-group.row
+				label.col-sm-2.col-form-label Vendor NOTE
+				.col-sm-8
+					input.form-control(type="text", name="object[note]")
+			.form-group.row
+				label.col-md-2.col-form-label Status
+				.col-md-8
+					select.form-control(name="object[status]", data-style="btn-info")
+						each key in Object.keys(Conf.stsVendor)
+							- let a;
+							option(value=key) #{Conf.stsVendor[key]}
+						- a;
+			.form-group.row
+				.offset-md-2.col-md-10
+					input.btn.btn-info#sub(type="submit" value="Add Vendor")
+					a.btn.btn-info#back(href="/vendorList", style="display:none") BACK TO LIST
+	script(src='/js/scont/vendor/add.js')

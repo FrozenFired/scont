@@ -1,0 +1,45 @@
+extends ../aalayout/layout
+
+block content
+	.container
+		.row
+			h1.col-sm-6 New Task
+			.col-sm-6.text-right
+				a.btn.btn-link(href="/bnTasks") back TaskList
+		hr
+		form#addTask(method="post", action=action, enctype="multipart/form-data")
+			.form-group.row
+				label.col-sm-2.col-form-label TaskCode
+				.col-sm-4
+					input.form-control(type="text", name="object[code]", value=code, readonly="readonly")
+
+				label.col-sm-2.col-form-label Sfer
+				input#iptSfer(type="hidden", name="object[staff]", value=crSfer._id, readonly="readonly")
+				.col-sm-4
+					input#iptSferName.form-control(type="text", value=crSfer.code, readonly="readonly")
+
+			.form-group.row
+				label.col-sm-2.col-form-label Title
+				.col-sm-8
+					input#iptTitle.form-control(type="text", name="object[title]", placeholder="Must fill it")
+				.col-sm-2
+					span#optTitle.text-danger(style="display:none") Pleas complete your task
+
+			.form-group.row
+				label.col-sm-2.col-form-label Serial
+				.col-sm-8
+					input.form-control(type="text", name="object[order]", placeholder="About order or qutation")
+
+			.form-group.row
+				label.col-sm-2.col-form-label description
+				.col-sm-8
+					textarea.form-control.rounded-0(rows="3", name="object[description]", placeholder="Descript about this work")
+			.form-group.row
+				label.col-sm-2.col-form-label note
+				.col-sm-8
+					textarea.form-control.rounded-0(rows="3", name="object[note]")
+
+			.form-group.row
+				.offset-md-2.col-md-10
+					input.btn.btn-default(type="submit" value="Add Task")
+	script(src="/js/task/add.js")

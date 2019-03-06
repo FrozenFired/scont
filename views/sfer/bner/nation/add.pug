@@ -1,0 +1,30 @@
+extends ../aalayout/layout
+
+block content
+	.container
+		h1 Nation Add
+		hr
+		form#add(method="post", action="/bnNationNew", enctype="multipart/form-data")
+			.form-group.row
+				label.col-sm-2.col-form-label Code
+				.col-sm-8
+					input#iptCode.form-control(type="text", class="iptCode", name="object[code]", placeholder="Must fill it")
+			.form-group.row
+				label.col-sm-2.col-form-label Origin name
+				.col-sm-8
+					input#iptName.form-control(type="text",class="iptName", name="object[name]")
+			.form-group.row
+				label.col-sm-2.col-form-label English Name
+				.col-sm-8
+					input#iptNameEN.form-control(type="text",class="iptNameEN", name="object[nameEN]")
+			.form-group.row
+				label.col-sm-2.col-form-label 中文名字
+				.col-sm-8
+					input#iptNameCN.form-control(type="text",class="iptNameCN", name="object[nameCN]")
+			.form-group.row
+				label.col-sm-2.col-form-label tel
+				.col-sm-8
+					input#iptTel.form-control(type="text",class="iptTel", name="object[tel]")
+			.form-group.row
+				.offset-md-2.col-md-10
+					input.btn.btn-default(type="submit" value="Add Nation")

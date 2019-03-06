@@ -1,0 +1,28 @@
+extends ../aalayout/layout
+
+block content
+	.container
+		.row
+			h1.col-sm-6
+				span Vendors [#{count}]
+			.col-sm-3.text-right
+				if crSfer && crSfer.role == 5
+					-a;
+					span: a.btn.btn-info.btn-lg(href="/bnVendorAdd") Add Vendor
+			.col-sm-3.text-right
+				span: a.btn.btn-info.btn-lg(href="/bnScontAdd") Add Discount
+		hr
+		.row.bg-light.p-2
+			.col-sm-12
+				include ./list/filter
+		hr
+		.row
+			.col-sm-12
+				include ../../../aaPlugin/pageSlip
+			.col-sm-12
+				include ./list/selfList
+		.row
+			.col-sm-8
+			.col-sm-4
+				include ./list/print
+	script(src="/js/responsive.js")

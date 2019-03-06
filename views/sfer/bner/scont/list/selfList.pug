@@ -1,0 +1,62 @@
+table.table.table-hover.table-bordered
+	thead
+		tr
+			th OPTIONS
+			th Brand <br/> Category
+			th Vendor <br/> Type
+			th DISCOUNT
+			th creater <br/> updater
+			//- th status
+			th oprate
+	tbody
+		each item in objects
+			- let trBg, brandBg, vendorBg;
+			if item.status == 0
+				-trBg ="bg-info";
+			else if item.status == 1
+				-trBg ="bg-default";
+			else if item.status == 2
+				-trBg ="bg-success";
+			else if item.status == 3
+				-trBg ="bg-warning";
+			else if item.status == 4
+				-trBg ="bg-secondary";
+			else if item.status == 5
+				-trBg ="bg-danger";
+			if item.brand && item.brand.status == 2
+				-brandBg ="bg-secondary";
+			if item.vendor && item.vendor.status == 2
+				-vendorBg ="bg-secondary";
+			tr(class=trBg+" item-id-"+item._id)
+				td #{Conf.sctCause[item.cause]}
+				td(class=brandBg)
+					if item.brand
+						-a;
+						a.btn.btn-primary(href="/bnBrand/"+item.brand._id) #{item.brand.code}
+						br
+						if item.brand.bcateg
+							-a;
+							span #{item.brand.bcateg.code} ; 
+							span #{Conf.bcate[item.brand.bcateg.bcate]}
+				td(class=vendorBg)
+					if item.vendor
+						-a;
+						a.btn.btn-primary(href="/bnVendor/"+item.vendor._id) #{item.vendor.code}
+						br
+						span #{Conf.vtype[item.vendor.vtype]}
+				td #{item.scont} %
+				td
+					if item.creater
+						-a;
+						span #{item.creater.code}
+					br
+					if item.updater
+						-a;
+						span #{item.updater.code}
+				//- td #{Conf.stsScont[item.status]}
+				td
+					a.btn.btn-primary(href="/bnScont/"+item._id) View
+					if item.status == 5
+						span &nbsp; | &nbsp;
+						button.btn.btn-warning.del(type="button", data-urldel="/bnScontDel", data-id=item._id) delete
+script(src="/js/delete.js")

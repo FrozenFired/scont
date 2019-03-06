@@ -1,0 +1,12 @@
+extends ../aalayout/layout
+
+block content
+	.container
+		a.btn.btn-info.btn-lg.btn-block(href="/bnBcategAdd") Add Bcateg
+		hr
+		.row
+			.col-sm-8
+			.col-sm-4
+				a.btn.btn-bg.btn-block.btn-warning(href="/bnBcategsPrint") Download Excel
+		hr
+		include ./list/selfList

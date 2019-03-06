@@ -49,10 +49,11 @@ app.use(require('compression')())
 // require('./route/aderRouter')(app)
 require('./route/aaRouter')(app)
 require('./route/mgerRouter')(app)
-require('./route/sferRouter')(app)
+// require('./route/sferRouter')(app)
 require('./route/oderRouter')(app)
 require('./route/fnerRouter')(app)
 require('./route/qterRouter')(app)
+require('./route/bnerRouter')(app)
 
 require('./route/cnerRouter')(app)
 
