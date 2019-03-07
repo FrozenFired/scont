@@ -36,7 +36,7 @@ if object.sconts && object.sconts.length > 0
 						else
 							-vdBg ="bg-default";
 						td(class=vdBg): a.btn.btn-primary(href="/bnVendor/"+vendor._id) #{vendor.code}
-						td(class=vdBg) #{Conf.vtype[vendor.vtype]} #{vendor.vtype}
+						td(class=vdBg) #{Conf.vtype[vendor.vtype]}
 						td(class=vdBg)
 							if vendor.contacts && vendor.contacts.length > 0
 								-contacts = vendor.contacts;
