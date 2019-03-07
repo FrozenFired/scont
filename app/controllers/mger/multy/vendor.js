@@ -32,9 +32,15 @@ saveVendors = function(i, arrs) {
 		typeCode = 'OTHER'
 	}
 	let vkey =Object.keys(Conf.vtype);
-	for(vi in vkey) {
-		if(Conf.vtype[vkey[vi]] == typeCode) {
-			vendor.vtype = vkey[vi]
+		
+	if(typeCode == "AGENTE + PRO") {
+		vendor.vtype = 2
+	} else{
+		for(vi in vkey) {
+			if(Conf.vtype[vi] == typeCode) {
+				vendor.vtype = vi
+				break;
+			}
 		}
 	}
 	
