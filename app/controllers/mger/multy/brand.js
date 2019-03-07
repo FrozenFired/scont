@@ -26,11 +26,19 @@ saveBrands = function(i, arrs) {
 	let brand = new Object()
 	brand.code = String(arr[1]).replace(/(\s*$)/g, "").replace( /^\s*/, '')
 
-	brand.category = arr[3].replace(/(\s*$)/g, "").replace( /^\s*/, '')
+	if(arr[3]) {
+		brand.category = arr[3].replace(/(\s*$)/g, "").replace( /^\s*/, '')
+	} else {
+		brand.category = "UNDEFINE";
+	}
 
 	brand.matDesp = arr[4]
 
-	brand.country = arr[5].replace(/(\s*$)/g, "").replace( /^\s*/, '')
+	if(arr[5]){
+		brand.country = arr[5].replace(/(\s*$)/g, "").replace( /^\s*/, '')
+	} else {
+		brand.country = "UNDEFINE";
+	}
 
 	brand.iva = arr[11];
 
