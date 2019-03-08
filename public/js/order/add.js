@@ -191,6 +191,7 @@ $( function() {
 							var tr = "<tr><td>";
 									tr +='<button class="btn btn-default vdCode" ';
 									tr +='data-code="'+results.objects[i].code+'" ';
+									tr +='data-id="'+results.objects[i]._id+'" ';
 									tr +='data-tf="'+results.objects[i].taxFree+'"';
 									tr +='>' + results.objects[i].code + '</button>';
 								tr +="</td></tr>";
@@ -206,9 +207,10 @@ $( function() {
 
 	$("#filterVendor").on("click", '.vdCode', function(e) {
 		var target = $(e.target)
+		var id = target.data('id')
 		var code = target.data('code')
 		var taxFree = target.data('tf')
-		$('#iptVder').val(code);			// scont中的 vendor赋值
+		$('#iptVder').val(id);			// scont中的 vendor赋值
 		$('#ajaxIptVendorCode').val(code);
 		$('#filterVendor tr').remove()
 
