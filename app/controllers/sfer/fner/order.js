@@ -10,7 +10,7 @@ let Conf = require('../../../../confile/conf.js')
 let moment = require('moment')
 
 let randID = '5c63ecf72430bf23f7280ba3';
-exports.fnOrdersFilter = function(req, res, next) {
+exports.ordersFilter = function(req, res, next) {
 	if(req.query && req.query.keyword) {
 		req.query.keyword = req.query.keyword.replace(/(\s*$)/g, "").replace( /^\s*/, '');
 	}
@@ -119,10 +119,10 @@ fnOrderFindOrders = function(req, res, next, condition) {
 }
 
 
-exports.fnOrderList = function(req, res) {
+exports.orders = function(req, res) {
 	let list = req.body.list;
 	list.title = 'Order List';
-	list.url = "/fnOrderList";
+	list.url = "/fnOrders";
 	list.crSfer = req.session.crSfer;
 
 	let today = new Date();
@@ -135,7 +135,7 @@ exports.fnOrderList = function(req, res) {
 }
 
 
-exports.fnOrderListPrint = function(req, res) {
+exports.ordersPrint = function(req, res) {
 	let objects = req.body.list.objects
 	
 	let xl = require('excel4node');
@@ -182,19 +182,19 @@ exports.fnOrderListPrint = function(req, res) {
 
 
 
-exports.fnOrderAdd =function(req, res) {
+exports.orderAdd =function(req, res) {
 	res.render('./sfer/fner/order/add', {
 		title: 'Add Order',
 		crSfer : req.session.crSfer,
 		// code: code,
-		action: "/fnAddOrder",
+		action: "/fnOrderNew",
 	})
 }
 
 
 
 
-exports.fnAddOrder = function(req, res) {
+exports.orderNew = function(req, res) {
 	let objBody = req.body.object
 	// console.log(objBody)
 	objBody.status = 0
@@ -224,7 +224,7 @@ exports.fnAddOrder = function(req, res) {
 			if(err) {
 				console.log(err);
 			} else {
-				res.redirect('/fnOrderDetail/'+objSave._id)
+				res.redirect('/fnOrder/'+objSave._id)
 			}
 		})
 	}
@@ -253,7 +253,7 @@ fnAddPayFunc = function(objBody, _object) {
 
 
 
-exports.fnOrderFilter = function(req, res, next) {
+exports.orderFilter = function(req, res, next) {
 	let id = req.params.id;
 	Order.findOne({_id: id})
 	.populate('payAc').populate('payMd').populate('paySa')
@@ -270,7 +270,7 @@ exports.fnOrderFilter = function(req, res, next) {
 		}
 	})
 }
-exports.fnOrderDetail = function(req, res) {
+exports.order = function(req, res) {
 	let objBody = req.body.object
 	// console.log(objBody)
 	let list = req.body.list;
@@ -289,19 +289,19 @@ exports.fnOrderDetail = function(req, res) {
 }
 
 
-exports.fnOrderUpMd = function(req, res) {
+exports.orderUpMd = function(req, res) {
 	let title = "fnOrder splite Md"
 	let fontUrl = './sfer/fner/order/update/slipMd';
 
-	fnOrderUpdate(req, res, fontUrl, title)
+	fnOrderUpd(req, res, fontUrl, title)
 }
-exports.fnOrderUpPrice = function(req, res) {
+exports.orderUpPrice = function(req, res) {
 	let title = "fnOrder update Price"
 	let fontUrl = './sfer/fner/order/update/upPrice';
 
-	fnOrderUpdate(req, res, fontUrl, title)
+	fnOrderUpd(req, res, fontUrl, title)
 }
-fnOrderUpdate = function(req, res, fontUrl, title) {
+fnOrderUpd = function(req, res, fontUrl, title) {
 	let objBody = req.body.object
 
 	res.render(fontUrl, {
@@ -309,13 +309,13 @@ fnOrderUpdate = function(req, res, fontUrl, title) {
 		crSfer : req.session.crSfer,
 		object: objBody,
 
-		action: '/fnUpdateOrder',
+		action: '/fnOrderUpd',
 	})
 }
 
 
 
-exports.fnUpdateOrder = function(req, res) {
+exports.orderUpd = function(req, res) {
 	let objBody = req.body.object
 	// console.log(objBody)
 	objBody.updateAt = Date.now();
@@ -333,7 +333,7 @@ exports.fnUpdateOrder = function(req, res) {
 			
 			_object.save(function(err, objSave) {
 				if(err) console.log(err);
-				res.redirect('/fnOrderDetail/'+objSave._id);
+				res.redirect('/fnOrder/'+objSave._id);
 			});	
 		}
 	})
@@ -367,7 +367,7 @@ fnMdFunc = function(objBody, _object) {
 
 
 
-exports.fnOrderDel = function(req, res) {
+exports.orderDel = function(req, res) {
 	let objBody = req.body.object;
 	payAc = objBody.payAc
 	payMd = objBody.payMd
@@ -377,7 +377,7 @@ exports.fnOrderDel = function(req, res) {
 	if(paySa) Pay.remove({_id: paySa}, function(err, rmPaySa) {});
 	Order.remove({_id: objBody._id}, function(err, fnOrderRm) {
 		if(err) console.log(err);
-		res.redirect('/fnOrderList')
+		res.redirect('/fnOrders')
 	})
 }
 
@@ -387,7 +387,7 @@ exports.fnOrderDel = function(req, res) {
 
 
 
-exports.fnOrderStatus = function(req, res) {
+exports.orderStatus = function(req, res) {
 	let id = req.query.id
 	let newStatus = req.query.newStatus
 	Order.findOne({_id: id}, function(err, object){

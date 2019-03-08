@@ -25,33 +25,31 @@ module.exports = function(app){
 		MdBcrypt.rqBcrypt, Fner.fnerUp);
 
 	// Order         ----------------------------------------------------------------------
-	app.get('/fnOrderList', MdRole.fnerIsLogin, Order.fnOrdersFilter, Order.fnOrderList)
-	app.get('/fnOrderListPrint', MdRole.fnerIsLogin, Order.fnOrdersFilter, Order.fnOrderListPrint)
-	app.get('/fnOrderAdd', MdRole.fnerIsLogin, MdRole.sfUniLog, Order.fnOrderAdd)
-	app.post('/fnAddOrder', PostForm, MdRole.fnerIsLogin, MdRole.sfUniLog, Order.fnAddOrder)
-	app.get('/fnOrderDetail/:id', MdRole.fnerIsLogin, Order.fnOrderFilter, Order.fnOrderDetail)
-	app.get('/fnOrderUpMd/:id', MdRole.fnerIsLogin, Order.fnOrderFilter, Order.fnOrderUpMd)
-	app.get('/fnOrderUpPrice/:id', MdRole.fnerIsLogin, Order.fnOrderFilter, Order.fnOrderUpPrice)
-	app.post('/fnUpdateOrder', PostForm, MdRole.fnerIsLogin, MdRole.sfUniLog, Order.fnUpdateOrder)
-	app.get('/fnOrderDel/:id', MdRole.fnerIsLogin, Order.fnOrderFilter, Order.fnOrderDel)
+	app.get('/fnOrders', MdRole.fnerIsLogin, Order.ordersFilter, Order.orders)
+	app.get('/fnOrdersPrint', MdRole.fnerIsLogin, Order.ordersFilter, Order.ordersPrint)
+	app.get('/fnOrderAdd', MdRole.fnerIsLogin, MdRole.sfUniLog, Order.orderAdd)
+	app.post('/fnOrderNew', PostForm, MdRole.fnerIsLogin, MdRole.sfUniLog, Order.orderNew)
+	app.get('/fnOrder/:id', MdRole.fnerIsLogin, Order.orderFilter, Order.order)
+	app.get('/fnOrderUpMd/:id', MdRole.fnerIsLogin, Order.orderFilter, Order.orderUpMd)
+	app.get('/fnOrderUpPrice/:id', MdRole.fnerIsLogin, Order.orderFilter, Order.orderUpPrice)
+	app.post('/fnOrderUpd', PostForm, MdRole.fnerIsLogin, MdRole.sfUniLog, Order.orderUpd)
+	app.get('/fnOrderDel/:id', MdRole.fnerIsLogin, Order.orderFilter, Order.orderDel)
 
-	app.get('/fnOrderStatus', MdRole.fnerIsLogin, Order.fnOrderStatus)
+	app.get('/fnOrderStatus', MdRole.fnerIsLogin, Order.orderStatus)
 
 	// Pay         ----------------------------------------------------------------------
-	app.get('/fnPayList', MdRole.fnerIsLogin, Pay.fnPaysFilter, Pay.fnPayList)
-	app.get('/fnPayListPrint', MdRole.fnerIsLogin, Pay.fnPaysFilter, Pay.fnPayListPrint)
-	// app.get('/fnPayAdd', MdRole.fnerIsLogin, MdRole.sfUniLog, Pay.fnPayAdd)
-	// app.post('/fnAddPay', PostForm, MdRole.fnerIsLogin, MdRole.sfUniLog, Pay.fnAddPay)
-	app.post('/fnUpdatePay', PostForm, MdRole.fnerIsLogin, MdRole.sfUniLog, Pay.fnUpdatePay)
-	app.get('/fnPayDetail/:id', MdRole.fnerIsLogin, Pay.fnPayFilter, Pay.fnPayDetail)
-	app.get('/fnPayUpdate/:id', MdRole.fnerIsLogin, Pay.fnPayFilter, Pay.fnPayUpdate)
+	app.get('/fnPays', MdRole.fnerIsLogin, Pay.fnPaysFilter, Pay.fnPays)
+	app.get('/fnPaysPrint', MdRole.fnerIsLogin, Pay.fnPaysFilter, Pay.fnPaysPrint)
+	app.post('/fnPayUpd', PostForm, MdRole.fnerIsLogin, MdRole.sfUniLog, Pay.payUpd)
+	app.get('/fnPay/:id', MdRole.fnerIsLogin, Pay.fnPayFilter, Pay.fnPay)
+	app.get('/fnPayUp/:id', MdRole.fnerIsLogin, Pay.fnPayFilter, Pay.fnPayUp)
 	// app.get('/fnPayDel/:id', MdRole.fnerIsLogin, Pay.fnPayFilter, Pay.fnPayDel)
 
 	app.get('/fnPayStatus', MdRole.fnerIsLogin, Pay.fnPayStatus)
 
 	// Vder ---------------------------------------------------------------------------------
-	app.get('/fnVderList', MdRole.fnerIsLogin, Vder.fnVdersFilter, Vder.fnVderList)
-	app.get('/fnVderDetail/:id', MdRole.fnerIsLogin, Vder.fnVderFilter, Vder.fnVderDetail)
+	app.get('/fnVders', MdRole.fnerIsLogin, Vder.fnVdersFilter, Vder.fnVders)
+	app.get('/fnVder/:id', MdRole.fnerIsLogin, Vder.fnVderFilter, Vder.fnVder)
 	app.post('/fnUpVderInfo', MdRole.fnerIsLogin, PostForm, 
 		Vder.fnCheckVderUp, Vder.fnUpVderInfo)
 	app.get('/ajaxFnVendor', MdRole.fnerIsLogin, Vder.ajaxFnVendor)

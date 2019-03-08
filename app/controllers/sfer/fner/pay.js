@@ -199,10 +199,10 @@ fnPayFindPays = function(req, res, next, condition) {
 	})
 }
 
-exports.fnPayList = function(req, res) {
+exports.fnPays = function(req, res) {
 	let list = req.body.list;
 	list.title = 'Pay List';
-	list.url = "/fnPayList";
+	list.url = "/fnPays";
 	list.crSfer = req.session.crSfer;
 
 	let today = new Date();
@@ -214,7 +214,7 @@ exports.fnPayList = function(req, res) {
 }
 
 
-exports.fnPayListPrint = function(req, res) {
+exports.fnPaysPrint = function(req, res) {
 	let objects = req.body.list.objects
 	
 	let xl = require('excel4node');
@@ -261,36 +261,6 @@ exports.fnPayListPrint = function(req, res) {
 
 
 
-exports.fnPayAdd =function(req, res) {
-	res.render('./sfer/fner/pay/add', {
-		title: 'Add Pay',
-		crSfer : req.session.crSfer,
-		// code: code,
-		action: "/fnAddPay",
-	})
-}
-
-
-
-
-exports.fnAddPay = function(req, res) {
-	let objBody = req.body.object
-	// console.log(objBody)
-	objBody.status = 0
-	objBody.price = parseFloat(objBody.price)
-	objBody.ac = parseFloat(objBody.ac)
-	objBody.sa = parseFloat(objBody.sa)
-	objBody.updateAt = objBody.createAt = Date.now();
-	objBody.updater = objBody.creater = req.session.crSfer._id;
-
-	let _object = new Pay(objBody)
-	_object.save(function(err, objSave) {
-		if(err) console.log(err)
-		// res.redirect('/fnPayDetail/'+objSave._id)
-		res.redirect('/fnPayList')
-	})
-}
-
 
 
 
@@ -324,23 +294,23 @@ exports.fnPayFilter = function(req, res, next) {
 		}
 	})
 }
-exports.fnPayDetail = function(req, res) {
+exports.fnPay = function(req, res) {
 	let list = req.body.list
 
 	list.title = "fnPay Infomation";
 
 	res.render('./sfer/fner/pay/detail', list)
 }
-exports.fnPayUpdate = function(req, res) {
+exports.fnPayUp = function(req, res) {
 	let list = req.body.list;
 	list.title = "fnPay Update";
-	list.action = "/fnUpdatePay";
+	list.action = "/fnPayUpd";
 	res.render('./sfer/fner/pay/update', list)
 }
 
 
 
-exports.fnUpdatePay = function(req, res) {
+exports.payUpd = function(req, res) {
 	let objBody = req.body.object
 	if(objBody.price) objBody.price = parseFloat(objBody.price)
 	// console.log(objBody.createAt)
@@ -366,7 +336,7 @@ exports.fnUpdatePay = function(req, res) {
 			let _object = _.extend(object, objBody);
 			_object.save(function(err, objSave) {
 				if(err) console.log(err);
-				res.redirect('/fnPayDetail/'+object._id);
+				res.redirect('/fnPay/'+object._id);
 			});	
 		}
 	})
@@ -380,7 +350,7 @@ exports.fnPayDel = function(req, res) {
 	let objBody = req.body.object;
 	Pay.remove({_id: objBody._id}, function(err, fnPayRm) {
 		if(err) console.log(err);
-		res.redirect('/fnPayList')
+		res.redirect('/fnPays')
 	})
 }
 

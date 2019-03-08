@@ -30,7 +30,7 @@ table.table.table-hover.table-bordered
 		-bgStatus = Conf.stsPayBg[pay.status];
 
 		tr(class="pay-"+pay._id)
-			td(class=bgStatus): a(href="/fnPayDetail/"+pay._id) #{pay.code}
+			td(class=bgStatus): a(href="/fnPay/"+pay._id) #{pay.code}
 			td
 				if pay.createAt
 					-a;
@@ -41,7 +41,7 @@ table.table.table-hover.table-bordered
 			td
 				if (paidAt == today) && (pay.status == 0)
 					-a;
-					a.btn.btn-info(href="/fnPayUpdate/"+pay._id) #{pay.price}
+					a.btn.btn-info(href="/fnPayUp/"+pay._id) #{pay.price}
 				else
 					span #{pay.price}
 			td(class=bgRecent)

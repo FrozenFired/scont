@@ -31,7 +31,7 @@ table.table.table-hover.table-bordered
 			tr(class="item-id-"+item._id+" "+bgStatus)
 				if item.order
 					-order = item.order;
-					td(class=Conf.stsOrderBg[order.status]): a.btn.btn-info(href="/fnOrderDetail/"+order._id) #{order.order}
+					td(class=Conf.stsOrderBg[order.status]): a.btn.btn-info(href="/fnOrder/"+order._id) #{order.order}
 					if order.vder
 						-vder = order.vder;
 						td #{vder.code}
@@ -42,12 +42,12 @@ table.table.table-hover.table-bordered
 					td(class=bgErr)
 					td
 					td
-				//- td: a(href="/fnPayDetail/"+item._id) #{item.code}
+				//- td: a(href="/fnPay/"+item._id) #{item.code}
 				td #{item.code}
 				td 
 					if (paidAt == today) && (item.status == 0) && (item.method == 0)
 						-a;
-						a.btn.btn-info(href="/fnPayUpdate/"+item._id) #{item.price}
+						a.btn.btn-info(href="/fnPayUp/"+item._id) #{item.price}
 						//- button.btn.btn-info.change(type="button", data-url="/fnPayStatus", data-sts=1, data-id=item._id) #{item.price}
 					else
 						span #{item.price}

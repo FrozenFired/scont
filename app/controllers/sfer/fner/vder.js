@@ -8,7 +8,7 @@ let Filter = require('../../../middle/filter');
 
 exports.fnVdersFilter = function(req, res, next) {
 	let title = 'fnVendor List';
-	let url = "/fnVderList";
+	let url = "/fnVders";
 	// 分页
 	let slipCond = ""; // 分页时用到的其他条件
 
@@ -82,7 +82,7 @@ exports.fnVdersFilter = function(req, res, next) {
 		})
 	})
 }
-exports.fnVderList = function(req, res) {
+exports.fnVders = function(req, res) {
 	res.render('./sfer/fner/vder/list', req.body.list)
 }
 
@@ -106,7 +106,7 @@ exports.fnVderFilter = function(req, res, next) {
 		}
 	})
 }
-exports.fnVderDetail = function(req, res) {
+exports.fnVder = function(req, res) {
 	let object = req.body.object
 	res.render('./sfer/fner/vder/detail', {
 		title: 'vendor Info',
@@ -143,7 +143,7 @@ exports.fnUpVderInfo = function(req, res) {
 	let objBody = req.body.object;
 	objBody.save(function(err, objSave) {
 		if(err) console.log(err)
-		res.redirect("/fnVderDetail/"+objSave._id)
+		res.redirect("/fnVder/"+objSave._id)
 	})
 }
 

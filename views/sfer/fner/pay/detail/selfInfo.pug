@@ -10,7 +10,7 @@ if paidAt < weekday && paidAt > today
 .row
 	h1.col-sm-6 Pay Information
 	.col-sm-6.text-right
-		a.btn.btn-link.btn-lg(href="/fnOrderDetail/"+order._id) back to Order Detail
+		a.btn.btn-link.btn-lg(href="/fnOrder/"+order._id) back to Order Detail
 hr
 h3 supplier: <strong> #{vder.code}</strong> (taxFree: #{vder.taxFree})
 
@@ -51,7 +51,7 @@ table.table.table-hover.table-bordered
 		td 
 			if (paidAt == today) && (object.status == 0)
 				-a;
-				a.btn.btn-info(href="/fnPayUpdate/"+object._id) #{object.price}
+				a.btn.btn-info(href="/fnPayUp/"+object._id) #{object.price}
 			else
 				span #{object.price}
 	tr
