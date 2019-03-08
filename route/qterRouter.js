@@ -58,6 +58,8 @@ module.exports = function(app){
 	app.get('/qtBrandsPrint', MdRole.qterIsLogin, Brand.brandsFilter, Brand.brandsPrint)
 	app.get('/qtBrand/:id', MdRole.qterIsLogin, Brand.brandFilter, Brand.brand)
 
+	app.get('/qtAjaxCodeBrand', MdRole.qterIsLogin, Brand.ajaxCodeBrand)
+
 	// Vendor ------------------------------------------------------------------------------
 	app.get('/qtVendors', MdRole.qterIsLogin, Vendor.vendorsFilter, Vendor.vendors)
 	app.get('/qtVendorsPrint', MdRole.qterIsLogin, Vendor.vendorsFilter, Vendor.vendorsPrint)
