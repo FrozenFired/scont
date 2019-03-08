@@ -2,7 +2,6 @@ let Conf = {
 	photoPath: {
 		sferAvatar: '/avatar/sfer/',
 	},
-	home: { homePage: '', option: 'option', brand: 'brandList', scont: 'scontList', vendor: 'vendorList', task: 'taskList' },
 
 	weight: {0: 'general', 1: 'usual', 2: 'often', 3: 'always', 4: 'important'},
 
