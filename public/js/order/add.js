@@ -98,6 +98,9 @@ $( function() {
 		} else {
 			$("#optAc").show();
 		}
+		let price = $("#iptPrice").val();
+		let sa = parseFloat(price) - parseFloat(ac)
+		$("#iptSa").val(sa);
 	})
 
 	// $("#iptAcAt").change(function(e) {
