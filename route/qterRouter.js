@@ -70,6 +70,7 @@ module.exports = function(app){
 	app.get('/qtSconts', MdRole.qterIsLogin, Scont.scontsFilter, Scont.sconts)
 	app.get('/qtScontsPrint', MdRole.qterIsLogin, Scont.scontsFilter, Scont.scontsPrint)
 	app.get('/qtScont/:id', MdRole.qterIsLogin, Scont.scontFilter, Scont.scont)
+	app.get('/qtScontPdf/:id', MdRole.qterIsLogin, Scont.scontFilter, Scont.scontPdf)
 	app.post('/qtAddScont', PostForm, MdRole.qterIsLogin, Scont.addScont)
 
 	app.get('/qtAjaxScontSts', MdRole.qterIsLogin, Scont.ajaxScontSts)

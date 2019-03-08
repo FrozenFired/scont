@@ -4,8 +4,8 @@ let _ = require('underscore')
 
 
 exports.fnerFilter = function(req, res, next) {
-	let crFner = req.session.crFner;
-	let id = crFner._id;
+	let crSfer = req.session.crSfer;
+	let id = crSfer._id;
 	ObjDB.findOne({_id: id})
 	.exec(function(err, object) {
 		if(err) { console.log(err); console.log(fnerFilter); }
@@ -21,7 +21,7 @@ exports.fnerFilter = function(req, res, next) {
 exports.fnerInfo = function(req, res) {
 	let object = req.body.object;
 	let objBody = new Object();
-	objBody.crFner = req.session.crFner;
+	objBody.crSfer = req.session.crSfer;
 	objBody.object = object;
 	objBody.thisAct = "/fnerInfo";
 	objBody.title = "个人信息";
@@ -33,7 +33,7 @@ exports.fnerInfo = function(req, res) {
 
 exports.fnerUp = function(req, res) {
 	let obj = req.body.object
-	if(obj._id != req.session.crFner._id) {
+	if(obj._id != req.session.crSfer._id) {
 		info = "您无权修改别人密码";
 		Index.fnOptionWrong(req, res, info);
 	} else {

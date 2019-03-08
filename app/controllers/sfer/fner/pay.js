@@ -203,7 +203,7 @@ exports.fnPayList = function(req, res) {
 	let list = req.body.list;
 	list.title = 'Pay List';
 	list.url = "/fnPayList";
-	list.crFner = req.session.crFner;
+	list.crSfer = req.session.crSfer;
 
 	let today = new Date();
 	list.today = moment(today).format('YYYYMMDD');
@@ -264,7 +264,7 @@ exports.fnPayListPrint = function(req, res) {
 exports.fnPayAdd =function(req, res) {
 	res.render('./sfer/fner/pay/add', {
 		title: 'Add Pay',
-		crFner : req.session.crFner,
+		crSfer : req.session.crSfer,
 		// code: code,
 		action: "/fnAddPay",
 	})
@@ -281,7 +281,7 @@ exports.fnAddPay = function(req, res) {
 	objBody.ac = parseFloat(objBody.ac)
 	objBody.sa = parseFloat(objBody.sa)
 	objBody.updateAt = objBody.createAt = Date.now();
-	objBody.updater = objBody.creater = req.session.crFner._id;
+	objBody.updater = objBody.creater = req.session.crSfer._id;
 
 	let _object = new Pay(objBody)
 	_object.save(function(err, objSave) {
@@ -312,7 +312,7 @@ exports.fnPayFilter = function(req, res, next) {
 			if(object.order) list.order = object.order;
 			list.vder = new Object();
 			if(list.order.vder) list.vder = list.order.vder;
-			list.crFner = req.session.crFner;
+			list.crSfer = req.session.crSfer;
 
 			let now = new Date();
 			list.today = moment(now).format('YYYYMMDD');

@@ -123,7 +123,7 @@ exports.fnOrderList = function(req, res) {
 	let list = req.body.list;
 	list.title = 'Order List';
 	list.url = "/fnOrderList";
-	list.crFner = req.session.crFner;
+	list.crSfer = req.session.crSfer;
 
 	let today = new Date();
 	list.today = moment(today).format('YYYYMMDD');
@@ -185,7 +185,7 @@ exports.fnOrderListPrint = function(req, res) {
 exports.fnOrderAdd =function(req, res) {
 	res.render('./sfer/fner/order/add', {
 		title: 'Add Order',
-		crFner : req.session.crFner,
+		crSfer : req.session.crSfer,
 		// code: code,
 		action: "/fnAddOrder",
 	})
@@ -281,7 +281,7 @@ exports.fnOrderDetail = function(req, res) {
 
 	res.render('./sfer/fner/order/detail', {
 		title: 'fnOrder Infomation',
-		crFner : req.session.crFner,
+		crSfer : req.session.crSfer,
 		object: objBody,
 		today: today,
 		weekday: weekday
@@ -306,7 +306,7 @@ fnOrderUpdate = function(req, res, fontUrl, title) {
 
 	res.render(fontUrl, {
 		title: title,
-		crFner : req.session.crFner,
+		crSfer : req.session.crSfer,
 		object: objBody,
 
 		action: '/fnUpdateOrder',
@@ -319,7 +319,7 @@ exports.fnUpdateOrder = function(req, res) {
 	let objBody = req.body.object
 	// console.log(objBody)
 	objBody.updateAt = Date.now();
-	objBody.updater = req.session.crFner._id;
+	objBody.updater = req.session.crSfer._id;
 	if(objBody.price) objBody.price = parseFloat(objBody.price);
 	Order.findOne({_id: objBody._id}, function(err, object) {
 		if(err) console.log(err);

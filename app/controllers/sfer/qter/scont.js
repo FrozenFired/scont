@@ -401,3 +401,33 @@ exports.ajaxScontSts = function(req, res) {
 		}
 	})
 }
+
+
+
+let rtQtPath = require('path').join(__dirname, "../../../../");
+
+exports.scontPdf = function(req, res) {
+	let object = req.body.object;
+	let brand = object.brand;
+	let vendor = object.vendor;
+	// let pug = require('pug');
+	if(brand && vendor) {
+		let hc = require('pug').renderFile(rtQtPath + 'views/zzPdf/scont/detail.pug', {
+			publicPath: "file://"+rtQtPath + 'public',
+			moment : require('moment'),
+			crSfer: req.session.crSfer,
+			title: 'Discount Pdf',
+
+			object: object,
+			brand: brand,
+			vendor: vendor
+		});
+		res.pdfFromHTML({
+			filename: brand.code + '_' + vendor.code + '.pdf',
+			htmlContent: hc
+		});
+	} else {
+		info = "Option is wrong, please contact manager. error: in scont pdf not have brand or vendor";
+		Index.bnOptionWrong(req, res, info)
+	}
+}

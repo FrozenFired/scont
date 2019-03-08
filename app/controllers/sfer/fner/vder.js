@@ -56,7 +56,7 @@ exports.fnVdersFilter = function(req, res, next) {
 				let list = new Object()
 				list.title = title;
 				list.url = url;
-				list.crFner = req.session.crFner;
+				list.crSfer = req.session.crSfer;
 
 				list.count = count;
 				list.objects = objects;
@@ -110,7 +110,7 @@ exports.fnVderDetail = function(req, res) {
 	let object = req.body.object
 	res.render('./sfer/fner/vder/detail', {
 		title: 'vendor Info',
-		crFner : req.session.crFner,
+		crSfer : req.session.crSfer,
 		object: object
 	})
 }

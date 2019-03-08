@@ -15,14 +15,14 @@
 			li.text-info
 				span &nbsp;
 				a.btn.btn-info(href="/fnerInfo") hello: 
-					if crFner.name && crFner.name.length > 0
-						span #{crFner.name}
+					if crSfer.name && crSfer.name.length > 0
+						span #{crSfer.name}
 					else
-						span #{crFner.code}
-					if crFner.role
-						span &nbsp;(#{Conf.sfRole[crFner.role]})
-					if crFner.photo
-						img(src=Svaddr+crFner.photo, width="30")
+						span #{crSfer.code}
+					if crSfer.role
+						span &nbsp;(#{Conf.sfRole[crSfer.role]})
+					if crSfer.photo
+						img(src=Svaddr+crSfer.photo, width="30")
 					-a;
 			span &nbsp;&nbsp;&nbsp;&nbsp;
 			li: a.btn.btn-danger(href="/logout") Logout
