@@ -165,9 +165,10 @@ $( function() {
 
 
 	$('#ajaxIptVendorCode').blur(function(e) {
+		$('#iptVder').val("");					// scont中的 vendor的值变空
+		$('#filterVendor tr').remove()				// 先移除table下的其他信息
 		var target = $(e.target)
 		var router = target.data('router')
-		$('#filterVendor tr').remove()				// 先移除table下的其他信息
 		var vendorCode = $(this).val()
 		vendorCode = vendorCode.replace(/(\s*$)/g, "").replace( /^\s*/, '')
 		if(vendorCode.length > 0){
@@ -182,13 +183,17 @@ $( function() {
 					$('#iptVder').val(results.object._id);			// scont中的 vendor赋值
 				} else {
 					$("#ajaxOptVendorCode").text('Please Complete the Vendor Code')
-					$('#iptVder').val("");					// scont中的 vendor的值变空
 					if(results.success === 2) {
 						$('#matchVendors').show();					// 显示模糊列表
 						if(results.objects.length > 5) vLen = 5;
 						else vLen = results.objects.length;
 						for(i = 0; i <vLen; i++){			// 把数据添加上去
-							var tr = "<tr class='addItem'><td>" + results.objects[i].code + "</td></tr>"
+							var tr = "<tr><td>";
+									tr +='<button class="btn btn-default vdCode" ';
+									tr +='data-code="'+results.objects[i].code+'" ';
+									tr +='data-tf="'+results.objects[i].taxFree+'"';
+									tr +='>' + results.objects[i].code + '</button>';
+								tr +="</td></tr>";
 							$("#filterVendor").append(tr)
 						}
 					}
@@ -196,7 +201,17 @@ $( function() {
 			})
 		} else {
 			$("#ajaxOptVendorCode").text('Please complete the Vendor Code')
-			$('#iptVder').val("");					// scont中的 vendor的值变空
 		}
+	})
+
+	$("#filterVendor").on("click", '.vdCode', function(e) {
+		var target = $(e.target)
+		var code = target.data('code')
+		var taxFree = target.data('tf')
+		$('#iptVder').val(code);			// scont中的 vendor赋值
+		$('#ajaxIptVendorCode').val(code);
+		$('#filterVendor tr').remove()
+
+		$("#ajaxOptVendorCode").text("Tax Free: "+taxFree);
 	})
 } );
