@@ -1,4 +1,4 @@
-let Index = require('../index')
+let Index = require('./index')
 let Bcateg = require('../../../models/scont/bcateg')
 let Brand = require('../../../models/scont/brand')
 
@@ -24,7 +24,7 @@ exports.cnBcategs = function(req, res) {
 	let objects = req.body.objects;
 	res.render('./sfer/cner/bcateg/list', {
 		title: 'Bcateg List',
-		crCner: req.session.crCner,
+		crSfer: req.session.crSfer,
 		objects: objects
 	})
 }
@@ -62,7 +62,7 @@ exports.cnBcategsPrint = function(req, res) {
 		if(item.numbrand) ws.cell((i+2), 5).string(String(item.numbrand));
 	}
 
-	wb.write('CategoryList_'+req.session.crCner.code+'_'+ moment(new Date()).format('YYYYMMDD-HHmmss') + '.xlsx', res);
+	wb.write('CategoryList_'+req.session.crSfer.code+'_'+ moment(new Date()).format('YYYYMMDD-HHmmss') + '.xlsx', res);
 }
 
 
@@ -98,7 +98,7 @@ exports.cnBcateg = function(req, res){
 		}
 		res.render('./sfer/cner/bcateg/detail', {
 			title: 'Bcategory Detail',
-			crCner: req.session.crCner,
+			crSfer: req.session.crSfer,
 			object: object,
 			brands: brands
 		})
@@ -153,5 +153,5 @@ cnBcategPrintFunc = function(req, res, object, brands) {
 		if(item.sconts) ws.cell((i+4), 5).string(String(item.sconts.length));
 	}
 
-	wb.write('Category_'+req.session.crCner.code+'_'+ moment(new Date()).format('YYYYMMDD-HHmmss') + '.xlsx', res);
+	wb.write('Category_'+req.session.crSfer.code+'_'+ moment(new Date()).format('YYYYMMDD-HHmmss') + '.xlsx', res);
 }

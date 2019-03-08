@@ -1,4 +1,4 @@
-let Index = require('../index');
+let Index = require('./index');
 let Cner = require('../../../models/user/sfer');
 let Brand = require('../../../models/scont/brand');
 let Bcateg = require('../../../models/scont/bcateg');
@@ -63,7 +63,7 @@ exports.cnBrandsFilter = function(req, res, next) {
 				let list = new Object()
 				list.title = title;
 				list.url = url;
-				list.crCner = req.session.crCner;
+				list.crSfer = req.session.crSfer;
 
 				list.count = count;
 				list.objects = objects;
@@ -268,7 +268,7 @@ exports.cnBrand = function(req, res){
 	})
 	res.render('./sfer/cner/brand/detail', {
 		title: '品牌信息',
-		crCner: req.session.crCner,
+		crSfer: req.session.crSfer,
 		object: object
 	})
 }

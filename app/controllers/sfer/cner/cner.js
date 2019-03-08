@@ -4,8 +4,8 @@ let _ = require('underscore')
 
 
 exports.cnerFilter = function(req, res, next) {
-	let crCner = req.session.crCner;
-	let id = crCner._id;
+	let crSfer = req.session.crSfer;
+	let id = crSfer._id;
 	ObjDB.findOne({_id: id})
 	.exec(function(err, object) {
 		if(err) { console.log(err); console.log(cnerFilter); }
@@ -21,7 +21,7 @@ exports.cnerFilter = function(req, res, next) {
 exports.cnerInfo = function(req, res) {
 	let object = req.body.object;
 	let objBody = new Object();
-	objBody.crCner = req.session.crCner;
+	objBody.crSfer = req.session.crSfer;
 	objBody.object = object;
 	objBody.thisAct = "/cnerInfo";
 	objBody.title = "个人信息";
@@ -33,7 +33,7 @@ exports.cnerInfo = function(req, res) {
 
 exports.cnerUp = function(req, res) {
 	let obj = req.body.object
-	if(obj._id != req.session.crCner._id) {
+	if(obj._id != req.session.crSfer._id) {
 		info = "您无权修改别人密码";
 		Index.cnOptionWrong(req, res, info);
 	} else {

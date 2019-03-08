@@ -1,4 +1,4 @@
-let Index = require('../index')
+let Index = require('./index')
 let Order = require('../../../models/finance/order')
 let Pay = require('../../../models/finance/pay')
 let Vder = require('../../../models/scont/vendor')

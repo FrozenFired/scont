@@ -1,4 +1,4 @@
-let Index = require('../index')
+let Index = require('./index')
 let Vder = require('../../../models/scont/vendor')
 let _ = require('underscore')
 Conf = require('../../../../confile/conf')

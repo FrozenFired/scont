@@ -1,4 +1,4 @@
-let Index = require('../index')
+let Index = require('./index')
 let Nation = require('../../../models/scont/nation')
 let Brand = require('../../../models/scont/brand')
 
@@ -26,7 +26,7 @@ exports.cnNations = function(req, res) {
 	let objects = req.body.objects;
 	res.render('./sfer/cner/nation/list', {
 		title: 'Nation List',
-		crCner: req.session.crCner,
+		crSfer: req.session.crSfer,
 		objects: objects
 	})
 }
@@ -67,14 +67,14 @@ exports.cnNationsPrint = function(req, res) {
 		if(item.numbrand) ws.cell((i+2), 6).string(String(item.numbrand));
 	}
 
-	wb.write('Nation_'+req.session.crCner.code+'_'+ moment(new Date()).format('YYYYMMDD-HHmmss') + '.xlsx', res);
+	wb.write('Nation_'+req.session.crSfer.code+'_'+ moment(new Date()).format('YYYYMMDD-HHmmss') + '.xlsx', res);
 }
 
 
 exports.nationAdd = function(req, res) {
 	res.render('./sfer/cner/nation/add', {
 		title: 'NationAdd',
-		crCner: req.session.crCner,
+		crSfer: req.session.crSfer,
 	})
 }
 
@@ -103,7 +103,7 @@ exports.cnNation = function(req, res){
 				}
 				res.render('./sfer/cner/nation/detail', {
 					title: 'Nationory Detail',
-					crCner: req.session.crCner,
+					crSfer: req.session.crSfer,
 					object: object,
 					brands: brands
 				})

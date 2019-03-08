@@ -1,4 +1,4 @@
-let Index = require('../index')
+let Index = require('./index')
 let Bcateg = require('../../../models/scont/bcateg')
 let Brand = require('../../../models/scont/brand')
 

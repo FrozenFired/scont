@@ -1,4 +1,4 @@
-let Index = require('../index')
+let Index = require('./index')
 let Vendor = require('../../../models/scont/vendor')
 
 let Filter = require('../../../middle/filter');

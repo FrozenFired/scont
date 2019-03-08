@@ -1,5 +1,5 @@
-let Index = require('../index')
-let SctRelate = require('./sctRelate')
+let Index = require('./index')
+let SctRelate = require('../scont/sctRelate')
 
 let Scont = require('../../../models/scont/scont')
 let Brand = require('../../../models/scont/brand')

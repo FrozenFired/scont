@@ -1,4 +1,4 @@
-let Index = require('../index');
+let Index = require('./index');
 let Sfer = require('../../../models/user/sfer');
 let Brand = require('../../../models/scont/brand');
 let Bcateg = require('../../../models/scont/bcateg');
