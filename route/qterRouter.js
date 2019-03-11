@@ -11,8 +11,7 @@ let Brand = require('../app/controllers/sfer/qter/brand');
 let Vendor = require('../app/controllers/sfer/qter/vendor');
 let Scont = require('../app/controllers/sfer/qter/scont');
 
-// let Order = require('../app/controllers/sfer/qter/order');
-// let Pay = require('../app/controllers/sfer/qter/pay');
+let Order = require('../app/controllers/sfer/qter/order');
 
 let MdBcrypt = require('../app/middle/middleBcrypt');
 let MdRole = require('../app/middle/middleRole');
@@ -69,6 +68,7 @@ module.exports = function(app){
 	app.get('/qtVendor/:id', MdRole.qterIsLogin, Vendor.vendorFilter, Vendor.vendor)
 
 	app.get('/qtAjaxCodeVendor', MdRole.qterIsLogin, Vendor.ajaxCodeVendor)
+	app.get('/ajaxQtVendor', MdRole.qterIsLogin, Vendor.ajaxVendor) // Order ajax vder
 
 	// Scont ------------------------------------------------------------------------------
 	app.get('/qtScontAdd', MdRole.qterIsLogin, Scont.scontAdd)
@@ -79,4 +79,14 @@ module.exports = function(app){
 	app.post('/qtAddScont', PostForm, MdRole.qterIsLogin, Scont.addScont)
 
 	app.get('/qtAjaxScontSts', MdRole.qterIsLogin, Scont.ajaxScontSts)
+
+
+
+	// Order         ----------------------------------------------------------------------
+	app.get('/qtOrders', MdRole.qterIsLogin, Order.ordersFilter, Order.orders)
+	app.get('/qtOrdersPrint', MdRole.qterIsLogin, Order.ordersFilter, Order.ordersPrint)
+	app.get('/qtOrder/:id', MdRole.qterIsLogin, Order.orderFilter, Order.order)
+	app.get('/qtOrderAdd', MdRole.qterIsLogin, MdRole.sfUniLog, Order.orderAdd)
+	app.post('/qtOrderNew', PostForm, MdRole.qterIsLogin, MdRole.sfUniLog, Order.orderNew)
+	app.post('/qtOrderUpd', PostForm, MdRole.qterIsLogin, MdRole.sfUniLog, Order.orderUpd)
 };

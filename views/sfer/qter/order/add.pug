@@ -5,13 +5,13 @@ block content
 		.row
 			h1.col-sm-6 New Order
 			.col-sm-6.text-right
-				a.btn.btn-link(href="/fnOrders") back List
+				a.btn.btn-link(href="/qtOrders") back List
 		hr
 		form#addOrder(method="post", action=action, enctype="multipart/form-data")
 			.form-group.row
 				label.col-sm-2.com-form-label Input Vendor Code
 				.col-sm-8
-					input#ajaxIptVendorCode.form-control(type="text", data-router="/ajaxFnVendor")
+					input#ajaxIptVendorCode.form-control(type="text", data-router="/ajaxQtVendor")
 				.col-sm-2
 					span.text-danger#ajaxOptVendorCode
 			input#iptVder(type="hidden", name="object[vder]")

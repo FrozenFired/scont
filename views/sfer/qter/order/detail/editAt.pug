@@ -1,7 +1,0 @@
-form(method="post", action="/fnPayUpd", enctype="multipart/form-data")
-	input.form-control(type="hidden", name="object[_id]", value=pay._id)
-	.form-group.row
-		.col-sm-8
-			input.datepicker.form-control(type="text", name=objStr, placeholder="[format:month/day/year]", readonly="readonly")
-		.col-sm-4
-			input.btn.btn-info.btn-block(type="submit" value="up")

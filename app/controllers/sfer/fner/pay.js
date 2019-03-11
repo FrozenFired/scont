@@ -10,7 +10,7 @@ let Conf = require('../../../../confile/conf.js')
 let moment = require('moment')
 
 let randID = '5c63ecf72430bf23f7280ba3';
-exports.fnPaysFilter = function(req, res, next) {
+exports.paysFilter = function(req, res, next) {
 	if(req.query && req.query.keyword) {
 		req.query.keyword = req.query.keyword.replace(/(\s*$)/g, "").replace( /^\s*/, '');
 	}
@@ -199,7 +199,7 @@ fnPayFindPays = function(req, res, next, condition) {
 	})
 }
 
-exports.fnPays = function(req, res) {
+exports.pays = function(req, res) {
 	let list = req.body.list;
 	list.title = 'Pay List';
 	list.url = "/fnPays";
@@ -214,7 +214,7 @@ exports.fnPays = function(req, res) {
 }
 
 
-exports.fnPaysPrint = function(req, res) {
+exports.paysPrint = function(req, res) {
 	let objects = req.body.list.objects
 	
 	let xl = require('excel4node');
@@ -265,7 +265,7 @@ exports.fnPaysPrint = function(req, res) {
 
 
 
-exports.fnPayFilter = function(req, res, next) {
+exports.payFilter = function(req, res, next) {
 	let id = req.params.id;
 	Pay.findOne({_id: id})
 	.populate({path: 'order', populate: {path: 'vder'} } )
@@ -294,14 +294,14 @@ exports.fnPayFilter = function(req, res, next) {
 		}
 	})
 }
-exports.fnPay = function(req, res) {
+exports.pay = function(req, res) {
 	let list = req.body.list
 
 	list.title = "fnPay Infomation";
 
 	res.render('./sfer/fner/pay/detail', list)
 }
-exports.fnPayUp = function(req, res) {
+exports.payUp = function(req, res) {
 	let list = req.body.list;
 	list.title = "fnPay Update";
 	list.action = "/fnPayUpd";
@@ -346,7 +346,7 @@ exports.payUpd = function(req, res) {
 
 
 
-exports.fnPayDel = function(req, res) {
+exports.payDel = function(req, res) {
 	let objBody = req.body.object;
 	Pay.remove({_id: objBody._id}, function(err, fnPayRm) {
 		if(err) console.log(err);
@@ -360,7 +360,7 @@ exports.fnPayDel = function(req, res) {
 
 
 
-exports.fnPayStatus = function(req, res) {
+exports.payStatus = function(req, res) {
 	let id = req.query.id
 	let newStatus = req.query.newStatus
 	Pay.findOne({_id: id}, function(err, object){

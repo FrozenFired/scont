@@ -19,12 +19,7 @@ table.table.table-hover.table-bordered
 		th P/I (形式发票号)
 		td #{object.pi}
 	tr
-		th
-			if action
-				-a;
-				span price (价格)
-			else
-				a.btn.btn-info(href="/fnOrderUpPrice/"+object._id) change price
+		th price (价格)
 		td 
 			span #{object.price}
 			if object.priceHis

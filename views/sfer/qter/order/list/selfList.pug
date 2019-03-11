@@ -65,7 +65,7 @@ table.table.table-hover.table-bordered
 						- bgSaWeek="bg-info";
 
 			tr(class="item-id-"+item._id)
-				td(class=stsOrderBg): a(href="/fnOrder/"+item._id) view
+				td(class=stsOrderBg): a(href="/qtOrder/"+item._id) view
 				td
 					if item.vder
 						-a;
@@ -94,5 +94,4 @@ table.table.table-hover.table-bordered
 				td #{item.note}
 				td
 					include ./editOurnote
-//- script(src="/js/changeStatus.js")
 script(src="/js/order/list.js")

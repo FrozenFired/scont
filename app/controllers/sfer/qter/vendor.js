@@ -237,6 +237,25 @@ exports.ajaxCodeVendor = function(req, res) {
 		}
 	})
 }
+exports.ajaxVendor = function(req, res) {
+	let keytpye = req.query.keytype
+	let keyword = req.query.keyword.toUpperCase();
+	Vendor.findOne({[keytpye]: keyword}, function(err, object) {
+		if(err) console.log(err);
+		if(object){
+			res.json({success: 1, object: object})
+		} else {
+			Vendor.find({[keytpye]: new RegExp(keyword + '.*')}, function(err, objects) {
+				if(err) console.log(err);
+				if(objects && objects.length > 0) {
+					res.json({success: 2, objects: objects});
+				} else {
+					res.json({success: 0})
+				}
+			})
+		}
+	})
+}
 
 
 exports.ajaxVendorSts = function(req, res) {

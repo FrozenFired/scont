@@ -38,14 +38,14 @@ module.exports = function(app){
 	app.get('/fnOrderStatus', MdRole.fnerIsLogin, Order.orderStatus)
 
 	// Pay         ----------------------------------------------------------------------
-	app.get('/fnPays', MdRole.fnerIsLogin, Pay.fnPaysFilter, Pay.fnPays)
-	app.get('/fnPaysPrint', MdRole.fnerIsLogin, Pay.fnPaysFilter, Pay.fnPaysPrint)
+	app.get('/fnPays', MdRole.fnerIsLogin, Pay.paysFilter, Pay.pays)
+	app.get('/fnPaysPrint', MdRole.fnerIsLogin, Pay.paysFilter, Pay.paysPrint)
 	app.post('/fnPayUpd', PostForm, MdRole.fnerIsLogin, MdRole.sfUniLog, Pay.payUpd)
-	app.get('/fnPay/:id', MdRole.fnerIsLogin, Pay.fnPayFilter, Pay.fnPay)
-	app.get('/fnPayUp/:id', MdRole.fnerIsLogin, Pay.fnPayFilter, Pay.fnPayUp)
-	// app.get('/fnPayDel/:id', MdRole.fnerIsLogin, Pay.fnPayFilter, Pay.fnPayDel)
+	app.get('/fnPay/:id', MdRole.fnerIsLogin, Pay.payFilter, Pay.pay)
+	app.get('/fnPayUp/:id', MdRole.fnerIsLogin, Pay.payFilter, Pay.payUp)
+	// app.get('/fnPayDel/:id', MdRole.fnerIsLogin, Pay.payFilter, Pay.payDel)
 
-	app.get('/fnPayStatus', MdRole.fnerIsLogin, Pay.fnPayStatus)
+	app.get('/fnPayStatus', MdRole.fnerIsLogin, Pay.payStatus)
 
 	// Vder ---------------------------------------------------------------------------------
 	app.get('/fnVders', MdRole.fnerIsLogin, Vder.fnVdersFilter, Vder.fnVders)
