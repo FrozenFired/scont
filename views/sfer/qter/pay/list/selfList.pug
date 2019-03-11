@@ -1,0 +1,68 @@
+table.table.table-hover.table-bordered
+	thead
+		tr
+			th order
+			th vendor
+			th taxType
+			th acsa
+			th price
+			th Method
+			th createAt
+			th paidAt
+			th status
+			th Assegno
+			th Picture
+			th note
+	tbody
+		- let total = 0;
+		each item in objects
+			- total += parseFloat(item.price)
+
+			-paidAt="";
+			if item.paidAt
+				-paidAt = moment(item.paidAt).format('YYYYMMDD');
+
+			- bgRecent = 'bg-default';
+			if paidAt < weekday && paidAt > today
+				- bgRecent = 'bg-info';
+
+			-bgStatus = Conf.stsPayBg[item.status];
+
+			tr(class="item-id-"+item._id+" "+bgStatus)
+				if item.order
+					-order = item.order;
+					td(class=Conf.stsOrderBg[order.status]): a.btn.btn-info(href="/fnOrder/"+order._id) #{order.order}
+					if order.vder
+						-vder = order.vder;
+						td #{vder.code}
+					else
+						td
+					td #{Conf.taxType[order.taxType]}
+				else
+					td(class=bgErr)
+					td
+					td
+				//- td: a(href="/fnPay/"+item._id) #{item.code}
+				td #{item.code}
+				td 
+					if (paidAt == today) && (item.status == 0) && (item.method == 0)
+						-a;
+						a.btn.btn-info(href="/fnPayUp/"+item._id) #{item.price}
+						//- button.btn.btn-info.change(type="button", data-url="/fnPayStatus", data-sts=1, data-id=item._id) #{item.price}
+					else
+						span #{item.price}
+				td #{Conf.payMethod[item.method]}
+				td 
+					if item.createAt
+						-a;
+						span #{moment(item.createAt).format("MM/DD/YYYY")}
+				td(class=bgRecent) 
+					if item.paidAt
+						-a;
+						span #{moment(item.paidAt).format("MM/DD/YYYY")}
+				td #{Conf.stsPay[item.status]}
+				td #{item.agCode}
+				td #{item.picUrl}
+				td #{item.note}
+
+h2.bg-info.rounded Total price : #{total.toFixed(2)}

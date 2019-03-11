@@ -77,7 +77,7 @@ exports.vdersFilter = function(req, res, next) {
 				next();
 			} else {
 				info = "Option error, Please Contact Manger"
-				Index.sfOptionWrong(req, res, info)
+				Index.odOptionWrong(req, res, info)
 			}
 		})
 	})
@@ -98,7 +98,7 @@ exports.vderFilter = function(req, res, next) {
 		if(err) console.log(err);
 		if(!object) {
 			info = "此帐号已经被删除";
-			Index.sfOptionWrong(req, res, info);
+			Index.odOptionWrong(req, res, info);
 		}
 		else {
 			req.body.object = object;

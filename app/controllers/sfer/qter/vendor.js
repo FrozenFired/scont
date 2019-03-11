@@ -82,7 +82,7 @@ exports.vendorsFilter = function(req, res, next) {
 				next();
 			} else {
 				info = "Option error, Please Contact Manger"
-				Index.sfOptionWrong(req, res, info)
+				Index.qtOptionWrong(req, res, info)
 			}
 		})
 	})
@@ -194,7 +194,7 @@ exports.vendorFilter = function(req, res, next){
 			next();
 		} else {
 			info = "This VendorI is deleted, Please reflesh"
-			Index.sfOptionWrong(req, res, info)
+			Index.qtOptionWrong(req, res, info)
 		}
 	})
 }

@@ -11,6 +11,9 @@ let Brand = require('../app/controllers/sfer/qter/brand');
 let Vendor = require('../app/controllers/sfer/qter/vendor');
 let Scont = require('../app/controllers/sfer/qter/scont');
 
+// let Order = require('../app/controllers/sfer/qter/order');
+// let Pay = require('../app/controllers/sfer/qter/pay');
+
 let MdBcrypt = require('../app/middle/middleBcrypt');
 let MdRole = require('../app/middle/middleRole');
 let MdPicture = require('../app/middle/middlePicture');

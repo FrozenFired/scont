@@ -16,7 +16,7 @@ exports.bcategsFilter = function(req, res, next) {
 			next();
 		} else {
 			info = "Can not Find Category"
-			Index.sfOptionWrong(req, res, info)
+			Index.qtOptionWrong(req, res, info)
 		}
 	})
 }
@@ -80,7 +80,7 @@ exports.bcategFilter = function(req, res, next) {
 			next();
 		} else {
 			info = "This BcategI is deleted, Please reflesh"
-			Index.sfOptionWrong(req, res, info)
+			Index.qtOptionWrong(req, res, info)
 		}
 	})
 }

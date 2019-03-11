@@ -92,7 +92,7 @@ exports.scontsFilter = function(req, res, next) {
 				next();
 			} else {
 				info = "Option error, Please Contact Manger"
-				Index.sfOptionWrong(req, res, info)
+				Index.qtOptionWrong(req, res, info)
 			}
 		})
 	})
@@ -255,13 +255,13 @@ qtCreateBrand = function(req, res) {
 			// console.log(brandBody.bcateg)
 			if(brandBody.nation.length < 15 || brandBody.bcateg.length < 15){
 				info = "Your brand nation or category is not complete, Please Reopration";
-				Index.sfOptionWrong(req, res, info);
+				Index.qtOptionWrong(req, res, info);
 			} else {
 				Brand.findOne({code: brandBody.code}, function(err, brand) {
 					if(err) console.log(err);
 					if(brand) {
 						info = "This brand code is existed";
-						Index.sfOptionWrong(req, res, info);
+						Index.qtOptionWrong(req, res, info);
 					} else {
 						// createAt 和 updateAt 取默认值
 						let _brand = new Brand(brandBody)
@@ -277,7 +277,7 @@ qtCreateBrand = function(req, res) {
 		}
 	} else {
 		info = "Option is error, Please contact manager";
-		Index.sfOptionWrong(req, res, info);
+		Index.qtOptionWrong(req, res, info);
 	}
 }
 qtCreateVendor = function(req, res) {
@@ -293,7 +293,7 @@ qtCreateVendor = function(req, res) {
 				if(err) console.log(err);
 				if(vendor) {
 					info = "This vendor code is existed";
-					Index.sfOptionWrong(req, res, info);
+					Index.qtOptionWrong(req, res, info);
 				} else {
 					// createAt 和 updateAt 取默认值
 					let _vendor = new Vendor(vendorBody)
@@ -307,7 +307,7 @@ qtCreateVendor = function(req, res) {
 		}
 	} else {
 		info = "Option is error, Please contact manager";
-		Index.sfOptionWrong(req, res, info);
+		Index.qtOptionWrong(req, res, info);
 	}
 }
 qtCreateScont = function(req, res) {
@@ -317,7 +317,7 @@ qtCreateScont = function(req, res) {
 
 	if(objBody.brand.length < 10 || objBody.vendor.length < 10) {
 		info = "brand or vendor is not complete, Please Reopration";
-		Index.sfOptionWrong(req, res, info);
+		Index.qtOptionWrong(req, res, info);
 	} else {
 		Scont.find()
 		.where('brand').equals(String(objBody.brand))
@@ -326,7 +326,7 @@ qtCreateScont = function(req, res) {
 			if(err) console.log(err);
 			if(sconts.length > 0) {
 				info = "This Brand Is Already Include This Vendor"
-				Index.sfOptionWrong(req, res, info)
+				Index.qtOptionWrong(req, res, info)
 			} else {
 				objBody.status = 0
 				let log = new Object();
@@ -367,7 +367,7 @@ exports.scontFilter = function(req, res, next){
 			next();
 		} else {
 			info = "This ScontI is deleted, Please reflesh"
-			Index.sfOptionWrong(req, res, info)
+			Index.qtOptionWrong(req, res, info)
 		}
 	})
 }

@@ -89,7 +89,7 @@ exports.brandsFilter = function(req, res, next) {
 				next();
 			} else {
 				info = "Option error, Please Contact Manger"
-				Index.sfOptionWrong(req, res, info)
+				Index.qtOptionWrong(req, res, info)
 			}
 		})
 	})
@@ -228,7 +228,7 @@ exports.headerBrand = function(req, res) {
 		}
 	} else {
 		info = "Non Trovato!"
-		Index.sfOptionWrong(req, res, info)
+		Index.qtOptionWrong(req, res, info)
 	}
 }
 
@@ -252,7 +252,7 @@ exports.brandFilter = function(req, res, next){
 			next();
 		} else {
 			info = "This BrandI is deleted, Please reflesh"
-			Index.sfOptionWrong(req, res, info)
+			Index.qtOptionWrong(req, res, info)
 		}
 	})
 }

@@ -17,7 +17,7 @@ exports.nationsFilter = function(req, res, next) {
 			next();
 		} else {
 			info = "Can't Find The Nation"
-			Index.sfOptionWrong(req, res, info)
+			Index.qtOptionWrong(req, res, info)
 		}
 	})
 }
@@ -98,7 +98,7 @@ exports.nation = function(req, res){
 			})
 		} else {
 			info = "This NationI is deleted, Please reflesh"
-			Index.sfOptionWrong(req, res, info)
+			Index.qtOptionWrong(req, res, info)
 		}
 	})
 }
