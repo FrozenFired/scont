@@ -32,6 +32,31 @@ block content
 			if object.status == 0 && object.method != 0
 				-a;
 				.form-group.row
+					label.col-sm-2.col-form-label Pay Method
+					.col-sm-6
+						select#iptMethod.form-control(name="object[method]", data-style="btn-info")
+							option(value=-2) please select
+							each key in Object.keys(Conf.payMethod)
+								-a;
+								if key == object.method
+									-a;
+									option(value=key, selected="selected") #{Conf.payMethod[key]} #{key}
+								else
+									option(value=key) #{Conf.payMethod[key]} #{key}
+					.col-sm-4
+						span#optMethod.text-danger(style="display:none") Pleas Select Pay Method
+				if object.method == 1
+					- a;
+					.form-group.row#assegnoCode
+						label.col-sm-2.col-form-label #{object.code} Assegno Code
+						.col-sm-6
+							input#iptAssegnoCode.form-control(type="text", name="object[agCode]", value=object.agCode)
+				else
+					.form-group.row#assegnoCode(style="display:none")
+						label.col-sm-2.col-form-label #{object.code} Assegno Code
+						.col-sm-6
+							input#iptAssegnoCode.form-control(type="text", name="object[agCode]", value=object.agCode)
+				.form-group.row
 					label.col-sm-2.col-form-label #{object.code} Price
 					.col-sm-6
 						input#iptPayPrice.form-control(type="text", name="object[price]", value=object.price)
@@ -55,31 +80,6 @@ block content
 						input.datepicker.form-control#iptPaidAt(type="text", name="object[paidAt]", value=paidAt, placeholder="click here", readonly="readonly")
 					.col-sm-4
 						span#optPaidAt.text-danger(style="display:none") Pleas complete Paid At
-				.form-group.row
-					label.col-sm-2.col-form-label Pay Method
-					.col-sm-6
-						select#iptMethod.form-control(name="object[method]", data-style="btn-info")
-							option(value=-2) please select
-							each key in Object.keys(Conf.payMethod)
-								-a;
-								if key == object.method
-									-a;
-									option(value=key, selected="selected") #{Conf.payMethod[key]} #{key}
-								else
-									option(value=key) #{Conf.payMethod[key]} #{key}
-					.col-sm-4
-						span#optMethod.text-danger(style="display:none") Pleas Select Pay Method
-			if object.method == 1
-				- a;
-				.form-group.row#assegnoCode
-					label.col-sm-2.col-form-label #{object.code} Assegno Code
-					.col-sm-6
-						input#iptAssegnoCode.form-control(type="text", name="object[agCode]", value=object.agCode)
-			else
-				.form-group.row#assegnoCode(style="display:none")
-					label.col-sm-2.col-form-label #{object.code} Assegno Code
-					.col-sm-6
-						input#iptAssegnoCode.form-control(type="text", name="object[agCode]", value=object.agCode)
 			- let picUrl = "";
 			if object.order && object.order.order
 				-picUrl += object.order.order;

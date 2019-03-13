@@ -8,6 +8,7 @@ block content
 				a.btn.btn-link(href="/qtOrders") back List
 		hr
 		form#addOrder(method="post", action=action, enctype="multipart/form-data")
+			input#iptStaff.form-control(type="hidden", name="object[staff]", value=crSfer.code)
 			.form-group.row
 				label.col-sm-2.com-form-label Input Vendor Code
 				.col-sm-8
@@ -56,12 +57,6 @@ block content
 							option(value=key) #{Conf.taxType[key]} - #{key}
 				.col-sm-2
 					span#optTaxType.text-danger
-			.form-group.row
-				label.col-sm-2.col-form-label Staff Name
-				.col-sm-8
-					input#iptStaff.form-control(type="text", name="object[staff]")
-				.col-sm-2
-					span#optStaff.text-danger(style="display:none") Please complete Staff
 
 
 			.form-group.row
