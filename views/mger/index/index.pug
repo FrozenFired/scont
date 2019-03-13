@@ -3,35 +3,4 @@ extends ../aalayout/layout
 block content
 	.container
 		h1 manager
-
-		
-		form(method="post", action='/multyNation', enctype="multipart/form-data")
-			.form-group.row.udPhoto
-				.col-md-4
-					input.btn.btn-info.btn-block(type="file", name="mulFile")
-				.col-md-4
-					input.btn.btn-default(type="submit" value="国家")
-		form(method="post", action='/multyBcateg', enctype="multipart/form-data")
-			.form-group.row.udPhoto
-				.col-md-4
-					input.btn.btn-info.btn-block(type="file", name="mulFile")
-				.col-md-4
-					input.btn.btn-default(type="submit" value="分类")
-		form(method="post", action='/multyBrand', enctype="multipart/form-data")
-			.form-group.row.udPhoto
-				.col-md-4
-					input.btn.btn-info.btn-block(type="file", name="mulFile")
-				.col-md-4
-					input.btn.btn-default(type="submit" value="Brand")
-		form(method="post", action='/multyVendor', enctype="multipart/form-data")
-			.form-group.row.udPhoto
-				.col-md-4
-					input.btn.btn-info.btn-block(type="file", name="mulFile")
-				.col-md-4
-					input.btn.btn-default(type="submit" value="vendor")
-		form(method="post", action='/multyScont', enctype="multipart/form-data")
-			.form-group.row.udPhoto
-				.col-md-4
-					input.btn.btn-info.btn-block(type="file", name="mulFile")
-				.col-md-4
-					input.btn.btn-default(type="submit" value="scont")
+		a.btn.btn-info(href="/mgScontUp") scont

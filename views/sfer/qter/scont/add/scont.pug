@@ -4,24 +4,26 @@ input(type="hidden", name="object[creater]", value=crSfer._id)
 input(type="hidden", name="object[updater]", value=crSfer._id)
 .form-group.row
 	label.col-sm-2.col-form-label Discount
-	.col-sm-2.input-group
+	.col-sm-4.input-group
 		input#iptSctScont.form-control(type="text", name="object[scont]")
 		.input-group-append
 			span.input-group-text %	
-	.col-sm-2
+	label.col-sm-2.col-form-label NOTE
+	.col-sm-4
+		input.form-control(type="text", name="object[note]")
+	.offset-sm-2.col-sm-4
 		span.text-danger#optSctScont
 .form-group.row
-	label.col-sm-2.col-form-label NOTE
-	.col-sm-10
-		input.form-control(type="text", name="object[note]")
-.form-group.row
+	label.col-sm-2.col-form-label IVA
+	.col-sm-4.input-group
+		input#iptSctIva.form-control(type="text", name="object[iva]")
 	label.col-sm-2.col-form-label OPTIONS
-	.col-sm-8
+	.col-sm-4
 		select#iptSctCause.form-control(name="object[cause]", data-style="btn-info")
 			option(value=-1) Please Select
 			each key in Object.keys(Conf.sctCause)
 				option(value=key) #{Conf.sctCause[key]}
 			- a;
-	.col-sm-2
+	.offset-sm-8.col-sm-4
 		span.text-danger#optSctCause
 script(src="/js/scont/scont/add/scontAdd.js")

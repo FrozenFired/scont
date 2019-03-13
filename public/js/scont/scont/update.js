@@ -39,9 +39,5 @@ $(function() {
 			$("#optUpdater").text("Please Insert Updater")
 			e.preventDefault();
 		}
-		else if($("#orgScont").val() == $("#iptScont").val()) {
-			$("#optScont").text("Scont is not change")
-			e.preventDefault();
-		}
 	})
 })

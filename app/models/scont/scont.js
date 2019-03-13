@@ -8,6 +8,7 @@ let dbSchema = new Schema({
 	
 	brand: {type: ObjectId, ref: 'Brand'},
 	vendor: {type: ObjectId, ref: 'Vendor'},
+	iva: String,
 
 	scont: String,
 	note: String,

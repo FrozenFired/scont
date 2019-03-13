@@ -10,6 +10,7 @@ if object.sconts && object.sconts.length > 0
 				th 首/尾款
 				th 折扣
 				th 备注
+				th 税
 				th 状态
 				th 更新时间
 		tbody
@@ -43,5 +44,6 @@ if object.sconts && object.sconts.length > 0
 						td
 					td(class=scontBg) #{scont.scont}%
 					td(class=scontBg) #{scont.note}
+					td(class=scontBg) #{scont.iva}
 					td(class=scontBg) #{Conf.stsScont[scont.status]}
 					td #{moment(scont.updateAt).format('YYYY/MM/DD')}

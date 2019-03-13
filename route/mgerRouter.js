@@ -14,6 +14,7 @@ let MtyBrand = require('../app/controllers/mger/multy/brand');
 let MtyVendor = require('../app/controllers/mger/multy/vendor');
 let MtyScont = require('../app/controllers/mger/multy/scont');
 let MtyTask = require('../app/controllers/mger/multy/task');
+let MtyScontUp = require('../app/controllers/mger/multy/scontUp');
 
 let MdBcrypt = require('../app/middle/middleBcrypt');
 let MdRole = require('../app/middle/middleRole');
@@ -78,8 +79,9 @@ module.exports = function(app){
 	app.post('/multyBrand', PostForm, MdExcel.loadFile, MtyBrand.multyBrand)
 	app.post('/multyVendor', PostForm, MdExcel.loadFile, MtyVendor.multyVendor)
 	app.post('/multyScont', PostForm, MdExcel.loadFile, MtyScont.multyScont)
-
 	
 	app.post('/multyTask', PostForm, MdExcel.loadFile, MtyTask.multyTask)
+
+	app.get('/mgScontUp', MdRole.mgerIsLogin, MtyScontUp.mgScontUp)
 
 };

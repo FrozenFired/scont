@@ -11,6 +11,7 @@ if object.sconts && object.sconts.length > 0
 				th ac/sa
 				th DISCOUNT
 				th Note
+				th IVA
 				th status
 				th views
 		tbody
@@ -53,5 +54,6 @@ if object.sconts && object.sconts.length > 0
 						td
 					td(class=scontBg) #{scont.scont}%
 					td(class=scontBg) #{scont.note}
+					td(class=scontBg) #{scont.iva}
 					td(class=scontBg) #{Conf.stsScont[scont.status]}
 					td(class=scontBg): a.btn.btn-primary(href="/qtScont/"+scont._id) view
