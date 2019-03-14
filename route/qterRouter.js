@@ -12,6 +12,7 @@ let Vendor = require('../app/controllers/sfer/qter/vendor');
 let Scont = require('../app/controllers/sfer/qter/scont');
 
 let Order = require('../app/controllers/sfer/qter/order');
+let Pay = require('../app/controllers/sfer/qter/pay');
 
 let MdBcrypt = require('../app/middle/middleBcrypt');
 let MdRole = require('../app/middle/middleRole');
@@ -89,4 +90,8 @@ module.exports = function(app){
 	app.get('/qtOrderAdd', MdRole.qterIsLogin, MdRole.sfUniLog, Order.orderAdd)
 	app.post('/qtOrderNew', PostForm, MdRole.qterIsLogin, MdRole.sfUniLog, Order.orderNew)
 	app.post('/qtOrderUpd', PostForm, MdRole.qterIsLogin, MdRole.sfUniLog, Order.orderUpd)
+
+	// Pay         ----------------------------------------------------------------------
+	app.get('/qtPays', MdRole.qterIsLogin, Pay.paysFilter, Pay.pays)
+	app.get('/qtPay/:id', MdRole.qterIsLogin, Pay.payFilter, Pay.pay)
 };
