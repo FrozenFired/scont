@@ -22,7 +22,11 @@ block content
 						label.col-sm-2.col-form-label Updater
 						input#iptUpdater(type="hidden", name="object[updater]", value=updater._id)
 						.col-sm-4.input-group
-							input#updaterCode.form-control(type="text", value=updater.code)
+							input#updaterCode.form-control(type="text", list="staff", value=updater.code)
+							datalist#staff
+								option(value="BMW")
+								option(value="Ford")
+								option(value="Volvo")
 						.col-sm-4
 							span.text-danger#optUpdater
 					.form-group.row
@@ -53,6 +57,4 @@ block content
 					.form-group.row
 						.offset-sm-9.col-md-3
 							input.btn.btn-warning.btn-block(type="submit" value="Update Discount")
-			.col-sm-4#matchSfer(style="display:none")
-				table#filterSfer.table.table-hover.table-bordered
 	script(src="/js/scont/scont/update.js")

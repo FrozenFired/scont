@@ -79,14 +79,12 @@ let saveBner = function(req, res, obj, object) {
 exports.bnAjaxSfer = function(req, res) {
 	let keytpye = req.query.keytype
 	let keyword = req.query.keyword.toUpperCase();
-	// console.log(keytpye)
-	// console.log(keyword)
-	Sfer.findOne({[keytpye]: keyword}, function(err, sfer) {
+	ObjDB.findOne({[keytpye]: keyword}, function(err, sfer) {
 		if(err) console.log(err);
 		if(sfer){
 			res.json({success: 1, sfer: sfer})
 		} else {
-			Sfer.find({[keytpye]: new RegExp(keyword + '.*')}, function(err, sfers) {
+			ObjDB.find({[keytpye]: new RegExp(keyword + '.*')}, function(err, sfers) {
 				if(err) console.log(err);
 				if(sfers && sfers.length > 0) {
 					res.json({success: 2, sfers: sfers});
