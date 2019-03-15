@@ -1,13 +1,13 @@
 extends ../aalayout/layout
 
 block content
-	.container
+	.contain1
 		.row
 			h1.col-sm-6 Pays [#{count}]
 			.col-sm-6.text-right
 				a.btn.btn-link.btn-lg(href="/fnOrders") Order List
 		hr
-		#selectOption.bg-light.pt-2
+		#selectOption.bg-light.p-2
 			include ./list/filter
 		hr
 		include ../../../aaPlugin/pageSlip
