@@ -198,6 +198,8 @@ exports.orderNew = function(req, res) {
 	let objBody = req.body.object
 	// console.log(objBody)
 	objBody.status = 0
+	objBody.order = objBody.order.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+	objBody.brand = objBody.brand.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
 	objBody.price = parseFloat(objBody.price)
 	if(isNaN(objBody.price)){
 		info = "订单价格设置错误";

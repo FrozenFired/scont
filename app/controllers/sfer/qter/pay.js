@@ -28,9 +28,10 @@ exports.paysFilter = function(req, res, next) {
 	condition.keytype = "code";
 	condition.keyword = "";
 	if(req.query.keyword) {
+		req.query.keyword = req.query.keyword.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
 		condition.keytype = req.query.keytype;
 		condition.slipCond += "&keytype="+condition.keytype;
-		condition.keyword = req.query.keyword.replace(/(\s*$)/g, "").replace( /^\s*/, '');
+		condition.keyword = req.query.keyword;
 		condition.slipCond += "&keyword="+condition.keyword;
 	}
 	
