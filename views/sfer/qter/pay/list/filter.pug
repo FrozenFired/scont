@@ -28,16 +28,13 @@ form(method="get", action=url, enctype="multipart/form-data")
 					option(value="vder", selected="selected") Supplier
 				else
 					option(value="vder") Supplier
+				if keytype == "staff"
+					-a;
+					option(value="staff", selected="selected") staff
+				else
+					option(value="staff") staff
 		.col-sm-8
 			input.form-control(type="text", name='keyword', value=keyword, placeholder="input the keywords to find your jobs")
-
-	.form-group.row
-		label.col-sm-2.col-form-label#labCrtS crtAt Start
-		.col-sm-4
-			input#crtS.datepicker.form-control(type="text", name="crtS", placeholder="startDate (month/day/year)", readonly="readonly", value=crtS)
-		label.col-sm-2.col-form-label#labCrtF crtAt End
-		.col-sm-4
-			input#crtF.datepicker.form-control(type="text", name="crtF", placeholder="endDate (month/day/year)", readonly="readonly", value=crtF)
 
 	.form-group.row
 		label.col-sm-2.col-form-label#labPaidS paidAt Start
@@ -47,19 +44,6 @@ form(method="get", action=url, enctype="multipart/form-data")
 		.col-sm-4
 			input#paidF.datepicker.form-control(type="text", name="paidF", placeholder="endDate (month/day/year)", readonly="readonly", value=paidF)
 
-	-let objMethod = Conf.payMethod;
-	.form-group.row
-		label.col-sm-2.col-form-label Pay Method
-		.col-sm-6
-			select#iptWay.form-control(name="method", data-style="btn-info")
-				option(value=-1) All
-				each key in Object.keys(objMethod)
-					-a;
-					if key == condMethod
-						-a;
-						option(value=key, selected="selected") #{Conf.payMethod[key]} #{key}
-					else
-						option(value=key) #{Conf.payMethod[key]} #{key}
 
 	- let objStatus = Conf.stsPay;
 	include ../../../../aaPlugin/filter/status

@@ -63,24 +63,6 @@ exports.paysFilter = function(req, res, next) {
 		condition.condPaidF = new Date(req.query.paidF).setHours(0,0,0,0) + 24*60*60*1000;
 	}
 
-	condition.symCrtS = "$ne"; condition.condCrtS = begin + 24*60*60*1000;
-	condition.symCrtF = "$ne"; condition.condCrtF = begin + 24*60*60*1000;
-	if(req.query.crtS) {
-		condition.slipCond += "&crtS="+req.query.crtS;
-
-		condition.symCrtS = "$gte";
-		condition.condCrtS = new Date(req.query.crtS).setHours(0,0,0,0);
-	}
-	if(req.query.crtF) {
-		condition.slipCond += "&crtF="+req.query.crtF;
-
-		condition.symCrtF = "$lt";
-		condition.condCrtF = new Date(req.query.crtF).setHours(0,0,0,0) + 24*60*60*1000;
-	}
-
-	// let condMethod = Object.keys(Conf.payMethod);
-	let condMethod = -1;
-	[condition.symMethod, condition.condMethod, condition.slipCond] = Filter.method(req.query.method, condMethod, condition.slipCond);
 	// 根据状态筛选
 	let condStatus = 0;
 	[condition.condStatus, condition.slipCond] = Filter.status(req.query.status, condStatus, condition.slipCond);
@@ -88,17 +70,25 @@ exports.paysFilter = function(req, res, next) {
 
 
 	if(req.query && req.query.keytype == "vder"){			// 如果是查找供应商 则先进入供应商数据库
-		condition.keytype = "code";
-		condition.symPul = "$eq";
+		condition.keytype = "code"; // PAY FIND QUERRY
+		condition.symPul = "$eq";	// PAY FIND WORD
 		condition.keyword = "";
 		condition.condPul = req.query.keyword;
 		qtPayFindVder(req, res, next, condition);
 	} 
 	else if(req.query && req.query.keytype == "order"){		//如果查找订单号，则先进入供应商 数据库
-		condition.keytype = "code";
-		condition.keyword = "";
+		condition.keytype = "code"; // PAY FIND QUERRY
+		condition.keyword = "";		// PAY FIND WORD
 		condition.symPul = "$eq";
 		condition.varPul = 'order'
+		condition.condPul = req.query.keyword;
+		qtPayFindOrders(req, res, next, condition);
+	}
+	else if(req.query && req.query.keytype == "staff"){		//如果查找员工，则先进入供应商 数据库
+		condition.keytype = "code"; // PAY FIND QUERRY
+		condition.keyword = "";		// PAY FIND WORD
+		condition.symPul = "$eq";
+		condition.varPul = 'staff'
 		condition.condPul = req.query.keyword;
 		qtPayFindOrders(req, res, next, condition);
 	}
@@ -142,9 +132,7 @@ qtPayFindPays = function(req, res, next, condition) {
 		[condition.varNumb]: {[condition.symNumb]: condition.condNumb},
 		'order': {[condition.symPul]: condition.condPul},
 		'paidAt': {[condition.symPaidS]: condition.condPaidS, [condition.symPaidF]: condition.condPaidF},
-		'createAt': {[condition.symCrtS]: condition.condCrtS, [condition.symCrtF]: condition.condCrtF},
 		[condition.keytype]: new RegExp(condition.keyword + '.*'),
-		'method': {[condition.symMethod]: condition.condMethod},
 		'status': condition.condStatus  // 'status': {[symStatus]: condStatus}
 	})
 	.exec(function(err, count) {
@@ -153,9 +141,7 @@ qtPayFindPays = function(req, res, next, condition) {
 			[condition.varNumb]: {[condition.symNumb]: condition.condNumb},
 			'order': {[condition.symPul]: condition.condPul},
 			'paidAt': {[condition.symPaidS]: condition.condPaidS, [condition.symPaidF]: condition.condPaidF},
-			'createAt': {[condition.symCrtS]: condition.condCrtS, [condition.symCrtF]: condition.condCrtF},
 			[condition.keytype]: new RegExp(condition.keyword + '.*'),
-			'method': {[condition.symMethod]: condition.condMethod},
 			'status': condition.condStatus  // 'status': {[symStatus]: condStatus}
 		})
 		.skip(condition.index).limit(condition.entry)
@@ -176,11 +162,8 @@ qtPayFindPays = function(req, res, next, condition) {
 
 				list.paidS = req.query.paidS;
 				list.paidF = req.query.paidF;
-				list.crtS = req.query.crtS;
-				list.crtF = req.query.crtF;
 
 				list.condStatus = condition.condStatus;
-				list.condMethod = condition.condMethod;
 
 
 				list.currentPage = (condition.page + 1);
@@ -192,8 +175,8 @@ qtPayFindPays = function(req, res, next, condition) {
 				req.body.list = list;
 				next();
 			} else {
-				info = "Option error, Please Contact Manger"
-				Index.qtOptionWrong(req, res, info)
+				info = "Option error, Please Contact Manger";
+				Index.qtOptionWrong(req, res, info);
 			}
 		})
 	})

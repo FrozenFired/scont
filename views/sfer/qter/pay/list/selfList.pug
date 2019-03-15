@@ -1,7 +1,7 @@
 table.table.table-hover.table-bordered
 	thead
 		tr
-			th order
+			th order <br/> staff
 			th vendor
 			th taxType
 			th acsa
@@ -31,7 +31,11 @@ table.table.table-hover.table-bordered
 			tr(class="item-id-"+item._id+" "+bgStatus)
 				if item.order
 					-order = item.order;
-					td(class=Conf.stsOrderBg[order.status]): a.btn.btn-info(href="/qtOrder/"+order._id) #{order.order}
+					td(class=Conf.stsOrderBg[order.status])
+						a.btn.btn-info(href="/qtOrder/"+order._id) #{order.order} 
+						br
+						span #{order.staff}
+
 					if order.vder
 						-vder = order.vder;
 						td #{vder.code}
@@ -58,4 +62,4 @@ table.table.table-hover.table-bordered
 				td #{item.picUrl}
 				td #{item.note}
 
-h2.bg-info.rounded Total price : #{total.toFixed(2)}
+//- h2.bg-info.rounded Total price : #{total.toFixed(2)}
