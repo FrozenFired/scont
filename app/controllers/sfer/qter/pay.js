@@ -63,6 +63,21 @@ exports.paysFilter = function(req, res, next) {
 		condition.condPaidF = new Date(req.query.paidF).setHours(0,0,0,0) + 24*60*60*1000;
 	}
 
+	condition.symCrtS = "$ne"; condition.condCrtS = begin + 24*60*60*1000;
+	condition.symCrtF = "$ne"; condition.condCrtF = begin + 24*60*60*1000;
+	if(req.query.crtS) {
+		condition.slipCond += "&crtS="+req.query.crtS;
+
+		condition.symCrtS = "$gte";
+		condition.condCrtS = new Date(req.query.crtS).setHours(0,0,0,0);
+	}
+	if(req.query.crtF) {
+		condition.slipCond += "&crtF="+req.query.crtF;
+
+		condition.symCrtF = "$lt";
+		condition.condCrtF = new Date(req.query.crtF).setHours(0,0,0,0) + 24*60*60*1000;
+	}
+
 	// 根据状态筛选
 	let condStatus = 0;
 	[condition.condStatus, condition.slipCond] = Filter.status(req.query.status, condStatus, condition.slipCond);
@@ -132,6 +147,7 @@ qtPayFindPays = function(req, res, next, condition) {
 		[condition.varNumb]: {[condition.symNumb]: condition.condNumb},
 		'order': {[condition.symPul]: condition.condPul},
 		'paidAt': {[condition.symPaidS]: condition.condPaidS, [condition.symPaidF]: condition.condPaidF},
+		'createAt': {[condition.symCrtS]: condition.condCrtS, [condition.symCrtF]: condition.condCrtF},
 		[condition.keytype]: new RegExp(condition.keyword + '.*'),
 		'status': condition.condStatus  // 'status': {[symStatus]: condStatus}
 	})
@@ -141,6 +157,7 @@ qtPayFindPays = function(req, res, next, condition) {
 			[condition.varNumb]: {[condition.symNumb]: condition.condNumb},
 			'order': {[condition.symPul]: condition.condPul},
 			'paidAt': {[condition.symPaidS]: condition.condPaidS, [condition.symPaidF]: condition.condPaidF},
+			'createAt': {[condition.symCrtS]: condition.condCrtS, [condition.symCrtF]: condition.condCrtF},
 			[condition.keytype]: new RegExp(condition.keyword + '.*'),
 			'status': condition.condStatus  // 'status': {[symStatus]: condStatus}
 		})
@@ -162,9 +179,10 @@ qtPayFindPays = function(req, res, next, condition) {
 
 				list.paidS = req.query.paidS;
 				list.paidF = req.query.paidF;
+				list.crtS = req.query.crtS;
+				list.crtF = req.query.crtF;
 
 				list.condStatus = condition.condStatus;
-
 
 				list.currentPage = (condition.page + 1);
 				list.entry = condition.entry;

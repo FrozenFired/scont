@@ -182,7 +182,6 @@ fnPayFindPays = function(req, res, next, condition) {
 				list.condStatus = condition.condStatus;
 				list.condMethod = condition.condMethod;
 
-
 				list.currentPage = (condition.page + 1);
 				list.entry = condition.entry;
 				list.totalPage = Math.ceil(count / condition.entry);
