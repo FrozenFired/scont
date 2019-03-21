@@ -38,12 +38,12 @@ table.table.table-hover.table-bordered
 				//- td #{Conf.stsTask[item.status]}
 				td
 					if item.status == 0
-						button.btn.btn-info.change(class="del-"+item._id, type="button", data-url="/qtTaskStatus", data-sts	=1, data-id=item._id) progress->finish
+						button.btn.btn-info.change(class="del-"+item._id, type="button", data-url="/qtTaskStatus", data-sts=1, data-id=item._id) progress->finish
 						
 					else if item.status == 1
-						button.btn.btn-warning.change(class="del-"+item._id, type="button", data-url="/qtTaskStatus", data-sts	=0, data-id=item._id) finish->progress
+						button.btn.btn-warning.change(class="del-"+item._id, type="button", data-url="/qtTaskStatus", data-sts=0, data-id=item._id) finish->progress
 					else
-						button.btn.btn-warning.change(class="del-"+item._id, type="button", data-url="/qtTaskStatus", data-sts	=0, data-id=item._id) progress
+						button.btn.btn-warning.change(class="del-"+item._id, type="button", data-url="/qtTaskStatus", data-sts=0, data-id=item._id) progress
 						button.btn.btn-info.change(class="del-"+item._id, type="button", data-url="/qtTaskStatus", data-sts	=1, data-id=item._id) finish
 				
 script(src="/js/changeStatus.js")

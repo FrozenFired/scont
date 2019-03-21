@@ -94,4 +94,6 @@ module.exports = function(app){
 	// Pay         ----------------------------------------------------------------------
 	app.get('/qtPays', MdRole.qterIsLogin, Pay.paysFilter, Pay.pays)
 	app.get('/qtPay/:id', MdRole.qterIsLogin, Pay.payFilter, Pay.pay)
+
+	app.get('/qtPayMailed', MdRole.qterIsLogin, Pay.payMailed)
 };

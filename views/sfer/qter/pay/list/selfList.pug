@@ -13,6 +13,7 @@ table.table.table-hover.table-bordered
 			th Assegno
 			th Picture
 			th note
+			th mailed
 	tbody
 		- let total = 0;
 		each item in objects
@@ -61,5 +62,12 @@ table.table.table-hover.table-bordered
 				td #{item.agCode}
 				td #{item.picUrl}
 				td #{item.note}
+				td
+					if item.mailed && item.mailed != 0
+						-a;
+						button.btn.btn-warning.change(class="del-"+item._id, type="button", data-url="/qtPayMailed", data-sts=0, data-id=item._id) Mailed->Not
+					else
+						button.btn.btn-info.change(class="del-"+item._id, type="button", data-url="/qtPayMailed", data-sts=1, data-id=item._id) Not->Mailed
 
 //- h2.bg-info.rounded Total price : #{total.toFixed(2)}
+script(src="/js/changeStatus.js")

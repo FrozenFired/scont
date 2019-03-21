@@ -19,6 +19,7 @@ let Conf = {
 	payMethod: {0: 'Certification', 1: 'Assegno', 2: 'Bonifico', 3: 'Credit Card'},
 	stsPay: {0: 'unpaid', 1: 'writed', 2: 'paid'},
 	stsPayBg: {0: 'bg-default', 1: 'bg-info', 2: 'bg-warning'},
+	payMialed: {0: 'Not', 1: 'Mailed'},
 
 	/* ------------------ task staus ------------------ */
 	stsTask:{ 0: 'progress', 1: 'finish'},

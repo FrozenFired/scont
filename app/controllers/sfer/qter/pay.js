@@ -80,10 +80,23 @@ exports.paysFilter = function(req, res, next) {
 	}
 
 	// 根据状态筛选
-	let condStatus = 0;
+	let condStatus = ['1', '2'];
 	[condition.condStatus, condition.slipCond] = Filter.status(req.query.status, condStatus, condition.slipCond);
 
-
+	// 根据状态筛选
+	condition.condMailed = 0;
+	condition.symMailed = '$eq';
+	if(req.query.mailed || req.query.mailed == 0) {
+		condition.condMailed = req.query.mailed;
+		condition.condMailed2 = req.query.mailed;
+		condition.slipCond = "&mailed="+req.query.mailed;
+	}
+	if(condition.condMailed == 0) {
+		condition.condMailed2 = null
+	}
+	if(condition.condMailed == 2) {
+		condition.symMailed = '$ne';
+	}
 
 	if(req.query && req.query.keytype == "vder"){			// 如果是查找供应商 则先进入供应商数据库
 		condition.keytype = "code"; // PAY FIND QUERRY
@@ -150,7 +163,8 @@ qtPayFindPays = function(req, res, next, condition) {
 		'paidAt': {[condition.symPaidS]: condition.condPaidS, [condition.symPaidF]: condition.condPaidF},
 		'createAt': {[condition.symCrtS]: condition.condCrtS, [condition.symCrtF]: condition.condCrtF},
 		[condition.keytype]: new RegExp(condition.keyword + '.*'),
-		'status': condition.condStatus  // 'status': {[symStatus]: condStatus}
+		'status': condition.condStatus,  // 'status': {[symStatus]: condStatus}
+		$or: [ {'mailed': condition.condMailed}, {'mailed':condition.condMailed2} ]
 	})
 	.exec(function(err, count) {
 		if(err) console.log(err);
@@ -160,7 +174,11 @@ qtPayFindPays = function(req, res, next, condition) {
 			'paidAt': {[condition.symPaidS]: condition.condPaidS, [condition.symPaidF]: condition.condPaidF},
 			'createAt': {[condition.symCrtS]: condition.condCrtS, [condition.symCrtF]: condition.condCrtF},
 			[condition.keytype]: new RegExp(condition.keyword + '.*'),
-			'status': condition.condStatus  // 'status': {[symStatus]: condStatus}
+			'status': condition.condStatus,  // 'status': {[symStatus]: condStatus}
+			$or: [ 
+				{ 'mailed': {[condition.symMailed]: condition.condMailed}},
+				{'mailed':  {[condition.symMailed]: condition.condMailed2}} 
+			]
 		})
 		.skip(condition.index).limit(condition.entry)
 		.populate('vder')
@@ -184,6 +202,7 @@ qtPayFindPays = function(req, res, next, condition) {
 				list.crtF = req.query.crtF;
 
 				list.condStatus = condition.condStatus;
+				list.condMailed = condition.condMailed;
 
 				list.currentPage = (condition.page + 1);
 				list.entry = condition.entry;
@@ -253,4 +272,22 @@ exports.pay = function(req, res) {
 	list.title = "qtPay Infomation";
 
 	res.render('./sfer/qter/pay/detail', list)
+}
+
+
+exports.payMailed = function(req, res) {
+	let id = req.query.id
+	let newMailed = req.query.newStatus
+	Pay.findOne({_id: id}, function(err, object){
+		if(err) console.log(err);
+		if(object){
+			object.mailed = parseInt(newMailed)
+			object.save(function(err,objSave) {
+				if(err) console.log(err);
+				res.json({success: 1, info: "已经更改"});
+			})
+		} else {
+			res.json({success: 0, info: "已被删除，按F5刷新页面查看"});
+		}
+	})
 }

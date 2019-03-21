@@ -52,9 +52,29 @@ form(method="get", action=url, enctype="multipart/form-data")
 		.col-sm-4
 			input#paidF.datepicker.form-control(type="text", name="paidF", placeholder="endDate (month/day/year)", readonly="readonly", value=paidF)
 
+	.form-group.row
+		label.col-sm-2.col-form-label Mailed
+		.col-sm-10
+			select.form-control(name="mailed", data-style="btn-info")
+				if !condMailed || condMailed == 0
+					-a;
+					option(value="0", selected="selected") Not
+				else
+					option(value="0") Not
+				if condMailed == 1
+					-a;
+					option(value="1", selected="selected") Mailed
+				else
+					option(value="1") Mailed
+				if condMailed == 2
+					-a;
+					option(value="2", selected="selected") All
+				else
+					option(value="2") All
 
 	- let objStatus = Conf.stsPay;
 	include ../../../../aaPlugin/filter/status
+
 	include ../../../../aaPlugin/filter/footer
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">

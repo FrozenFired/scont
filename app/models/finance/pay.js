@@ -16,6 +16,7 @@ let dbSchema = new Schema({
 	paidAt: Date,
 
 	status: String,	// paid unpaid
+	mailed: String, // Not Mailed
 	note: String,
 
 	picUrl: String,
