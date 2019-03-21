@@ -1,18 +1,19 @@
 table.table.table-hover.table-bordered
 	thead
 		tr
-			th order <br/> staff
+			th order
 			th vendor
 			th taxType
 			th acsa
 			th price
-			th Method
 			th createAt
 			th paidAt
 			th status
-			th Assegno
+			//- th Method
+			//- th Assegno
 			th Picture
 			th note
+			th staff
 			th mailed
 	tbody
 		- let total = 0;
@@ -34,9 +35,6 @@ table.table.table-hover.table-bordered
 					-order = item.order;
 					td(class=Conf.stsOrderBg[order.status])
 						a.btn.btn-info(href="/qtOrder/"+order._id) #{order.order} 
-						br
-						span #{order.staff}
-
 					if order.vder
 						-vder = order.vder;
 						td #{vder.code}
@@ -49,7 +47,6 @@ table.table.table-hover.table-bordered
 					td
 				td #{item.code}
 				td #{item.price}
-				td #{Conf.payMethod[item.method]}
 				td 
 					if item.createAt
 						-a;
@@ -59,15 +56,24 @@ table.table.table-hover.table-bordered
 						-a;
 						span #{moment(item.paidAt).format("MM/DD/YYYY")}
 				td #{Conf.stsPay[item.status]}
-				td #{item.agCode}
+				//- td #{Conf.payMethod[item.method]}
+				//- td #{item.agCode}
 				td #{item.picUrl}
 				td #{item.note}
-				td
-					if item.mailed && item.mailed != 0
-						-a;
-						button.btn.btn-warning.change(class="del-"+item._id, type="button", data-url="/qtPayMailed", data-sts=0, data-id=item._id) Mailed->Not
-					else
-						button.btn.btn-info.change(class="del-"+item._id, type="button", data-url="/qtPayMailed", data-sts=1, data-id=item._id) Not->Mailed
+				if item.order
+					-a;
+					td #{item.order.staff}
+					td
+						if item.order.staff == crSfer.code
+							-a;
+							if item.mailed && item.mailed != 0
+								-a;
+								button.btn.btn-warning.change(class="del-"+item._id, type="button", data-url="/qtPayMailed", data-sts=0, data-id=item._id) Mailed->Not
+							else
+								button.btn.btn-info.change(class="del-"+item._id, type="button", data-url="/qtPayMailed", data-sts=1, data-id=item._id) Not->Mailed
+				else
+					td
+					td
 
 //- h2.bg-info.rounded Total price : #{total.toFixed(2)}
 script(src="/js/changeStatus.js")
