@@ -87,9 +87,11 @@ module.exports = function(app){
 	app.get('/qtOrders', MdRole.qterIsLogin, Order.ordersFilter, Order.orders)
 	app.get('/qtOrdersPrint', MdRole.qterIsLogin, Order.ordersFilter, Order.ordersPrint)
 	app.get('/qtOrder/:id', MdRole.qterIsLogin, Order.orderFilter, Order.order)
+	app.get('/qtOrderUp/:id', MdRole.qterIsLogin, Order.orderFilter, Order.orderUp)
+	app.post('/qtOrderUpd', PostForm, MdRole.qterIsLogin, MdRole.sfUniLog, Order.orderUpd)
 	app.get('/qtOrderAdd', MdRole.qterIsLogin, MdRole.sfUniLog, Order.orderAdd)
 	app.post('/qtOrderNew', PostForm, MdRole.qterIsLogin, MdRole.sfUniLog, Order.orderNew)
-	app.post('/qtOrderUpd', PostForm, MdRole.qterIsLogin, MdRole.sfUniLog, Order.orderUpd)
+	app.get('/qtOrderDel/:id', MdRole.qterIsLogin, Order.orderFilter, Order.orderDel)
 
 	// Pay         ----------------------------------------------------------------------
 	app.get('/qtPays', MdRole.qterIsLogin, Pay.paysFilter, Pay.pays)

@@ -265,7 +265,7 @@ exports.orderFilter = function(req, res, next) {
 	.exec(function(err, object) {
 		if(err) console.log(err);
 		if(!object) {
-			info = "此任务已经被删除"
+			info = "此订单已经被删除"
 			Index.qtOptionWrong(req, res, info)
 		} else {
 			req.body.object = object
@@ -290,7 +290,29 @@ exports.order = function(req, res) {
 		weekday: weekday
 	})
 }
+exports.orderUp = function(req, res) {
+	let objBody = req.body.object
+	// console.log(objBody)
+	if(objBody.status == 0) {
+		let list = req.body.list;
+		let now = new Date();
+		today = moment(now).format('YYYYMMDD');
+		let weekday = new Date(now.getTime() + 7*24*60*60*1000)
+		weekday = moment(weekday).format('YYYYMMDD');
 
+		res.render('./sfer/qter/order/update', {
+			title: 'qtOrder Update',
+			action: '/qtOrderUpd',
+			crSfer : req.session.crSfer,
+			object: objBody,
+			today: today,
+			weekday: weekday
+		})
+	} else {
+		info = "订单信息已经确认，请联系财务部"
+		Index.qtOptionWrong(req, res, info)
+	}
+}
 
 
 exports.orderUpd = function(req, res) {
@@ -310,4 +332,23 @@ exports.orderUpd = function(req, res) {
 			});	
 		}
 	})
+}
+
+exports.orderDel = function(req, res) {
+	let objBody = req.body.object;
+	if(objBody.status == 0) {
+		payAc = objBody.payAc
+		payMd = objBody.payMd
+		paySa = objBody.paySa
+		if(payAc) Pay.remove({_id: payAc}, function(err, rmPayAc) {});
+		if(payMd) Pay.remove({_id: payMd}, function(err, rmPayMd) {});
+		if(paySa) Pay.remove({_id: paySa}, function(err, rmPaySa) {});
+		Order.remove({_id: objBody._id}, function(err, qtOrderRm) {
+			if(err) console.log(err);
+			res.redirect('/qtOrders')
+		})
+	} else {
+		info = "订单信息已经确认，不能删除，请联系财务部"
+		Index.qtOptionWrong(req, res, info)
+	}
 }

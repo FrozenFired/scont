@@ -12,3 +12,7 @@ block content
 		include ./detail/acsaInfo
 		hr
 		include ./detail/selfInfo
+		hr
+		if object.status == 0
+			-a;
+			a.btn.btn-danger(href="/qtOrderDel/"+object._id) Delete

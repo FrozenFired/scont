@@ -1,0 +1,11 @@
+extends ../aalayout/layout
+
+block content
+	.container
+		.row
+			h1.col-sm-6 Order Update
+			.col-sm-6.text-right
+				a.btn.btn-link(href="/qtOrders") back List
+		hr
+		form#addOrder(method="post", action=action, enctype="multipart/form-data")
+			h1 待开发
