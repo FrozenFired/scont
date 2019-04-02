@@ -474,13 +474,11 @@ exports.ajaxScontSts = function(req, res) {
 let rtBnPath = require('path').join(__dirname, "../../../../");
 
 exports.scontPdf = function(req, res) {
-	console.log(1)
 	let object = req.body.object;
 	let brand = object.brand;
 	let vendor = object.vendor;
 	// let pug = require('pug');
 	if(brand && vendor) {
-		console.log(2)
 		let hc = require('pug').renderFile(rtBnPath + 'views/zzPdf/scont/detail.pug', {
 			publicPath: "file://"+rtBnPath + 'public',
 			moment : require('moment'),
@@ -491,7 +489,7 @@ exports.scontPdf = function(req, res) {
 			brand: brand,
 			vendor: vendor
 		});
-		console.log(3)
+		console.log(hc)
 		res.pdfFromHTML({
 			filename: brand.code + '_' + vendor.code + '.pdf',
 			htmlContent: hc
