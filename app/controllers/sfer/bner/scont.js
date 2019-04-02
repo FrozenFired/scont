@@ -489,7 +489,6 @@ exports.scontPdf = function(req, res) {
 			brand: brand,
 			vendor: vendor
 		});
-		console.log(res.pdfFromHTML)
 		res.pdfFromHTML({
 			filename: brand.code + '_' + vendor.code + '.pdf',
 			htmlContent: hc
