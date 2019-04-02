@@ -474,6 +474,7 @@ exports.ajaxScontSts = function(req, res) {
 let rtBnPath = require('path').join(__dirname, "../../../../");
 
 exports.scontPdf = function(req, res) {
+	console.log(1)
 	let object = req.body.object;
 	let brand = object.brand;
 	let vendor = object.vendor;
