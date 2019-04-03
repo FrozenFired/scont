@@ -1,6 +1,12 @@
 let express = require('express');
 let app = express();
-let server = require('http').createServer(app);
+let serverHttp = require('http').createServer(app);
+
+let fs = require('fs');
+let privkey = fs.readFileSync('./https/private.pem', 'utf8');
+let certfig = fs.readFileSync('./https/file.crt', 'utf8');
+let credent = {key: privkey, cert: certfig};
+let serverHttps = require('https').createServer(credent, app);
 
 // 加载本系统的配置项
 let InitConf = require('./confile/initConf');
@@ -44,7 +50,7 @@ app.use(serveStatic(path.join(__dirname, "./public")));
 // 前端读取配置数据
 app.locals.moment = require('moment');// 时间格式化
 app.locals.Conf = require('./confile/conf');// 
-app.locals.Svaddr = InitConf.serverUrl;// 
+app.locals.Svaddr = InitConf.httpUrl;// 
 app.locals.cdn = InitConf.cdn;// 
 
 // 网页生成pdf用的
@@ -72,6 +78,9 @@ app.use(function(req, res, next) {
 });
 
 // 服务器监听
-server.listen(InitConf.port, function(){
-	console.log('Server start on port : ' + InitConf.serverUrl);
+serverHttp.listen(InitConf.portHttp, function(){
+	console.log('Server start on port : ' + InitConf.httpUrl);
+});
+serverHttps.listen(InitConf.portHttps, function(){
+	console.log('Server start on port : ' + InitConf.httpsUrl);
 });

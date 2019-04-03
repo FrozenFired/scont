@@ -3,3 +3,4 @@ confile/initSet.js
 node_modules/
 readStep.txt
 checkServer.js
+https/
