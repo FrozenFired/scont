@@ -491,10 +491,11 @@ exports.scontPdf = function(req, res) {
 		});
 		res.pdfFromHTML({
 			filename: brand.code + '_' + vendor.code + '.pdf',
-			htmlContent: hc
+			htmlContent: '<html><body>ASDF</body></html>'
 		});
 	} else {
-		info = "Option is wrong, please contact manager. error: in scont pdf not have brand or vendor";
-		Index.bnOptionWrong(req, res, info)
+		info = "Option is wrong, please contact manager. ";
+		info += "error: in scont pdf not have brand or vendor";
+		Index.bnOptionWrong(req, res, info);
 	}
 }
