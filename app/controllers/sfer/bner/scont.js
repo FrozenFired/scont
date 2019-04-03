@@ -489,9 +489,10 @@ exports.scontPdf = function(req, res) {
 			brand: brand,
 			vendor: vendor
 		});
+		// console.log('ok')
 		res.pdfFromHTML({
 			filename: brand.code + '_' + vendor.code + '.pdf',
-			htmlContent: '<html><body>ASDF</body></html>'
+			htmlContent: hc
 		});
 	} else {
 		info = "Option is wrong, please contact manager. ";

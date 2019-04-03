@@ -138,11 +138,11 @@ cnBcategPrintFunc = function(req, res, object, brands) {
 	ws.column(5).setWidth(10);
 
 	// header
-	ws.cell(3,1).string('Brand');
-	ws.cell(3,2).string('Country');
-	ws.cell(3,3).string('material Description');
-	ws.cell(3,4).string('status');
-	ws.cell(3,5).string('Supplier');
+	ws.cell(3,1).string('品牌');
+	ws.cell(3,2).string('国家');
+	ws.cell(3,3).string('材料描述');
+	ws.cell(3,4).string('状态');
+	ws.cell(3,5).string('供应商');
 
 	for(let i=0; i<brands.length; i++){
 		let item = brands[i];
