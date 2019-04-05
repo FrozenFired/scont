@@ -1,27 +1,21 @@
-table.table.table-hover.table-bordered
-	thead
-		tr
-			th 序号
-			th nation code
-			th Weight (sort)
-			th Origin Name
-			th English Name
-			th Chinese Name
-			th nation telCode
-			th brand Numbers
-			th 删除
-	tbody
-		-let i = 0;
-		each item in objects
-			- i++;
-			tr(class="item-id-"+item._id)
-				td <strong> #{i} </strong>
-				td: a(href="/bnNation/"+item._id) #{item.code}
-				td #{Conf.weight[item.weight]}
-				td #{item.name}
-				td #{item.nameEN}
-				td #{item.nameCN}
-				td #{item.tel}
-				td #{item.numbrand}
-				td: button.btn.btn-danger.del(type="button", data-urldel="/bnNationDel", data-id=item._id) 删除
+-var i = 0;
+each item in objects
+	- i++;
+	.row.nationlist(class="item-id-"+item._id)
+		.col-sm-10
+			a.text-dark(href="/bnNation/"+item._id)
+				.card.p-2.mt-2
+					.row
+						.col-12.col-sm-6
+							.row
+								.col-4: strong #{i}
+								h4.col-4 #{item.code}
+								.col-4 #{item.tel}
+						.col-12.col-sm-6
+							.row
+								.col-4 #{item.nameCN}
+								.col-4 #{item.nameEN}
+								.col-4.text-info #{item.numbrand}
+		.col-sm-2
+			button.btn.btn-danger.btn-block.del(type="button", data-urldel="/bnNationDel", data-id=item._id) 删除
 script(src="/js/delete.js")

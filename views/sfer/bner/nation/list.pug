@@ -3,10 +3,9 @@ extends ../aalayout/layout
 block content
 	.container
 		a.btn.btn-info.btn-lg.btn-block(href="/bnNationAdd") Add Nation
-		hr
 		.row
-			.col-sm-8
-			.col-sm-4
-				a.btn.btn-bg.btn-block.btn-warning(href="/bnNationsPrint") Download Excel
+			h3.col-6 Nations
+			.col-6.text-right
+				a.btn.btn-warning(href="/bnNationsPrint") Download Excel
 		hr
 		include ./list/selfList

@@ -3,7 +3,8 @@ extends ../aalayout/layout
 block content
 	.container
 		.row
-			.col-sm-8
-				h1 国家列表
+			h3.col-6 国家列表
+			.col-6.text-right
+				a.btn.btn-warning(href="/cnNationsPrint") 下载Excel
 		hr
 		include ./list/selfList

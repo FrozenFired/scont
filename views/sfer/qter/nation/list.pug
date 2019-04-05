@@ -2,11 +2,9 @@ extends ../aalayout/layout
 
 block content
 	.container
-		h1 Nation List
-		hr
 		.row
-			.col-sm-8
-			.col-sm-4
-				a.btn.btn-bg.btn-block.btn-warning(href="/qtNationsPrint") Download Excel
+			h3.col-6 Nations
+			.col-6.text-right
+				a.btn.btn-warning(href="/qtNationsPrint") Download Excel
 		hr
 		include ./list/selfList

@@ -22,7 +22,7 @@ each item in objects
 			-vendorBg ="bg-info";
 		if item.vendor.status == 2
 			-vendorBg ="bg-secondary";
-	.card.p-2.mt-2
+	.card.p-2.mt-2(class="item-id-"+item._id)
 		.row
 			.col-12.col-sm-4.border-right(class=trBg+" item-id-"+item._id)
 				.row
@@ -44,6 +44,10 @@ each item in objects
 							span Updater: #{updater.code}
 						else
 							span Updater Lost
+					if item.status == 5
+						-a;
+						.col-12
+							button.btn.btn-warning.btn-block.del(type="button", data-urldel="/bnScontDel", data-id=item._id) delete
 			.col-12.col-sm-4.border-right(class=brandBg)
 				if item.brand
 					-brand = item.brand;
@@ -66,3 +70,4 @@ each item in objects
 						.col-12.text-center #{Conf.vtype[vendor.vtype]}
 				else
 					h3 Supplier Lost
+script(src="/js/delete.js")

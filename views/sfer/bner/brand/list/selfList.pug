@@ -7,7 +7,7 @@
 			-objBg ="bg-default";
 		else if item.status == 2
 			-objBg ="bg-secondary";
-		.col-12.col-sm-4.mt-2
+		.col-12.col-sm-4.mt-2(class="item-id-"+item._id)
 			.card.p-2.mt-2
 				.row
 					h3.text-center.col-12(class=objBg+" item-id-"+item._id) 
@@ -32,8 +32,10 @@
 							-sconts = item.sconts;
 							font.text-info(size=5) #{sconts.length}
 						else
-							span.text-danger 0
+							span.text-danger 0 &nbsp;
+							button.btn.btn-danger.del(type="button", data-urldel="/bnBrandDelAjax", data-id=item._id) delete
 					.col-12 
 						span Website: 
 						a(href=item.website, target="view_window") #{item.website}
 					.col-12 UpdateAt: #{moment(item.updateAt).format('YYYY/MM/DD')}
+script(src="/js/delete.js")
