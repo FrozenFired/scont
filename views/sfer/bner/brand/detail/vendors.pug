@@ -1,59 +1,59 @@
 if object.sconts && object.sconts.length > 0
 	-let sconts = object.sconts;
+	h2.mt-2 #{sconts.length} - Vendors:
 	hr
-	h2 #{sconts.length} - Vendors:
-	table.table.table-hover.table-bordered
-		thead
-			tr
-				th Vendor
-				th Type
-				th contacts
-				th ac/sa
-				th DISCOUNT
-				th Note
-				th IVA
-				th status
-				th views
-		tbody
-			each scont in sconts
-				- let scontBg;
-				if scont.status == 0
-					-scontBg ="bg-info";
-				else if scont.status == 1
-					-scontBg ="bg-default";
-				else if scont.status == 2
-					-scontBg ="bg-success";
-				else if scont.status == 3
-					-scontBg ="bg-warning";
-				else if scont.status == 4
-					-scontBg ="bg-secondary";
-				else if scont.status == 5
-					-scontBg ="bg-danger";
-				tr(class="scont-id-"+scont._id)
+	each scont in sconts
+		- let scontBg;
+		if scont.status == 0
+			-scontBg ="bg-info";
+		else if scont.status == 1
+			-scontBg ="bg-default";
+		else if scont.status == 2
+			-scontBg ="bg-success";
+		else if scont.status == 3
+			-scontBg ="bg-warning";
+		else if scont.status == 4
+			-scontBg ="bg-secondary";
+		else if scont.status == 5
+			-scontBg ="bg-danger";
+		.card.p-2.mt-2
+			.row
+				.col-12.col-sm-7
 					if scont.vendor
 						-vendor = scont.vendor;
 						if vendor.status == 2
 							-vdBg ="bg-secondary";
 						else
 							-vdBg ="bg-default";
-						td(class=vdBg): a.btn.btn-primary(href="/bnVendor/"+vendor._id) #{vendor.code}
-						td(class=vdBg) #{Conf.vtype[vendor.vtype]}
-						td(class=vdBg)
-							if vendor.contacts && vendor.contacts.length > 0
-								-contacts = vendor.contacts;
-								each contact in contacts
-									-a;
-									ul
-										li #{contact.contacter} 
-										li #{contact.tel} 
-										li #{contact.email}
-						td(class=vdBg) #{vendor.ac} / #{vendor.sa}
+						.vendorPart.bg-light(class=vdBg)
+							.row
+								-code ='UNDEFINE';
+								if vendor.code
+									-code = vendor.code;
+								h4.col-12.col-sm-6: a.text-left.text-info(href="/bnVendor/"+vendor._id) #{code}
+								h5.col-6.col-sm-4 [#{Conf.vtype[vendor.vtype]}]
+								-ac = 'no';
+								if vendor.ac
+									-ac = vendor.ac;
+								-sa = 'no';
+								if vendor.sa
+									-sa = vendor.sa;
+								h5.col-6.col-sm-2.text-right #{ac} / #{sa}
+								if vendor.contacts && vendor.contacts.length > 0
+									-contacts = vendor.contacts;
+									each contact in contacts
+										-a;
+										.col-12.col-sm-6.mt-2
+											span #{contact.contacter}<br/>
+											span #{contact.tel}<br/>
+											span #{contact.email}
 					else
-						td
-						td
-						td
-					td(class=scontBg) #{scont.scont}%
-					td(class=scontBg) #{scont.note}
-					td(class=scontBg) #{scont.iva}
-					td(class=scontBg) #{Conf.stsScont[scont.status]}
-					td(class=scontBg): a.btn.btn-primary(href="/bnScont/"+scont._id) view
+						p lost supplier
+				.col-12.col-sm-5.p-2.text-center(class=scontBg)
+					.scontPart
+						a.text-dark(href="/bnScont/"+scont._id): h3 discont: #{scont.scont}%
+						.row
+							if scont.note
+								-a;
+								.col-12 note: #{scont.note}
+							.col-12 iva: #{scont.iva} &nbsp; | &nbsp; #{Conf.stsScont[scont.status]}

@@ -7,79 +7,110 @@ else if object.status == 1
 else if object.status == 2
 	-objBg ="bg-secondary";
 .row(class=objBg)
-	h1.col-sm-8
-		span 品牌: [#{object.code}]
-	.col-sm-4.text-right
+	h1.col-8
+		span.text-info #{object.code}
+	.col-4.text-right
 		a.btn.btn-link(href="/cnBrands") 返回列表
-
-hr
-.bg-light
-	table.table.table-hover.table-bordered
-		tr
-			th 品牌
-			th 国家
-			th 公司名
-			th 一级分类
-			th 二级分类
-			th 材料描述
-
-		tr
-			td.text-primary <strong>#{object.code}</strong>
-			td
-				if object.nation
-					-a;
-					span #{object.nation.code}<br/>
-			td #{object.firmName}
-			if object.bcateg
-				-a;
-				td #{Conf.bcate[object.bcateg.bcate]}
-				td #{object.bcateg.code}
+.card.p-2
+	if object.bcateg
+		-bcateg = object.bcateg;
+		h5.text-secondary 品牌分类
+		.row
+			.col-1.col-sm-1
+			h5.col-4.col-sm-2.text-secondary 一级
+			h5.col-6.text-info #{Conf.bcate[bcateg.bcate]} 
+		.row
+			.col-1.col-sm-1
+			h5.col-4.col-sm-2.text-secondary 二级 
+			h5.col-6.text-info #{object.bcateg.code}
+	else
+		h5.col-12.text-danger 品牌分类 丢失
+	.row
+		if object.matDesp
+			-matDesp = object.matDesp;
+			h5.col-5.col-sm-3.text-secondary 材料
+			h5.col-6.text-info #{matDesp}
+	.row
+		if object.nation
+			-nation = object.nation;
+			h5.col-5.col-sm-3.text-secondary 国家
+			h5.col-6.text-info #{object.nation.code}
+		else
+			span 国家 丢失
+	.row
+		if object.firmName
+			-firmName = object.firmName;
+			h5.col-4.col-sm-3.text-secondary 公司名
+			h5.col-8.text-info #{firmName}
+	.row
+		h5.col-4.col-sm-3.text-secondary 网站
+		h5.col-8.text-info: a(href=object.website, target="view_window") #{object.website}
+	.basicDetail(style="display:none")
+		if object.webNote
+			- webNote = object.webNote;
+			.row
+				.col-1.col-sm-1
+				p.col-4.col-sm-2.text-secondary 备注
+				p.col-6.text-info #{webNote}
+		.row
+			h5.col-4.col-sm-3.text-secondary 生产周济
+			h5.col-8.text-info #{object.pTime}
+		.row
+			h5.col-4.col-sm-3.text-secondary 价目表
+			h5.col-8.text-info #{object.plist}
+		if object.plNote && object.plNote.length > 0
+			-plNote = object.plNote;
+			.row
+				.col-1.col-sm-1
+				p.col-4.col-sm-2.text-secondary 备注
+				p.col-6.text-info #{plNote}
+		.row
+			h5.col-4.col-sm-3.text-secondary 价目表
+			h5.col-8.text-info #{object.atlas}
+		if object.atNote && object.atNote.length > 0
+			-atNote = object.atNote;
+			.row
+				.col-1.col-sm-1
+				p.col-4.col-sm-2.text-secondary 备注
+				p.col-6.text-info #{atNote}
+		.row
+			if object.creater
+				-creater = object.creater;
+				h5.col-4.col-sm-3.text-secondary 创建者
+				h5.col-8.text-info #{object.creater.code}
 			else
-				td
-				td
-			td #{object.matDesp}
-	table.table.table-hover.table-bordered
-		tr
-			th 网站
-			th 生产周期
-			th 价目表
-			th 图册
-		tr
-			td 
-				a(href=object.website, target="view_window") #{object.website}
-				if object.webNote
-					-a;
-					span <br/>#{object.webNote}
-			td #{object.pTime}
-			td 
-				span #{object.plist} 
-				if object.plNote && object.plNote.length > 0
-					-a;
-					span : #{object.plNote}
-			td 
-				span #{object.atlas} 
-				if object.atNote && object.atNote.length > 0
-					-a;
-					span : #{object.atNote}
-	table.table.table-hover.table-bordered
-		tr
-			th 种类
-			th 创建者<br/>更新者
-			th 创建时间<br/>更新时间
-			th 权重
-		tr
-			td(class=objBg) #{Conf.stsBrand[object.status]}
-			td
-				if object.creater
-					-a;
-					span 创建者: #{object.creater.code}
-				if object.updater
-					-a;
-					br
-					span 更新者: #{object.updater.code}
-			td 
-				span #{moment(object.createAt).format('YYYY/MM/DD')}
-				br
-				span #{moment(object.updateAt).format('YYYY/MM/DD')}
-				
-			td #{Conf.weight[object.weight]}
+				span 创建者 丢失
+		.row
+			if object.updater
+				-updater = object.updater;
+				h5.col-4.col-sm-3.text-secondary 更新者
+				h5.col-8.text-info #{object.updater.code}
+			else
+				span 更新者 丢失
+		.row
+			if object.createAt
+				-createAt = object.createAt;
+				h5.col-4.col-sm-3.text-secondary 创建时间
+				h5.col-8.text-info #{moment(createAt).format('YYYY/MM/DD')}
+			else
+				span 创建时间 丢失
+		.row
+			if object.updateAt
+				-updateAt = object.updateAt;
+				h5.col-4.col-sm-3.text-secondary 更新时间
+				h5.col-8.text-info #{moment(updateAt).format('YYYY/MM/DD')}
+			else
+				span 更新时间 丢失
+		if object.weight
+			- weight = object.weight;
+			.row
+				p.col-3.col-sm-1.text-secondary 权重
+				p.col-8.text-info #{Conf.weight[object.weight]}
+		.row(class=objBg)
+			h5.col-4.col-sm-3.text-secondary 状态
+			if object.status
+				-status = object.status;
+				h5.col-8.text-info #{Conf.stsBrand[object.status]}
+			else
+				span UpdateAt Loss
+	button.btn.btn-default.btn-block.btnToggle(type="button") 详细信息
