@@ -27,7 +27,7 @@ each item in objects
 			.col-12.col-sm-4.border-right(class=trBg+" item-id-"+item._id)
 				.row
 					.col-12.text-center
-						a.text-dark(href="/qtScont/"+item._id): h3 Discount: #{item.scont} %
+						a.text-dark(href="/bnScont/"+item._id): h3 Discount: #{item.scont} %
 					.col-6.text-center
 						h5 #{Conf.sctCause[item.cause]}
 					.col-6.text-center
@@ -49,7 +49,7 @@ each item in objects
 					-brand = item.brand;
 					.row
 						.col-12.text-center
-							a.text-dark(href="/qtBrand/"+brand._id): h3 Brand: #{brand.code}
+							a.text-dark(href="/bnBrand/"+brand._id): h3 Brand: #{brand.code}
 						if brand.bcateg
 							-bcateg = brand.bcateg;
 							.col-6.text-left
@@ -62,7 +62,7 @@ each item in objects
 				if item.vendor
 					-vendor = item.vendor;
 					.row
-						.col-12.text-center: a.text-dark(href="/qtVendor/"+vendor._id): h3 Supplier: #{vendor.code}
+						.col-12.text-center: a.text-dark(href="/bnVendor/"+vendor._id): h3 Supplier: #{vendor.code}
 						.col-12.text-center #{Conf.vtype[vendor.vtype]}
 				else
 					h3 Supplier Lost
