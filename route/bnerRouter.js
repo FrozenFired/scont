@@ -72,11 +72,12 @@ module.exports = function(app){
 	app.get('/bnBrands', MdRole.bnerIsLogin, Brand.brandsFilter, Brand.brands)
 	app.get('/bnBrandsPrint', MdRole.bnerIsLogin, Brand.brandsFilter, Brand.brandsPrint)
 	app.get('/bnBrand/:id', MdRole.bnerIsLogin, Brand.brandFilter, Brand.brand)
+	app.get('/bnBrandDel/:id', MdRole.bnerIsLogin, Brand.brandFilter, Brand.brandDel)
 	app.get('/bnBrandUp/:id', MdRole.bnerIsLogin, Brand.brandFilter, Brand.brandUp)
 	app.post('/bnBrandUpd', PostForm, MdRole.bnerIsLogin, Brand.brandUpd)
 	app.get('/bnBrandAdd', MdRole.bnerIsLogin, Brand.brandAdd)
 	app.post('/bnBrandNew', PostForm, MdRole.bnerIsLogin, Brand.brandNew)
-	app.delete('/bnBrandDel', MdRole.bnerIsLogin, Brand.brandDel)
+	app.delete('/bnBrandDelAjax', MdRole.bnerIsLogin, Brand.brandDelAjax)
 
 	app.get('/ajaxCodeBrand', MdRole.bnerIsLogin, Brand.ajaxCodeBrand)
 	app.get('/ajaxBrandSts', MdRole.bnerIsLogin, Brand.ajaxBrandSts)

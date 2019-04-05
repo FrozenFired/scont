@@ -1,14 +1,18 @@
 extends ../aalayout/layout
 
 block content
-	.contain1
+	.container
 		.row
-			h1.col-sm-6
+			h1.col-12.col-sm-6
 				span 品牌 [#{count}]
-		.row.bg-light.p-2
-			.col-sm-12
-				include ./list/filter
+			.col-12.col-sm-6.text-right
+				button.btn.btn-warning.btnFilter(type="button") Filter
 		hr
+		.filterInfo(style="display:none")
+			.row.bg-light.p-2
+				.col-sm-12
+					include ./list/filter
+			hr
 		.row
 			.col-sm-12
 				include ../../../aaPlugin/pageSlip
@@ -18,4 +22,4 @@ block content
 			.col-sm-8
 			.col-sm-4
 				include ./list/print
-	script(src="/js/responsive.js")
+	script(src="/js/scont/brand/list.js")

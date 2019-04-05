@@ -49,6 +49,9 @@ else if object.status == 2
 		h5.col-4.col-sm-3.text-secondary option
 		a.col-4.col-sm-2.btn.btn-dark(href="/bnBrandUp/"+object._id) update
 		button.col-3.col-sm-2.btn.btn-warning#mark(type="button") Mark
+		if object.sconts && object.sconts.length == 0
+			-a;
+			a.btn.btn-danger(href="/bnBrandDel/"+object._id) delete
 	.basicDetail(style="display:none")
 		if object.webNote
 			- webNote = object.webNote;

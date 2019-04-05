@@ -1,19 +1,22 @@
 extends ../aalayout/layout
 
 block content
-	.contain1
+	.container
 		.row
-			h1.col-sm-6
+			h1.col-12.col-sm-6
 				span Brands [#{count}]
-			.col-sm-3.text-right
-				span: a.btn.btn-info.btn-lg(href="/bnBrandAdd") Add Brand
-			.col-sm-3.text-right
-				span: a.btn.btn-info.btn-lg(href="/bnScontAdd") Add Discount
+			.col-6.col-sm-2.text-right
+				span: a.btn.btn-info.btn-block(href="/bnBrandAdd") Add Brand
+			.col-6.col-sm-2.text-right
+				span: a.btn.btn-info.btn-block(href="/bnScontAdd") Add Discount
+			.col-12.col-sm-2.text-right
+				button.btn.btn-warning.btn-block.btnFilter(type="button") Filter
 		hr
-		.row.bg-light.p-2
-			.col-sm-12
-				include ./list/filter
-		hr
+		.filterInfo(style="display:none")
+			.row.bg-light.p-2
+				.col-sm-12
+					include ./list/filter
+			hr
 		.row
 			.col-sm-12
 				include ../../../aaPlugin/pageSlip
@@ -23,4 +26,4 @@ block content
 			.col-sm-8
 			.col-sm-4
 				include ./list/print
-	script(src="/js/responsive.js")
+	script(src="/js/scont/brand/list.js")

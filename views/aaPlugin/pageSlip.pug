@@ -4,13 +4,9 @@ if totalPage > 1
 	-a;
 	ul.pagination
 		li.page-item
-			a.page-link(href=url+'?page=0'+slipCond) First [1]
-		if currentPage > 5
-			-a;
-			li.page-item
-				a.page-link(href=url+'?page='+(currentPage-6)+slipCond) 5<<
+			a.page-link(href=url+'?page=0'+slipCond) First[1]
 		li.page-item: span &nbsp;
-		- for(let i = currentPage-3; i < currentPage+2; i++){
+		- for(let i = currentPage-2; i < currentPage+1; i++){
 			- if(i >= 0 && i<totalPage){
 				- if(currentPage == (i+1)){
 					li.page-item.active
@@ -23,8 +19,5 @@ if totalPage > 1
 			- }
 		- }
 		li.page-item: span &nbsp;
-		if currentPage < totalPage -4
-			li.page-item
-				a.page-link(href=url+'?page='+(currentPage+4)+slipCond) >>5
 		li.page-item
 			a.page-link(href=url+'?page=' + (totalPage-1)+slipCond) Last [#{totalPage}]

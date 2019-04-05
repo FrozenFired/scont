@@ -241,7 +241,6 @@ exports.brandFilter = function(req, res, next){
 		info = "Option error, Please contact Manager"
 		Index.bnOptionWrong(req, res, info)
 	} else {
-
 		Brand.findOne({_id: id})
 		.populate('bcateg').populate('nation')
 		.populate({
@@ -276,6 +275,31 @@ exports.brand = function(req, res){
 		title: 'Brand Detail',
 		crSfer: req.session.crSfer,
 		object: object
+	})
+}
+exports.brandDel = function(req, res){
+	let id = req.params.id;
+	Brand.findOne({_id: id}, function(err, brand) { if(err) {
+		console.log(err);
+		info = "bnBrandDel find brand database error, please contact Likelin";
+		Index.bnOptionWrong(req, res, info);
+	} else if(!brand) {
+		info = "This Brand is deleted, Please reflesh"
+		Index.bnOptionWrong(req, res, info)
+	} else {
+		bnCategBrandnum(brand.bcateg, -1)
+		bnNationBrandnum(brand.nation, -1)
+
+		Brand.remove({_id: id}, function(err, brander) {
+			if(err) {
+				info = "bnBrandDel remove brand database error, please contact Likelin";
+				Index.bnOptionWrong(req, res, info);
+			} else {
+				res.redirect('/bnBrands')
+			}
+		})
+	}
+
 	})
 }
 
@@ -340,7 +364,7 @@ exports.brandUpd = function(req, res) {
 	})
 }
 
-exports.brandDel = function(req, res) {
+exports.brandDelAjax = function(req, res) {
 	let id = req.query.id
 	Brand.findOne({_id: id})
 	.exec(function(err, brand){
