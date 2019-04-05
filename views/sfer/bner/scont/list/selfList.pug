@@ -1,62 +1,68 @@
-table.table.table-hover.table-bordered
-	thead
-		tr
-			th OPTIONS
-			th Brand <br/> Category
-			th Vendor <br/> Type
-			th DISCOUNT
-			th creater <br/> updater
-			//- th status
-			th oprate
-	tbody
-		each item in objects
-			- let trBg, brandBg, vendorBg;
-			if item.status == 0
-				-trBg ="bg-info";
-			else if item.status == 1
-				-trBg ="bg-default";
-			else if item.status == 2
-				-trBg ="bg-success";
-			else if item.status == 3
-				-trBg ="bg-warning";
-			else if item.status == 4
-				-trBg ="bg-secondary";
-			else if item.status == 5
-				-trBg ="bg-danger";
-			if item.brand && item.brand.status == 2
-				-brandBg ="bg-secondary";
-			if item.vendor && item.vendor.status == 2
-				-vendorBg ="bg-secondary";
-			tr(class=trBg+" item-id-"+item._id)
-				td #{Conf.sctCause[item.cause]}
-				td(class=brandBg)
-					if item.brand
-						-a;
-						a.btn.btn-primary(href="/bnBrand/"+item.brand._id) #{item.brand.code}
-						br
-						if item.brand.bcateg
-							-a;
-							span #{item.brand.bcateg.code} ; 
-							span #{Conf.bcate[item.brand.bcateg.bcate]}
-				td(class=vendorBg)
-					if item.vendor
-						-a;
-						a.btn.btn-primary(href="/bnVendor/"+item.vendor._id) #{item.vendor.code}
-						br
-						span #{Conf.vtype[item.vendor.vtype]}
-				td #{item.scont} %
-				td
-					if item.creater
-						-a;
-						span #{item.creater.code}
-					br
-					if item.updater
-						-a;
-						span #{item.updater.code}
-				//- td #{Conf.stsScont[item.status]}
-				td
-					a.btn.btn-primary(href="/bnScont/"+item._id) View
-					if item.status == 5
-						span &nbsp; | &nbsp;
-						button.btn.btn-warning.del(type="button", data-urldel="/bnScontDel", data-id=item._id) delete
-script(src="/js/delete.js")
+each item in objects
+	- let trBg, brandBg = 'bg-default', vendorBg = 'bg-default';
+	if item.status == 0
+		-trBg ="bg-info";
+	else if item.status == 1
+		-trBg ="bg-default";
+	else if item.status == 2
+		-trBg ="bg-success";
+	else if item.status == 3
+		-trBg ="bg-warning";
+	else if item.status == 4
+		-trBg ="bg-secondary";
+	else if item.status == 5
+		-trBg ="bg-danger";
+	if item.brand 
+		if item.brand.status == 0
+			-brandBg ="bg-info";
+		else if item.brand.status == 2
+			-brandBg ="bg-secondary";
+	if item.vendor
+		if item.vendor.status == 0
+			-vendorBg ="bg-info";
+		if item.vendor.status == 2
+			-vendorBg ="bg-secondary";
+	.card.p-2.mt-2
+		.row
+			.col-12.col-sm-4.border-right(class=trBg+" item-id-"+item._id)
+				.row
+					.col-12.text-center
+						a.text-dark(href="/qtScont/"+item._id): h3 Discount: #{item.scont} %
+					.col-6.text-center
+						h5 #{Conf.sctCause[item.cause]}
+					.col-6.text-center
+						h5 #{Conf.stsScont[item.status]}
+					.col-6.text-left
+						if item.creater
+							- creater = item.creater;
+							span Creater: #{creater.code}
+						else
+							span Creater Lost
+					.col-6.text-right
+						if item.updater
+							- updater = item.updater;
+							span Updater: #{updater.code}
+						else
+							span Updater Lost
+			.col-12.col-sm-4.border-right(class=brandBg)
+				if item.brand
+					-brand = item.brand;
+					.row
+						.col-12.text-center
+							a.text-dark(href="/qtBrand/"+brand._id): h3 Brand: #{brand.code}
+						if brand.bcateg
+							-bcateg = brand.bcateg;
+							.col-6.text-left
+								span #{bcateg.code} ; 
+							.col-6.text-right
+								span #{Conf.bcate[bcateg.bcate]}
+				else
+					h3 Brand Lost
+			.col-12.col-sm-4(class=vendorBg)
+				if item.vendor
+					-vendor = item.vendor;
+					.row
+						.col-12.text-center: a.text-dark(href="/qtVendor/"+vendor._id): h3 Supplier: #{vendor.code}
+						.col-12.text-center #{Conf.vtype[vendor.vtype]}
+				else
+					h3 Supplier Lost
