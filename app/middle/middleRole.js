@@ -54,11 +54,11 @@ exports.sfUniLog = function(req, res, next){
 			if(crSfer.loginTime == sfer.loginTime){
 				next()
 			}else{
-				res.redirect('/sferLogout')
+				res.redirect('/logout')
 			}
 		})
 	} else {
-		res.redirect('/sferLogout')
+		res.redirect('/logout')
 	}
 }
 

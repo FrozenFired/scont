@@ -1,102 +1,100 @@
-table.table.table-hover.table-bordered
-	thead
-		tr
-			th view
-			th supplier
-			th order
-			th brand
-			//- th P/I
-			th price
-			th ac
-			th acAt
-			th md
-			th mdAt
-			th sa
-			th saAt
-			th note
-			th(style="min-width: 200px") ourNote
-			th staff
-	tbody
-		- let pTot = 0, acTot = 0, saTot = 0;
-		each item in objects
-			-let stsOrderBg = Conf.stsOrderBg[item.status];
+- var pTot = 0, acTot = 0, saTot = 0;
+each item in objects
+	-var stsOrderBg = Conf.stsOrderBg[item.status];
 
-			-let payAc, acPrice, payMd, mdPrice, paySa, saPrice;
-			-let bgAcPaid = bgMdPaid = bgSaPaid = "bg-default";
-			-let bgAcToday = bgMdToday = bgSaToday = "bg-default";
-			-let bgAcWeek = bgMdWeek = bgSaWeek = "bg-default";
-			if item.payAc
-				-payAc = item.payAc;
-				-acPrice = payAc.price;
+	-var payAc, acPrice, payMd, mdPrice, paySa, saPrice;
+	-var bgAcPaid = bgMdPaid = bgSaPaid = "bg-default";
+	-var bgAcToday = bgMdToday = bgSaToday = "bg-default";
+	-var bgAcWeek = bgMdWeek = bgSaWeek = "bg-default";
+	if item.payAc
+		-payAc = item.payAc;
+		-acPrice = payAc.price;
 
-				if payAc.status > 0
-					- bgAcPaid = "bg-warning";
+		if payAc.status > 0
+			- bgAcPaid = "bg-warning";
 
-				if payAc.paidAt
-					-acTime = moment(payAc.paidAt).format('YYYYMMDD');
-					if today == acTime
-						- bgAcToday="bg-info";
-					else if today < acTime && acTime < weekday
-						- bgAcWeek="bg-info";
-			if item.payMd
-				-payMd = item.payMd;
-				-mdPrice = payMd.price;
+		if payAc.paidAt
+			-acTime = moment(payAc.paidAt).format('YYYYMMDD');
+			if today == acTime
+				- bgAcToday="bg-info";
+			else if today < acTime && acTime < weekday
+				- bgAcWeek="bg-info";
+	if item.payMd
+		-payMd = item.payMd;
+		-mdPrice = payMd.price;
 
-				if payMd.status > 0
-					- bgMdPaid = "bg-warning";
+		if payMd.status > 0
+			- bgMdPaid = "bg-warning";
 
-				if payMd.paidAt
-					-mdTime = moment(payMd.paidAt).format('YYYYMMDD');
-					if today == mdTime
-						- bgMdToday="bg-info";
-					else if today < mdTime && mdTime < weekday
-						- bgMdWeek="bg-info";
-			if item.paySa
-				-paySa = item.paySa;
-				-saPrice = paySa.price;
+		if payMd.paidAt
+			-mdTime = moment(payMd.paidAt).format('YYYYMMDD');
+			if today == mdTime
+				- bgMdToday="bg-info";
+			else if today < mdTime && mdTime < weekday
+				- bgMdWeek="bg-info";
+	if item.paySa
+		-paySa = item.paySa;
+		-saPrice = paySa.price;
 
-				if paySa.status > 0
-					- bgSaPaid = "bg-warning";
+		if paySa.status > 0
+			- bgSaPaid = "bg-warning";
 
-				if paySa.paidAt
-					-saTime = moment(paySa.paidAt).format('YYYYMMDD');
-					if today == saTime
-						- bgSaToday="bg-info";
-					else if today < saTime && saTime < weekday
-						- bgSaWeek="bg-info";
+		if paySa.paidAt
+			-saTime = moment(paySa.paidAt).format('YYYYMMDD');
+			if today == saTime
+				- bgSaToday="bg-info";
+			else if today < saTime && saTime < weekday
+				- bgSaWeek="bg-info";
+	.card.p-2.mt-2(class="item-id-"+item._id)
+		.row
+			a.col-11.col-sm-4.btn.btn-default.text-left.text-dark.border.ml-2(class=stsOrderBg href="/qtOrder/"+item._id)
+				h5 #{item.order}
+				if item.vder
+					-var vder = item.vder;
+					h5 <span class="text-secondary">Supplier:</span> #{vder.code}
+				else
+					span Supplier Lost
 
-			tr(class="item-id-"+item._id)
-				td(class=stsOrderBg): a(href="/qtOrder/"+item._id) view
-				td
-					if item.vder
-						-a;
-						span #{item.vder.code} #{weekTime}
-					else
-						span loss supplier
-				td #{item.order}
-				td #{item.brand}
-				//- td #{item.pi}
-				td #{item.price}
-				td(class=bgAcPaid + " " + bgAcToday) #{acPrice}
-				td(class=bgAcWeek)
-					if payAc && payAc.paidAt
-						-a;
-						span #{moment(payAc.paidAt).format('YYYY/MM/DD')}
-				td(class=bgMdPaid + " " + bgMdToday) #{mdPrice}
-				td(class=bgMdWeek)
-					if payMd && payMd.paidAt
-						-a;
-						span #{moment(payMd.paidAt).format('YYYY/MM/DD')}
-				td(class=bgSaPaid + " " + bgSaToday) #{saPrice}
-				td(class=bgSaWeek)
-					if paySa && paySa.paidAt
-						-a;
-						span #{moment(paySa.paidAt).format('YYYY/MM/DD')}
-				td #{item.note}
-				td
+				p #{item.brand}
+			.col-11.col-sm-4.ml-2
+				h4 Total: #{item.price} 
+				.row
+					h5.col-6
+						span(class=bgAcPaid + " " + bgAcToday) AC: 
+						span #{acPrice}
+					.col-6(class=bgAcWeek)
+						if payAc && payAc.paidAt
+							-a;
+							span #{moment(payAc.paidAt).format('YYYY/MM/DD')}
+				.row
+					if item.payMd
+						-payMd = item.payMd;
+						h5.col-6
+							span(class=bgMdPaid + " " + bgMdToday) MD: 
+							span #{payMd.price}
+						.col-6(class=bgMdWeek)
+							if payMd && payMd.paidAt
+								-a;
+								span #{moment(payMd.paidAt).format('YYYY/MM/DD')}
+				.row
+					h5.col-6
+						span(class=bgSaPaid + " " + bgSaToday) SA: 
+						span #{saPrice}
+					.col-6(class=bgSaWeek)
+						if paySa && paySa.paidAt
+							-a;
+							span #{moment(paySa.paidAt).format('YYYY/MM/DD')}
+			.col-11.col-sm-3.ml-2
+				h4 P/I： #{item.pi}
+				if item.note
+					-a;
+					div SupplierNote: #{item.note}
+				div
 					include ./editOurnote
-				td 
-					if item.creater
-						-a;
-						span #{item.creater.code}
+				if item.creater
+					-creater = item.creater;
+					span Staff: #{creater.code}
+				else
+					span Staff Lost
+
 script(src="/js/order/list.js")
