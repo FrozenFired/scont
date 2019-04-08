@@ -2,9 +2,9 @@ extends ../aalayout/layout
 
 block content
 	.container
-		.row(class=objBg)
-			h1.col-sm-6 详情: [#{object.code}]
-			.col-sm-6.text-right
+		.row
+			h1.col-12.col-sm-6 国家: [#{object.code}]
+			.col-12.col-sm-6.text-right
 				a.btn.btn-link(href="/cnNations") 返回列表
 		hr
 		include ./detail/selfInfo

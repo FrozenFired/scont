@@ -1,26 +1,30 @@
-table.table.table-hover.table-bordered
-	thead
-		tr
-			th(width="20%") 品牌
-			th(width="20%") 种类1/种类2
-			th(width="20%") 材料描述
-			th(width="10%") 状态
-			th(width="10%") 供应商数
-	tbody
-		each brand in brands
-			-let a;
-			tr(class="brand-id-"+brand._id)
-				td: a(href="/cnBrand/"+brand._id) #{brand.code}
-				td 
-					if brand.bcateg
-						-a;
-						span #{Conf.bcate[brand.bcateg.bcate]}<br/>#{brand.bcateg.code}
-					if brand. matDesp && brand.matDesp.length > 0
-						-a;
-				td <br/>#{brand.matDesp}
-				td #{Conf.stsBrand[brand.status]}
-				if brand.sconts
-					td #{brand.sconts.length}
+each brand in brands
+	-a;
+	.card.p-2.mt-2
+		.row
+			.col-12.col-sm-4
+				h4: a(href="/qtBrand/"+brand._id) 品牌: #{brand.code}
+				if brand.bcateg
+					- bcateg = brand.bcateg;
+					h5 一级： #{Conf.bcate[bcateg.bcate]}
+					h5 二级： #{bcateg.code}
 				else
-					td 0
-				-a;
+					h5 Brand Category Lost
+			.col-12.col-sm-4
+				h5
+					span.col-6.text-secondary 材料描述:
+					span.col-6.text-info #{brand.matDesp}
+				h5
+					span.col-6.text-secondary 公司名:
+					span.col-6.text-info #{brand.firmName}
+			.col-12.col-sm-4
+				h5
+					span.col-6.text-secondary 状态:
+					span.col-6.text-info #{Conf.stsBrand[brand.status]}
+				h5
+					span.col-6.text-secondary 供应商数:
+					if brand.sconts
+						-sconts = brand.sconts;
+						span #{sconts.length}
+					else
+						span 0

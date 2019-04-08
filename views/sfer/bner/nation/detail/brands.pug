@@ -1,28 +1,30 @@
-table.table.table-hover.table-bordered
-	thead
-		tr
-			th brand code
-			th firm name
-			th category1 / category2
-			th material Description
-			th status
-			th numvendor
-	tbody
-		each brand in brands
-			-let a;
-			tr(class="brand-id-"+brand._id)
-				td: a(href="/bnBrand/"+brand._id) #{brand.code}
-				td #{brand.firmName}
-				td 
-					if brand.bcateg
-						-a;
-						span #{Conf.bcate[brand.bcateg.bcate]}<br/>#{brand.bcateg.code}
-					if brand. matDesp && brand.matDesp.length > 0
-						-a;
-				td <br/>#{brand.matDesp}
-				td #{Conf.stsBrand[brand.status]}
-				if brand.sconts
-					td #{brand.sconts.length}
+each brand in brands
+	-a;
+	.card.p-2.mt-2
+		.row
+			.col-12.col-sm-4
+				h4: a(href="/bnBrand/"+brand._id) #{brand.code}
+				if brand.bcateg
+					- bcateg = brand.bcateg;
+					h5 #{Conf.bcate[bcateg.bcate]}
+					h5 #{bcateg.code}
 				else
-					td 0
-				-a;
+					h5 Brand Category Lost
+			.col-12.col-sm-4
+				h5
+					span.col-6.text-secondary Material:
+					span.col-6.text-info #{brand.matDesp}
+				h5
+					span.col-6.text-secondary Firm:
+					span.col-6.text-info #{brand.firmName}
+			.col-12.col-sm-4
+				h5
+					span.col-6.text-secondary Status:
+					span.col-6.text-info #{Conf.stsBrand[brand.status]}
+				h5
+					span.col-6.text-secondary Num Supplier:
+					if brand.sconts
+						-sconts = brand.sconts;
+						span #{sconts.length}
+					else
+						span 0

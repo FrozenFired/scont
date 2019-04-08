@@ -81,7 +81,9 @@ exports.nation = function(req, res){
 	.exec(function(err, object){
 		if(err) console.log(err);
 		if(object) {
-			Brand.find({nation: object._id}, function(err, brands) {
+			Brand.find({nation: object._id})
+			.populate('bcateg')
+			.exec(function(err, brands) {
 				if(err) console.log(err);
 				if(object.numbrand != brands.length) {
 					object.numbrand = brands.length;
