@@ -2,6 +2,7 @@ let Index = require('./index')
 let Order = require('../../../models/finance/order')
 let Pay = require('../../../models/finance/pay')
 let Vder = require('../../../models/scont/vendor')
+let Sfer = require('../../../models/user/sfer')
 let _ = require('underscore')
 
 let Filter = require('../../../middle/filter');
@@ -43,7 +44,14 @@ exports.ordersFilter = function(req, res, next) {
 	// let condStatus = Object.keys(Conf.stsOrder);
 	let condStatus = ['0', '1', '2'];
 	[condition.condStatus, condition.slipCond] = Filter.status(req.query.status, condStatus, condition.slipCond);
-	if(req.query && req.query.keytype == "vder"){
+	if(req.query && req.query.keytype == "sfer"){
+		// console.log('sfer')
+		condition.keytype = "order";
+		condition.keyword = "";
+		condition.symPul = "$eq";
+		condition.condPul = req.query.keyword;
+		qtOrderFindSfers(req, res, next, condition);
+	} else if(req.query && req.query.keytype == "vder"){
 		condition.keytype = "order";
 		condition.keyword = "";
 		condition.symPul = "$eq";
@@ -55,9 +63,23 @@ exports.ordersFilter = function(req, res, next) {
 		qtOrderFindOrders(req, res, next, condition);
 	}
 }
+qtOrderFindSfers = function(req, res, next, condition) {
+	Sfer.findOne({code: condition.condPul}, function(err, sfer) {
+		if(err) console.log(err);
+		condition.varDB = 'creater';
+		condition.symPul = '$eq';
+		if(sfer) {
+			condition.condPul = sfer._id;
+		} else {
+			condition.condPul = randID;
+		}
+		qtOrderFindOrders(req, res, next, condition);
+	})
+}
 qtOrderFindVders = function(req, res, next, condition) {
 	Vder.findOne({code: condition.condPul}, function(err, vder) {
 		if(err) console.log(err);
+		condition.varDB = 'vder';
 		condition.symPul = '$eq';
 		if(vder) {
 			condition.condPul = vder._id;
@@ -70,7 +92,7 @@ qtOrderFindVders = function(req, res, next, condition) {
 qtOrderFindOrders = function(req, res, next, condition) {
 	Order.count({
 		[condition.varNumb]: {[condition.symNumb]: condition.condNumb},
-		'vder': {[condition.symPul]: condition.condPul},
+		[condition.varDB]: {[condition.symPul]: condition.condPul},
 		[condition.keytype]: new RegExp(condition.keyword + '.*'),
 		'status': condition.condStatus  // 'status': {$in: condStatus}
 	})
@@ -79,7 +101,7 @@ qtOrderFindOrders = function(req, res, next, condition) {
 
 	Order.find({
 		[condition.varNumb]: {[condition.symNumb]: condition.condNumb},
-		'vder': {[condition.symPul]: condition.condPul},
+		[condition.varDB]: {[condition.symPul]: condition.condPul},
 		[condition.keytype]: new RegExp(condition.keyword + '.*'),
 		'status': condition.condStatus  // 'status': {[symStatus]: condStatus}
 	})

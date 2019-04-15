@@ -60,7 +60,7 @@ exports.ordersFilter = function(req, res, next) {
 		.skip(index).limit(entry)
 		.populate('payAc').populate('payMd').populate('paySa')
 		.populate('vder')
-		.sort({"createAt": -1})
+		.sort({'status': 1, "createAt": -1})
 		.exec(function(err, objects) {
 			if(err) console.log(err);
 			if(objects){
