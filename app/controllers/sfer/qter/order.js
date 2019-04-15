@@ -255,7 +255,7 @@ exports.orderNew = function(req, res) {
 	}
 }
 
-qtAddPayFunc = function(objBody, _object) {
+qtAddPayFunc = function(objBody, object) {
 	let objAc = new Object();
 	objAc.price = parseFloat(objBody.acPrice);
 	objAc.code = "ac";
@@ -266,14 +266,14 @@ qtAddPayFunc = function(objBody, _object) {
 	objSa.code = "sa";
 	objSa.status = 0;
 
-	objAc.order = objSa.order = _object._id;
+	objAc.order = objSa.order = object._id;
 	let _payAc = new Pay(objAc);
 	_payAc.save(function(err, acSave) {});
 	let _paySa = new Pay(objSa);
 	_paySa.save(function(err, saSave) {});
 
-	_object.payAc = _payAc._id;
-	_object.paySa = _paySa._id;
+	object.payAc = _payAc._id;
+	object.paySa = _paySa._id;
 }
 
 
@@ -339,19 +339,68 @@ exports.orderUp = function(req, res) {
 
 exports.orderUpd = function(req, res) {
 	let objBody = req.body.object
-	// console.log(objBody)
 	Order.findOne({_id: objBody._id}, function(err, object) {
 		if(err) console.log(err);
 		if(!object) {
-			info = "此任务已经被删除"
+			info = "此订单已经被删除"
 			Index.qtOptionWrong(req, res, info)
 		} else {
-			let _object = _.extend(object, objBody);
+			objBody.price = parseFloat(objBody.price)
+			if(isNaN(parseFloat(objBody.price)) || isNaN(parseFloat(objBody.acPrice)) || isNaN(parseFloat(objBody.saPrice))){
+				info = "订单价格设置错误";
+				Index.qtOptionWrong(req, res, info);
+			} else {
+				objBody.order = objBody.order.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+				objBody.brand = objBody.brand.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+				objBody.updateAt = Date.now();
+				objBody.updater = req.session.crSfer._id;
 
-			_object.save(function(err, objSave) {
+				let _object = _.extend(object, objBody)
+				qtUpdPayFunc(req, res, objBody, _object)
+				
+			}
+		}
+	})
+}
+
+qtUpdPayFunc = function(req, res, objBody, object) {
+	Pay.findOne({_id: object.payAc}, function(err, payAc) {
+		if(err) {
+			console.log(err);
+			info = "qtOrderUpd payAc find id error, Please Contact Manager";
+			Index.qtOptionWrong(req, res, info);
+		} else if(!payAc) {
+			info = "qtOrderUpd payAc find error, Please Contact Manager";
+			Index.qtOptionWrong(req, res, info);
+		} else {
+			payAc.price = parseFloat(objBody.acPrice);
+			payAc.save(function(err, payAcSave) {
 				if(err) console.log(err);
-				res.redirect('/qtOrders');
-			});	
+				Pay.findOne({_id: object.paySa}, function(err, paySa) {
+					if(err) {
+						console.log(err);
+						info = "qtOrderUpd paySa find id error, Please Contact Manager";
+						Index.qtOptionWrong(req, res, info);
+					} else if(!paySa) {
+						info = "qtOrderUpd paySa find error, Please Contact Manager";
+						Index.qtOptionWrong(req, res, info);
+					} else {
+						paySa.price = parseFloat(objBody.saPrice);
+						paySa.save(function(err, paySaSave) {
+							if(err) console.log(err);
+							object.save(function(err, objSave) {
+								if(err) {
+									console.log(err);
+									info = "qtOrderUpd order save error, Please Contact Manager";
+									Index.qtOptionWrong(req, res, info);
+								} else {
+									res.redirect('/qtOrder/'+objSave._id)
+								}
+							})
+						})
+					}
+				})
+			})
 		}
 	})
 }

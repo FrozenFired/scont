@@ -1,6 +1,7 @@
 $( function() {
 	// $(".datepicker").datepicker();
 	$("#ajaxIptVendorCode").focus();
+	$("#areaOurNote").val($("#iptOurNote").val());
 
 	// let now = new Date();
 	// let month = String(now.getMonth()+1);
