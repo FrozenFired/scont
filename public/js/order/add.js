@@ -86,11 +86,40 @@ $( function() {
 		// 突然想自己写个逻辑，就没有用正则
 		if(isFloat(price)) {
 			$("#optPrice").hide();
+
+			let perAc = $("#perAc").val();
+			if(isFloat(perAc)) {
+				let perSa = Math.round((100 - perAc)*100)/100;
+				$("#perSa").val(perSa);
+
+				let iptAc = Math.round(perAc * price) / 100;
+				$("#iptAc").val(iptAc);
+
+				let iptSa = Math.round((price - iptAc)*100)/100;
+				$("#iptSa").val(iptSa);
+			}
 		} else {
 			$("#optPrice").show();
 		}
 	})
 
+
+
+	$("#perAc").blur(function(e) {
+		let perAc = $(this).val();
+		let price = $("#iptPrice").val();
+		// 突然想自己写个逻辑，就没有用正则
+		if(isFloat(perAc) && isFloat(price)) {
+			let perSa = Math.round((100 - perAc)*100)/100;
+			$("#perSa").val(perSa);
+
+			let iptAc = Math.round(perAc * price) / 100;
+			$("#iptAc").val(iptAc);
+
+			let iptSa = Math.round((price - iptAc)*100)/100;
+			$("#iptSa").val(iptSa);
+		}
+	})
 	$("#iptAc").blur(function(e) {
 		let ac = $(this).val();
 		// 突然想自己写个逻辑，就没有用正则

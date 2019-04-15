@@ -66,14 +66,24 @@ block content
 			hr
 			.form-group.row
 				label.col-sm-2.col-form-label Ac
-				.col-sm-6
+				.col-sm-2
 					input#iptAc.form-control(type="text", name="object[acPrice]")
+				.col-sm-2
+					.input-group.mb-3
+						input#perAc.form-control(type="number" placeholder="number" aria-label="percentuale of AC" aria-describedby="basic-addon1")
+						.input-group-append
+							span.input-group-text#basic-addon1 %
 				.col-sm-4
 					span#optAc.text-danger(style="display:none") Pleas complete Ac Price
 			.form-group.row
 				label.col-sm-2.col-form-label Sa
-				.col-sm-6
+				.col-sm-2
 					input#iptSa.form-control(type="text", name="object[saPrice]")
+				.col-sm-2
+					.input-group.mb-3
+						input#perSa.form-control(type="number" placeholder="number" aria-label="percentuale of SA" aria-describedby="basic-addon2")
+						.input-group-append
+							span.input-group-text#basic-addon2 %
 				.col-sm-4
 					span#optSa.text-danger(style="display:none") Pleas complete Sa Price
 
