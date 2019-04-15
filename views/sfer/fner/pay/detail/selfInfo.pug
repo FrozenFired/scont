@@ -81,22 +81,22 @@ table.table.table-hover.table-bordered
 		td(class=bgStatus): strong Status
 		td 
 			span #{Conf.stsPay[object.status]} &nbsp;
-			if object.method == 0
-				-a;
-				if object.status == 0
-					-a;
-					button.btn.btn-warning.change(type="button", class=referBtn, data-url="/fnPayStatus", data-id=object._id, data-sts=2) Paid
-			else if object.method == 1
+			if object.method == 1
 				-a;
 				if object.status == 0
 					-a;
 					button.btn.btn-warning.change(type="button", class=referBtn, data-url="/fnPayStatus", data-id=object._id, data-sts=1) writed
-				if object.status == 1
+				else if object.status == 1
 					-a;
 					button.btn.btn-warning.change(type="button", class=referBtn, data-url="/fnPayStatus", data-id=object._id, data-sts=2) Paid
-			else if object.method
+				else
+					button.btn.btn-danger.change(type="button", class=referBtn, data-url="/fnPayStatus", data-id=object._id, data-sts=0) init
+
+			else if object.method || object.method == 0
 				-a;
 				if object.status == 0
 					-a;
 					button.btn.btn-warning.change(type="button", class=referBtn, data-url="/fnPayStatus", data-id=object._id, data-sts=2) Paid
+				else
+					button.btn.btn-danger.change(type="button", class=referBtn, data-url="/fnPayStatus", data-id=object._id, data-sts=0) init
 script(src="/js/changeStatus.js")

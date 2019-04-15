@@ -336,7 +336,30 @@ exports.orderUp = function(req, res) {
 	}
 }
 
+exports.orderFixed = function(req, res) {
+	let objBody = req.body.object
+	Order.findOne({_id: objBody._id}, function(err, object) {
+		if(err) console.log(err);
+		if(!object) {
+			info = "此订单已经被删除"
+			Index.qtOptionWrong(req, res, info)
+		} else {
+			if(objBody.price) objBody.price = parseFloat(objBody.price)
+			if(objBody.order) objBody.order = objBody.order.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
 
+			let _object = _.extend(object, objBody)
+			_object.save(function(err, objSave) {
+				if(err) {
+					console.log(err);
+					info = "qtOrderUpd order save error, Please Contact Manager";
+					Index.qtOptionWrong(req, res, info);
+				} else {
+					res.redirect('/qtOrder/'+objSave._id)
+				}
+			})	
+		}
+	})
+}
 exports.orderUpd = function(req, res) {
 	let objBody = req.body.object
 	Order.findOne({_id: objBody._id}, function(err, object) {

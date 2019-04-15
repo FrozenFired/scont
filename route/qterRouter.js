@@ -89,6 +89,7 @@ module.exports = function(app){
 	app.get('/qtOrder/:id', MdRole.qterIsLogin, Order.orderFilter, Order.order)
 	app.get('/qtOrderUp/:id', MdRole.qterIsLogin, Order.orderFilter, Order.orderUp)
 	app.post('/qtOrderUpd', PostForm, MdRole.qterIsLogin, MdRole.sfUniLog, Order.orderUpd)
+	app.post('/qtOrderFixed', PostForm, MdRole.qterIsLogin, MdRole.sfUniLog, Order.orderFixed)
 	app.get('/qtOrderAdd', MdRole.qterIsLogin, MdRole.sfUniLog, Order.orderAdd)
 	app.post('/qtOrderNew', PostForm, MdRole.qterIsLogin, MdRole.sfUniLog, Order.orderNew)
 	app.get('/qtOrderDel/:id', MdRole.qterIsLogin, Order.orderFilter, Order.orderDel)

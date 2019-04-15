@@ -114,7 +114,6 @@ fnOrderFindOrders = function(req, res, next, condition) {
 			Index.fnOptionWrong(req, res, info);
 		}
 	})
-
 	})
 }
 
@@ -190,7 +189,6 @@ exports.orderAdd =function(req, res) {
 		action: "/fnOrderNew",
 	})
 }
-
 
 
 
@@ -380,8 +378,6 @@ fnMdFunc = function(objBody, _object) {
 		paySa.price = parseFloat(objBody.saPrice);
 		paySa.save(function(err, saSave) {});
 	})
-
-
 }
 
 
@@ -467,10 +463,6 @@ exports.orderDel = function(req, res) {
 		res.redirect('/fnOrders')
 	})
 }
-
-
-
-
 
 
 
