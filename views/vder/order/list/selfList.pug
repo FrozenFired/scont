@@ -7,11 +7,11 @@ table.table.table-hover.table-bordered
 			//- th P/I
 			th price
 			th ac
-			th acAt
+			th Method / acAt
 			th md
-			th mdAt
+			th Method / mdAt
 			th sa
-			th saAt
+			th Method / saAt
 			th(style="min-width: 100px") note
 	tbody
 		- let pTot = 0, acTot = 0, saTot = 0;
@@ -19,11 +19,13 @@ table.table.table-hover.table-bordered
 			-let stsOrderBg = Conf.stsOrderBg[item.status];
 
 			-let payAc, acPrice, payMd, mdPrice, paySa, saPrice;
+			-let methodAc, methodMd, methodSa;
 			-let bgAcPaid = bgMdPaid = bgSaPaid = "bg-default";
 			-let bgAcToday = bgMdToday = bgSaToday = "bg-default";
 			-let bgAcWeek = bgMdWeek = bgSaWeek = "bg-default";
 			if item.payAc
 				-payAc = item.payAc;
+				-methodAc = payAc.method;
 				-acPrice = payAc.price;
 
 				if payAc.status > 0
@@ -37,6 +39,7 @@ table.table.table-hover.table-bordered
 						- bgAcWeek="bg-info";
 			if item.payMd
 				-payMd = item.payMd;
+				-methodMd = payMd.method;
 				-mdPrice = payMd.price;
 
 				if payMd.status > 0
@@ -50,6 +53,7 @@ table.table.table-hover.table-bordered
 						- bgMdWeek="bg-info";
 			if item.paySa
 				-paySa = item.paySa;
+				-methodSa = paySa.method;
 				-saPrice = paySa.price;
 
 				if paySa.status > 0
@@ -75,16 +79,28 @@ table.table.table-hover.table-bordered
 				td #{item.price}
 				td(class=bgAcPaid + " " + bgAcToday) #{acPrice}
 				td(class=bgAcWeek)
-					if payAc && payAc.paidAt
+					if methodAc || methodAc == 0
 						-a;
-						span #{moment(payAc.paidAt).format('YYYY/MM/DD')}
+						span #{Conf.payMethod[methodAc]}
+						br
+					if payAc && payAc.paidAt
+						-paidAt = payAc.paidAt;
+						span #{moment(paidAt).format('YYYY/MM/DD')}
 				td(class=bgMdPaid + " " + bgMdToday) #{mdPrice}
 				td(class=bgMdWeek)
+					if methodMd || methodMd == 0
+						-a;
+						span #{Conf.payMethod[methodMd]}
+						br
 					if payMd && payMd.paidAt
 						-a;
 						span #{moment(payMd.paidAt).format('YYYY/MM/DD')}
 				td(class=bgSaPaid + " " + bgSaToday) #{saPrice}
 				td(class=bgSaWeek)
+					if methodSa || methodSa == 0
+						-a;
+						span #{Conf.payMethod[methodSa]}
+						br
 					if paySa && paySa.paidAt
 						-a;
 						span #{moment(paySa.paidAt).format('YYYY/MM/DD')}
