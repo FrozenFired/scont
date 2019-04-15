@@ -30,8 +30,7 @@ block content
 		hr
 		include ./detail/selfInfo
 		hr
-		.row
-			.col-sm-6
-				a.btn.btn-danger(href="/fnOrderDel/"+object._id) delete
-			.col-sm-6
+		a.btn.btn-warning(href="/fnOrderUp/"+object._id) Update
+		span &nbsp; &nbsp;
+		a.btn.btn-danger(href="/fnOrderDel/"+object._id) Delete
 	script(src="/js/changeStatus.js")

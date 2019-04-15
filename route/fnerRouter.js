@@ -30,8 +30,10 @@ module.exports = function(app){
 	app.get('/fnOrderAdd', MdRole.fnerIsLogin, MdRole.sfUniLog, Order.orderAdd)
 	app.post('/fnOrderNew', PostForm, MdRole.fnerIsLogin, MdRole.sfUniLog, Order.orderNew)
 	app.get('/fnOrder/:id', MdRole.fnerIsLogin, Order.orderFilter, Order.order)
+	app.get('/fnOrderUp/:id', MdRole.fnerIsLogin, Order.orderFilter, Order.orderUp)
 	app.get('/fnOrderUpMd/:id', MdRole.fnerIsLogin, Order.orderFilter, Order.orderUpMd)
 	app.get('/fnOrderUpPrice/:id', MdRole.fnerIsLogin, Order.orderFilter, Order.orderUpPrice)
+	app.post('/fnOrderFixed', PostForm, MdRole.fnerIsLogin, MdRole.sfUniLog, Order.orderFixed)
 	app.post('/fnOrderUpd', PostForm, MdRole.fnerIsLogin, MdRole.sfUniLog, Order.orderUpd)
 	app.get('/fnOrderDel/:id', MdRole.fnerIsLogin, Order.orderFilter, Order.orderDel)
 

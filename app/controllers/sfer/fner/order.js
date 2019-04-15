@@ -290,20 +290,37 @@ exports.order = function(req, res) {
 	})
 }
 
+exports.orderUp = function(req, res) {
+	let objBody = req.body.object
+	// console.log(objBody)
+	let list = req.body.list;
+	let now = new Date();
+	today = moment(now).format('YYYYMMDD');
+	let weekday = new Date(now.getTime() + 7*24*60*60*1000)
+	weekday = moment(weekday).format('YYYYMMDD');
 
+	res.render('./sfer/fner/order/update', {
+		title: 'fnOrder Update',
+		action: '/fnOrderUpd',
+		crSfer : req.session.crSfer,
+		object: objBody,
+		today: today,
+		weekday: weekday
+	})
+}
 exports.orderUpMd = function(req, res) {
 	let title = "fnOrder splite Md"
 	let fontUrl = './sfer/fner/order/update/slipMd';
 
-	fnOrderUpd(req, res, fontUrl, title)
+	fnOrderFix(req, res, fontUrl, title)
 }
 exports.orderUpPrice = function(req, res) {
 	let title = "fnOrder update Price"
 	let fontUrl = './sfer/fner/order/update/upPrice';
 
-	fnOrderUpd(req, res, fontUrl, title)
+	fnOrderFix(req, res, fontUrl, title)
 }
-fnOrderUpd = function(req, res, fontUrl, title) {
+fnOrderFix = function(req, res, fontUrl, title) {
 	let objBody = req.body.object
 
 	res.render(fontUrl, {
@@ -311,13 +328,13 @@ fnOrderUpd = function(req, res, fontUrl, title) {
 		crSfer : req.session.crSfer,
 		object: objBody,
 
-		action: '/fnOrderUpd',
+		action: '/fnOrderFixed',
 	})
 }
 
 
 
-exports.orderUpd = function(req, res) {
+exports.orderFixed = function(req, res) {
 	let objBody = req.body.object
 	// console.log(objBody)
 	objBody.updateAt = Date.now();
@@ -368,6 +385,74 @@ fnMdFunc = function(objBody, _object) {
 }
 
 
+
+exports.orderUpd = function(req, res) {
+	let objBody = req.body.object
+	Order.findOne({_id: objBody._id}, function(err, object) {
+		if(err) console.log(err);
+		if(!object) {
+			info = "此订单已经被删除"
+			Index.fnOptionWrong(req, res, info)
+		} else {
+			objBody.price = parseFloat(objBody.price)
+			if(isNaN(parseFloat(objBody.price)) || isNaN(parseFloat(objBody.acPrice)) || isNaN(parseFloat(objBody.saPrice))){
+				info = "订单价格设置错误";
+				Index.fnOptionWrong(req, res, info);
+			} else {
+				objBody.order = objBody.order.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+				objBody.brand = objBody.brand.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+				objBody.updateAt = Date.now();
+				objBody.updater = req.session.crSfer._id;
+
+				let _object = _.extend(object, objBody)
+				fnUpdPayFunc(req, res, objBody, _object)
+				
+			}
+		}
+	})
+}
+
+fnUpdPayFunc = function(req, res, objBody, object) {
+	Pay.findOne({_id: object.payAc}, function(err, payAc) {
+		if(err) {
+			console.log(err);
+			info = "fnOrderUpd payAc find id error, Please Contact Manager";
+			Index.fnOptionWrong(req, res, info);
+		} else if(!payAc) {
+			info = "fnOrderUpd payAc find error, Please Contact Manager";
+			Index.fnOptionWrong(req, res, info);
+		} else {
+			payAc.price = parseFloat(objBody.acPrice);
+			payAc.save(function(err, payAcSave) {
+				if(err) console.log(err);
+				Pay.findOne({_id: object.paySa}, function(err, paySa) {
+					if(err) {
+						console.log(err);
+						info = "fnOrderUpd paySa find id error, Please Contact Manager";
+						Index.fnOptionWrong(req, res, info);
+					} else if(!paySa) {
+						info = "fnOrderUpd paySa find error, Please Contact Manager";
+						Index.fnOptionWrong(req, res, info);
+					} else {
+						paySa.price = parseFloat(objBody.saPrice);
+						paySa.save(function(err, paySaSave) {
+							if(err) console.log(err);
+							object.save(function(err, objSave) {
+								if(err) {
+									console.log(err);
+									info = "fnOrderUpd order save error, Please Contact Manager";
+									Index.fnOptionWrong(req, res, info);
+								} else {
+									res.redirect('/fnOrder/'+objSave._id)
+								}
+							})
+						})
+					}
+				})
+			})
+		}
+	})
+}
 
 exports.orderDel = function(req, res) {
 	let objBody = req.body.object;
