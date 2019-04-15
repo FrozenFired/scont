@@ -50,10 +50,12 @@ if object.sconts && object.sconts.length > 0
 						p lost supplier
 				.col-12.col-sm-5.p-2.text-center(class=scontBg)
 					.scontPart
-						a.btn.btn-default.text-dark(href="/qtScont/"+scont._id)
-							h3 discount: #{scont.scont}%
-							.row
-								if scont.note
-									-a;
-									.col-12 note: #{scont.note}
-								.col-12 iva: #{scont.iva} &nbsp; | &nbsp; #{Conf.stsScont[scont.status]}
+						.row
+							.col-12
+								a.btn.btn-default.text-dark(href="/qtScont/"+scont._id)
+									h3 discount: #{scont.scont}%
+							.col-12.col-sm-6 updateAt: #{moment(scont.updateAt).format('DD/MM/YYYY')}
+							.col-12.col-sm-6 iva: #{scont.iva} &nbsp; | &nbsp; #{Conf.stsScont[scont.status]}
+							if scont.note
+								-a;
+								.col-12.text-secondary note: #{scont.note}

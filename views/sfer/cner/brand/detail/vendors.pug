@@ -42,8 +42,10 @@ if object.sconts && object.sconts.length > 0
 				.col-12.col-sm-5.p-2.text-center(class=scontBg)
 					.row.scontPart
 						h4.col-12.col-sm-4 折扣: #{scont.scont}%
-						.col-12.col-sm-4
-							if scont.note
-								-a;
-								span 备注: #{scont.note}
+						.col-12.col-sm-4 #{moment(scont.updateAt).format('YY年MM月DD日')}
 						.col-12.col-sm-4 税: #{scont.iva}
+				.col-12.col-sm-7
+				.col-12.col-sm-5
+					if scont.note
+						-a;
+						span 备注: #{scont.note}
