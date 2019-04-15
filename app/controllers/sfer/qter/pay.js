@@ -11,9 +11,6 @@ let moment = require('moment')
 
 let randID = '5c63ecf72430bf23f7280ba3';
 exports.paysFilter = function(req, res, next) {
-	if(req.query && req.query.keyword) {
-		req.query.keyword = req.query.keyword.replace(/(\s*$)/g, "").replace( /^\s*/, '');
-	}
 
 	let condition = new Object();
 	condition.slipCond = ""; // 分页时用到的其他条件
@@ -28,7 +25,12 @@ exports.paysFilter = function(req, res, next) {
 	condition.keytype = "code";
 	condition.keyword = "";
 	if(req.query.keyword) {
-		req.query.keyword = req.query.keyword.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
+		req.query.keyword = req.query.keyword.replace(/(\s*$)/g, "").replace( /^\s*/, '');
+		if(req.query.keytype == "code") {
+			req.query.keyword = req.query.keyword.toLowerCase();
+		} else {
+			req.query.keyword = req.query.keyword.toUpperCase();
+		}
 		condition.keytype = req.query.keytype;
 		condition.slipCond += "&keytype="+condition.keytype;
 		condition.keyword = req.query.keyword;
