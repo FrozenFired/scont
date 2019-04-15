@@ -1,0 +1,18 @@
+extends ../../aalayout/layout
+
+block content
+	.container
+		.row
+			h1.col-sm-6 #{title}
+			.col-sm-6.text-right
+				a.btn.btn-link(href="/fnOrders") back OrderList
+		hr
+		include ../detail/selfInfo
+		hr
+		form#fnUpOrder(method="post", action=action, enctype="multipart/form-data")
+			input(type="hidden", name="object[_id]", value=object._id)
+			block orderUp
+
+			.form-group.row
+				.offset-md-2.col-md-10
+					input.btn.btn-default(type="submit" value="submit")
