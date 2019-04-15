@@ -87,7 +87,7 @@ qtOrderFindOrders = function(req, res, next, condition) {
 	.populate('payAc').populate('payMd').populate('paySa')
 	.populate('vder')
 	.populate('creater')
-	.sort({"createAt": -1})
+	.sort({'status': 1, "createAt": -1})
 	.exec(function(err, objects) {
 		if(err) console.log(err);
 		if(objects){

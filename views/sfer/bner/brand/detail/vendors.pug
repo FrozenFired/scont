@@ -53,7 +53,7 @@ if object.sconts && object.sconts.length > 0
 					.scontPart
 						.row
 							.col-12
-								a.btn.btn-default.text-dark(href="/qtScont/"+scont._id)
+								a.btn.btn-default.text-dark(href="/bnScont/"+scont._id)
 									h3 discount: #{scont.scont}%
 							.col-12.col-sm-6 updateAt: #{moment(scont.updateAt).format('DD/MM/YYYY')}
 							.col-12.col-sm-6 iva: #{scont.iva} &nbsp; | &nbsp; #{Conf.stsScont[scont.status]}
