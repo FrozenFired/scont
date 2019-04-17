@@ -1,5 +1,5 @@
 .mycontainer {
-	width: 770px;	
+	width: 1000px;	
 	padding-right: 10px; padding-left: 10px;
 	margin-right: auto; margin-left: auto;
 }
@@ -7,12 +7,16 @@
 .wd30{width: 30px;}
 .wd80{width: 80px;}
 .wd90{width: 90px;}
+.wd100{width: 100px;}
 .wd180{width: 180px;}
+.wd200{width: 200px;}
 .wd230{width: 230px;}
 .wd250{width: 250px;}
 .wd290{width: 290px;}
 .wd300{width: 300px;}
+.wd380{width: 380px;}
 .wd400{width: 400px;}
+.wd500{width: 500px;}
 .wd510{width: 510px;}
 .wd590{width: 590px;}
 .ht01{height: 10px;border: 0px;}

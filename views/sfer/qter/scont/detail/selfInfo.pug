@@ -40,7 +40,7 @@ hr
 			th creater <br/> updater
 			th createAt <br/> updateAt
 			th status
-			th PDF
+			th PRINT
 		tr
 			td #{Conf.sctCause[object.cause]}
 			td #{object.scont} %
@@ -55,4 +55,4 @@ hr
 					span #{object.updater.code}
 			td #{moment(object.createAt).format('YYYY/MM/DD')} <br/> #{moment(object.updateAt).format('YYYY/MM/DD')}
 			td(class=scontBg) #{Conf.stsScont[object.status]}
-			td: a.btn.btn-dark.btn-lg(href="/qtScontPdf/"+object._id) PDF
+			td: a.btn.btn-dark.btn-lg(href="javascript:window.print()") PRINT
