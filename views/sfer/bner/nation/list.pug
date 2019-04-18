@@ -1,11 +1,15 @@
 extends ../aalayout/layout
 
 block content
-	.container
-		a.btn.btn-info.btn-lg.btn-block(href="/bnNationAdd") Add Nation
-		.row
-			h3.col-6 Nations
-			.col-6.text-right
-				a.btn.btn-warning(href="/bnNationsPrint") Download Excel
-		hr
+	.bg-secondary.py-5
+		.container
+			.row
+				h2.col-8.text-center.mt-2 Nations
+				.col-4
+					a.btn.btn-info(href="/bnNationAdd") Add
+	.container.mt-3
 		include ./list/selfList
+		.row.mt-5
+			.col-12.col-sm-8
+			.col-12.col-sm-4.text-right
+				a.btn.btn-warning.btn-block(href="/bnNationsPrint") Download Excel

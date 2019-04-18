@@ -1,10 +1,14 @@
 extends ../aalayout/layout
 
 block content
-	.container
-		.row
-			h3.col-6 Nations
-			.col-6.text-right
-				a.btn.btn-warning(href="/qtNationsPrint") Download Excel
-		hr
+	.bg-secondary.py-5
+		.container
+			h2.text-center.mt-2 Nations
+				
+	.container.mt-3
 		include ./list/selfList
+
+		.row
+			.col-12.col-sm-8
+			.col-12.col-sm-4
+				a.mt-5.btn.btn-warning.btn-block(href="/qtNationsPrint") Download Excel

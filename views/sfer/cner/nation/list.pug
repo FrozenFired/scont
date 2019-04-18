@@ -1,10 +1,8 @@
 extends ../aalayout/layout
 
 block content
-	.container
-		.row
-			h3.col-6 国家列表
-			.col-6.text-right
-				a.btn.btn-warning(href="/cnNationsPrint") 下载Excel
-		hr
+	.bg-secondary.py-5
+		.container
+			h2.text-center.mt-2 国家列表
+	.container.mt-3
 		include ./list/selfList

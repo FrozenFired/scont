@@ -2,8 +2,8 @@
 each item in objects
 	- i++;
 	a.text-dark(href="/cnNation/"+item._id)
-		.card.p-2.mt-2
-			.row
+		.card.mt-3
+			.row.m-1
 				.col-12.col-sm-6
 					.row
 						.col-4: strong #{i}
@@ -13,4 +13,4 @@ each item in objects
 					.row
 						.col-4 #{item.nameCN}
 						.col-4 #{item.nameEN}
-						.col-4.text-info #{item.numbrand}
+						.col-4 品牌数量:<span class="text-info">#{item.numbrand}</span>
