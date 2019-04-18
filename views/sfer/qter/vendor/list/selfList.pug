@@ -1,46 +1,32 @@
-table.table.table-hover.table-bordered
-	thead
-		tr
-			th vendor code
-			th Weight(for sort)
-			th vtype
-			th contacts
-			th ac/sa
-			//- th status
-			th number <br/>of brand
-			th createAt <br/>updateAt
-			th option
-	tbody
-		each item in objects
-			- let objBg;
-			if item.status == 0
-				-objBg ="bg-info";
-			else if item.status == 1
-				-objBg ="bg-default";
-			else if item.status == 2
-				-objBg ="bg-secondary";
-			tr(class=objBg+" item-id-"+item._id)
-				td #{item.code}
-				td #{Conf.weight[item.weight]}
-				td #{Conf.vtype[item.vtype]}
-				td
-					if item.contacts && item.contacts.length > 0
-						-contacts = item.contacts;
-						each contact in contacts
-							-a;
+.row
+	each item in objects
+		- var objBg;
+		if item.status == 0
+			-objBg ="bg-info";
+		else if item.status == 1
+			-objBg ="bg-default";
+		else if item.status == 2
+			-objBg ="bg-secondary";
+		.col-12.col-sm-6.col-lg-4.col-xl-3.mt-2(class="item-id-"+item._id)
+			.card.mt-2
+				.row.m-1
+					h3.text-center.col-12(class=objBg+" item-id-"+item._id) 
+						a.text-dark(href="/qtVendor/"+item._id) #{item.code}
+					.col-12.text-center
+						h5 [ #{Conf.vtype[item.vtype]} ]
+					.col-12.text-center ac/sa: #{item.ac} / #{item.sa}
+					.col-12
+						if item.contacts && item.contacts.length > 0
+							-contact = item.contacts[0];
 							ul
 								li #{contact.contacter} 
 								li #{contact.tel} 
 								li #{contact.email}
-				td #{item.ac} / #{item.sa}
-				//- td #{Conf.stsVendor[item.status]}
-				if item.sconts
-					-a;
-					td #{item.sconts.length}
-				else
-					td 0
-				td
-					li #{moment(item.createAt).format('YYYY/MM/DD')}
-					li #{moment(item.updateAt).format('YYYY/MM/DD')}
-				td
-					a.btn.btn-primary(href="/qtVendor/"+item._id) view
+					.col-12
+						span Brands: 
+						if item.sconts && item.sconts.length > 0
+							-sconts = item.sconts;
+							font.text-info(size=5) #{sconts.length}
+						else
+							span.text-danger 0
+					.col-12 CreateAt: #{moment(item.createAt).format('YYYY/MM/DD')}

@@ -8,8 +8,8 @@
 		else if item.status == 2
 			-objBg ="bg-secondary";
 		.col-12.col-sm-6.col-lg-4.col-xl-3.mt-2(class="item-id-"+item._id)
-			.card.p-2.mt-2
-				.row
+			.card.mt-2
+				.row.m-1
 					h5.text-center.col-12(class=objBg+" item-id-"+item._id) 
 						a.text-dark(href="/cnBrand/"+item._id) 品牌: #{item.code}
 						if item.nation

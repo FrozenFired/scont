@@ -1,17 +1,21 @@
 extends ../aalayout/layout
 
 block content
-	.container
-		.row
-			h1.col-sm-9
-				span Vendors [#{count}]
-			.col-sm-3.text-right
-				span: a.btn.btn-info.btn-lg(href="/qtScontAdd") Add Discount
-		hr
-		.row.bg-light.p-2
-			.col-sm-12
-				include ./list/filter
-		hr
+	.bg-secondary.py-5
+		.container
+			.row
+				h2.col-12.col-md-6.text-center.mt-2
+					span Vendors [#{count}]
+				.col-6.col-md-3.mt-4
+					button.btn.btn-warning.btn-block.btnFilter(type="button") Filter
+				.col-6.col-md-3.mt-4
+					span: a.btn.btn-info.btn-block(href="/qtScontAdd") Add Discount
+	.container.mt-3
+		.filterInfo(style="display:none")
+			.row.bg-light.p-2
+				.col-sm-12
+					include ./list/filter
+			hr
 		.row
 			.col-sm-12
 				include ../../../aaPlugin/pageSlip
@@ -21,4 +25,4 @@ block content
 			.col-sm-8
 			.col-sm-4
 				include ./list/print
-	script(src="/js/responsive.js")
+	script(src="/js/filtTog.js")
