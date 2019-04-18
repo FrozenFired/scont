@@ -1,7 +1,13 @@
 extends ../aalayout/layout
 
 block content
-	.container
+	.bg-secondary.py-5
+		.container
+			.row
+				h2.col-12.text-center
+					span.text-dark Supplier: 
+					span.text-info #{object.code}
+	.container.mt-3
 		include ./detail/selfInfo
 
 		if object.sconts && object.sconts.length > 0

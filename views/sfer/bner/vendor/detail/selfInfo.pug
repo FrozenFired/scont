@@ -6,13 +6,11 @@ else if object.status == 1
 	-objBg ="bg-white";
 else if object.status == 2
 	-objBg ="bg-secondary";
-.row(class=objBg)
-	h1.col-8
-		span.text-dark #{object.code}
-	.col-4.text-right
-		a.btn.btn-link(href="/qtVendors") vendor list
 
 .card.p-3
+	.row(class=objBg)
+		h5.col-5.col-sm-3.text-secondary Status
+		h5.col-6.text-dark #{Conf.stsVendor[object.status]}
 	.row
 		h5.col-5.col-sm-3.text-secondary Type
 		h5.col-6.text-info #{Conf.vtype[object.vtype]}
@@ -79,8 +77,5 @@ else if object.status == 2
 		.row
 			h5.col-5.col-sm-3.text-secondary Note
 			h5.col-6.text-info #{object.note}
-		.row(class=objBg)
-			h5.col-5.col-sm-3.text-secondary Status
-			h5.col-6.text-dark #{Conf.stsScont[object.status]}
 	button.btn.btn-default.btn-block.btnToggle(type="button") detail info
 script(src="/js/scont/markToggle.js")
