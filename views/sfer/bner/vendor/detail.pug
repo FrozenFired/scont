@@ -3,7 +3,9 @@ extends ../aalayout/layout
 block content
 	.container
 		include ./detail/selfInfo
-
 		include ./detail/mark
 
-		include ./detail/brands
+		if object.sconts && object.sconts.length > 0
+			-let sconts = object.sconts;
+			include ./detail/brands
+	script(src="/js/scont/vendor/detail.js")

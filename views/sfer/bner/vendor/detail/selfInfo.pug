@@ -7,56 +7,80 @@ else if object.status == 1
 else if object.status == 2
 	-objBg ="bg-secondary";
 .row(class=objBg)
-	h1.col-sm-9
-		span vendor Information: [#{object.code}]
-	.col-sm-3.text-right
-			a.btn.btn-link(href="/bnVendors") vendor list
-hr
-.bg-light
-	table.table.table-hover.table-bordered
-		tr
-			th code
-			th Weight(for sort)
-			th vtype
-			th contacts
-			th ac/sa <br/> acsaNote
-			th freight
-			th Summary
-		tr
-			td.text-primary <strong>#{object.code}</strong>
-			td #{Conf.weight[object.weight]}
-			td #{Conf.vtype[object.vtype]}
-			td
-				if object.contacts && object.contacts.length > 0
-					-contacts = object.contacts;
-					each contact in contacts
-						-a;
-						ul
-							li #{contact.contacter} 
-							li #{contact.tel} 
-							li #{contact.email}
-			td #{object.ac} / #{object.sa}<br/>#{object.acsaNote}
-			td #{object.freight}
-			td #{object.note}
-	table.table.table-hover.table-bordered
-		tr
-			th creater <br/> updater
-			th createAt <br/> updateAt
-			th status
-			th oprate
-		tr
-			td
-				if object.creater
-					-a;
-					span #{object.creater.code}
-				br
-				if object.updater
-					-a;
-					span #{object.updater.code}
-			td #{moment(object.createAt).format('YYYY/MM/DD')} <br/> #{moment(object.updateAt).format('YYYY/MM/DD')}
-			td(class=objBg) #{Conf.stsScont[object.status]}
-			
-			td
-				a.btn.btn-dark.btn-lg(href="/bnVendorUp/"+object._id) update
-				button.btn.btn-warning.btn-lg#mark(type="button") Mark
+	h1.col-8
+		span.text-dark #{object.code}
+	.col-4.text-right
+		a.btn.btn-link(href="/qtVendors") vendor list
+
+.card.p-3
+	.row
+		h5.col-5.col-sm-3.text-secondary Type
+		h5.col-6.text-info #{Conf.vtype[object.vtype]}
+	.row
+		- var labnote = '';
+		- var acsaNote = '';
+		if object.acsaNote
+			- labnote = '(Note)';
+			- acsaNote = '( '+ object.acsaNote + ' )';
+		h5.col-5.col-sm-3.text-secondary AC/SA #{labnote}
+		h5.col-6.text-info #{object.ac} / #{object.sa} #{acsaNote}
+	.row
+		h5.col-5.col-sm-3.text-secondary freight
+		h5.col-6.text-info #{object.freight}
+	.row
+		h5.col-5.col-sm-3.text-secondary Contacts
+		if object.contacts && object.contacts.length > 0
+			-contacts = object.contacts;
+			each contact in contacts
+				-a;
+				ul
+					li #{contact.contacter} 
+					li #{contact.tel} 
+					li #{contact.email}
+	.row
+		h5.col-4.col-sm-3.text-secondary option
+		a.col-4.col-sm-2.btn.btn-dark(href="/bnVendorUp/"+object._id) update
+		button.col-3.col-sm-2.btn.btn-warning#mark(type="button") Mark
+		if object.sconts && object.sconts.length == 0
+			-a;
+			a.btn.btn-danger(href="/bnVendorDel/"+object._id) delete
+	.basicDetail(style="display:none")
+		.row
+			if object.creater
+				-creater = object.creater;
+				h5.col-4.col-sm-3.text-secondary Creater
+				h5.col-8.text-info #{object.creater.code}
+			else
+				span Creater Loss
+		.row
+			if object.updater
+				-updater = object.updater;
+				h5.col-4.col-sm-3.text-secondary Updater
+				h5.col-8.text-info #{object.updater.code}
+			else
+				span Updater Loss
+		.row
+			if object.createAt
+				-createAt = object.createAt;
+				h5.col-4.col-sm-3.text-secondary CreateAt
+				h5.col-8.text-info #{moment(createAt).format('YYYY/MM/DD')}
+			else
+				span CreateAt Loss
+		.row
+			if object.updateAt
+				-updateAt = object.updateAt;
+				h5.col-4.col-sm-3.text-secondary UpdateAt
+				h5.col-8.text-info #{moment(updateAt).format('YYYY/MM/DD')}
+			else
+				span UpdateAt Loss
+		.row
+			h5.col-5.col-sm-3.text-secondary Weight
+			h5.col-6.text-info #{Conf.weight[object.weight]}
+		.row
+			h5.col-5.col-sm-3.text-secondary Note
+			h5.col-6.text-info #{object.note}
+		.row(class=objBg)
+			h5.col-5.col-sm-3.text-secondary Status
+			h5.col-6.text-dark #{Conf.stsScont[object.status]}
+	button.btn.btn-default.btn-block.btnToggle(type="button") detail info
 script(src="/js/scont/markToggle.js")

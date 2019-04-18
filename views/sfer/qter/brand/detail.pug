@@ -2,9 +2,9 @@ extends ../aalayout/layout
 
 block content
 	.container
-		.row
-			.col-12.col-sm-12
-				include ./detail/selfInfo
+		include ./detail/selfInfo
 
-		include ./detail/vendors
-	script(src="/js/scont/brand/detail.js")
+		if object.sconts && object.sconts.length > 0
+			-let sconts = object.sconts;
+			include ./detail/vendors
+	script(src="/js/scont/vendor/detail.js")
