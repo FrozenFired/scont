@@ -1,20 +1,14 @@
 extends ../aalayout/layout
 
 block content
-	.container
+	.container.mt-5
 		.row
-			.col-6.col-sm-4
+			.col-6.col-sm-4.col-lg-3
 				a.nav-link(href="/cnBrands")
-					figure.figure
-						img.figure-img.img-fluid.rounded(src="/imgs/brand.jpg", width="150px", height="150px", alt="brand list")
-						figcaption.figure-caption.text-right brand list
-			.col-6.col-sm-4
+					img.figure-img.img-fluid.rounded(src="/imgs/brand.jpg", width="100%", alt="brand list")
+			.col-6.col-sm-4.col-lg-3
 				a.nav-link(href="/cnNations")
-					figure.figure
-						img.figure-img.img-fluid.rounded(src="/imgs/nations.jpg", width="200px", height="150px", alt="nation list")
-						figcaption.figure-caption.text-right nation list
-			.col-6.col-sm-4
+					img.figure-img.img-fluid.rounded(src="/imgs/nations.jpg", width="100%", alt="nation list")
+			.col-6.col-sm-4.col-lg-3
 				a.nav-link(href="/cnBcategs")
-					figure.figure
-						img.figure-img.img-fluid.rounded(src="/imgs/categs.png", width="150px", height="150px", alt="brand Category")
-						figcaption.figure-caption.text-right brand Category
+					img.figure-img.img-fluid.rounded(src="/imgs/categs.jpg", width="100%", alt="brand Category")

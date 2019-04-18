@@ -1,32 +1,23 @@
 extends ../aalayout/layout
 
 block content
-	.container
+	.container.mt-5
 		.row
-			.col-6.col-sm-4
+			.col-6.col-sm-4.col-lg-3
 				a.nav-link(href="/bnBrands")
-					figure.figure
-						img.figure-img.img-fluid.rounded(src="/imgs/brand.jpg", width="150px", height="150px", alt="brand list")
-						figcaption.figure-caption.text-right brands
-			.col-6.col-sm-4
+					img.figure-img.img-fluid.rounded(src="/imgs/brand.jpg", width="100%", alt="brand list")
+			.col-6.col-sm-4.col-lg-3
 				a.nav-link(href="/bnVendors")
-					figure.figure
-						img.figure-img.img-fluid.rounded(src="/imgs/vendors.png", width="150px", height="150px", alt="vendor list")
-						figcaption.figure-caption.text-right vendors
-			.col-6.col-sm-4
+					img.figure-img.img-fluid.rounded(src="/imgs/vendors.jpg", width="100%", alt="vendor list")
+			.col-6.col-sm-4.col-lg-3
 				a.nav-link(href="/bnSconts")
-					figure.figure
-						img.figure-img.img-fluid.rounded(src="/imgs/scont.jpg", width="150px", height="150px", alt="scont list")
-						figcaption.figure-caption.text-right sconts
-		hr
-		.row
-			.col-6.col-sm-6
+					img.figure-img.img-fluid.rounded(src="/imgs/scont.jpg", width="100%", alt="scont list")
+			.col-6.col-sm-4.col-lg-3
 				a.nav-link(href="/bnNations")
-					figure.figure
-						img.figure-img.img-fluid.rounded(src="/imgs/nations.jpg", width="200px", height="150px", alt="nation list")
-						figcaption.figure-caption.text-right nations
-			.col-6.col-sm-6
+					img.figure-img.img-fluid.rounded(src="/imgs/nations.jpg", width="100%", alt="nation list")
+			.col-6.col-sm-4.col-lg-3
 				a.nav-link(href="/bnBcategs")
-					figure.figure
-						img.figure-img.img-fluid.rounded(src="/imgs/categs.png", width="150px", height="150px", alt="brand Category")
-						figcaption.figure-caption.text-right Category
+					img.figure-img.img-fluid.rounded(src="/imgs/categs.jpg", width="100%", alt="brand Category")
+			.col-6.col-sm-4.col-lg-3
+				a.nav-link(href="/bnTasks")
+					img.figure-img.img-fluid.rounded(src="/imgs/tasks.jpg", width="100%", alt="tasks list")
