@@ -26,7 +26,8 @@ let Conf = {
 
 	/* --------------------- scont ---------------------*/
 	// 品牌分类
-	bcate: { 0: 'PROFESSIONISTI', 1: 'ACCESSORI', 2: 'COSTRUZIONE', 3: 'MOBILI'},
+	bcate: { 0: 'PROFESSIONISTI', 1: 'ACCESSORI', 2: 'COSTRUZIONE', 3: 'MOBILI', 4: 'ALTRO'},
+	bcateCn: { 0: '高端定制', 1: '饰品', 2: '建材', 3: '家具', 4: '其他'},
 	// 厂家类型
 	vtype: { 0: 'RIVENDITORE', 1: 'AGENTE', 2: 'PRO.+AGE.', 3: 'PRODUTTORE', 5: 'OTHER'},
 	vtypeCn: { 0: '经销商', 1: '代理商', 2: '厂商+代理.', 3: '厂家直销', 5: '其他'},

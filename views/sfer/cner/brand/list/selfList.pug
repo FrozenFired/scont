@@ -11,14 +11,14 @@
 			.card.mt-2
 				.row.m-1
 					h5.text-center.col-12(class=objBg+" item-id-"+item._id) 
-						a.text-dark(href="/cnBrand/"+item._id) 品牌: #{item.code}
+						a.text-dark(href="/cnBrand/"+item._id) #{item.code}
 						if item.nation
 							-nation = item.nation;
 							span &nbsp;&nbsp;&nbsp; [#{nation.code}]
 					if item.bcateg
 						-bcateg = item.bcateg;
 						.col-6
-							p [#{Conf.bcate[bcateg.bcate]}]
+							p [#{Conf.bcateCn[bcateg.bcate]}]
 						.col-6
 							p [#{bcateg.code}]
 					else

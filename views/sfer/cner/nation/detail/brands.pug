@@ -4,10 +4,10 @@ each brand in brands
 	.card.mt-4
 		.row.m-1
 			.col-12.col-sm-4
-				h4: a(href="/qtBrand/"+brand._id) 品牌: #{brand.code}
+				h4: a(href="/cnBrand/"+brand._id) 品牌: #{brand.code}
 				if brand.bcateg
 					- bcateg = brand.bcateg;
-					h5 一级： #{Conf.bcate[bcateg.bcate]}
+					h5 一级： #{Conf.bcateCn[bcateg.bcate]}
 					h5 二级： #{bcateg.code}
 				else
 					h5 Brand Category Lost
