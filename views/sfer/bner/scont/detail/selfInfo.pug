@@ -55,7 +55,6 @@ hr
 					span #{object.updater.code}
 			td #{moment(object.createAt).format('YYYY/MM/DD')} <br/> #{moment(object.updateAt).format('YYYY/MM/DD')}
 			td(class=scontBg) #{Conf.stsScont[object.status]}
-			
 			td
 				a.btn.btn-dark.btn-lg(href="/bnScontUp/"+object._id) update
 				button.btn.btn-warning.btn-lg#mark(type="button") Mark
