@@ -1,14 +1,14 @@
 extends ../aalayout/layout
 
 block content
-	.container
-		.row
-			h1.col-12.col-sm-6 国家: [#{object.code}]
-			.col-12.col-sm-6.text-right
-				a.btn.btn-link(href="/cnNations") 返回列表
-		hr
+	.bg-secondary.py-5
+		.container
+			.row
+				h2.col-12.text-center
+					span.text-dark 国家: 
+					span.text-warning [#{object.code}]
+	.container.mt-3
 		include ./detail/selfInfo
 		if brands.length > 0 
 			-a;
-			hr
 			include ./detail/brands

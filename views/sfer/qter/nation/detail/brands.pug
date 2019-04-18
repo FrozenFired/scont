@@ -1,7 +1,8 @@
+h4.mt-4 Brands - #{brands.length} :
 each brand in brands
 	-a;
-	.card.p-2.mt-2
-		.row
+	.card.mt-4
+		.row.m-1
 			.col-12.col-sm-4
 				h4: a(href="/qtBrand/"+brand._id) #{brand.code}
 				if brand.bcateg
