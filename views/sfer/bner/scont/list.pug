@@ -1,15 +1,16 @@
 extends ../aalayout/layout
 
 block content
-	.container
-		.row
-			h1.col-12.col-sm-6
-				span Discount [#{count}]
-			.col-6.col-sm-3.text-right
-				span: a.btn.btn-info.btn-block(href="/bnScontAdd") Add Discount
-			.col-6.col-sm-3.text-right
-				button.btn.btn-warning.btn-block.btnFilter(type="button") Filter
-		hr
+	.bg-secondary.py-5
+		.container
+			.row
+				h2.col-12.col-md-6.text-center.mt-2
+					span Discount [#{count}]
+				.col-6.col-md-3.mt-4
+					button.btn.btn-warning.btn-block.btnFilter(type="button") Filter
+				.col-6.col-md-3.mt-4
+					span: a.btn.btn-info.btn-block(href="/bnScontAdd") Add Discount
+	.container.mt-3
 		.filterInfo(style="display:none")
 			.bg-light.pt-2
 				include ./list/filter

@@ -23,7 +23,7 @@ exports.scontsFilter = function(req, res, next) {
 	// 分页
 	let slipCond = ""; // 分页时用到的其他条件
 
-	let page = 0, entry = 10;
+	let page = 0, entry = 12;
 	[entry, page, slipCond] = Filter.slipPage(req, entry, slipCond)
 	let index = page * entry;
 

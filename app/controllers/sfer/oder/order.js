@@ -19,7 +19,7 @@ exports.ordersFilter = function(req, res, next) {
 	condition.slipCond = ""; // 分页时用到的其他条件
 
 	// 分页
-	let page = 0, entry = 10;
+	let page = 0, entry = 12;
 	[condition.entry, condition.page, condition.slipCond] = Filter.slipPage(req, entry, condition.slipCond)
 	condition.index = condition.page * condition.entry;
 
