@@ -6,12 +6,10 @@ else if object.status == 1
 	-objBg ="bg-white";
 else if object.status == 2
 	-objBg ="bg-secondary";
-.row(class=objBg)
-	h1.col-8
-		span.text-dark #{object.code}
-	.col-4.text-right
-		a.btn.btn-link(href="/qtBrands") back to list
 .card.p-3
+	.row(class=objBg)
+		h5.col-4.col-sm-3.text-secondary Status
+		h5.col-8.text-dark #{Conf.stsBrand[object.status]}
 	if object.bcateg
 		-bcateg = object.bcateg;
 		h5.text-secondary Category
@@ -106,11 +104,4 @@ else if object.status == 2
 			.row
 				p.col-3.col-sm-1.text-secondary Weight
 				p.col-8.text-info #{Conf.weight[object.weight]}
-		.row(class=objBg)
-			h5.col-4.col-sm-3.text-secondary Status
-			if object.status
-				-status = object.status;
-				h5.col-8.text-info #{Conf.stsBrand[object.status]}
-			else
-				span UpdateAt Loss
 	button.btn.btn-default.btn-block.btnToggle(type="button") detail info
