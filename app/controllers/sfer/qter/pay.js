@@ -91,7 +91,7 @@ exports.paysFilter = function(req, res, next) {
 	if(req.query.mailed || req.query.mailed == 0) {
 		condition.condMailed = req.query.mailed;
 		condition.condMailed2 = req.query.mailed;
-		condition.slipCond = "&mailed="+req.query.mailed;
+		condition.slipCond += "&mailed="+req.query.mailed;
 	}
 	if(condition.condMailed == 0) {
 		condition.condMailed2 = null

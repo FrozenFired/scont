@@ -55,13 +55,21 @@ each item in objects
 				else
 					span Supplier Lost
 
-				p #{item.brand}
+				p <span class="text-secondary">Brand:</span> #{item.brand}
 			.col-11.col-sm-4.ml-2
-				h4 Total: #{item.price} 
+				if !isNaN(item.price)
+					- let price = (item.price).toFixed(2);
+					h4 Total: #{price} €
+				else
+					h4 Total: <span class="text-danger">NaN </span>
 				.row
 					h5.col-6
-						span(class=bgAcPaid + " " + bgAcToday) AC: 
-						span #{acPrice}
+						span(class=bgAcPaid + " " + bgAcToday) AC:
+						if !isNaN(acPrice)
+							- acPrice = (acPrice).toFixed(2);
+							<span class="text-info"> #{acPrice}</span>€
+						else
+							<span class="text-danger">NaN </span>
 					.col-6(class=bgAcWeek)
 						if payAc && payAc.paidAt
 							-a;
@@ -78,8 +86,12 @@ each item in objects
 								span #{moment(payMd.paidAt).format('YYYY/MM/DD')}
 				.row
 					h5.col-6
-						span(class=bgSaPaid + " " + bgSaToday) SA: 
-						span #{saPrice}
+						span(class=bgSaPaid + " " + bgSaToday) SA:
+						if !isNaN(saPrice)
+							- saPrice = (saPrice).toFixed(2);
+							<span class="text-info"> #{saPrice}</span>€
+						else
+							<span class="text-danger">NaN </span>
 					.col-6(class=bgSaWeek)
 						if paySa && paySa.paidAt
 							-a;

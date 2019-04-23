@@ -7,40 +7,43 @@ if object.paySa
 	- pays.push(object.paySa);
 
 
-h3 Payment Information (此订单付款信息)
-table.table.table-hover.table-bordered
-	tr
-		th ac/sa
-		th createAt
-		th price
-		th paidAt
-		th status
-		th method
-		th agCode
-		th note
-	each pay in pays
-		-paidAt="";
-		if pay.paidAt
-			-paidAt = moment(pay.paidAt).format('YYYYMMDD');
+h3.text-center Payment (订单付款)：
+each pay in pays
+	-paidAt="";
+	if pay.paidAt
+		-paidAt = moment(pay.paidAt).format('YYYYMMDD');
 
-		- bgRecent = 'bg-default';
-		if paidAt < weekday && paidAt > today
-			- bgRecent = 'bg-info';
+	- bgRecent = 'bg-default';
+	if paidAt < weekday && paidAt > today
+		- bgRecent = 'bg-info';
 
-		-bgStatus = Conf.stsPayBg[pay.status];
-
-		tr(class="pay-"+pay._id)
-			td #{pay.code}
-			td
-				if pay.createAt
-					-a;
-					span #{moment(pay.createAt).format('YYYY/MM/DD')}
-			td #{pay.price}
-			td(class=bgRecent)
-				if pay.paidAt
-					-a;
-					span #{moment(pay.paidAt).format('YYYY/MM/DD')}
-			td #{Conf.stsPay[pay.status]}
-			td #{Conf.payMethod[pay.method]}
-			td #{pay.agCode}
-			td #{pay.note}
+	-bgStatus = Conf.stsPayBg[pay.status];
+	.card.mt-3(class="pay-"+pay._id)
+		.row.m-1
+			.col-12.col-sm-6
+				h3 
+					span #{(pay.code).toUpperCase()}: 
+					if !isNaN(pay.price)
+						-let price = (pay.price).toFixed(2);
+						span.text-info #{price} 
+						span €
+					else
+						span.text-danger NaN
+				p
+					span(class=bgRecent) PaidAt: 
+					if pay.paidAt
+						-paidAt = pay.paidAt;
+						span #{moment(paidAt).format('YYYY/MM/DD')}
+				p
+					span CreatAt: 
+					if pay.createAt
+						-createAt = pay.createAt;
+						span #{moment(createAt).format('YYYY/MM/DD')}
+			.col-12.col-sm-6
+				h4: span(class=bgStatus) #{Conf.stsPay[pay.status]}
+				p 
+					strong #{Conf.payMethod[pay.method]} 
+					if pay.method == 1
+						- agCode = pay.agCode;
+						span - Code: #{pay.agCode}
+				p #{pay.note}

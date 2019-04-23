@@ -1,15 +1,18 @@
 extends ../aalayout/layout
 
 block content
-	.contain1
-		.row
-			h1.col-sm-6 Pays [#{count}]
-			.col-sm-6.text-right
-				a.btn.btn-link.btn-lg(href="/qtOrders") Order List
-		hr
-		#selectOption.bg-light.p-2
-			include ./list/filter
-		hr
+	.bg-secondary.py-5
+		.container
+			.row
+				h2.col-12.col-md-6.text-center.mt-2 Pays [#{count}]
+				
+				.col-12.col-md-3.mt-3
+					button.btn.btn-warning.btn-block.btnFilter(type="button") Filter
+	.contain1.mt-3
+		.filterInfo(style="display:none")
+			#selectOption.bg-light.p-2
+				include ./list/filter
+			hr
 		include ../../../aaPlugin/pageSlip
 		include ./list/selfList
 		//- .row
@@ -17,3 +20,4 @@ block content
 		//- 	.col-sm-4
 		//- 		include ./list/print
 	script(src="/js/responsive.js")
+	script(src="/js/filtTog.js")

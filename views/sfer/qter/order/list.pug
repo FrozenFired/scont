@@ -1,14 +1,16 @@
 extends ../aalayout/layout
 
 block content
-	.container
-		.row
-			h1.col-12.col-sm-6 Orders [#{count}]
-			.col-6.col-sm-3.text-right
-				button.btn.btn-warning.btn-block.btnFilter(type="button") Filter
-			.col-6.col-sm-3.text-right
-				a.btn.btn-primary.btn-lg(href="/qtOrderAdd") new Order
-		hr
+	.bg-secondary.py-5
+		.container
+			.row
+				h2.col-12.col-md-6.text-center.mt-2 Orders [#{count}]
+				
+				.col-6.col-md-3.mt-4
+					button.btn.btn-warning.btn-block.btnFilter(type="button") Filter
+				.col-6.col-md-3.mt-4
+					a.btn.btn-info.btn-block(href="/qtOrderAdd") New
+	.container.mt-3
 		.filterInfo(style="display:none")
 			#selectOption.bg-light.pt-2
 				include ./list/filter
