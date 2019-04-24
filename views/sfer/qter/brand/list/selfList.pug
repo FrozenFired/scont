@@ -30,7 +30,7 @@
 							h5 Category Loss
 					.col-12(style="height:40px") 
 						- matDesp = item.matDesp;
-						if matDesp.length > 40
+						if matDesp && matDesp.length > 40
 							- matDesp = matDesp.slice(0, 37) + '...';
 						span Material: #{matDesp}
 

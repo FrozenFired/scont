@@ -35,7 +35,7 @@
 							p 分类数据丢失
 					.col-12(style="height:40px")
 						- matDesp = item.matDesp;
-						if matDesp.length > 30
+						if matDesp && matDesp.length > 30
 							- matDesp = matDesp.slice(0, 27) + '...';
 						span 材料描述: #{matDesp}
 
