@@ -24,9 +24,21 @@
 						if item.contacts && item.contacts.length > 0
 							-contact = item.contacts[0];
 							ul.mt-2
-								li(style="height:40px") #{contact.contacter} 
-								li(style="height:40px") #{contact.tel} 
-								li(style="height:40px") #{contact.email}
+								li
+									-contacter = contact.contacter;
+									if contacter.length > 20
+										-contacter = contacter.slice(0,17)+'...';
+									span #{contacter} 
+								li
+									-tel = contact.tel;
+									if tel.length > 20
+										-tel = tel.slice(0, 17) + '...';
+									span #{tel} 
+								li(style="height:40px") 
+									- email = contact.email;
+									if email.length > 35
+										- email = email.slice(0, 32) + '...';
+									span #{email}
 					.col-12
 						span Brands: 
 						if item.sconts && item.sconts.length > 0
