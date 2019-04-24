@@ -7,21 +7,26 @@
 			-objBg ="bg-default";
 		else if item.status == 2
 			-objBg ="bg-secondary";
-		.col-12.col-sm-6.col-lg-4.col-xl-3.mb-5(class="item-id-"+item._id)
+		.col-sm-12.col-md-6.col-lg-4.col-xl-3.mb-5(class="item-id-"+item._id)
 			.card
 				.row.m-1
-					h3.text-center.col-12(class=objBg+" item-id-"+item._id) 
-						a.text-dark(href="/qtVendor/"+item._id) #{item.code}
+					h4.text-center.col-12(class=objBg+" item-id-"+item._id) 
+						a.text-dark(href="/qtVendor/"+item._id)
+							- code = item.code;
+							if code.length > 14
+								-code = code.slice(0,12)+'...';
+							span #{code}
 					.col-12.text-center
 						h5 [ #{Conf.vtype[item.vtype]} ]
-					.col-12.text-center ac/sa: #{item.ac} / #{item.sa}
+					.col-12.text-center
+						strong ac/sa: #{item.ac} / #{item.sa}
 					.col-12
 						if item.contacts && item.contacts.length > 0
 							-contact = item.contacts[0];
-							ul
-								li #{contact.contacter} 
-								li #{contact.tel} 
-								li #{contact.email}
+							ul.mt-2
+								li(style="height:40px") #{contact.contacter} 
+								li(style="height:40px") #{contact.tel} 
+								li(style="height:40px") #{contact.email}
 					.col-12
 						span Brands: 
 						if item.sconts && item.sconts.length > 0

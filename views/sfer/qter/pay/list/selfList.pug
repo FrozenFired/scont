@@ -16,13 +16,13 @@ each item in objects
 			.col-lg-12.col-xl-4.border-right
 				if item.order
 					-order = item.order;
-					a.btn.text-dark(href="/qtOrder/"+order._id)
+					a.btn.text-dark.text-left(href="/qtOrder/"+order._id)
 						h3
 							span(class=Conf.stsOrderBg[order.status] + " text-secondary") Order: 
 							span #{order.order} 
 					if order.vder
 						-vder = order.vder;
-						h4 <span class="text-secondary">supplier:</span> #{vder.code}
+						h4 <span class="text-secondary">Supplier:</span> #{vder.code}
 					else
 						h4.text-danger Supplier Loss
 					h4 <span class="text-secondary">TaxType:</span> #{Conf.taxType[order.taxType]}
