@@ -42,9 +42,14 @@
 						else
 							span.text-danger 0 &nbsp;
 							button.btn.btn-danger.del(type="button", data-urldel="/bnBrandDelAjax", data-id=item._id) delete
-					.col-12(style="height:100px")
-						span Website: 
-						a(href=item.website, target="view_window") 
-							span #{item.website}
+					.col-12
+						span Website:
+						-website = item.website;
+						if website.slice(0,4) != 'http'
+							- item.website = 'http://'+website
+						a(href=item.website, target="view_window")
+							if website.length > 20
+								- website = website.slice(0, 17) + '...';
+							span #{website}
 					.col-12 UpdateAt: #{moment(item.updateAt).format('YYYY/MM/DD')}
 script(src="/js/delete.js")

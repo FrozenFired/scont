@@ -42,7 +42,10 @@ else if object.status == 2
 			h5.col-8.text-info #{firmName}
 	.row
 		h5.col-4.col-sm-3.text-secondary 网站
-		h5.col-8.text-info: a(href=object.website, target="view_window") #{object.website}
+		- website = object.website;
+		if website && website.slice(0, 4) != 'http'
+			-website = 'http://'+website;
+		h5.col-8.text-info: a(href=website, target="view_window") #{object.website}
 	.basicDetail(style="display:none")
 		if object.webNote
 			- webNote = object.webNote;
