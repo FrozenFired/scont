@@ -1,12 +1,12 @@
 extends ../aalayout/layout
 
 block content
-	.container
-		a.btn.btn-info.btn-lg.btn-block(href="/bnBcategAdd") Add Bcateg
-		hr
-		.row
-			.col-sm-8
-			.col-sm-4
-				a.btn.btn-bg.btn-block.btn-warning(href="/bnBcategsPrint") Download Excel
-		hr
+	.bg-secondary.py-5
+		.container
+			.row
+				h2.col-sm-12.col-md-6.text-center Second Category
+				.col-sm-12.col-md-6
+					a.btn.btn-info.btn-block(href="/bnBcategAdd") Add Bcateg
+	.container.mt-3
 		include ./list/selfList
+		a.btn.btn-bg.btn-default.mt-5(href="/bnBcategsPrint") Download Excel
