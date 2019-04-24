@@ -48,8 +48,8 @@
 						if website.slice(0,4) != 'http'
 							- item.website = 'http://'+website
 						a(href=item.website, target="view_window")
-							if website.length > 20
-								- website = website.slice(0, 17) + '...';
+							if website.length > 15
+								- website = website.slice(0, 12) + '...';
 							span #{website}
 					.col-12 UpdateAt: #{moment(item.updateAt).format('YYYY/MM/DD')}
 script(src="/js/delete.js")
