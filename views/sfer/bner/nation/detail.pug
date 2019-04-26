@@ -9,6 +9,6 @@ block content
 					span.text-warning [#{object.code}]
 	.container.mt-3
 		include ./detail/selfInfo
-		if brands.length > 0 
+		if brands && brands.length > 0 
 			-a;
 			include ./detail/brands

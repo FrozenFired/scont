@@ -13,7 +13,7 @@
 					h4.text-center.col-12(class=objBg+" item-id-"+item._id) 
 						a.text-dark(href="/qtBrand/"+item._id)
 							- code = item.code;
-							if code.length > 12
+							if code && code.length > 12
 								-code = code.slice(0,10)+'...';
 							span #{code}
 					if item.nation
@@ -47,7 +47,7 @@
 						if website.slice(0,4) != 'http'
 							- item.website = 'http://'+website
 						a(href=item.website, target="view_window")
-							if website.length > 15
+							if website && website.length > 15
 								- website = website.slice(0, 12) + '...';
 							span #{website}
 					.col-12 UpdateAt: #{moment(item.updateAt).format('YYYY/MM/DD')}

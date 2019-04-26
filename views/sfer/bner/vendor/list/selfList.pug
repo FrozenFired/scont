@@ -13,7 +13,7 @@
 					h4.text-center.col-12(class=objBg+" item-id-"+item._id) 
 						a.text-dark(href="/bnVendor/"+item._id)
 							- code = item.code;
-							if code.length > 14
+							if code && code.length > 14
 								-code = code.slice(0,12)+'...';
 							span #{code}
 					.col-12.text-center
@@ -26,17 +26,17 @@
 							ul.mt-2
 								li
 									-contacter = contact.contacter;
-									if contacter.length > 20
+									if contacter && contacter.length > 20
 										-contacter = contacter.slice(0,17)+'...';
 									span #{contacter} 
 								li
 									-tel = contact.tel;
-									if tel.length > 20
+									if tel && tel.length > 20
 										-tel = tel.slice(0, 17) + '...';
 									span #{tel} 
 								li(style="height:40px") 
 									- email = contact.email;
-									if email.length > 35
+									if email && email.length > 35
 										- email = email.slice(0, 32) + '...';
 									span #{email}
 					.col-12
