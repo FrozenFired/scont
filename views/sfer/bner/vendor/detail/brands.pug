@@ -21,8 +21,8 @@ each scont in sconts
 					if brand.status == 2
 						-brandBg ="bg-secondary";
 					else
-						-brandBg ="bg-default";
-					.brandPart.bg-light(class=vdBg)
+						-brandBg ="bg-light";
+					.brandPart(class=brandBg)
 						.row
 							-code ='UNDEFINE';
 							if brand.code

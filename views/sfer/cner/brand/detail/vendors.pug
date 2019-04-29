@@ -21,8 +21,8 @@ each scont in sconts
 					if vendor.status == 2
 						-vdBg ="bg-secondary";
 					else
-						-vdBg ="bg-default";
-					.row.vendorPart.bg-light(class=vdBg)
+						-vdBg ="bg-light";
+					.row.vendorPart(class=vdBg)
 						-code ='UNDEFINE';
 						if vendor.code
 							-code = vendor.code;
