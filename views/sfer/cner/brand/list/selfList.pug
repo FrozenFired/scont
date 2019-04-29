@@ -49,7 +49,7 @@
 					.col-12
 						span 网站: 
 						-website = item.website;
-						if website.slice(0,4) != 'http'
+						if website && website.slice(0,4) != 'http'
 							- item.website = 'http://'+website
 						a(href=item.website, target="view_window")
 							if website && website.length > 15
