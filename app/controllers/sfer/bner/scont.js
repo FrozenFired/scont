@@ -186,8 +186,16 @@ exports.scontsPrint = function(req, res) {
 			if(brand.code) ws.cell((i+2), 2).string(String(brand.code));
 			if(brand.bcateg) {
 				let bcateg = brand.bcateg;
-				if(Conf.bcate[bcateg.bcate]) ws.cell((i+2), 3).string(Conf.bcate[bcateg.bcate]);
-				if(bcateg.code) ws.cell((i+2), 4).string(String(bcateg.code));
+				if(Conf.bcate[bcateg.bcate]) ws.cell((i+2), 3).string(Conf.bcate[bcateg.bcate]+' - '+Conf.bcateCn[bcateg.bcate]);
+				let strBcateg = 'Error';
+				if(bcateg.code){
+					strBcateg = String(bcateg.code);
+					if(bcateg.nameCN) {
+						strBcateg += ' - ';
+						strBcateg += bcateg.nameCN;
+					}
+				}
+				ws.cell((i+2), 4).string(strBcateg);
 			}
 			ws.cell((i+2), 5).string(String(brand.matDesp));
 			if(brand.nation && brand.nation.code) ws.cell((i+2), 6).string(String(brand.nation.code));
