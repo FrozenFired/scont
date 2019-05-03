@@ -21,9 +21,9 @@
 						h5.text-center.col-12 [#{nation.code}]
 					if item.bcateg
 						-bcateg = item.bcateg;
-						.col-12
+						.col-6
 							strong [#{Conf.bcateCn[bcateg.bcate]}]
-						.col-12
+						.col-6.text-right
 							-var name ="错误"
 							if bcateg.nameCN
 								-name = bcateg.nameCN;
@@ -33,7 +33,7 @@
 					else
 						.col-12
 							p 分类数据丢失
-					.col-12(style="height:40px")
+					.col-12.mt-2(style="height:40px")
 						- matDesp = item.matDesp;
 						if matDesp && matDesp.length > 30
 							- matDesp = matDesp.slice(0, 27) + '...';
