@@ -21,10 +21,10 @@ $( function() {
 			$("#optOrder").show();
 			e.preventDefault();
 		}
-		else if($("#iptPi").val().length < 1) {
-			$("#optPi").show();
-			e.preventDefault();
-		}
+		// else if($("#iptPi").val().length < 1) {
+		// 	$("#optPi").show();
+		// 	e.preventDefault();
+		// }
 		else if($("#iptBrand").val().length < 1) {
 			$("#optBrand").show();
 			e.preventDefault();
