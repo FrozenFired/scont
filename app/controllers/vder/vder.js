@@ -38,13 +38,6 @@ exports.updateVderInfo = function(req, res) {
 	objBody.save(function(err, objSave) {
 		if(err) console.log(err);
 		req.session.crVder = objSave
-		if(objSave.role == 5) {
-			req.session.crBner = objSave
-		}else if(objSave.role == 10) {
-			req.session.crQter = objSave
-		} else if(objSave.role == 15) {
-			req.session.crCner = objSave
-		}
 		res.redirect("/vderDetail/"+objSave._id);
 	});
 }

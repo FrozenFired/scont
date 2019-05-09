@@ -1,24 +1,27 @@
 exports.index = function(req, res) {
 	// 判断是否登录
+	let crVder = req.session.crVder;
+	let crMger = req.session.crMger;
+	let crSfer = req.session.crSfer;
 	if(req.session.crVder) {
 		res.redirect('/vder');
 	}
-	else if(req.session.crCner) {
+	else if(crSfer && crSfer.role == 15) {
 		res.redirect('/cner');
 	}
-	else if(req.session.crQter) {
+	else if(crSfer && crSfer.role == 10) {
 		res.redirect('/qter');
 	}
-	else if(req.session.crBner) {
+	else if(crSfer && crSfer.role == 5) {
 		res.redirect('/bner');
 	}
-	else if(req.session.crOder) {
+	else if(crSfer && crSfer.role == 1) {
 		res.redirect('/oder');
 	}
-	else if(req.session.crFner) {
+	else if(crSfer && crSfer.role == 2) {
 		res.redirect('/fner');
 	}
-	else if(req.session.crLger) {
+	else if(crSfer && crSfer.role == 3) {
 		res.redirect('/lger');
 	}
 	else if(req.session.crMger) {

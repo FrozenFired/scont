@@ -65,65 +65,63 @@ exports.sfUniLog = function(req, res, next){
 
 
 exports.qterIsLogin = function(req, res, next) {
-	let crQter = req.session.crQter
-	if(!crQter) {
+	let crSfer = req.session.crSfer
+	if(crSfer && crSfer.role == 10) {
+		next();
+	} else {
 		info = "Need permission from the quotazione department"
 		Index.optionError(req, res, info)
-	} else {
-		next()
 	}
 }
 
 
 
 exports.bnerIsLogin = function(req, res, next) {
-	let crBner = req.session.crBner
-	if(!crBner) {
+	let crSfer = req.session.crSfer
+	if(crSfer && crSfer.role == 5) {
+		next();
+	} else {
 		info = "Need permission from the brand department";
 		Index.optionError(req, res, info)
-	} else {
-		next()
 	}
 }
 
-
-
 exports.cnerIsLogin = function(req, res, next) {
-	let crCner = req.session.crCner
-	if(!crCner) {
+	let crSfer = req.session.crSfer
+	if(crSfer && crSfer.role == 15) {
+		next();
+	} else {
 		info = "需要登录您的账户"
 		Index.optionError(req, res, info)
-	} else {
-		next()
 	}
 }
 
 exports.fnerIsLogin = function(req, res, next) {
-	let crFner = req.session.crFner
-	if(!crFner) {
+	let crSfer = req.session.crSfer
+	if(crSfer && crSfer.role == 2) {
+		next();
+	} else {
 		info = "Need permission from the Contabilita department";
 		Index.optionError(req, res, info)
-	} else {
-		next()
 	}
 }
 
 exports.oderIsLogin = function(req, res, next) {
-	let crOder = req.session.crOder
-	if(!crOder) {
+	let crSfer = req.session.crSfer
+	if(crSfer && crSfer.role == 1) {
+		next();
+	} else {
 		info = "Need permission from the Order department";
 		Index.optionError(req, res, info)
-	} else {
-		next()
 	}
 }
 
 exports.lgerIsLogin = function(req, res, next) {
-	let crLger = req.session.crLger
-	if(!crLger) {
+	let crSfer = req.session.crSfer
+	if(crSfer && crSfer.role == 3) {
+		next()
+	} else {
 		info = "Need permission from the Contabilita department";
 		Index.optionError(req, res, info)
-	} else {
-		next()
 	}
 }
