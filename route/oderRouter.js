@@ -1,7 +1,5 @@
 let Index = require('../app/controllers/sfer/oder/index');
 
-let Sfer = require('../app/controllers/sfer/oder/oder');
-
 let Order = require('../app/controllers/sfer/oder/order');
 let Vder = require('../app/controllers/sfer/oder/vder');
 let Pay = require('../app/controllers/sfer/oder/pay');
@@ -16,14 +14,6 @@ let PostForm = multipart();
 module.exports = function(app){
 	// index ---------------Sfer 首页 登录页面 登录 登出---------------------------------------
 	app.get('/oder', MdRole.oderIsLogin, Index.oder);
-
-
-	// Sfer -------------------------------------------------------------------------------
-	app.get('/oderInfo', MdRole.oderIsLogin, Sfer.oderFilter, Sfer.oderInfo);
-	app.post('/oderUpInfo', PostForm, MdRole.oderIsLogin, MdRole.sfUniLog, 
-		MdPicture.addNewPhoto, Sfer.oderUp);
-	app.post('/oderUpPw', PostForm, MdRole.oderIsLogin, MdRole.sfUniLog, 
-		MdBcrypt.rqBcrypt, Sfer.oderUp);
 
 	// Order         ----------------------------------------------------------------------
 	app.get('/odOrders', MdRole.oderIsLogin, Order.ordersFilter, Order.orders)

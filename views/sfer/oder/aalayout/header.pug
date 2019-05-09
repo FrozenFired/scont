@@ -11,10 +11,12 @@
 				a.nav-link(href="/odPays") Pay <span class="sr-only">(current)</span>
 			li.nav-item.active
 				a.nav-link(href="/odVders") Vder <span class="sr-only">(current)</span>
+			li.nav-item.active
+				a.nav-link(href="/sfTasks") taskList <span class="sr-only">(current)</span>
 		ul.navbar-nav
 			li.text-info
 				span &nbsp;
-				a.btn.btn-info(href="/oderInfo") hello: 
+				a.btn.btn-info(href="/sferInfo") hello: 
 					if crSfer.name && crSfer.name.length > 0
 						span #{crSfer.name}
 					else
@@ -29,7 +31,7 @@
 
 .container
 	.row
-		div(style="height:80px") 
+		div(style="height:56px") 
 
 
 #signIn.modal.fade

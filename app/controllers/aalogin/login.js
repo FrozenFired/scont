@@ -18,6 +18,9 @@ exports.index = function(req, res) {
 	else if(req.session.crFner) {
 		res.redirect('/fner');
 	}
+	else if(req.session.crLger) {
+		res.redirect('/lger');
+	}
 	else if(req.session.crMger) {
 		res.redirect('/mger');
 	}
@@ -94,21 +97,24 @@ loginSfer = function(req, res, code, password) {
 						loginMger(req, res, code, password);
 					} else if(sfer.role == 15) {
 						req.session.crCner = sfer;
-						res.redirect('/cner')
+						res.redirect('/cner');
 					} else if(sfer.role == 10) {
 						req.session.crQter = sfer;
-						res.redirect('/qter')
+						res.redirect('/qter');
 					} else if(sfer.role == 5) {
 						req.session.crBner = sfer;
-						res.redirect('/bner')
+						res.redirect('/bner');
+					} else if(sfer.role == 3) {
+						req.session.crLger = sfer;
+						res.redirect('/lger');
 					} else if(sfer.role == 2) {
 						req.session.crFner = sfer;
-						res.redirect('/fner')
+						res.redirect('/fner');
 					} else if(sfer.role == 1) {
 						req.session.crOder = sfer;
-						res.redirect('/oder')
+						res.redirect('/oder');
 					} else {
-						res.redirect('/')
+						res.redirect('/');
 					}
 				}
 				else {
@@ -145,6 +151,7 @@ exports.logout = function(req, res) {
 	// Sfer
 	if(req.session.crSfer) delete req.session.crSfer;
 
+	if(req.session.crLger) delete req.session.crLger;
 	if(req.session.crOder) delete req.session.crOder;
 	if(req.session.crFner) delete req.session.crFner;
 	if(req.session.crBner) delete req.session.crBner;

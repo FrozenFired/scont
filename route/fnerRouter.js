@@ -1,5 +1,4 @@
 let Index = require('../app/controllers/sfer/fner/index');
-let Fner = require('../app/controllers/sfer/fner/fner');
 
 let Order = require('../app/controllers/sfer/fner/order');
 let Pay = require('../app/controllers/sfer/fner/pay');
@@ -15,14 +14,6 @@ let PostForm = multipart();
 module.exports = function(app){
 	// index ---------------Fner 首页 登录页面 登录 登出---------------------------------------
 	app.get('/fner', MdRole.fnerIsLogin, Index.fner);
-
-
-	// Fner -------------------------------------------------------------------------------
-	app.get('/fnerInfo', MdRole.fnerIsLogin, Fner.fnerFilter, Fner.fnerInfo);
-	app.post('/fnerUpInfo', PostForm, MdRole.fnerIsLogin, MdRole.sfUniLog, 
-		MdPicture.addNewPhoto, Fner.fnerUp);
-	app.post('/FnerUpPw', PostForm, MdRole.fnerIsLogin, MdRole.sfUniLog, 
-		MdBcrypt.rqBcrypt, Fner.fnerUp);
 
 	// Order         ----------------------------------------------------------------------
 	app.get('/fnOrders', MdRole.fnerIsLogin, Order.ordersFilter, Order.orders)

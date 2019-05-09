@@ -60,18 +60,8 @@ app.use(require('express-pdf'));
 app.use(require('compression')());
 
 // 调用路由
-// require('./route/aderRouter')(app);
-require('./route/aaRouter')(app);
-require('./route/mgerRouter')(app);
-// require('./route/sferRouter')(app);
-require('./route/oderRouter')(app);
-require('./route/fnerRouter')(app);
-require('./route/qterRouter')(app);
-require('./route/bnerRouter')(app);
+require('./route/aaaConfRouter')(app);
 
-require('./route/cnerRouter')(app);
-
-require('./route/vderRouter')(app);
 // 如果没有路由，则跳转到404页面
 app.use(function(req, res, next) {
 	res.render("404")

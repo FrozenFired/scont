@@ -1,0 +1,16 @@
+-var i = 0;
+each item in objects
+	- i++;
+	a.text-dark(href="/lgNation/"+item._id)
+		.card.mt-3
+			.row.m-1
+				.col-12.col-sm-6
+					.row
+						.col-4: strong #{i}
+						h4.col-4 #{item.code}
+						.col-4 #{item.tel}
+				.col-12.col-sm-6
+					.row
+						.col-4 #{item.nameCN}
+						.col-4 #{item.nameEN}
+						.col-4.text-info #{item.numbrand}

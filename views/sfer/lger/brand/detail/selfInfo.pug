@@ -1,0 +1,110 @@
+-let objBg = "bg-light";
+
+if object.status == 0
+	-objBg ="bg-info";
+else if object.status == 1
+	-objBg ="bg-white";
+else if object.status == 2
+	-objBg ="bg-secondary";
+.card.p-3
+	.row(class=objBg)
+		h5.col-4.col-sm-3.text-secondary Status
+		h5.col-8.text-dark #{Conf.stsBrand[object.status]}
+	if object.bcateg
+		-bcateg = object.bcateg;
+		h5.text-secondary Category
+		.row
+			.col-1.col-sm-1
+			h5.col-4.col-sm-2.text-secondary First
+			h5.col-6.text-info #{Conf.bcate[bcateg.bcate]} 
+		.row
+			.col-1.col-sm-1
+			h5.col-4.col-sm-2.text-secondary Second 
+			h5.col-6.text-info #{object.bcateg.code}
+	else
+		h5.col-12.text-danger Category Lost
+	.row
+		if object.matDesp
+			-matDesp = object.matDesp;
+			h5.col-5.col-sm-3.text-secondary Material
+			h5.col-6.text-info #{matDesp}
+	.row
+		if object.nation
+			-nation = object.nation;
+			h5.col-5.col-sm-3.text-secondary Nation
+			h5.col-6.text-info #{object.nation.code}
+		else
+			span Nation Loss
+	.row
+		if object.firmName
+			-firmName = object.firmName;
+			h5.col-4.col-sm-3.text-secondary Firm
+			h5.col-8.text-info #{firmName}
+	.row
+		h5.col-4.col-sm-3.text-secondary Website
+		-website = object.website;
+		if website && website.slice(0, 4) != 'http'
+			-website = 'http://'+website;
+		h5.col-8.text-info: a(href=website, target="view_window") #{object.website}
+	.basicDetail(style="display:none")
+		if object.webNote
+			- webNote = object.webNote;
+			.row
+				.col-1.col-sm-1
+				p.col-4.col-sm-2.text-secondary Note
+				p.col-6.text-info #{webNote}
+		.row
+			h5.col-4.col-sm-3.text-secondary Product Time 
+			h5.col-8.text-info #{object.pTime}
+		.row
+			h5.col-4.col-sm-3.text-secondary Price List
+			h5.col-8.text-info #{object.plist}
+		if object.plNote && object.plNote.length > 0
+			-plNote = object.plNote;
+			.row
+				.col-1.col-sm-1
+				p.col-4.col-sm-2.text-secondary Note
+				p.col-6.text-info #{plNote}
+		.row
+			h5.col-4.col-sm-3.text-secondary Catalog
+			h5.col-8.text-info #{object.atlas}
+		if object.atNote && object.atNote.length > 0
+			-atNote = object.atNote;
+			.row
+				.col-1.col-sm-1
+				p.col-4.col-sm-2.text-secondary Note
+				p.col-6.text-info #{atNote}
+		.row
+			if object.creater
+				-creater = object.creater;
+				h5.col-4.col-sm-3.text-secondary Creater
+				h5.col-8.text-info #{object.creater.code}
+			else
+				span Creater Loss
+		.row
+			if object.updater
+				-updater = object.updater;
+				h5.col-4.col-sm-3.text-secondary Updater
+				h5.col-8.text-info #{object.updater.code}
+			else
+				span Updater Loss
+		.row
+			if object.createAt
+				-createAt = object.createAt;
+				h5.col-4.col-sm-3.text-secondary CreateAt
+				h5.col-8.text-info #{moment(createAt).format('YYYY/MM/DD')}
+			else
+				span CreateAt Loss
+		.row
+			if object.updateAt
+				-updateAt = object.updateAt;
+				h5.col-4.col-sm-3.text-secondary UpdateAt
+				h5.col-8.text-info #{moment(updateAt).format('YYYY/MM/DD')}
+			else
+				span UpdateAt Loss
+		if object.weight
+			- weight = object.weight;
+			.row
+				p.col-3.col-sm-1.text-secondary Weight
+				p.col-8.text-info #{Conf.weight[object.weight]}
+	button.btn.btn-default.btn-block.btnToggle(type="button") detail info

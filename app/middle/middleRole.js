@@ -117,3 +117,13 @@ exports.oderIsLogin = function(req, res, next) {
 		next()
 	}
 }
+
+exports.lgerIsLogin = function(req, res, next) {
+	let crLger = req.session.crLger
+	if(!crLger) {
+		info = "Need permission from the Contabilita department";
+		Index.optionError(req, res, info)
+	} else {
+		next()
+	}
+}

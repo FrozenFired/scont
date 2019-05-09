@@ -1,9 +1,5 @@
 let Index = require('../app/controllers/sfer/qter/index');
 
-let Sfer = require('../app/controllers/sfer/qter/qter');
-
-let Task = require('../app/controllers/sfer/qter/task');
-
 let Nation = require('../app/controllers/sfer/qter/nation');
 let Bcateg = require('../app/controllers/sfer/qter/bcateg');
 
@@ -26,25 +22,6 @@ module.exports = function(app){
 	app.get('/headerQtBrand', MdRole.qterIsLogin, Brand.brandsFilter, Brand.headerBrand)
 	// index ---------------Sfer 首页 登录页面 登录 登出---------------------------------------
 	app.get('/qter', MdRole.qterIsLogin, Index.qter);
-
-
-	// Sfer -------------------------------------------------------------------------------
-	app.get('/qterInfo', MdRole.qterIsLogin, Sfer.qterFilter, Sfer.qterInfo);
-	app.post('/qterUpInfo', PostForm, MdRole.qterIsLogin, MdRole.sfUniLog, 
-		MdPicture.addNewPhoto, Sfer.qterUp);
-	app.post('/qterUpPw', PostForm, MdRole.qterIsLogin, MdRole.sfUniLog, 
-		MdBcrypt.rqBcrypt, Sfer.qterUp);
-
-	// task ------------------------------------------------------------------------------
-	app.get('/qtTasks', MdRole.qterIsLogin, Task.tasksFilter, Task.tasks)
-	app.get('/qtTasksPrint', MdRole.qterIsLogin, Task.tasksFilter, Task.tasksPrint)
-	app.get('/qtTask/:id', MdRole.qterIsLogin, Task.taskFilter, Task.task)
-	app.get('/qtTaskUp/:id', MdRole.qterIsLogin, Task.taskFilter, Task.taskUp)
-	app.post('/qtTaskUpd', PostForm, MdRole.qterIsLogin, Task.taskUpd)
-	app.get('/qtTaskAdd', MdRole.qterIsLogin, MdRole.sfUniLog, Task.taskAdd)
-	app.post('/qtTaskNew', PostForm, MdRole.qterIsLogin, Task.qtTaskNew)
-	app.get('/qtTaskDel/:id', MdRole.qterIsLogin, Task.taskFilter, Task.taskDel)
-	app.get('/qtTaskStatus', MdRole.qterIsLogin, Task.taskStatus)
 
 	// Nation ------------------------------------------------------------------------------
 	app.get('/qtNations', MdRole.qterIsLogin, Nation.nationsFilter, Nation.nations)

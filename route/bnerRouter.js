@@ -1,9 +1,5 @@
 let Index = require('../app/controllers/sfer/bner/index');
 
-let Sfer = require('../app/controllers/sfer/bner/bner');
-
-let Task = require('../app/controllers/sfer/bner/task');
-
 let Nation = require('../app/controllers/sfer/bner/nation');
 let Bcateg = require('../app/controllers/sfer/bner/bcateg');
 
@@ -27,26 +23,6 @@ module.exports = function(app){
 	app.get('/bner', MdRole.bnerIsLogin, Index.bner);
 
 	app.get('/headerBnBrand', MdRole.bnerIsLogin, Brand.brandsFilter, Brand.headerBrand)
-
-	// Sfer -------------------------------------------------------------------------------
-	app.get('/bnerInfo', MdRole.bnerIsLogin, Sfer.bnerFilter, Sfer.bnerInfo);
-	app.post('/bnerUpInfo', PostForm, MdRole.bnerIsLogin, MdRole.sfUniLog, 
-		MdPicture.addNewPhoto, Sfer.bnerUp);
-	app.post('/bnerUpPw', PostForm, MdRole.bnerIsLogin, MdRole.sfUniLog, 
-		MdBcrypt.rqBcrypt, Sfer.bnerUp);
-
-	app.get('/bnAjaxSfer', MdRole.bnerIsLogin, Sfer.bnAjaxSfer)
-
-	// task ------------------------------------------------------------------------------
-	app.get('/bnTasks', MdRole.bnerIsLogin, Task.tasksFilter, Task.tasks)
-	app.get('/bnTasksPrint', MdRole.bnerIsLogin, Task.tasksFilter, Task.tasksPrint)
-	app.get('/bnTask/:id', MdRole.bnerIsLogin, Task.taskFilter, Task.task)
-	app.get('/bnTaskUp/:id', MdRole.bnerIsLogin, Task.taskFilter, Task.taskUp)
-	app.post('/bnTaskUpd', PostForm, MdRole.bnerIsLogin, Task.taskUpd)
-	app.get('/bnTaskDel/:id', MdRole.bnerIsLogin, Task.taskFilter, Task.taskDel)
-	app.get('/bnTaskAdd', MdRole.bnerIsLogin, MdRole.sfUniLog, Task.taskAdd)
-	app.post('/bnTaskNew', PostForm, MdRole.bnerIsLogin, Task.taskNew)
-	app.get('/bnTaskStatus', MdRole.bnerIsLogin, Task.taskStatus)
 
 	// Nation ------------------------------------------------------------------------------
 	app.get('/bnNations', MdRole.bnerIsLogin, Nation.nationsFilter, Nation.nations)

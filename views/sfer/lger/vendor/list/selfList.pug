@@ -1,0 +1,49 @@
+.row
+	each item in objects
+		- var objBg;
+		if item.status == 0
+			-objBg ="bg-info";
+		else if item.status == 1
+			-objBg ="bg-default";
+		else if item.status == 2
+			-objBg ="bg-secondary";
+		.col-sm-12.col-md-6.col-lg-4.col-xl-3.mb-5(class="item-id-"+item._id)
+			.card
+				.row.m-1
+					h4.text-center.col-12(class=objBg+" item-id-"+item._id) 
+						a.text-dark(href="/lgVendor/"+item._id)
+							- code = item.code;
+							if code && code.length > 14
+								-code = code.slice(0,12)+'...';
+							span #{code}
+					.col-12.text-center
+						h5 [ #{Conf.vtype[item.vtype]} ]
+					.col-12.text-center
+						strong ac/sa: #{item.ac} / #{item.sa}
+					.col-12
+						if item.contacts && item.contacts.length > 0
+							-contact = item.contacts[0];
+							ul.mt-2
+								li
+									-contacter = contact.contacter;
+									if contacter && contacter.length > 18
+										-contacter = contacter.slice(0,15)+'...';
+									span #{contacter} 
+								li
+									-tel = contact.tel;
+									if tel && tel.length > 18
+										-tel = tel.slice(0, 15) + '...';
+									span #{tel} 
+								li(style="height:40px") 
+									- email = contact.email;
+									if email && email.length > 35
+										- email = email.slice(0, 32) + '...';
+									span #{email}
+					.col-12
+						span Brands: 
+						if item.sconts && item.sconts.length > 0
+							-sconts = item.sconts;
+							font.text-info(size=5) #{sconts.length}
+						else
+							span.text-danger 0
+					.col-12 CreateAt: #{moment(item.createAt).format('YYYY/MM/DD')}
