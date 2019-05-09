@@ -2,7 +2,7 @@ let Bner = require('../../../models/user/sfer');
 
 exports.bner = function(req, res) {
 	res.render('./sfer/bner/index/index', {
-		title: 'Quotazione',
+		title: 'Brand',
 		crSfer: req.session.crSfer,
 	});
 }

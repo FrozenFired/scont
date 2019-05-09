@@ -1,0 +1,18 @@
+extends ../aalayout/layout
+
+block content
+	.bg-secondary.py-5
+		.container
+			-let stsOrderBg = Conf.stsOrderBg[object.status];
+			.row(class=stsOrderBg)
+				h1.col-sm-6
+					span Order Information:
+	.container.mt-3
+		include ./detail/acsaInfo
+		include ./detail/selfInfo
+		if object.creater && object.creater.code == crSfer.code && object.status == 0
+			-a;
+			hr
+			a.btn.btn-warning(href="/bnOrderUp/"+object._id) Update
+			span &nbsp; &nbsp;
+			a.btn.btn-danger(href="/bnOrderDel/"+object._id) Delete

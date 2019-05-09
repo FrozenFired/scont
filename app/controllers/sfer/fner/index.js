@@ -2,7 +2,7 @@ let Fner = require('../../../models/user/sfer');
 
 exports.fner = function(req, res) {
 	res.render('./sfer/fner/index/index', {
-		title: '中国首页',
+		title: 'Contabilita',
 		crSfer : req.session.crSfer,
 	});
 }
