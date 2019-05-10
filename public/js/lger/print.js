@@ -32,7 +32,7 @@ $( function() {
 	}
 
 	$('#preview').click(function(e) {
-		// $("#set").hide()
+		$("#set").hide()
 		iptImg = $('#iptImg')[0].src;
 		iptOrder = $('#iptOrder').val();
 		iptBrand = $('#iptBrand').val();
