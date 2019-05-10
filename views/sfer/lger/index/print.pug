@@ -1,0 +1,38 @@
+extends ../aalayout/layout
+
+block content
+	.container.mt-5
+		.row.noprint#set
+			.col-12.col-md-8.text-center
+				.card.bg-light.p-2
+					.row
+						.col-10#img
+							img#iptImg(src='/imgs/lgmare.jpg', width="300px" height="240px")
+					.row.my-2
+						.col-8
+							input#iptOrder.form-control(type="text", placeholder="input order code")
+						.col-4#optOrder.text-danger
+					.row.my-2
+						.col-8
+							input#iptBrand.form-control(type="text", placeholder="input brand code")
+						.col-4#optBrand.text-danger
+					.row.my-2
+						.col-8
+							input#iptNumber.form-control(type="number", placeholder="input init number")
+						.col-4#optNumber.text-danger
+				.row.my-2
+						.col-4
+							input#iptQuant.form-control(type="number", placeholder="input print quantity")
+						.col-4#optQuant.text-danger
+						.col-4
+							button.btn.btn-info.btn-block#preview(typ="button") preview
+			.col-12.col-md-4.text-center
+				.row
+					.col-12.mt-2
+						img.border.img#img2(src='/imgs/lgmare.jpg', width="180px" height="150px")
+					.col-12.mt-2
+						img.border.img#img1(src='/imgs/lgarea.jpg', width="180px" height="150px")
+					.col-12.mt-2
+						img.border.img#img3(src='/imgs/lgcar.jpg', width="180px" height="150px")
+		#print
+	script(src='/js/lger/print.js')

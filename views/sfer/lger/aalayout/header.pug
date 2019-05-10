@@ -6,11 +6,9 @@
 	.collapse.navbar-collapse#navbarTogglerDemo02
 		ul.navbar-nav.mr-auto.mt-2.mt-lg-0
 			li.nav-item.active
+				a.nav-link(href="/lgprint") print <span class="sr-only">(current)</span>
+			li.nav-item.active
 				a.nav-link(href="/lgBrands") Brand <span class="sr-only">(current)</span>
-			li.nav-item.active
-				a.nav-link(href="/lgOrders") Order <span class="sr-only">(current)</span>
-			li.nav-item.active
-				a.nav-link(href="/lgPays") Pay <span class="sr-only">(current)</span>
 			li.nav-item.active
 				a.nav-link(href="/sfTasks") taskList <span class="sr-only">(current)</span>
 		ul.navbar-nav
@@ -36,19 +34,3 @@
 			li: a.btn.btn-danger(href="/logout") Logout
 
 div(style="height:56px")
-
-#signIn.modal.fade
-	.modal-dialog
-		.modal-content
-			form(method="post", action="/loginMger")
-				.modal-header: h3 Manager Signin
-				.modal-body
-					.form-group
-						label.col-form-label(for="iptCode") Code
-						input#iptCodeModal.form-control(type="text", class="iptCode", name="code")
-					.form-group
-						label.col-form-label(for="iptPassword") Password
-						input#iptPasswordModal.form-control(type="password", class="iptPassword", name="password")
-				.modal-footer
-					button.btn.btn-default(type="button" data-dismiss="modal") 关闭
-					button.btn.btn-success(type="submit") 提交

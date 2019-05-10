@@ -22,6 +22,7 @@ module.exports = function(app){
 	app.get('/headerLgBrand', MdRole.lgerIsLogin, Brand.brandsFilter, Brand.headerBrand)
 	// index ---------------Sfer 首页 登录页面 登录 登出---------------------------------------
 	app.get('/lger', MdRole.lgerIsLogin, Index.lger);
+	app.get('/lgprint', MdRole.lgerIsLogin, Index.lgprint);
 	
 	// Nation ------------------------------------------------------------------------------
 	app.get('/lgNations', MdRole.lgerIsLogin, Nation.nationsFilter, Nation.nations)

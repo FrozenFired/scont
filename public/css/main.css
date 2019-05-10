@@ -5,3 +5,12 @@
   margin-right: auto;
   margin-left: auto;
 }
+
+.prtBfr {
+	page-break-before: always;
+	page-break-after: auto;
+}
+.prtAft {
+	page-break-before: auto;
+	page-break-after: always;
+}

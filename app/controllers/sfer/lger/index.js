@@ -5,6 +5,13 @@ exports.lger = function(req, res) {
 	});
 }
 
+exports.lgprint = function(req, res) {
+	res.render('./sfer/lger/index/print', {
+		title: 'Etichetta',
+		crSfer: req.session.crSfer,
+	});
+}
+
 
 
 lgWrongpage = function(req, res, info){

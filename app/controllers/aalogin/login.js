@@ -99,22 +99,16 @@ loginSfer = function(req, res, code, password) {
 						delete req.session.crSfer;
 						loginMger(req, res, code, password);
 					} else if(sfer.role == 15) {
-						req.session.crCner = sfer;
 						res.redirect('/cner');
 					} else if(sfer.role == 10) {
-						req.session.crQter = sfer;
 						res.redirect('/qter');
 					} else if(sfer.role == 5) {
-						req.session.crBner = sfer;
 						res.redirect('/bner');
 					} else if(sfer.role == 3) {
-						req.session.crLger = sfer;
 						res.redirect('/lger');
 					} else if(sfer.role == 2) {
-						req.session.crFner = sfer;
 						res.redirect('/fner');
 					} else if(sfer.role == 1) {
-						req.session.crOder = sfer;
 						res.redirect('/oder');
 					} else {
 						res.redirect('/');
