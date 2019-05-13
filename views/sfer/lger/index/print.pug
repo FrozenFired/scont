@@ -1,8 +1,8 @@
 extends ../aalayout/layout
 
 block content
-	.container.mt-5
-		.row.noprint#set
+	.container.noprint.mt-5
+		.row#set
 			.col-12.col-md-8.text-center
 				.card.bg-light.p-2
 					.row
@@ -10,12 +10,12 @@ block content
 							img#iptImg(src='/imgs/lgmare.jpg', width="300px" height="240px")
 					.row.my-2
 						.col-8
-							input#iptOrder.form-control(type="text", placeholder="input order code")
-						.col-4#optOrder.text-danger
-					.row.my-2
-						.col-8
 							input#iptBrand.form-control(type="text", placeholder="input brand code")
 						.col-4#optBrand.text-danger
+					.row.my-2
+						.col-8
+							input#iptOrder.form-control(type="text", placeholder="input order code", value="HBXD20")
+						.col-4#optOrder.text-danger
 					.row.my-2
 						.col-8
 							input#iptNumber.form-control(type="number", placeholder="input init number")
@@ -32,7 +32,5 @@ block content
 						img.border.img#img2(src='/imgs/lgmare.jpg', width="180px" height="150px")
 					.col-12.mt-2
 						img.border.img#img1(src='/imgs/lgarea.jpg', width="180px" height="150px")
-					.col-12.mt-2
-						img.border.img#img3(src='/imgs/lgcar.jpg', width="180px" height="150px")
-		#print
+	#print.lgprint
 	script(src='/js/lger/print.js')

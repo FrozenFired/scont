@@ -14,3 +14,9 @@
 	page-break-before: auto;
 	page-break-after: always;
 }
+
+.lgprint {
+	width: 280px;
+	padding-right: 15px;
+	padding-left: 15px;
+}

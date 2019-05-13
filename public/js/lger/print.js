@@ -9,22 +9,23 @@ $( function() {
 	})
 
 	let showPrint = function(num, qt) {
+		// $("#print").append('<div class="row prtAft"></div>')
 		for(let i=0; i<qt; i++) {
 			let numb = num+i;
 			let str = "";
-			str += '<div class="row prtAft prints">';
-				str += '<div class="col-12 text-center">';
-					str += '<img src='+iptImg+' width="300px" height="240px" >';
+			str += '<div class="row prtAft prints text-center mt-5" style="font-size:20px">';
+				str += '<div class="col-12">';
+					str += '<img src='+iptImg+' width="180px" height="80px" >';
 				str += '</div>';
-				str += '<div class="col-12 text-center">';
-					str += iptOrder;
-				str += '</div>';
-				str += '<div class="col-12 text-center">';
+				str += '<div class="col-12"><strong>';
 					str += iptBrand;
-				str += '</div>';
-				str += '<div class="col-12 text-center">';
+				str += '</strong></div>';
+				str += '<div class="col-12"><strong>';
+					str += iptOrder;
+				str += '</strong></div>';
+				str += '<div class="col-12"><strong> N. ';
 					str += numb;
-				str += '</div>';
+				str += '</strong></div>';
 			str += '</div>';
 
 			$("#print").append(str)
