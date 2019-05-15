@@ -1,12 +1,11 @@
 $(function() {
 	$("#updateScont").on('input', '#updaterCode', function(e) {
-	// $("#updaterCode").blur(function(e) {
 		$("#iptUpdater").val("")
 		$("#optUpdater").text("")
 		$('#staff option').remove()				// 先移除table下的其他信息
 		let sferCode = $(this).val();
 		sferCode = sferCode.replace(/(\s*$)/g, "").replace( /^\s*/, '')
-		if(sferCode.length > 0){
+		if(sferCode.length > 1){
 			var code = encodeURIComponent(sferCode)
 			$.ajax({
 				type: 'get',

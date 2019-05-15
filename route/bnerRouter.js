@@ -22,6 +22,8 @@ module.exports = function(app){
 	// index ---------------Sfer 首页 登录页面 登录 登出---------------------------------------
 	app.get('/bner', MdRole.bnerIsLogin, Index.bner);
 
+	app.get('/bnAjaxSfer', MdRole.bnerIsLogin, Index.bnAjaxSfer)
+	
 	app.get('/headerBnBrand', MdRole.bnerIsLogin, Brand.brandsFilter, Brand.headerBrand)
 
 	// Nation ------------------------------------------------------------------------------
