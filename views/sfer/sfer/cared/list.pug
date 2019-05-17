@@ -1,0 +1,39 @@
+extends ../aalayout/layout
+
+block content
+	.container.mt-3
+		each item in objects
+			- a;
+			.card.my-5(class="item-id-"+item._id)
+				.row.p-1
+					.col-12.col-md-4.border-right
+						- let apler = "Loss";
+						if item.apler
+							-apler = item.apler.code;
+						h4 Applicant: #{apler}
+
+						- let car = "Loss";
+						if item.car
+							-car = item.car.code;
+						h4 Car: #{car} - #{item.car.nome}
+
+						p #{item.desp}
+
+						p #{moment(item.ctAt).format('YYYY/MM/DD HH:mm:ss')}
+					.col-12.col-md-4.border-right
+						if item.cfmer
+							-cfmer = item.cfmer.code;
+							h4 Confirm: #{cfmer}
+							p
+								if item.sAt
+									-sAt = item.sAt;
+									span #{moment(sAt).format('YYYY/MM/DD HH:mm:ss')}
+
+					.col-12.col-md-4
+						if item.ender
+							-ender = item.ender.code;
+							h4 End: #{ender}
+							p
+								if item.eAt
+									-eAt = item.eAt;
+									span #{moment(eAt).format('YYYY/MM/DD HH:mm:ss')}

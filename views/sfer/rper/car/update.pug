@@ -1,0 +1,46 @@
+extends ../aalayout/layout
+
+block content
+	.container.mt-3
+		h1 Car Update
+		hr
+		form#udpate(method="post", action="/rpCarUpd", enctype="multipart/form-data")
+			input(type="hidden", name="object[_id]", value=object._id)
+			input(type="hidden", name="object[code]", value=object.code)
+			.form-group.row
+				label.col-2.col-form-label Nome
+				.col-8
+					input#iptNome.form-control(type="text", class="iptNome", name="object[nome]", placeholder="Must fill it", value=object.nome)
+				#optNome.text-danger
+			.form-group.row
+				label.col-2.col-form-label Desp
+				.col-8
+					input#iptDesp.form-control(type="text",class="iptDesp", name="object[desp]", value=object.desp)
+			.form-group.row
+				label.col-2.col-form-label Role
+				.col-8
+					select.form-control(name="object[status]", data-style="btn-info")
+						if object.status == 1
+							-a;
+							option(value=0) BROKEN
+							option(value=1, selected="selected") VOID
+						else if object.status == 2
+							-a;
+							option(value=2) OCCUPY
+						else if object.status == 3
+							-a;
+							option(value=3) USING
+						else
+							-a;
+							option(value=0, selected="selected") BROKEN
+							option(value=1) VOID
+			.form-group.row.udPhoto
+				input(type="hidden", name="object[photoDir]", value=Conf.photoPath.carPhoto)
+				input(type="hidden", name="object[orgPhoto]", value=object.photo)
+				label.col-2.col-form-label(for="uploadPhoto") Photo
+				.col-8
+					input#uploadPhoto.btn.btn-info.btn-block(type="file", name="uploadPhoto")
+			.form-group.row
+				.col-sm-10
+				.col-12.col-sm-2
+					input.btn.btn-info#sub(type="submit" value="Update")

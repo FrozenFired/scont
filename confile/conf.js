@@ -1,13 +1,14 @@
 let Conf = {
 	photoPath: {
 		sferAvatar: '/avatar/sfer/',
+		carPhoto: '/car/'
 	},
 
 	weight: {0: 'general', 1: 'usual', 2: 'often', 3: 'always', 4: 'important'},
 
 	//员工角色
 	sfRole: { 
-		1: 'Order', 2: 'Contabilita', 3: 'Logistic',
+		1: 'Order', 2: 'Contabilita', 3: 'Logistic', 4: 'Reception',
 		5: 'brand', 10: 'quotation', 15: '中国报价', 20: 'leave',
 	},
 	vdRole: {0: 'register', 1: 'unregister', 2: 'logout'},

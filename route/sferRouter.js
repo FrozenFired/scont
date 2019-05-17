@@ -3,7 +3,8 @@ let Index = require('../app/controllers/sfer/sfer/index');
 let Sfer = require('../app/controllers/sfer/sfer/sfer');
 
 let Task = require('../app/controllers/sfer/sfer/task');
-
+let Car = require('../app/controllers/sfer/sfer/car');
+let Cared = require('../app/controllers/sfer/sfer/cared');
 
 let MdBcrypt = require('../app/middle/middleBcrypt');
 let MdRole = require('../app/middle/middleRole');
@@ -34,4 +35,13 @@ module.exports = function(app){
 	app.get('/sfTaskDel/:id', MdRole.sferIsLogin, Task.taskFilter, Task.taskDel)
 	app.get('/sfTaskStatus', MdRole.sferIsLogin, Task.taskStatus)
 
+	// car ------------------------------------------------------------------------------
+	app.get('/sfCars', MdRole.sferIsLogin, Car.sfCars)
+
+	app.get('/sfCarAppl', MdRole.sferIsLogin, Car.sfCarAppl)
+
+	// cared ------------------------------------------------------------------------------
+	app.get('/sfCareds', MdRole.sferIsLogin, Cared.sfCareds)
+	app.get('/sfCared/:id', MdRole.sferIsLogin, Cared.sfCaredFilter, Cared.sfCared)
+	app.get('/sfCaredDel/:id', MdRole.sferIsLogin, Cared.sfCaredFilter, Cared.sfCaredDel)
 };

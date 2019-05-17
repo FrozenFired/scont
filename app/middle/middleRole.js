@@ -121,7 +121,17 @@ exports.lgerIsLogin = function(req, res, next) {
 	if(crSfer && crSfer.role == 3) {
 		next()
 	} else {
-		info = "Need permission from the Contabilita department";
+		info = "Need permission from the Logistica department";
+		Index.optionError(req, res, info)
+	}
+}
+
+exports.rperIsLogin = function(req, res, next) {
+	let crSfer = req.session.crSfer
+	if(crSfer && crSfer.role == 4) {
+		next()
+	} else {
+		info = "Need permission from the Reception department";
 		Index.optionError(req, res, info)
 	}
 }

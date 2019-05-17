@@ -1,0 +1,20 @@
+table.table.table-hover.table-bordered
+	thead
+		tr
+			th Bcate code
+			th Weight(for sort)
+			th English Name
+			th Chinese Name
+			th Father Cate
+			th Brand Numbers
+	tbody
+		each item in objects
+			-let a;
+			tr(class="item-id-"+item._id)
+				td: a(href="/rpBcateg/"+item._id) #{item.code}
+				td #{Conf.weight[item.weight]}
+				td #{item.nameEN}
+				td #{item.nameCN}
+				td #{Conf.bcate[item.bcate]}
+				td #{item.numbrand}
+script(src="/js/delete.js")

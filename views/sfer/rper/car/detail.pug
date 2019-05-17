@@ -1,0 +1,38 @@
+extends ../aalayout/layout
+
+block content
+	.container.mt-3
+		- let objBg, status;
+		if object.status == 1
+			-objBg ="bg-default";
+			-status = "VOID";
+		else if object.status == 2
+			-objBg ="bg-info";
+			-status = "OCCUPY";
+		else if object.status == 3
+			-objBg = "bg-warning";
+			-status = "USING";
+		else
+			-objBg = "bg-secondary";
+			-status = "BROKEN";
+		.card
+			h3.text-center(class=objBg)  #{object.code}
+			.row
+				.col-12.col-lg-6
+					img(src=object.photo, width="100%")
+				.col-12.col-lg-6
+					h4.m-2 #{object.nome}
+					h6.m-2 #{object.desp}
+					.row
+						.col-6 [ #{status} ]
+						if object.apler
+							- apler = object.apler;
+							.col-6.text-right #{apler.code}
+					.row.my-3
+						.col-12.text-right.text-secondary CreateAt: #{moment(object.createAt).format('DD/MM/YYYY')}
+					hr
+					.row.mt-5
+						.col-6
+							a.btn.btn-warning(href="/rpCarUp/"+object._id) Update
+						.col-6.text-right
+							a.btn.btn-danger(href="/rpCarDel/"+object._id) Delete

@@ -1,0 +1,29 @@
+extends ../aalayout/layout
+
+block content
+	.container.mt-3
+		h1 New Car
+		hr
+		form#add(method="post", action="/rpCarNew", enctype="multipart/form-data")
+			.form-group.row
+				label.col-sm-2.col-form-label Code
+				.col-sm-8
+					input#iptCode.form-control(type="text", class="iptCode", name="object[code]", placeholder="Must fill it")
+				#optCode.text-danger
+			.form-group.row
+				label.col-sm-2.col-form-label Nome
+				.col-sm-8
+					input#iptNome.form-control(type="text", class="iptNome", name="object[nome]", placeholder="Must fill it")
+				#optNome.text-danger
+			.form-group.row
+				label.col-sm-2.col-form-label Desp
+				.col-sm-8
+					input#iptDesp.form-control(type="text",class="iptDesp", name="object[desp]")
+			.form-group.row.udPhoto
+				input(type="hidden", name="object[photoDir]", value=Conf.photoPath.carPhoto)
+				label.col-md-2.col-form-label(for="uploadPhoto") Photo
+				.col-md-8
+					input#uploadPhoto.btn.btn-info.btn-block(type="file", name="uploadPhoto")
+			.form-group.row
+				.offset-sm-2.col-sm-10
+					input.btn.btn-info#sub(type="submit" value="New Car")

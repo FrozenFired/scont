@@ -1,0 +1,39 @@
+extends ../aalayout/layout
+
+block content
+	.container.mt-3
+		.row
+			each item in objects
+				- let objBg, stsTxt;
+				if item.status == 1
+					-objBg ="bg-default";
+					-stsTxt = "VOID";
+				else if item.status == 2
+					-objBg ="bg-info";
+					-stsTxt = "OCCUPY";
+					if item.apler
+						-stsTxt = item.apler.code + " OCCUPY";
+
+				else if item.status == 3
+					-objBg = "bg-warning";
+					-stsTxt = "USING";
+					if item.apler
+						-stsTxt = item.apler.code + " USING";
+				else
+					-objBg = "bg-secondary";
+					-stsTxt = "BROKEN";
+				.col-12.col-md-6.mb-5(class="item-id-"+item._id)
+					.card.px-3
+						h3.row(class=objBg+" item-id-"+item._id)
+							.col-6 #{item.code} 
+							.col-6.text-right [#{stsTxt}]
+						.row.mt-3
+							.col-6.text-center
+								img(src=item.photo, width="100%")
+							.col-6
+								h4.m-2 #{item.nome}
+								h6.m-2 #{item.desp}
+								if item.status == 1
+									-a;
+									button.mt-5.change.btn.btn-info.btn-block(type="button", data-url="/sfCarAppl", data-sts='2', data-id=item._id) Apply
+	script(src="/js/changeStatus.js")

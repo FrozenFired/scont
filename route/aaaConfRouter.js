@@ -8,6 +8,7 @@ module.exports = function(app){
 	require('./qterRouter')(app);
 	require('./bnerRouter')(app);
 	require('./lgerRouter')(app);
+	require('./rperRouter')(app);
 
 	require('./cnerRouter')(app);
 

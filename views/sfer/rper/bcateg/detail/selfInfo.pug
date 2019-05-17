@@ -1,0 +1,29 @@
+.bg-light
+	table.table.table-hover.table-bordered
+		tr
+			th Bcate code
+			th English Name
+			th Chinese Name
+			th Father Cate
+			th Weight(for sort)
+		tr
+			td #{object.code}
+			td #{object.nameEN}
+			td #{object.nameCN}
+			td #{Conf.bcate[object.bcate]}
+			td #{Conf.weight[object.weight]}
+	table.table.table-hover.table-bordered
+		tr
+			th Brand Numbers
+			th createAt
+			th updateAt
+			th creater
+		tr
+			td #{object.numbrand}
+			td #{moment(object.createAt).format('YYYY/MM/DD')}
+			td #{moment(object.updateAt).format('YYYY/MM/DD')}
+			if object.creater && object.creater.name
+				-a;
+				td #{object.creater.name}
+			else
+				td loss

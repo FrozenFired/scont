@@ -1,0 +1,112 @@
+- let brand = object.brand;
+- let vendor = object.vendor;
+.mycontainer
+	img(src="/imgs/scontPrint.jpg", alt="qtz", width="1000px")
+	table
+		tr
+			td.wd300
+				div.ht02
+				div.ht03 CATEGORY
+				div.ht13 #{Conf.bcate[brand.bcateg.bcate]}
+				div.ht01
+				div.ht13 #{brand.bcateg.code}
+			td.wd10
+			td.wd380
+				div.ht03
+				div.ht15: h4: strong #{brand.code}
+				div.ht01
+				div.ht13 #{Conf.vtype[vendor.vtype]}
+			td.wd10
+			td.wd300
+				div.ht03 COUNTRY
+				div.ht13 #{brand.nation.code}
+				div.ht03 COMPANY NAME
+				div.ht13 #{brand.firmName}
+	div.ht02
+	table
+		- let contact1 = new Object(), contact2 = new Object();
+		if vendor.contacts && vendor.contacts.length > 0
+			- contact1 = vendor.contacts[0];
+		if vendor.contacts && vendor.contacts.length > 1
+			- contact2 = vendor.contacts[1];
+
+		tr
+			td.wd300: div.ht02 CONTACT 
+			td.wd10: div.ht02 
+			td.wd300: div.ht02 
+			td.wd10: div.ht02 
+			td.wd380: div.ht02 
+		tr
+			td.wd300: div.ht13 #{contact1.contacter}
+			td.wd30: div.ht03  &nbsp;MP
+			td.wd300: div.ht13 #{contact1.tel}
+			td.wd30: div.ht03  &nbsp;@:
+			td.wd300: div.ht13 #{contact1.email}
+		tr
+			td.wd300: div.ht13 #{contact2.contacter}
+			td.wd30: div.ht03  &nbsp;TEL
+			td.wd300: div.ht13 #{contact2.tel}
+			td.wd30: div.ht03  &nbsp;@:
+			td.wd300: div.ht13 #{contact2.email}
+	<hr/>
+	table
+		tr
+			td.wd230: div.ht03 1) Information channel 
+			td.wd230: div.ht13  Internet / Expo 
+			td.wd590: div.ht13 #{brand.website}
+	<hr/>
+	div.ht03 2) Quotation Services
+	table
+		tr
+			td.wd100: div.ht03 Catalog
+			td.wd100: div.ht15  PDF <br/> PAPERY
+			td.wd300: div.ht15 #{brand.atNote}
+			td.wd100: div.ht03 &nbsp;&nbsp;&nbsp;Price list
+			td.wd100: div.ht15 PDF <br/> PAPERY
+			td.wd300: div.ht15 #{brand.plNote}
+	<hr/>
+	table
+		tr
+			td.wd250: div.ht06.text-left 3) Terms and conditions of order
+			td.wd500: div.ht15 #{object.scont} %
+			td.wd90: div.ht05.text-right  AC: <br/> SA:&nbsp;
+			td.wd180: div.ht15 #{vendor.ac} <br/> #{vendor.sa}
+	table
+		tr
+			td.wd590: div.ht03
+				span NOTES: #{object.note}
+			td.wd400: div.ht03
+				span NOTES: #{vendor.acsaNote}
+	<hr/>
+	div.ht03 4)Material Description: <strong>#{brand.matDesp}</strong>
+	<hr/>
+	table
+		tr
+			td.wd230: div.ht03 5) LOGOAuthorization
+			td.wd180: div.ht13 
+			td.wd90: div.ht03
+
+			td.wd300: div.ht03 7) Authorization in e-Commerce
+			td.wd180: div.ht13 
+	<hr/>
+	table
+		tr
+			td.wd200: div.ht03 8) Production time
+			td.wd300: div.ht13  #{brand.pTime}
+			td.wd200: div.ht03  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9) Delivery
+			td.wd300: div.ht13 #{vendor.freight}
+	<hr/>
+	div.ht17
+		span NOTES: #{object.note}
+	
+	<hr/>
+	table
+		tr
+			td.wd180: div.ht03  Date:
+			td.wd300: div.ht03 #{moment(object.updateAt).format('YYYY/MM/DD')}
+
+			td.wd180: div.ht03 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sign:
+			if object.updater
+				td.wd230: div.ht03 #{object.updater.name}
+			else
+				td.wd230: div.ht03 Departure

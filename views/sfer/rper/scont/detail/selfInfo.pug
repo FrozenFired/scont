@@ -1,0 +1,58 @@
+-let scontBg = "bg-light";
+
+if object.status == 0
+	-scontBg ="bg-info";
+else if object.status == 1
+	-scontBg ="bg-white";
+else if object.status == 2
+	-scontBg ="bg-success";
+else if object.status == 3
+	-scontBg ="bg-warning";
+else if object.status == 4
+	-scontBg ="bg-secondary";
+else if object.status == 5
+	-scontBg ="bg-danger";
+.row(class=scontBg)
+	h1.col-sm-6
+		span Discount Detail:
+	.col-sm-6.text-right
+		a.btn.btn-link(href="/rpSconts") Discount list
+hr
+.row
+	.col-sm-6
+		if object.brand
+			-let brand=object.brand;
+			include ./brandInfo
+		else
+			h2 loss brand information
+	.col-sm-6
+		if object.vendor
+			-let vendor = object.vendor;
+			include ./vendorInfo
+		else
+			h2 loss vendor information
+.bg-light
+	table.table.table-hover.table-bordered
+		tr
+			th OPTIONS 
+			th Discount
+			th note
+			th creater <br/> updater
+			th createAt <br/> updateAt
+			th status
+			th PRINT
+		tr
+			td #{Conf.sctCause[object.cause]}
+			td #{object.scont} %
+			td #{object.note}
+			td
+				if object.creater
+					-a;
+					span #{object.creater.code}
+				br
+				if object.updater
+					-a;
+					span #{object.updater.code}
+			td #{moment(object.createAt).format('YYYY/MM/DD')} <br/> #{moment(object.updateAt).format('YYYY/MM/DD')}
+			td(class=scontBg) #{Conf.stsScont[object.status]}
+			td: a.btn.btn-dark.btn-lg(href="javascript:window.print()") PRINT

@@ -1,0 +1,47 @@
+extends ../aalayout/layout
+
+block content
+	.container.mt-3
+		each item in objects
+			- let objBg, stsTxt;
+			if item.status == 1
+				-objBg ="bg-default";
+				-stsTxt = "VOID";
+			else if item.status == 2
+				-objBg ="bg-info";
+				-stsTxt = "OCCUPY";
+				if item.apler
+						-stsTxt = item.apler.code + " OCCUPY";
+			else if item.status == 3
+				-objBg = "bg-warning";
+				-stsTxt = "USING";
+				if item.apler
+						-stsTxt = item.apler.code + " USING";
+			else
+				-objBg = "bg-secondary";
+				-stsTxt = "BROKEN";
+			.card.my-5
+				a.text-dark(href="/rpCar/"+item._id)
+					h3.text-center(class=objBg+" item-id-"+item._id)  #{item.code}
+				.row
+					.col-md-6.text-center
+						img(src=item.photo, width="300px")
+					.col-md-6
+						h4.m-2 #{item.nome}
+						h6.m-2 #{item.desp}
+						.row.mt-5
+							.col-6 [ #{stsTxt} ]
+							.col-6
+								if item.status == 2
+									-a;
+									button.change.btn.btn-info.btn-block(type="button", data-url="/rpCarCnfm", data-sts='3', data-id=item._id) confirm
+								else if item.status == 3
+									-a;
+									button.change.btn.btn-warning.btn-block(type="button", data-url="/rpCarEnd", data-sts='4', data-id=item._id) finish
+		hr
+		.row.mt-5
+			.col-12.col-sm-6.col-md-3
+				a.btn.btn-warning.btn-block(href="/rpCarAdd") New Car
+
+
+	script(src="/js/changeStatus.js")

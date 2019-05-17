@@ -1,0 +1,10 @@
+button.btn.btn-link.btnEdit(class="edit-"+item._id, type="button", data-id=item._id) edit
+if item.ourNote
+	-a;
+	span(class="text-"+item._id) &nbsp;->&nbsp; #{item.ourNote}
+form(class="form-"+item._id, method="post", action="/rpOrderFixed", style="display:none")
+	input.form-control(type="hidden", name="object[_id]", value=item._id)
+	input.form-control(class="ipt-"+item._id, type="hidden", value=item.ourNote)
+	textarea.form-control.rounded-0(class="tar-"+item._id, rows="3", name="object[ourNote]")
+	button.btn.btn-default.btnCancel(class="cancel-"+item._id, type="button", data-id=item._id, style="display:none") cancel
+	input.btn.btn-info(type="submit" value="Edit Note")

@@ -1,0 +1,24 @@
+extends ../aalayout/layout
+
+block content
+	.bg-secondary.py-5
+		.container
+			.row
+				h2.col-12.col-md-6.text-center.mt-2
+					span Discount [#{count}]
+				.col-12.col-md-6.mt-4
+					button.btn.btn-warning.btn-block.btnFilter(type="button") Filter
+				//- .col-6.col-md-3.mt-4
+				//- 	span: a.btn.btn-info.btn-block(href="/rpScontAdd") Add Discount
+	.container.mt-3
+		.filterInfo(style="display:none")
+			.bg-light.pt-2
+				include ./list/filter
+			hr
+		include ../../../aaPlugin/pageSlip
+		include ./list/selfList
+		.row
+			.col-sm-8
+			.col-sm-4
+				include ./list/print
+	script(src="/js/filtTog.js")
