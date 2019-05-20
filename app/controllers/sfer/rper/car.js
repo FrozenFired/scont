@@ -147,6 +147,48 @@ exports.rpCarCnfm = function(req, res) {
 	})
 }
 
+exports.rpCarCncel = function(req, res) {
+	let crSfer = req.session.crSfer;
+	let id = req.query.id;
+	// let newStatus = parseInt(req.query.newStatus);
+	Car.findOne({_id: id}, function(err, object) {
+		if(err) {
+			info = '汽车查找错误，请联系管理员， Contact Kelin heihei!'
+			res.json({success: 0, info: info});
+		} else if(!object) {
+			info = '没有找到此量车，刷新尝试';
+			res.json({success: 0, info: info});
+		} else {
+			caredId = object.cared;
+			object.status = 1;
+			object.apler = null;
+			object.cared = null;
+			object.save(function(err, objSave) {
+				if(err) {
+					info = 'rpCarStatus database error, Contact Manager';
+					res.json({success: 0, info: info});
+				} else {
+					Cared.findOne({_id: caredId}, function(err, cared) {
+						if(err) {
+							info = 'rpCarCnfm database error cared findOne, Contact Manager';
+							res.json({success: 0, info: info});
+						} else if(!cared) {
+							info = '没有找到车辆记录，请刷新重试';
+							res.json({success: 0, info: info});
+						} else {
+							Cared.remove({_id: cared._id}, function(err, caredDel) {
+								if(err) console.log(err);
+								res.json({success: 1});
+							})
+						}
+					})
+				}
+			})
+
+		}
+	})
+}
+
 exports.rpCarEnd = function(req, res) {
 	let crSfer = req.session.crSfer;
 	let id = req.query.id;

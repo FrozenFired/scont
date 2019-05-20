@@ -87,5 +87,6 @@ module.exports = function(app){
 	app.get('/rpCarDel/:id', MdRole.rperIsLogin, RpCar.rpCarFilter, RpCar.rpCarDel)
 
 	app.get('/rpCarCnfm', MdRole.rperIsLogin, RpCar.rpCarCnfm)
+	app.get('/rpCarCncel', MdRole.rperIsLogin, RpCar.rpCarCncel)
 	app.get('/rpCarEnd', MdRole.rperIsLogin, RpCar.rpCarEnd)
 };
