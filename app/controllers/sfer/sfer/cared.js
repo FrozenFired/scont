@@ -8,6 +8,7 @@ exports.sfCareds = function(req, res) {
 	.populate('apler', 'code')
 	.populate('cfmer', 'code')
 	.populate('ender', 'code')
+	.sort({'ctAt': -1})
 	.exec(function(err, objects) {
 		if(err) console.log(err);
 		// console.log(objects)

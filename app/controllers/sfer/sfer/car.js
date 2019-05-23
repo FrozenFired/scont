@@ -28,6 +28,9 @@ exports.sfCarAppl = function(req, res) {
 		} else if(!object) {
 			info = '没有找到此量车，刷新尝试';
 			res.json({success: 0, info: info});
+		} else if(object.status != 1) {
+			info = 'Not empty, please refresh';
+			res.json({success: 0, info: info});
 		} else {
 			let caredObj = new Object;
 			caredObj.car = object._id;

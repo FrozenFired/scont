@@ -114,6 +114,9 @@ exports.rpCarCnfm = function(req, res) {
 		} else if(!object) {
 			info = '没有找到此量车，刷新尝试';
 			res.json({success: 0, info: info});
+		} else if(object.status != 2) {
+			info = 'Already processed, please refresh';
+			res.json({success: 0, info: info});
 		} else {
 			Cared.findOne({_id: object.cared}, function(err, cared) {
 				if(err) {
@@ -158,6 +161,9 @@ exports.rpCarCncel = function(req, res) {
 		} else if(!object) {
 			info = '没有找到此量车，刷新尝试';
 			res.json({success: 0, info: info});
+		} else if(object.status != 2) {
+			info = 'Already processed, please refresh';
+			res.json({success: 0, info: info});
 		} else {
 			caredId = object.cared;
 			object.status = 1;
@@ -199,6 +205,9 @@ exports.rpCarEnd = function(req, res) {
 			res.json({success: 0, info: info});
 		} else if(!object) {
 			info = '没有找到此量车，刷新尝试';
+			res.json({success: 0, info: info});
+		} else if(object.status != 3) {
+			info = 'Already processed, please refresh';
 			res.json({success: 0, info: info});
 		} else {
 			Cared.findOne({_id: object.cared}, function(err, cared) {
