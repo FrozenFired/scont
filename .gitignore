@@ -1,5 +1,6 @@
 public/libs/
 public/upload/
+public/upload/car/
 confile/initSet.js
 node_modules/
 readStep.txt

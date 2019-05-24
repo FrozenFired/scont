@@ -22,18 +22,19 @@ block content
 				else
 					-objBg = "bg-secondary";
 					-stsTxt = "BROKEN";
-				.col-12.col-md-6.mb-5(class="item-id-"+item._id)
-					.card.px-3
-						h5.row
+				.col-12.col-md-6.mb-3(class="item-id-"+item._id)
+					.card.px-3.py-1
+						.row
 							.col-3 #{item.code} 
 							.col-9.text-right [#{stsTxt}]
 						.row.mt-2
 							.col-4.text-center.pl-1
 								img(src=item.photo, width="100%", style="max-width: 80px")
 							.col-8
-								h4.m-1 #{item.nome}
-								h6.m-1 #{item.desp}
+								strong.m-1 #{item.nome}
+								div #{item.desp}
 								if item.status == 1
 									-a;
-									button.mt-3.change.btn.btn-info.btn-block(type="button", data-url="/sfCarAppl", data-sts='2', data-id=item._id) Apply
+									.text-right
+										button.mt-2.change.btn.btn-info(type="button", data-url="/sfCarAppl", data-sts='2', data-id=item._id) Apply
 	script(src="/js/changeStatus.js")
