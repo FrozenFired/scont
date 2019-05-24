@@ -31,10 +31,10 @@ $( function() {
 				elem += '<div class="col-12 col-md-4 border-right">';
 					let apler = "Loss";
 					if(object.apler) apler = object.apler.code;
-					elem += '<h5><strong>Applicant: '+apler+'</strong></h5>';
+					elem += '<h5><b>Applicant: '+apler+'</b></h5>';
 					let car = "Loss";
-					if(object.car) car = object.car.code;
-					elem += '<h5>Car: '+car+'</h5>';
+					if(object.car) car = object.car.code + ' - ' + object.car.nome;
+					elem += '<div><i>Car: '+car+'</i></div>';
 
 					let ctAt = getTime(object.ctAt)
 					elem += '<div>'+ctAt+'</div>';
@@ -42,7 +42,7 @@ $( function() {
 				elem += '<div class="col-12 col-md-4 border-right">';
 					if(object.cfmer) {
 						cfmer = object.cfmer.code;
-						elem += '<h5><strong>Confirm: '+cfmer+'</strong></h5>';
+						elem += '<h5><b>Confirm: '+cfmer+'</b></h5>';
 						let sAt = getTime(object.sAt)
 						sAtNum = new Date(sAt)
 						elem += '<div>'+sAt+'</div>';
@@ -51,7 +51,7 @@ $( function() {
 				elem += '<div class="col-12 col-md-4">';
 					if(object.ender) {
 						ender = object.ender.code;
-						elem += '<h5><strong>Finish: '+ender+'</strong></h5>';
+						elem += '<h5><b>Finish: '+ender+'</b></h5>';
 						let eAt = getTime(object.eAt)
 						elem += '<div>'+eAt+'</div>';
 						eAtNum = new Date(eAt)
