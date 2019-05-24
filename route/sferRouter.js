@@ -42,6 +42,10 @@ module.exports = function(app){
 
 	// cared ------------------------------------------------------------------------------
 	app.get('/sfCareds', MdRole.sferIsLogin, Cared.sfCareds)
+	app.get('/sfCaredsAjax', MdRole.sferIsLogin, Cared.sfCaredsAjax)
+	app.get('/sfCaredsMonth', MdRole.sferIsLogin, Cared.sfCaredsMonth)
+	app.get('/sfCaredsMonthAjax', MdRole.sferIsLogin, Cared.sfCaredsMonthAjax)
+
 	app.get('/sfCared/:id', MdRole.sferIsLogin, Cared.sfCaredFilter, Cared.sfCared)
 	app.get('/sfCaredDel/:id', MdRole.sferIsLogin, Cared.sfCaredFilter, Cared.sfCaredDel)
 };

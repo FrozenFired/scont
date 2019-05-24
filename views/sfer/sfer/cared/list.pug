@@ -1,39 +1,30 @@
 extends ../aalayout/layout
 
 block content
-	.container.mt-3
-		each item in objects
-			- a;
-			.card.my-3.bg-secondary(class="item-id-"+item._id)
-				.row.p-1
-					.col-12.col-md-4.border-right
-						- let apler = "Loss";
-						if item.apler
-							-apler = item.apler.code;
-						h4 Applicant: #{apler}
+	div(style="height:50px")
 
-						- let car = "Loss";
-						if item.car
-							-car = item.car.code;
-						h4 Car: #{car} - #{item.car.nome}
+	.container
+		.days(style="display:none")
+		.day.mt-3
 
-						p #{item.desp}
+	.topNav-second.p-1
+		.row.text-center.pt-1
+			.col-4
+				//- a.btn.btn-link(href='/monthOrders')
+				a.btn.btn-link(href='/sfCaredsMonth')
+					span 日
+					span.text-dark &nbsp;- 月
+			.col-4
+			.col-4
+				//- .selDate <span class="oi oi-loop-square"></span>
+				input#dirDate.datepicker.form-control(type="text", placeholder="选择日期",readonly="readonly")
 
-						p #{moment(item.ctAt).format('YYYY/MM/DD HH:mm:ss')}
-					.col-12.col-md-4.border-right
-						if item.cfmer
-							-cfmer = item.cfmer.code;
-							h4 Confirm: #{cfmer}
-							p
-								if item.sAt
-									-sAt = item.sAt;
-									span #{moment(sAt).format('YYYY/MM/DD HH:mm:ss')}
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	//- <link rel="stylesheet" href="/resources/demos/style.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	//- timepicker
+	link(rel="stylesheet", href="/libs/jt.timepicker/jquery.timepicker.css")
+	script(src="/libs/jt.timepicker/jquery.timepicker.min.js")
 
-					.col-12.col-md-4
-						if item.ender
-							-ender = item.ender.code;
-							h4 End: #{ender}
-							p
-								if item.eAt
-									-eAt = item.eAt;
-									span #{moment(eAt).format('YYYY/MM/DD HH:mm:ss')}
+	script(src="/js/sfer/cared/list.js")

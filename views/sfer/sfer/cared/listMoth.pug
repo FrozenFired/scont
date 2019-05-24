@@ -1,0 +1,22 @@
+extends ../aalayout/layout
+
+block content
+	div(style="height:50px")
+
+	.container
+		.months(style="display:none")
+		.month.mt-3
+	.topNav-second.p-1
+		.row.text-center
+			.col-4
+				a.btn.btn-link(href='/sfCareds')
+					span.text-dark 日 - 
+					span 月
+			.col-4
+			.col-4
+				select#selMonth.form-control(data-style="btn-info")
+					each month in months
+						-a;
+						option(value=month.key+'-'+month.vals+'-'+month.valf) #{month.key}
+	//- script(src="/js/bser/order/list/listdayinit.js")
+	script(src="/js/sfer/cared/listmon.js")
