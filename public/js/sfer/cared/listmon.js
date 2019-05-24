@@ -40,6 +40,7 @@ $( function() {
 						cfmer = object.cfmer.code;
 						elem += '<h4>Confirm: '+cfmer+'</h4>';
 						let sAt = getTime(object.sAt)
+						sAtNum = new Date(sAt)
 						elem += '<p>'+sAt+'</p>';
 					}
 				elem += '</div>';
@@ -48,7 +49,11 @@ $( function() {
 						ender = object.ender.code;
 						elem += '<h4>Confirm: '+ender+'</h4>';
 						let eAt = getTime(object.eAt)
+						eAtNum = new Date(eAt)
 						elem += '<p>'+eAt+'</p>';
+						let usageTime = getDuration(parseInt(eAtNum-sAtNum));
+						
+						elem += '<p>usageTime: '+usageTime+'</p>';
 					}
 				elem += '</div>';
 			elem += '</div>';
@@ -109,6 +114,28 @@ $( function() {
 		let ended = parseInt(strs[2]);
 		singledateRow(ym, begin, ended);
 		getsdObjects(begin, ended);
+	}
+	let getDuration = function(duration) {
+		let time = (duration)/1000;
+		let dayNum = parseInt(time/(60*60*24));
+		lastTime = parseInt(time%(60*60*24))
+		let hourNum = parseInt(lastTime/(60*60))
+		lastTime = parseInt(lastTime%(60*60))
+		let minNum = parseInt(lastTime/60)
+		lastTime = parseInt(lastTime%60)
+		if(dayNum < 1) dayNum = "";
+		else if(dayNum == 1) dayNum = dayNum + "day ";
+		else dayNum = dayNum + "days ";
+
+		if(hourNum < 1) hourNum = "";
+		else if(hourNum == 1) hourNum = hourNum + "hour ";
+		else hourNum = hourNum + "hours ";
+
+		if(minNum < 1) minNum = "";
+		else if(minNum == 1) minNum = minNum + "minute";
+		else minNum = minNum + "minutes";
+		usageTime = dayNum+hourNum+minNum;
+		return usageTime
 	}
 	let getTime = function(timestamp) {
 		let date = new Date(timestamp);
