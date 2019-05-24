@@ -27,7 +27,7 @@ $( function() {
 	let objectRow = function(object, ident) {
 		let elem;
 		elem = '<div class="card my-3 bg-secondary singleday sdayshow_'+ident+'">';
-			elem += '<div class="row p-1">';
+			elem += '<div class="row p-1 id-'+object._id+'">';
 				elem += '<div class="col-12 col-md-4 border-right">';
 					let apler = "Loss";
 					if(object.apler) apler = object.apler.code;

@@ -46,6 +46,6 @@ module.exports = function(app){
 	app.get('/sfCaredsMonth', MdRole.sferIsLogin, Cared.sfCaredsMonth)
 	app.get('/sfCaredsMonthAjax', MdRole.sferIsLogin, Cared.sfCaredsMonthAjax)
 
-	app.get('/sfCared/:id', MdRole.sferIsLogin, Cared.sfCaredFilter, Cared.sfCared)
-	app.get('/sfCaredDel/:id', MdRole.sferIsLogin, Cared.sfCaredFilter, Cared.sfCaredDel)
+	// app.get('/sfCared/:id', MdRole.sferIsLogin, Cared.sfCaredFilter, Cared.sfCared)
+	app.get('/sfCaredDel/:id', MdRole.rperIsLogin, Cared.sfCaredFilter, Cared.sfCaredDel)
 };
