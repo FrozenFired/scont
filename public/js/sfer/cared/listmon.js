@@ -27,33 +27,33 @@ $( function() {
 				elem += '<div class="col-12 col-md-4 border-right">';
 					let apler = "Loss";
 					if(object.apler) apler = object.apler.code;
-					elem += '<h4>Applicant: '+apler+'</h4>';
+					elem += '<h5><strong>Applicant: '+apler+'</strong></h5>';
 					let car = "Loss";
 					if(object.car) car = object.car.code;
-					elem += '<h4>Car: '+car+'</h4>';
+					elem += '<h5>Car: '+car+'</h5>';
 
 					let ctAt = getTime(object.ctAt)
-					elem += '<p>'+ctAt+'</p>';
+					elem += '<div>'+ctAt+'</div>';
 				elem += '</div>';
 				elem += '<div class="col-12 col-md-4 border-right">';
 					if(object.cfmer) {
 						cfmer = object.cfmer.code;
-						elem += '<h4>Confirm: '+cfmer+'</h4>';
+						elem += '<h5><strong>Confirm: '+cfmer+'</strong></h5>';
 						let sAt = getTime(object.sAt)
 						sAtNum = new Date(sAt)
-						elem += '<p>'+sAt+'</p>';
+						elem += '<div>'+sAt+'</div>';
 					}
 				elem += '</div>';
 				elem += '<div class="col-12 col-md-4">';
 					if(object.ender) {
 						ender = object.ender.code;
-						elem += '<h4>Confirm: '+ender+'</h4>';
+						elem += '<h5><strong>Finish: '+ender+'</strong></h5>';
 						let eAt = getTime(object.eAt)
 						eAtNum = new Date(eAt)
-						elem += '<p>'+eAt+'</p>';
+						elem += '<div>'+eAt+'</div>';
 						let usageTime = getDuration(parseInt(eAtNum-sAtNum));
 						
-						elem += '<p>usageTime: '+usageTime+'</p>';
+						elem += '<div>usageTime: '+usageTime+'</div>';
 					}
 				elem += '</div>';
 			elem += '</div>';
@@ -65,7 +65,7 @@ $( function() {
 	let loading = function() {
 		let elem;
 		elem = '<div class="loading text-warning text-center mt-3">';
-			elem += '<h4>请稍后，正在加载...</h4>';
+			elem += '<h5>请稍后，正在加载...</h5>';
 		elem += '</div>';
 		$('.month').append(elem);
 	}
