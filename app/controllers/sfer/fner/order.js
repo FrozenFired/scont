@@ -336,6 +336,7 @@ exports.orderFixed = function(req, res) {
 	let objBody = req.body.object
 	// console.log(objBody)
 	objBody.updateAt = Date.now();
+	// objBody.updater = req.session.crSfer._id;
 	if(objBody.price) objBody.price = parseFloat(objBody.price);
 	Order.findOne({_id: objBody._id}, function(err, object) {
 		if(err) console.log(err);
@@ -397,7 +398,7 @@ exports.orderUpd = function(req, res) {
 				objBody.order = objBody.order.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
 				objBody.brand = objBody.brand.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
 				objBody.updateAt = Date.now();
-				objBody.updater = req.session.crSfer._id;
+				// objBody.updater = req.session.crSfer._id;
 
 				let _object = _.extend(object, objBody)
 				fnUpdPayFunc(req, res, objBody, _object)
