@@ -336,7 +336,6 @@ exports.orderFixed = function(req, res) {
 	let objBody = req.body.object
 	// console.log(objBody)
 	objBody.updateAt = Date.now();
-	objBody.updater = req.session.crSfer._id;
 	if(objBody.price) objBody.price = parseFloat(objBody.price);
 	Order.findOne({_id: objBody._id}, function(err, object) {
 		if(err) console.log(err);
