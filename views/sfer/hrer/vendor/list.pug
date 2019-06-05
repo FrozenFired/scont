@@ -1,0 +1,28 @@
+extends ../aalayout/layout
+
+block content
+	.bg-secondary.py-5
+		.container
+			.row
+				h2.col-12.col-md-6.text-center.mt-2
+					span Vendors [#{count}]
+				.col-12.col-md-6.mt-4
+					button.btn.btn-warning.btn-block.btnFilter(type="button") Filter
+				//- .col-6.col-md-3.mt-4
+				//- 	span: a.btn.btn-info.btn-block(href="/hrScontAdd") Add Discount
+	.container.mt-3
+		.filterInfo(style="display:none")
+			.row.bg-light.p-2
+				.col-sm-12
+					include ./list/filter
+			hr
+		.row
+			.col-sm-12
+				include ../../../aaPlugin/pageSlip
+			.col-sm-12
+				include ./list/selfList
+		.row
+			.col-sm-8
+			.col-sm-4
+				include ./list/print
+	script(src="/js/filtTog.js")

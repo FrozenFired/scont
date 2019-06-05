@@ -6,15 +6,6 @@ exports.index = function(req, res) {
 	if(req.session.crVder) {
 		res.redirect('/vder');
 	}
-	else if(crSfer && crSfer.role == 15) {
-		res.redirect('/cner');
-	}
-	else if(crSfer && crSfer.role == 10) {
-		res.redirect('/qter');
-	}
-	else if(crSfer && crSfer.role == 5) {
-		res.redirect('/bner');
-	}
 	else if(crSfer && crSfer.role == 1) {
 		res.redirect('/oder');
 	}
@@ -26,6 +17,18 @@ exports.index = function(req, res) {
 	}
 	else if(crSfer && crSfer.role == 4) {
 		res.redirect('/rper');
+	}
+	else if(crSfer && crSfer.role == 5) {
+		res.redirect('/bner');
+	}
+	else if(crSfer && crSfer.role == 6) {
+		res.redirect('/hrer');
+	}
+	else if(crSfer && crSfer.role == 10) {
+		res.redirect('/qter');
+	}
+	else if(crSfer && crSfer.role == 15) {
+		res.redirect('/cner');
 	}
 	else if(req.session.crMger) {
 		res.redirect('/mger');
@@ -105,6 +108,8 @@ loginSfer = function(req, res, code, password) {
 						res.redirect('/cner');
 					} else if(sfer.role == 10) {
 						res.redirect('/qter');
+					} else if(sfer.role == 6) {
+						res.redirect('/hrer');
 					} else if(sfer.role == 5) {
 						res.redirect('/bner');
 					} else if(sfer.role == 4) {

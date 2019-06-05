@@ -1,0 +1,50 @@
+extends ../aalayout/layout
+
+block content
+	.container.mt-3
+		.row
+			each item in objects
+				- let objBg, stsTxt;
+				if item.status == 1
+					-objBg ="bg-default";
+					-stsTxt = "VOID";
+				else if item.status == 2
+					-objBg ="bg-info";
+					-stsTxt = "OCCUPY";
+					if item.apler
+							-stsTxt = item.apler.code + " OCCUPY";
+				else if item.status == 3
+					-objBg = "bg-warning";
+					-stsTxt = "USING";
+					if item.apler
+							-stsTxt = item.apler.code + " USING";
+				else
+					-objBg = "bg-secondary";
+					-stsTxt = "BROKEN";
+				.col-12.col-md-6.mb-3(class="item-id-"+item._id)
+					.card
+						a.text-dark(href="/hrCar/"+item._id)
+							h5.text-center #{item.code}
+						.row
+							.col-4.text-center
+								img(src=item.photo, width="100%", style="max-width: 80px")
+							.col-8
+								strong.m-2 #{item.nome}
+								div #{item.desp}
+								.mt-2 [ #{stsTxt} ]
+								div.text-right
+									if item.status == 2
+										-a;
+										button.change.btn.btn-danger(type="button", data-url="/hrCarCncel", data-sts='3', data-id=item._id) cancel
+										span &nbsp;
+										button.change.btn.btn-info(type="button", data-url="/hrCarCnfm", data-sts='3', data-id=item._id) confirm
+									else if item.status == 3
+										-a;
+										button.change.btn.btn-warning(type="button", data-url="/hrCarEnd", data-sts='4', data-id=item._id) finish
+		hr
+		.row.mt-5
+			.col-12.col-sm-6.col-md-3
+				a.btn.btn-warning.btn-block(href="/hrCarAdd") New Car
+
+
+	script(src="/js/changeStatus.js")

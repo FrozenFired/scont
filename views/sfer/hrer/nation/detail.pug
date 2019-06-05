@@ -1,0 +1,14 @@
+extends ../aalayout/layout
+
+block content
+	.bg-secondary.py-5
+		.container
+			.row
+				h2.col-12.text-center
+					span.text-dark Nation: 
+					span.text-warning [#{object.code}]
+	.container.mt-3
+		include ./detail/selfInfo
+		if brands && brands.length > 0 
+			-a;
+			include ./detail/brands

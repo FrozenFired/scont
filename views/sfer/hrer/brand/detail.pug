@@ -1,0 +1,16 @@
+extends ../aalayout/layout
+
+block content
+	.bg-secondary.py-5
+		.container
+			.row
+				h2.col-12.text-center
+					span.text-dark Brand: 
+					span.text-warning #{object.code}
+	.container.mt-3
+		include ./detail/selfInfo
+
+		if object.sconts && object.sconts.length > 0
+			-let sconts = object.sconts;
+			include ./detail/vendors
+	script(src="/js/scont/vendor/detail.js")

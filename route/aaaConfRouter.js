@@ -9,6 +9,7 @@ module.exports = function(app){
 	require('./bnerRouter')(app);
 	require('./lgerRouter')(app);
 	require('./rperRouter')(app);
+	require('./hrerRouter')(app);
 
 	require('./cnerRouter')(app);
 

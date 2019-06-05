@@ -96,22 +96,22 @@ exports.cnerIsLogin = function(req, res, next) {
 	}
 }
 
-exports.fnerIsLogin = function(req, res, next) {
-	let crSfer = req.session.crSfer
-	if(crSfer && crSfer.role == 2) {
-		next();
-	} else {
-		info = "Need permission from the Contabilita department";
-		Index.optionError(req, res, info)
-	}
-}
-
 exports.oderIsLogin = function(req, res, next) {
 	let crSfer = req.session.crSfer
 	if(crSfer && crSfer.role == 1) {
 		next();
 	} else {
 		info = "Need permission from the Order department";
+		Index.optionError(req, res, info)
+	}
+}
+
+exports.fnerIsLogin = function(req, res, next) {
+	let crSfer = req.session.crSfer
+	if(crSfer && crSfer.role == 2) {
+		next();
+	} else {
+		info = "Need permission from the Contabilita department";
 		Index.optionError(req, res, info)
 	}
 }
@@ -132,6 +132,16 @@ exports.rperIsLogin = function(req, res, next) {
 		next()
 	} else {
 		info = "Need permission from the Reception department";
+		Index.optionError(req, res, info)
+	}
+}
+
+exports.hrerIsLogin = function(req, res, next) {
+	let crSfer = req.session.crSfer
+	if(crSfer && crSfer.role == 6) {
+		next()
+	} else {
+		info = "Need permission from the HR department";
 		Index.optionError(req, res, info)
 	}
 }
