@@ -19,6 +19,16 @@ a.btn.btn-default(href="#", data-toggle="modal", data-target="#upSferInfo") upda
 								else
 									option(value=key) #{Conf.sfRole[key]} #{key}
 					.form-group
+						label.col-form-label(for="iptPart") Part
+						select#iptPart.form-control(name="object[part]", data-style="btn-info")
+							each key in Object.keys(Conf.sfPart)
+								-a;
+								if key == object.part
+									-a;
+									option(value=key, selected="selected") #{Conf.sfPart[key]} #{key}
+								else
+									option(value=key) #{Conf.sfPart[key]} #{key}
+					.form-group
 						label.col-form-label(for="iptName") Name
 						input#iptName.form-control(type="text", class="iptName", name="object[name]", value=object.name)
 					.form-group.udPhoto

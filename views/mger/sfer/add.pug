@@ -19,6 +19,13 @@ block content
 							-a;
 							option(value=key) #{Conf.sfRole[key]} #{key}
 			.form-group.row
+				label.col-md-2.col-form-label(for="iptPart") 角色
+				.col-md-6
+					select#iptPart.form-control(name="object[part]", data-style="btn-info")
+						each key in Object.keys(Conf.sfPart)
+							-a;
+							option(value=key) #{Conf.sfPart[key]} #{key}
+			.form-group.row
 				label.col-md-2.col-form-label(for="iptName") Name
 				.col-md-6
 					input#iptName.form-control(type="text", class="iptName", name="object[name]")

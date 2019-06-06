@@ -1,8 +1,10 @@
 dl.dl-horizontal
 	dt Code:
 	dd #{object.code}
-	dt Role:
+	dt 部门:
 	dd #{Conf.sfRole[object.role]}
+	dt 角色:
+	dd #{Conf.sfPart[object.part]}
 	
 	dt createAt:
 	dd #{moment(object.createAt).format('DD/MM/YYYY')}

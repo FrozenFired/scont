@@ -8,7 +8,9 @@ let dbSchema = new Schema({
 		type: String
 	},
 	password: String,
-	role: { type: Number, default: 2 },
+	role: { type: Number, default: 2 },		// 部门
+
+	part: { type: Number, default: 0 }, // 员工角色
 	
 	name: String,
 	photo: {

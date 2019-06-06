@@ -7,6 +7,8 @@ let Conf = {
 	weight: {0: 'general', 1: 'usual', 2: 'often', 3: 'always', 4: 'important'},
 
 	//员工角色
+	sfPart: { 0: '职员', 1: '主管'},
+	// 员工部门
 	sfRole: { 
 		1: 'Order', 2: 'Contabilita', 3: 'Logistic', 4: 'Reception',
 		5: 'brand',  6: 'HR', 10: 'quotation', 15: '中国报价', 20: 'leave',
