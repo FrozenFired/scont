@@ -26,6 +26,7 @@ let Conf = {
 
 	/* ------------------ task staus ------------------ */
 	stsTask:{ 0: 'progress', 1: 'finish'},
+	stsAbsence:{ 1: 'Apply', 1: 'suport', 3: 'allow', 4: 'back', 5: 'confirm'},
 
 	/* --------------------- scont ---------------------*/
 	// 品牌分类

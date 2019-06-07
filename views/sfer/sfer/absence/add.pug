@@ -1,0 +1,56 @@
+extends ../aalayout/layout
+
+block content
+	.container.mt-2
+		.row.border-bottom
+			h1.col-sm-6 Apply Leave
+		
+		form#newForm.mt-3(method="post", action=action, enctype="multipart/form-data")
+			.form-group.row
+				label.col-sm-2.col-form-label.labDesp Reason
+				.col-12.col-sm-10
+					textarea#iptDesp.form-control.rounded-0(rows="3", name="object[desp]", placeholder="Please Complete reason")
+			.form-group.row
+				label.col-sm-2.col-form-label.labSAt StartAt
+				.col-5.col-sm-5
+					input#sAt.datepicker.form-control(type="text", name="sTime", placeholder="Date", readonly="readonly")
+				.col-3.col-sm-2
+					select.form-control(name="sTime", data-style="btn-info")
+						each key in [8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+							-a;
+							option(value=key) #{key}
+				.col-1 :
+				.col-3.col-sm-2
+					select.form-control(name="sTime", data-style="btn-info")
+						each key in ['00', 10, 20, 30, 40, 50]
+							-a;
+							option(value=key) #{key}
+			.form-group.row
+				label.col-sm-2.col-form-label.labPeAt pre EndAt
+				.col-5.col-sm-5
+					input#peAt.datepicker.form-control(type="text", name="peTime", placeholder="Date", readonly="readonly")
+				.col-3.col-sm-2
+					select.form-control(name="peTime", data-style="btn-info")
+						each key in [8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+							-a;
+							option(value=key) #{key}
+				.col-1 :
+				.col-3.col-sm-2
+					select.form-control(name="peTime", data-style="btn-info")
+						each key in ['00', 10, 20, 30, 40, 50]
+							-a;
+							option(value=key) #{key}
+
+			hr
+			.form-group.row.text-right
+				.offset-md-2.col-md-10
+					input.btn.btn-default(type="submit" value="Apply")
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	//- <link rel="stylesheet" href="/resources/demos/style.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	//- timepicker
+	link(rel="stylesheet", href="/libs/jt.timepicker/jquery.timepicker.css")
+	script(src="/libs/jt.timepicker/jquery.timepicker.min.js")
+
+	script(src="/js/sfer/absence/add.js")

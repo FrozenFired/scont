@@ -5,6 +5,7 @@ let Sfer = require('../app/controllers/sfer/sfer/sfer');
 let Task = require('../app/controllers/sfer/sfer/task');
 let Car = require('../app/controllers/sfer/sfer/car');
 let Cared = require('../app/controllers/sfer/sfer/cared');
+let Absence = require('../app/controllers/sfer/sfer/absence');
 
 let MdBcrypt = require('../app/middle/middleBcrypt');
 let MdRole = require('../app/middle/middleRole');
@@ -37,15 +38,29 @@ module.exports = function(app){
 
 	// car ------------------------------------------------------------------------------
 	app.get('/sfCars', MdRole.sferIsLogin, Car.sfCars)
-
 	app.get('/sfCarAppl', MdRole.sferIsLogin, Car.sfCarAppl)
-
 	// cared ------------------------------------------------------------------------------
 	app.get('/sfCareds', MdRole.sferIsLogin, Cared.sfCareds)
 	app.get('/sfCaredsAjax', MdRole.sferIsLogin, Cared.sfCaredsAjax)
 	app.get('/sfCaredsMonth', MdRole.sferIsLogin, Cared.sfCaredsMonth)
 	app.get('/sfCaredsMonthAjax', MdRole.sferIsLogin, Cared.sfCaredsMonthAjax)
-
 	// app.get('/sfCared/:id', MdRole.sferIsLogin, Cared.sfCaredFilter, Cared.sfCared)
 	app.get('/sfCaredDel/:id', MdRole.rperIsLogin, Cared.sfCaredFilter, Cared.sfCaredDel)
+
+	// absence ------------------------------------------------------------------------------
+	app.get('/sfAbsences', MdRole.sferIsLogin, Absence.sfAbsences)
+	app.get('/sfAbsencesAjax', MdRole.sferIsLogin, Absence.sfAbsencesAjax)
+	app.get('/sfAbsencesMonth', MdRole.sferIsLogin, Absence.sfAbsencesMonth)
+	app.get('/sfAbsencesMonthAjax', MdRole.sferIsLogin, Absence.sfAbsencesMonthAjax)
+
+
+	app.get('/sfAbsenceAdd', MdRole.sferIsLogin, MdRole.sfUniLog, Absence.absenceAdd)
+	app.post('/sfAbsenceNew', PostForm, MdRole.sferIsLogin, Absence.absenceNew)
+
+	app.get('/sfAbsenceConfirm', MdRole.sferIsLogin, Absence.sfAbsenceConfirm) // page
+	app.get('/sfAbsenceStatus', MdRole.sferIsLogin, Absence.absenceStatus)
+
+	app.get('/sfAbsenceDel/:id', MdRole.sferIsLogin, Absence.absenceDel)
+	app.delete('/sfAbsenceDelAjax', MdRole.sferIsLogin, Absence.absenceDelAjax)
+
 };

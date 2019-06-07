@@ -1,0 +1,32 @@
+extends ../aalayout/layout
+
+block content
+	.container.mt-3
+		.row
+			h1.col-12 Absence Note
+		hr
+		form#formUpd(method="post", action='/hrAbsenceUpd', enctype="multipart/form-data")
+			input(type="hidden", name="object[_id]", value=object._id)
+			.form-group.row
+				label.col-sm-2.col-form-label Duration
+				.col-sm-10
+					input#iptDuration.form-control(type="float", name="object[duration]", placeholder="Must Number", value=object.duration)
+			.form-group.row
+				label.col-sm-2.col-form-label.labDesp Note
+				.col-12.col-sm-10
+					input#txtNote(type="hidden", value=object.note)
+					textarea#iptNote.form-control.rounded-0(rows="3", name="object[note]", placeholder="Note")
+
+			hr
+			.form-group.row.text-right
+				.offset-md-2.col-md-10
+					input.btn.btn-default(type="submit" value="Apply")
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	//- <link rel="stylesheet" href="/resources/demos/style.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	//- timepicker
+	link(rel="stylesheet", href="/libs/jt.timepicker/jquery.timepicker.css")
+	script(src="/libs/jt.timepicker/jquery.timepicker.min.js")
+
+	script(src="/js/hrer/absence/update.js")

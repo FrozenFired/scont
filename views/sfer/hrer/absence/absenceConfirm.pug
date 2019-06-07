@@ -1,0 +1,42 @@
+extends ../aalayout/layout
+
+block content
+	.bg-secondary.py-5
+		.container
+			.row
+				h2.col-12.text-center.mt-2
+					span Apply Absence
+	.container.mt-3
+		table.table.table-hover.table-bordered
+			thead
+				tr
+					th Applicant
+					th start At
+					th pre End
+					th description
+					th Manager
+					th createAt
+					th refuse
+					th confirm
+			tbody
+				each item in objects
+					-a;
+					tr(class="item-id-"+item._id)
+						- let apler = 'Loss';
+						if item.apler
+							- apler = item.apler.code;
+						td #{apler}
+						td #{moment(item.sAt).format('YYYY/MM/DD HH:mm')}
+						td #{moment(item.peAt).format('YYYY/MM/DD HH:mm')}
+						td #{item.desp}
+						- let manage = 'Loss';
+						if item.manage
+							- manage = item.manage.code;
+						td #{manage}
+						td #{moment(item.ctAt).format('YYYY/MM/DD')}
+						td: button.btn.btn-danger.del(type="button", data-urldel="/hrAbsenceDelAjax", data-id=item._id) refuse
+						td
+							button.btn.btn-warning.change(class="del-"+item._id, type="button", data-url="/hrAbsenceStatus", data-sts=3, data-id=item._id) confirm
+														
+		script(src="/js/changeStatus.js")
+		script(src="/js/delete.js")

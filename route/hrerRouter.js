@@ -11,6 +11,7 @@ let Order = require('../app/controllers/sfer/hrer/order');
 let Pay = require('../app/controllers/sfer/hrer/pay');
 
 let HrCar = require('../app/controllers/sfer/hrer/car');
+let Absence = require('../app/controllers/sfer/hrer/absence');
 
 let MdBcrypt = require('../app/middle/middleBcrypt');
 let MdRole = require('../app/middle/middleRole');
@@ -89,4 +90,19 @@ module.exports = function(app){
 	app.get('/hrCarCnfm', MdRole.hrerIsLogin, HrCar.hrCarCnfm)
 	app.get('/hrCarCncel', MdRole.hrerIsLogin, HrCar.hrCarCncel)
 	app.get('/hrCarEnd', MdRole.hrerIsLogin, HrCar.hrCarEnd)
+
+	// absence ------------------------------------------------------------------------------
+	app.get('/hrAbsences', MdRole.hrerIsLogin, Absence.hrAbsences)
+	app.get('/hrAbsencesAjax', MdRole.hrerIsLogin, Absence.hrAbsencesAjax)
+	app.get('/hrAbsencesMonth', MdRole.hrerIsLogin, Absence.hrAbsencesMonth)
+	app.get('/hrAbsencesMonthAjax', MdRole.hrerIsLogin, Absence.hrAbsencesMonthAjax)
+
+	app.get('/hrAbsenceUp/:id', MdRole.hrerIsLogin, Absence.hrAbsenceUp)
+	app.post('/hrAbsenceUpd', PostForm, MdRole.hrerIsLogin, Absence.hrAbsenceUpd)
+
+	app.get('/hrAbsenceConfirm', MdRole.hrerIsLogin, Absence.hrAbsenceConfirm)
+	app.get('/hrAbsenceStatus', MdRole.hrerIsLogin, Absence.hrAbsenceStatus)
+
+	app.get('/hrAbsenceDel/:id', MdRole.hrerIsLogin, Absence.absenceDel)
+	app.delete('/hrAbsenceDelAjax', MdRole.hrerIsLogin, Absence.absenceDelAjax)
 };

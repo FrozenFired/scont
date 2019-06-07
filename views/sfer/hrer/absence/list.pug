@@ -1,0 +1,30 @@
+extends ../aalayout/layout
+
+block content
+	div(style="height:50px")
+
+	.container
+		.days(style="display:none")
+		.day.mt-3
+
+	.topNav-second.p-1
+		.row.text-center.pt-1
+			.col-4
+				//- a.btn.btn-link(href='/monthOrders')
+				a.btn.btn-link(href='/hrAbsencesMonth')
+					span 日
+					span.text-dark &nbsp;- 月
+			.col-4
+			.col-4
+				//- .selDate <span class="oi oi-loop-square"></span>
+				input#dirDate.datepicker.form-control(type="text", placeholder="选择日期",readonly="readonly")
+
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	//- <link rel="stylesheet" href="/resources/demos/style.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	//- timepicker
+	link(rel="stylesheet", href="/libs/jt.timepicker/jquery.timepicker.css")
+	script(src="/libs/jt.timepicker/jquery.timepicker.min.js")
+
+	script(src="/js/hrer/absence/list.js")
