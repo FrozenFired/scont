@@ -2,6 +2,12 @@ let Index = require('../app/controllers/sfer/sfer/index');
 
 let Sfer = require('../app/controllers/sfer/sfer/sfer');
 
+let Nation = require('../app/controllers/sfer/sfer/nation');
+let Bcateg = require('../app/controllers/sfer/sfer/bcateg');
+let Brand = require('../app/controllers/sfer/sfer/brand');
+let Vendor = require('../app/controllers/sfer/sfer/vendor');
+let Scont = require('../app/controllers/sfer/sfer/scont');
+
 let Task = require('../app/controllers/sfer/sfer/task');
 let Car = require('../app/controllers/sfer/sfer/car');
 let Cared = require('../app/controllers/sfer/sfer/cared');
@@ -18,12 +24,49 @@ module.exports = function(app){
 
 	// index ---------------Sfer 首页 登录页面 登录 登出---------------------------------------
 
+	app.get('/headerBrand', MdRole.sferIsLogin, Brand.brandsFilter, Brand.headerBrand)
+
 	// Sfer -------------------------------------------------------------------------------
 	app.get('/sferInfo', MdRole.sferIsLogin, Sfer.sferFilter, Sfer.sferInfo);
 	app.post('/sferUpInfo', PostForm, MdRole.sferIsLogin, MdRole.sfUniLog, 
 		MdPicture.addNewPhoto, Sfer.sferUp);
 	app.post('/sferUpPw', PostForm, MdRole.sferIsLogin, MdRole.sfUniLog, 
 		MdBcrypt.rqBcrypt, Sfer.sferUp);
+
+	// Nation ------------------------------------------------------------------------------
+	app.get('/sfNations', MdRole.sferIsLogin, Nation.nationsFilter, Nation.nations)
+	app.get('/sfNationsPrint', MdRole.sferIsLogin, Nation.nationsFilter, Nation.nationsPrint)
+	app.get('/sfNation/:id', MdRole.sferIsLogin, Nation.nation)
+	// Bcateg ------------------------------------------------------------------------------
+	app.get('/sfBcategs', MdRole.sferIsLogin, Bcateg.bcategsFilter, Bcateg.bcategs)
+	app.get('/sfBcategsPrint', MdRole.sferIsLogin, Bcateg.bcategsFilter, Bcateg.bcategsPrint)
+	app.get('/sfBcateg/:id', MdRole.sferIsLogin, Bcateg.bcategFilter, Bcateg.bcateg)
+	app.get('/sfBcategPrint/:id', MdRole.sferIsLogin, Bcateg.bcategFilter, Bcateg.bcategPrint)
+
+	// Brand ------------------------------------------------------------------------------
+	app.get('/sfBrands', MdRole.sferIsLogin, Brand.brandsFilter, Brand.brands)
+	app.get('/sfBrandsPrint', MdRole.sferIsLogin, Brand.brandsFilter, Brand.brandsPrint)
+	app.get('/sfBrand/:id', MdRole.sferIsLogin, Brand.brandFilter, Brand.brand)
+
+	app.get('/sfAjaxCodeBrand', MdRole.sferIsLogin, Brand.ajaxCodeBrand)
+
+	// Vendor ------------------------------------------------------------------------------
+	app.get('/sfVendors', MdRole.sferIsLogin, Vendor.vendorsFilter, Vendor.vendors)
+	app.get('/sfVendorsPrint', MdRole.sferIsLogin, Vendor.vendorsFilter, Vendor.vendorsPrint)
+	app.get('/sfVendor/:id', MdRole.sferIsLogin, Vendor.vendorFilter, Vendor.vendor)
+
+	app.get('/sfAjaxCodeVendor', MdRole.sferIsLogin, Vendor.ajaxCodeVendor)
+	app.get('/ajaxSfVendor', MdRole.sferIsLogin, Vendor.ajaxVendor) // Order ajax vder
+
+	// Scont ------------------------------------------------------------------------------
+	app.get('/sfScontAdd', MdRole.sferIsLogin, Scont.scontAdd)
+	app.get('/sfSconts', MdRole.sferIsLogin, Scont.scontsFilter, Scont.sconts)
+	app.get('/sfScontsPrint', MdRole.sferIsLogin, Scont.scontsFilter, Scont.scontsPrint)
+	app.get('/sfScont/:id', MdRole.sferIsLogin, Scont.scontFilter, Scont.scont)
+	app.get('/sfScontPdf/:id', MdRole.sferIsLogin, Scont.scontFilter, Scont.scontPdf)
+	app.post('/sfAddScont', PostForm, MdRole.sferIsLogin, Scont.addScont)
+
+	app.get('/sfAjaxScontSts', MdRole.sferIsLogin, Scont.ajaxScontSts)
 
 	// task ------------------------------------------------------------------------------
 	app.get('/sfTasks', MdRole.sferIsLogin, Task.tasksFilter, Task.tasks)

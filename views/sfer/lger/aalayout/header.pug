@@ -8,12 +8,12 @@
 			li.nav-item.active
 				a.nav-link(href="/lgprint") print <span class="sr-only">(current)</span>
 			li.nav-item.active
-				a.nav-link(href="/lgBrands") Brand <span class="sr-only">(current)</span>
+				a.nav-link(href="/sfBrands") Brand <span class="sr-only">(current)</span>
 			li.nav-item.active
 				a.nav-link(href="/sfTasks") taskList <span class="sr-only">(current)</span>
 		ul.navbar-nav
 			li
-				form.form-inline(method="get", action="/headerLgBrand", enctype="multipart/form-data")
+				form.form-inline(method="get", action="/headerBrand", enctype="multipart/form-data")
 					input(type="hidden", name="keytpye", value="code")
 					input.form-control.mr-sm-2(type="search", name='keyword', placeholder="Brand Code",  aria-label="Search")
 					button.btn.btn-outline-success.my-2.my-sm-0(type="submit") Search
