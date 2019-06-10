@@ -11,7 +11,8 @@ let Conf = {
 	// 员工部门
 	sfRole: { 
 		1: 'Order', 2: 'Contabilita', 3: 'Logistic', 4: 'Reception',
-		5: 'brand',  6: 'HR', 10: 'quotation', 15: '中国报价', 20: 'leave',
+		5: 'Brand',  6: 'HR', 10: 'Quotation', 11: 'Market',
+		15: '中国报价', 20: 'leave',
 	},
 	vdRole: {0: 'register', 1: 'unregister', 2: 'logout'},
 	/* --------------------- order ---------------------*/

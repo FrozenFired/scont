@@ -63,39 +63,6 @@ exports.sfUniLog = function(req, res, next){
 }
 
 
-
-exports.qterIsLogin = function(req, res, next) {
-	let crSfer = req.session.crSfer
-	if(crSfer && crSfer.role == 10) {
-		next();
-	} else {
-		info = "Need permission from the quotazione department"
-		Index.optionError(req, res, info)
-	}
-}
-
-
-
-exports.bnerIsLogin = function(req, res, next) {
-	let crSfer = req.session.crSfer
-	if(crSfer && crSfer.role == 5) {
-		next();
-	} else {
-		info = "Need permission from the brand department";
-		Index.optionError(req, res, info)
-	}
-}
-
-exports.cnerIsLogin = function(req, res, next) {
-	let crSfer = req.session.crSfer
-	if(crSfer && crSfer.role == 15) {
-		next();
-	} else {
-		info = "需要登录您的账户"
-		Index.optionError(req, res, info)
-	}
-}
-
 exports.oderIsLogin = function(req, res, next) {
 	let crSfer = req.session.crSfer
 	if(crSfer && crSfer.role == 1) {
@@ -136,12 +103,53 @@ exports.rperIsLogin = function(req, res, next) {
 	}
 }
 
+exports.bnerIsLogin = function(req, res, next) {
+	let crSfer = req.session.crSfer
+	if(crSfer && crSfer.role == 5) {
+		next();
+	} else {
+		info = "Need permission from the brand department";
+		Index.optionError(req, res, info)
+	}
+}
+
 exports.hrerIsLogin = function(req, res, next) {
 	let crSfer = req.session.crSfer
 	if(crSfer && crSfer.role == 6) {
 		next()
 	} else {
 		info = "Need permission from the HR department";
+		Index.optionError(req, res, info)
+	}
+}
+
+exports.qterIsLogin = function(req, res, next) {
+	let crSfer = req.session.crSfer
+	if(crSfer && crSfer.role == 10) {
+		next();
+	} else {
+		info = "Need permission from the quotazione department"
+		Index.optionError(req, res, info)
+	}
+}
+
+exports.mkerIsLogin = function(req, res, next) {
+	let crSfer = req.session.crSfer
+	if(crSfer && crSfer.role == 11) {
+		next();
+	} else {
+		info = "Need permission from the Market department"
+		Index.optionError(req, res, info)
+	}
+}
+
+
+exports.cnerIsLogin = function(req, res, next) {
+	let crSfer = req.session.crSfer
+	if(crSfer && crSfer.role == 15) {
+		next();
+	} else {
+		info = "需要登录您的账户"
 		Index.optionError(req, res, info)
 	}
 }

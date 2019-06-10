@@ -27,6 +27,9 @@ exports.index = function(req, res) {
 	else if(crSfer && crSfer.role == 10) {
 		res.redirect('/qter');
 	}
+	else if(crSfer && crSfer.role == 11) {
+		res.redirect('/mker');
+	}
 	else if(crSfer && crSfer.role == 15) {
 		res.redirect('/cner');
 	}
@@ -106,6 +109,8 @@ loginSfer = function(req, res, code, password) {
 						loginMger(req, res, code, password);
 					} else if(sfer.role == 15) {
 						res.redirect('/cner');
+					} else if(sfer.role == 11) {
+						res.redirect('/mker');
 					} else if(sfer.role == 10) {
 						res.redirect('/qter');
 					} else if(sfer.role == 6) {
