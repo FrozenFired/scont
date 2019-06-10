@@ -38,6 +38,8 @@
 	.row
 		h5.col-6.col-sm-3.text-secondary brand Numbers
 		h5.col-6.text-info #{object.numbrand}
-	.row
-		.col-12
-			a.btn.btn-warning.btn-block(href="/bnNationUp/"+object._id) update
+	if crSfer.part == 1
+		-a;
+		.row
+			.col-12
+				a.btn.btn-warning.btn-block(href="/bnNationUp/"+object._id) update

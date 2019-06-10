@@ -28,4 +28,7 @@
 				td #{object.creater.name}
 			else
 				td loss
-			td: a.btn.btn-warning.btn-lg(href="/bnBcategUp/"+object._id) update
+			td
+				if crSfer.part == 1
+					-a;
+					a.btn.btn-warning.btn-lg(href="/bnBcategUp/"+object._id) update

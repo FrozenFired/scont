@@ -35,13 +35,15 @@ else if object.status == 2
 					li #{contact.contacter} 
 					li #{contact.tel} 
 					li #{contact.email}
-	.row
-		h5.col-4.col-sm-3.text-secondary option
-		a.col-4.col-sm-2.btn.btn-dark(href="/bnVendorUp/"+object._id) update
-		button.col-3.col-sm-2.btn.btn-warning#mark(type="button") Mark
-		if object.sconts && object.sconts.length == 0
-			-a;
-			a.btn.btn-danger(href="/bnVendorDel/"+object._id) delete
+	if crSfer.part == 1
+		-a;
+		.row
+			h5.col-4.col-sm-3.text-secondary option
+			a.col-4.col-sm-2.btn.btn-dark(href="/bnVendorUp/"+object._id) update
+			button.col-3.col-sm-2.btn.btn-warning#mark(type="button") Mark
+			if object.sconts && object.sconts.length == 0
+				-a;
+				a.btn.btn-danger(href="/bnVendorDel/"+object._id) delete
 	.basicDetail(style="display:none")
 		.row
 			if object.creater
