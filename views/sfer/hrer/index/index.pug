@@ -1,8 +1,18 @@
 extends ../aalayout/layout
 
 block content
-	.container.mt-5
-		.row
+	.container.mt-3
+		h2 HR System
+		.row.border-top.border-bottom.mt-3
+			.col-6.col-sm-4.col-lg-3
+				a.nav-link(href="/hrAbsences")
+					img.figure-img.img-fluid.rounded(src="/imgs/absence/hrRecord.jpg", width="100%", alt="pays list")
+			.col-6.col-sm-4.col-lg-3
+				a.nav-link(href="/hrAbsenceConfirm")
+					img.figure-img.img-fluid.rounded(src="/imgs/absence/hrMg.jpg", width="100%", alt="pays list")
+		.row.mt-4
+			include ../../sfer/index/manager
+		.row.mt-4
 			.col-6.col-sm-4.col-lg-3
 				a.nav-link(href="/hrOrders")
 					img.figure-img.img-fluid.rounded(src="/imgs/orders.jpg", width="100%", alt="orders list")
@@ -11,11 +21,3 @@ block content
 					img.figure-img.img-fluid.rounded(src="/imgs/pays.jpg", width="100%", alt="pays list")
 			include ../../sfer/index/scont
 			include ../../sfer/index/index
-		hr
-		.row.mt-3
-			.col-6.col-sm-4.col-lg-3
-				a.nav-link(href="/hrAbsences") HrAbsences
-					//- img.figure-img.img-fluid.rounded(src="/imgs/pays.jpg", width="100%", alt="pays list")
-			.col-6.col-sm-4.col-lg-3
-				a.nav-link(href="/hrAbsenceConfirm") hrAbsenceConfirm
-					//- img.figure-img.img-fluid.rounded(src="/imgs/pays.jpg", width="100%", alt="pays list")

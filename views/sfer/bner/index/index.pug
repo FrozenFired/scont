@@ -1,8 +1,9 @@
 extends ../aalayout/layout
 
 block content
-	.container.mt-5
-		.row
+	.container.mt-3
+		h1 Brand Partment
+		.row.border-top.border-bottom
 			.col-6.col-sm-4.col-lg-3
 				a.nav-link(href="/bnBrands")
 					img.figure-img.img-fluid.rounded(src="/imgs/brand.jpg", width="100%", alt="brand list")
@@ -18,6 +19,9 @@ block content
 			.col-6.col-sm-4.col-lg-3
 				a.nav-link(href="/bnBcategs")
 					img.figure-img.img-fluid.rounded(src="/imgs/categs.jpg", width="100%", alt="brand Category")
+		.row.mt-4
+			include ../../sfer/index/manager
+		.row.mt-4
 			.col-6.col-sm-4.col-lg-3
 				a.nav-link(href="/bnOrders")
 					img.figure-img.img-fluid.rounded(src="/imgs/orders.jpg", width="100%", alt="orders list")
