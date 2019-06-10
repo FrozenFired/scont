@@ -2,15 +2,15 @@ extends ../aalayout/layout
 
 block content
 	.container.mt-3
-		h1 Contabilita
-		.row.border.top.border-bottom
+		h2 Contabilita
+		.row.border.mt-3
 			.col-6.col-sm-4.col-lg-3
 				a.nav-link(href="/fnOrders")
 					img.figure-img.img-fluid.rounded(src="/imgs/orders.jpg", width="100%", alt="orders list")
 			.col-6.col-sm-4.col-lg-3
 				a.nav-link(href="/fnPays")
 					img.figure-img.img-fluid.rounded(src="/imgs/pays.jpg", width="100%", alt="pays list")
-		.row.mt-4
+		.row.mt-4.border-bottom
 			include ../../sfer/index/manager
 		.row.mt-4
 			include ../../sfer/index/scont

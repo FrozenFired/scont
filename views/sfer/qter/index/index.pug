@@ -3,14 +3,14 @@ extends ../aalayout/layout
 block content
 	.container.mt-3
 		h2 Quotation
-		.row.mt-3.border-top.border-bottom
+		.row.mt-3.border
 			.col-6.col-sm-4.col-lg-3
 				a.nav-link(href="/qtOrders")
 					img.figure-img.img-fluid.rounded(src="/imgs/orders.jpg", width="100%", alt="orders list")
 			.col-6.col-sm-4.col-lg-3
 				a.nav-link(href="/qtPays")
 					img.figure-img.img-fluid.rounded(src="/imgs/pays.jpg", width="100%", alt="pays list")
-		.row.mt-4
+		.row.mt-4.border-bottom
 			include ../../sfer/index/manager
 		.row.mt-4
 			include ../../sfer/index/scont
