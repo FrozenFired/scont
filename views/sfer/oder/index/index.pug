@@ -1,16 +1,11 @@
 extends ../aalayout/layout
 
 block content
-	.container
-		h1 #{title}
-		hr
-		.row
-			.col-6.col-sm-4.col-lg-3
-				a.nav-link(href="/lgOrders")
-					img.figure-img.img-fluid.rounded(src="/imgs/orders.jpg", width="100%", alt="orders list")
-			.col-6.col-sm-4.col-lg-3
-				a.nav-link(href="/lgPays")
-					img.figure-img.img-fluid.rounded(src="/imgs/pays.jpg", width="100%", alt="pays list")
-			.col-6.col-sm-4.col-lg-3
-				a.nav-link(href="/sfTasks")
-					img.figure-img.img-fluid.rounded(src="/imgs/tasks.jpg", width="100%", alt="tasks list")
+	.container.mt-3
+		h2 Order Partment
+		.row.mt-4.bg-light
+			include ../../sfer/index/manager
+		.row.mt-4
+			include ../../sfer/index/order
+			include ../../sfer/index/scont
+			include ../../sfer/index/index

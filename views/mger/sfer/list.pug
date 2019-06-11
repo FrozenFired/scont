@@ -10,6 +10,7 @@ block content
 				thead
 					tr
 						th 账户
+						th 部门
 						th 角色
 						th 昵称
 						th delete
@@ -19,6 +20,7 @@ block content
 						tr(class="item-id-"+item._id)
 							td: a(href="/mgSferDetail/"+item._id) #{item.code}
 							td #{Conf.sfRole[item.role]} #{item.role}
+							td #{Conf.sfPart[item.part]}
 							td #{item.name}
 							td: button.btn.btn-danger.del(type="button", data-urldel="/mgSferDel", data-id=item._id) delete
 	script(src="/js/delete.js")

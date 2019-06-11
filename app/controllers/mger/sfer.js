@@ -43,7 +43,7 @@ exports.mgAddSfer = function(req, res) {
 
 exports.mgSferList = function(req, res) {
 	Sfer.find()
-	.sort({'role': 1})
+	.sort({'role': 1, 'part': -1, 'code': 1})
 	.exec(function(err, objects) {
 		if(err) console.log(err)
 		res.render('./mger/sfer/list', {
