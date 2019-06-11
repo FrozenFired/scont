@@ -8,6 +8,9 @@ let Brand = require('../app/controllers/sfer/sfer/brand');
 let Vendor = require('../app/controllers/sfer/sfer/vendor');
 let Scont = require('../app/controllers/sfer/sfer/scont');
 
+let Order = require('../app/controllers/sfer/sfer/order');
+let Pay = require('../app/controllers/sfer/sfer/pay');
+
 let Task = require('../app/controllers/sfer/sfer/task');
 let Car = require('../app/controllers/sfer/sfer/car');
 let Cared = require('../app/controllers/sfer/sfer/cared');
@@ -67,6 +70,26 @@ module.exports = function(app){
 	app.post('/sfAddScont', PostForm, MdRole.sferIsLogin, Scont.addScont)
 
 	app.get('/sfAjaxScontSts', MdRole.sferIsLogin, Scont.ajaxScontSts)
+
+
+	// Order         ----------------------------------------------------------------------
+	app.get('/sfOrders', MdRole.sferIsLogin, Order.ordersFilter, Order.orders)
+	app.get('/sfOrdersPrint', MdRole.sferIsLogin, Order.ordersFilter, Order.ordersPrint)
+	app.get('/sfOrder/:id', MdRole.sferIsLogin, Order.orderFilter, Order.order)
+	app.get('/sfOrderUp/:id', MdRole.sferIsLogin, Order.orderFilter, Order.orderUp)
+	app.post('/sfOrderUpd', PostForm, MdRole.sferIsLogin, MdRole.sfUniLog, Order.orderUpd)
+	app.post('/sfOrderFixed', PostForm, MdRole.sferIsLogin, MdRole.sfUniLog, Order.orderFixed)
+	app.get('/sfOrderAdd', MdRole.sferIsLogin, MdRole.sfUniLog, Order.orderAdd)
+	app.post('/sfOrderNew', PostForm, MdRole.sferIsLogin, MdRole.sfUniLog, Order.orderNew)
+	app.get('/sfOrderDel/:id', MdRole.sferIsLogin, Order.orderFilter, Order.orderDel)
+
+	// Pay         ----------------------------------------------------------------------
+	app.get('/sfPays', MdRole.sferIsLogin, Pay.paysFilter, Pay.pays)
+	app.get('/sfPay/:id', MdRole.sferIsLogin, Pay.payFilter, Pay.pay)
+
+	app.get('/sfPayMailed', MdRole.sferIsLogin, Pay.payMailed)
+
+
 
 	// task ------------------------------------------------------------------------------
 	app.get('/sfTasks', MdRole.sferIsLogin, Task.tasksFilter, Task.tasks)

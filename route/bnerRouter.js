@@ -2,13 +2,9 @@ let Index = require('../app/controllers/sfer/bner/index');
 
 let Nation = require('../app/controllers/sfer/bner/nation');
 let Bcateg = require('../app/controllers/sfer/bner/bcateg');
-
 let Brand = require('../app/controllers/sfer/bner/brand');
 let Vendor = require('../app/controllers/sfer/bner/vendor');
 let Scont = require('../app/controllers/sfer/bner/scont');
-
-let Order = require('../app/controllers/sfer/bner/order');
-let Pay = require('../app/controllers/sfer/bner/pay');
 
 let MdBcrypt = require('../app/middle/middleBcrypt');
 let MdRole = require('../app/middle/middleRole');
@@ -91,21 +87,4 @@ module.exports = function(app){
 
 	app.get('/ajaxScontSts', MdRole.bnerIsLogin, Scont.ajaxScontSts)
 
-
-	// Order         -------------------------------------------------------------------
-	app.get('/bnOrders', MdRole.bnerIsLogin, Order.ordersFilter, Order.orders)
-	app.get('/bnOrdersPrint', MdRole.bnerIsLogin, Order.ordersFilter, Order.ordersPrint)
-	app.get('/bnOrder/:id', MdRole.bnerIsLogin, Order.orderFilter, Order.order)
-	app.get('/bnOrderUp/:id', MdRole.bnerIsLogin, Order.orderFilter, Order.orderUp)
-	app.post('/bnOrderUpd', PostForm, MdRole.bnerIsLogin, MdRole.sfUniLog, Order.orderUpd)
-	app.post('/bnOrderFixed', PostForm, MdRole.bnerIsLogin, MdRole.sfUniLog, Order.orderFixed)
-	app.get('/bnOrderAdd', MdRole.bnerIsLogin, MdRole.sfUniLog, Order.orderAdd)
-	app.post('/bnOrderNew', PostForm, MdRole.bnerIsLogin, MdRole.sfUniLog, Order.orderNew)
-	app.get('/bnOrderDel/:id', MdRole.bnerIsLogin, Order.orderFilter, Order.orderDel)
-
-	// Pay         ---------------------------------------------------------------------
-	app.get('/bnPays', MdRole.bnerIsLogin, Pay.paysFilter, Pay.pays)
-	app.get('/bnPay/:id', MdRole.bnerIsLogin, Pay.payFilter, Pay.pay)
-
-	app.get('/bnPayMailed', MdRole.bnerIsLogin, Pay.payMailed)
 };

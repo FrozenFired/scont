@@ -1,8 +1,5 @@
 let Index = require('../app/controllers/sfer/hrer/index');
 
-let Order = require('../app/controllers/sfer/hrer/order');
-let Pay = require('../app/controllers/sfer/hrer/pay');
-
 let HrCar = require('../app/controllers/sfer/hrer/car');
 let Absence = require('../app/controllers/sfer/hrer/absence');
 
@@ -17,24 +14,6 @@ module.exports = function(app){
 
 	// index ---------------Sfer 首页 登录页面 登录 登出---------------------------------------
 	app.get('/hrer', MdRole.hrerIsLogin, Index.hrer);
-
-	// Order         ----------------------------------------------------------------------
-	app.get('/hrOrders', MdRole.hrerIsLogin, Order.ordersFilter, Order.orders)
-	app.get('/hrOrdersPrint', MdRole.hrerIsLogin, Order.ordersFilter, Order.ordersPrint)
-	app.get('/hrOrder/:id', MdRole.hrerIsLogin, Order.orderFilter, Order.order)
-	// app.get('/hrOrderUp/:id', MdRole.hrerIsLogin, Order.orderFilter, Order.orderUp)
-	// app.post('/hrOrderUpd', PostForm, MdRole.hrerIsLogin, MdRole.sfUniLog, Order.orderUpd)
-	// app.post('/hrOrderFixed', PostForm, MdRole.hrerIsLogin, MdRole.sfUniLog, Order.orderFixed)
-	// app.get('/hrOrderAdd', MdRole.hrerIsLogin, MdRole.sfUniLog, Order.orderAdd)
-	// app.post('/hrOrderNew', PostForm, MdRole.hrerIsLogin, MdRole.sfUniLog, Order.orderNew)
-	// app.get('/hrOrderDel/:id', MdRole.hrerIsLogin, Order.orderFilter, Order.orderDel)
-
-	// Pay         ----------------------------------------------------------------------
-	app.get('/hrPays', MdRole.hrerIsLogin, Pay.paysFilter, Pay.pays)
-	app.get('/hrPay/:id', MdRole.hrerIsLogin, Pay.payFilter, Pay.pay)
-
-	app.get('/hrPayMailed', MdRole.hrerIsLogin, Pay.payMailed)
-
 
 	// car ------------------------------------------------------------------------------
 	app.get('/hrCars', MdRole.hrerIsLogin, HrCar.hrCars)
