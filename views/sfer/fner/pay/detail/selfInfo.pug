@@ -62,7 +62,7 @@ table.table.table-hover.table-bordered
 		td #{createAt}
 	tr
 		td: strong paidAt
-		td(class=bgRecent) #{paidAt}
+		td(class=bgRecent) #{moment(object.paidAt).format('MM/DD/YYYY')}
 	tr
 		td: strong Method
 		td #{Conf.payMethod[object.method]}

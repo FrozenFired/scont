@@ -162,7 +162,13 @@ fnPayFindPays = function(req, res, next, condition) {
 		})
 		.skip(condition.index).limit(condition.entry)
 		.populate('vder')
-		.populate({path: 'order', populate: {path: 'vder'} } )
+		.populate({ 
+			path: 'order', 
+			populate: [
+				{ path: 'vder'},
+				{ path: 'creater'}
+			] 
+		})
 		.sort({"status": 1, "paidAt": 1})
 		.exec(function(err, objects) {
 			if(err) console.log(err);
@@ -231,29 +237,59 @@ exports.paysPrint = function(req, res) {
 	ws.column(1).setWidth(20);
 	ws.column(2).setWidth(20);
 	ws.column(3).setWidth(20);
-	ws.column(4).setWidth(50);
-	ws.column(5).setWidth(40);
+	ws.column(4).setWidth(20);
+	ws.column(5).setWidth(20);
 	ws.column(6).setWidth(20);
 	ws.column(7).setWidth(20);
+	ws.column(8).setWidth(20);
+	ws.column(9).setWidth(20);
+	ws.column(10).setWidth(20);
+	ws.column(11).setWidth(20);
+	ws.column(12).setWidth(20);
 	
 	// header
-	ws.cell(1,1).string('Code');
-	ws.cell(1,2).string('Title');
-	ws.cell(1,3).string('Serial');
-	ws.cell(1,4).string('Description');
-	ws.cell(1,5).string('Note');
-	ws.cell(1,6).string('CreateAt');
-	ws.cell(1,7).string('FinishAt');
+	ws.cell(1,1).string('支付日期');
+	ws.cell(1,2).string('负责人');
+	ws.cell(1,3).string('订单号');
+	ws.cell(1,4).string('品牌');
+	ws.cell(1,5).string('供应商');
+	ws.cell(1,6).string('总金额');
+	ws.cell(1,7).string('首款');
+	ws.cell(1,8).string('尾款');
+	ws.cell(1,9).string('免税方式');
+	ws.cell(1,10).string('支票兑付时间');
+	ws.cell(1,11).string('是否兑付');
+	ws.cell(1,12).string('支票号');
+	ws.cell(1,13).string('备注');
+	ws.cell(1,14).string('图片描述');
 
 	for(let i=0; i<objects.length; i++){
 		let item = objects[i];
-		if(item.code) ws.cell((i+2), 1).string(String(item.code));
-		if(item.title) ws.cell((i+2), 2).string(String(item.title));
-		if(item.order) ws.cell((i+2), 3).string(String(item.order));
-		if(item.description) ws.cell((i+2), 4).string(String(item.description));
-		if(item.note) ws.cell((i+2), 5).string(String(item.note));
-		if(item.createAt) ws.cell((i+2), 6).string(moment(item.createAt).format('MM/DD/YYYY HH:mm'));
-		if(item.finishAt) ws.cell((i+2), 7).string(String(item.finishAt));
+		if(item.createAt) ws.cell((i+2), 1).string(moment(item.createAt).format('YYYY/MM/DD'));
+		if(item.order) {
+			let order = item.order;
+			if(order.creater) {
+				if(order.creater.code) ws.cell((i+2), 2).string(String(order.creater.code));
+			}
+			if(order.order) ws.cell((i+2), 3).string(String(order.order));
+			if(order.brand) ws.cell((i+2), 4).string(String(order.brand));
+			if(order.vder) {
+				if(order.vder.code) ws.cell((i+2), 5).string(String(order.vder.code));
+			}
+			if(order.price) ws.cell((i+2), 6).string(String(order.price));
+			let taxType = Conf.taxType[0]
+			if(order.taxType) taxType = Conf.taxType[order.taxType]; 
+			if(taxType) ws.cell((i+2), 9).string(String(taxType));
+		}
+		if(item.price && item.code == 'ac') ws.cell((i+2), 7).string(String(item.price));
+		if(item.price && item.code != 'ac') ws.cell((i+2), 8).string(String(item.price));
+		if(item.paidAt) ws.cell((i+2), 10).string(moment(item.paidAt).format('YYYY/MM/DD'));
+		let isPaid = Conf.stsPay[0];
+		if(item.status) isPaid = Conf.stsPay[item.status];
+		if(isPaid) ws.cell((i+2), 11).string(String(isPaid));
+		if(item.agCode) ws.cell((i+2), 12).string(String(item.agCode));
+		if(item.note) ws.cell((i+2), 13).string(String(item.note));
+		if(item.picUrl) ws.cell((i+2), 14).string(String(item.picUrl));
 	}
 
 	wb.write('Pay_'+req.session.crSfer.code+'_'+ moment(new Date()).format('YYYYMMDD-HHmmss') + '.xlsx', res);
