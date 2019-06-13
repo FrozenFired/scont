@@ -170,6 +170,7 @@ exports.absenceNew = function(req, res) {
 	objBody.sAt = new Date(sfTimeFormat(sTime));
 	objBody.peAt = new Date(sfTimeFormat(peTime));
 	objBody.status = 1
+	if(crSfer.part == 1) objBody.status = 2;
 
 	let role = crSfer.role;
 	if(crSfer.role == 5) {
