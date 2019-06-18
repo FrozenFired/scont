@@ -21,6 +21,7 @@ let dbSchema = new Schema({
 	paySa: {type: ObjectId, ref: 'Pay'},
 
 	status: String,
+	stsOrderLg: {type: Number, default: 0},
 	creater: {type: ObjectId, ref: 'Sfer'},
 	updater: {type: ObjectId, ref: 'Sfer'},
 	createAt: Date,

@@ -173,9 +173,7 @@ exports.absenceNew = function(req, res) {
 	if(crSfer.part == 1) objBody.status = 2;
 
 	let role = crSfer.role;
-	if(crSfer.role == 5) {
-		role = 10;
-	} else if(crSfer.role == 4) {
+	if(crSfer.role == 4) {
 		role = 6;
 	}
 	objBody.role = role;
