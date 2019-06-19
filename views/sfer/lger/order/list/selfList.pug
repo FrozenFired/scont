@@ -75,5 +75,25 @@ each item in objects
 				else
 					h4 Total: <span class="text-danger">NaN </span>
 				h5 P/I： #{item.pi}
+				
+				.row.mt-2
+					.col-5.text-secondary.text-right VOLUME:
+					.col-7
+						span.text-info #{item.volumeLg} 
+						span m<sup>3</sup>
+				.row.mt-2
+					.col-5.text-secondary.text-right GROSS WEIGHT:
+					.col-7
+						span.text-info #{item.gwlg} 
+						span KG
+				.row.mt-2
+					.col-5.text-secondary.text-right NET WEIGHT:
+					.col-7
+						span.text-info #{item.nwlg} 
+						span KG
+				.row.mt-2
+					.col-5.text-secondary.text-right PACK:
+					.col-7
+						span.text-info #{item.packlg} 
 
 script(src="/js/order/list.js")

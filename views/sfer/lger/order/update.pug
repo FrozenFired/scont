@@ -1,0 +1,39 @@
+extends ../aalayout/layout
+
+block content
+	.container.mt-3
+		.row
+			h1.col-sm-6 OrderLg Update
+			.col-sm-6.text-right
+				a.btn.btn-link(href="/lgOrders") back List
+		hr
+		form#Upd(method="post", action=action, enctype="multipart/form-data")
+			input.form-control(type="hidden", name="object[_id]", value=object._id)
+
+			.form-group.row
+				label.col-sm-2.col-form-label VOLUME
+				.col-sm-8
+					input#iptVolume.form-control(type="text", name="object[volumeLg]", value=object.volumeLg)
+				.col-sm-2
+					span#optVolume.text-danger(style="display:none") Must be number
+
+			.form-group.row
+				label.col-sm-2.col-form-label Gross Weight
+				.col-sm-8
+					input#iptGross.form-control(type="number", name="object[gwlg]", value=object.gwlg)
+
+			.form-group.row
+				label.col-sm-2.col-form-label Net Weight
+				.col-sm-8
+					input#iptNet.form-control(type="number", name="object[nwlg]", value=object.nwlg)
+
+			.form-group.row
+				label.col-sm-2.col-form-label Pack
+				.col-sm-8
+					input#iptPack.form-control(type="number", name="object[packlg]", value=object.packlg)
+
+			.form-group.row.text-right
+				.col-sm-10
+					input.btn.btn-default(type="submit" value="Update")
+
+	script(src="/js/order/add.js")

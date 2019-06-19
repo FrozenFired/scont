@@ -252,28 +252,22 @@ exports.lgOrder = function(req, res) {
 		weekday: weekday
 	})
 }
-exports.orderUp = function(req, res) {
+exports.lgOrderUp = function(req, res) {
 	let objBody = req.body.object
-	// console.log(objBody)
-	if(objBody.status == 0) {
-		let list = req.body.list;
-		let now = new Date();
-		today = moment(now).format('YYYYMMDD');
-		let weekday = new Date(now.getTime() + 7*24*60*60*1000)
-		weekday = moment(weekday).format('YYYYMMDD');
+	let list = req.body.list;
+	let now = new Date();
+	today = moment(now).format('YYYYMMDD');
+	let weekday = new Date(now.getTime() + 7*24*60*60*1000)
+	weekday = moment(weekday).format('YYYYMMDD');
 
-		res.render('./sfer/lger/order/update', {
-			title: 'lgOrder Update',
-			action: '/lgOrderUpd',
-			crSfer : req.session.crSfer,
-			object: objBody,
-			today: today,
-			weekday: weekday
-		})
-	} else {
-		info = "订单信息已经确认，请联系财务部"
-		Index.lgOptionWrong(req, res, info)
-	}
+	res.render('./sfer/lger/order/update', {
+		title: 'lgOrder Update',
+		action: '/lgOrderUpd',
+		crSfer : req.session.crSfer,
+		object: objBody,
+		today: today,
+		weekday: weekday
+	})
 }
 
 exports.lgOrderUpd = function(req, res) {

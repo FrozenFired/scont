@@ -19,6 +19,25 @@ h2.text-center.mt-5.p-2 Order: #{object.order}
 		h4.col-5.text-secondary.text-right status:
 		h4.col-7 #{Conf.stsOrder[object.status]}
 	.row.mt-2
+		h4.col-5.text-secondary.text-right VOLUME:
+		h4.col-7
+			span.text-info #{object.volumeLg} 
+			span m<sup>3</sup>
+	.row.mt-2
+		h4.col-5.text-secondary.text-right GROSS WEIGHT:
+		h4.col-7
+			span.text-info #{object.gwlg} 
+			span KG
+	.row.mt-2
+		h4.col-5.text-secondary.text-right NET WEIGHT:
+		h4.col-7
+			span.text-info #{object.nwlg} 
+			span KG
+	.row.mt-2
+		h4.col-5.text-secondary.text-right PACK:
+		h4.col-7
+			span.text-info #{object.packlg} 
+	.row.mt-2
 		h4.col-5.text-secondary.text-right price:
 		h4.col-7
 			if !isNaN(object.price)

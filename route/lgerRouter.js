@@ -19,7 +19,8 @@ module.exports = function(app){
 	app.get('/orderNull', MdRole.lgerIsLogin, Order.orderNull)
 	app.get('/lgOrders', MdRole.lgerIsLogin, Order.lgOrdersFilter, Order.lgOrders)
 	app.get('/lgOrder/:id', MdRole.lgerIsLogin, Order.lgOrderFilter, Order.lgOrder)
-
+	app.get('/lgOrderUp/:id', MdRole.lgerIsLogin, Order.lgOrderFilter, Order.lgOrderUp)
+	app.post('/lgOrderUpd', PostForm, MdRole.lgerIsLogin, MdRole.sfUniLog, Order.lgOrderUpd)
 	app.get('/lgOrderStslg', MdRole.lgerIsLogin, Order.lgOrderStslg)
 
 	app.get('/lgOrdersPrint', MdRole.lgerIsLogin, Order.lgOrdersFilter, Order.lgOrdersPrint)
