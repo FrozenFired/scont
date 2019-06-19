@@ -1,0 +1,15 @@
+extends ../aalayout/layout
+
+block content
+	.bg-secondary.py-5
+		.container
+			-let stsOrderBg = Conf.stsOrderBg[object.status];
+			.row(class=stsOrderBg)
+				h1.col-sm-6
+					span Order Information:
+	.container.mt-3.mb-5
+		include ./detail/selfInfo
+		hr
+		.row.text-right
+			.col-12
+				a.btn.btn-warning(href="/sfOrderUp/"+object._id) Update

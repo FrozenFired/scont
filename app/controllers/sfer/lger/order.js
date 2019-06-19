@@ -1,6 +1,5 @@
 let Index = require('./index')
 let Order = require('../../../models/finance/order')
-let Pay = require('../../../models/finance/pay')
 let Vder = require('../../../models/scont/vendor')
 let Sfer = require('../../../models/user/sfer')
 let _ = require('underscore')
@@ -11,7 +10,7 @@ let Conf = require('../../../../confile/conf.js')
 let moment = require('moment')
 
 let randID = '5c63ecf72430bf23f7280ba3';
-exports.ordersFilter = function(req, res, next) {
+exports.lgOrdersFilter = function(req, res, next) {
 	if(req.query && req.query.keyword) {
 		req.query.keyword = req.query.keyword.replace(/(\s*$)/g, "").replace( /^\s*/, '');
 	}
@@ -42,41 +41,52 @@ exports.ordersFilter = function(req, res, next) {
 
 	// 根据状态筛选
 	// let condStatus = Object.keys(Conf.stsOrder);
-	let condStatus = ['0', '1', '2'];
+	let condStatus = ['2', '3'];
 	[condition.condStatus, condition.slipCond] = Filter.status(req.query.status, condStatus, condition.slipCond);
+
+	condition.condStatuslg = ['0', '1', '2'];
+	if(req.query.statuslg) condition.condStatuslg = req.query.statuslg;
+	if(condition.condStatuslg instanceof Array){
+		for(i in condition.condStatuslg){
+			condition.slipCond += "&statuslg="+condition.condStatuslg[i];
+		}
+	} else {
+		condition.condStatuslg = [condition.condStatuslg];
+		condition.slipCond += "&statuslg="+condition.condStatuslg;
+	}
 	if(req.query && req.query.keytype == "sfer"){
-		// console.log('sfer')
+		// console.log('lger')
 		condition.keytype = "order";
 		condition.keyword = "";
 		condition.symPul = "$eq";
 		condition.condPul = req.query.keyword;
-		sfOrderFindSfers(req, res, next, condition);
+		lgOrderFindSfers(req, res, next, condition);
 	} else if(req.query && req.query.keytype == "vder"){
 		condition.keytype = "order";
 		condition.keyword = "";
 		condition.symPul = "$eq";
 		condition.condPul = req.query.keyword;
-		sfOrderFindVders(req, res, next, condition);
+		lgOrderFindVders(req, res, next, condition);
 	} else {
 		condition.symPul = '$ne';
 		condition.condPul = randID;
-		sfOrderFindOrders(req, res, next, condition);
+		lgOrderFindOrders(req, res, next, condition);
 	}
 }
-sfOrderFindSfers = function(req, res, next, condition) {
-	Sfer.findOne({code: condition.condPul}, function(err, sfer) {
+lgOrderFindSfers = function(req, res, next, condition) {
+	Sfer.findOne({code: condition.condPul}, function(err, lger) {
 		if(err) console.log(err);
 		condition.varDB = 'creater';
 		condition.symPul = '$eq';
-		if(sfer) {
-			condition.condPul = sfer._id;
+		if(lger) {
+			condition.condPul = lger._id;
 		} else {
 			condition.condPul = randID;
 		}
-		sfOrderFindOrders(req, res, next, condition);
+		lgOrderFindOrders(req, res, next, condition);
 	})
 }
-sfOrderFindVders = function(req, res, next, condition) {
+lgOrderFindVders = function(req, res, next, condition) {
 	Vder.findOne({code: condition.condPul}, function(err, vder) {
 		if(err) console.log(err);
 		condition.varDB = 'vder';
@@ -86,15 +96,16 @@ sfOrderFindVders = function(req, res, next, condition) {
 		} else {
 			condition.condPul = randID;
 		}
-		sfOrderFindOrders(req, res, next, condition);
+		lgOrderFindOrders(req, res, next, condition);
 	})
 }
-sfOrderFindOrders = function(req, res, next, condition) {
+lgOrderFindOrders = function(req, res, next, condition) {
 	Order.count({
 		[condition.varNumb]: {[condition.symNumb]: condition.condNumb},
 		[condition.varDB]: {[condition.symPul]: condition.condPul},
 		[condition.keytype]: new RegExp(condition.keyword + '.*'),
-		'status': condition.condStatus  // 'status': {$in: condStatus}
+		'status': condition.condStatus,  // 'status': {$in: condStatus}
+		'stsOrderLg': condition.condStatuslg,
 	})
 	.exec(function(err, count) {
 		if(err) console.log(err);
@@ -103,7 +114,8 @@ sfOrderFindOrders = function(req, res, next, condition) {
 		[condition.varNumb]: {[condition.symNumb]: condition.condNumb},
 		[condition.varDB]: {[condition.symPul]: condition.condPul},
 		[condition.keytype]: new RegExp(condition.keyword + '.*'),
-		'status': condition.condStatus  // 'status': {[symStatus]: condStatus}
+		'status': condition.condStatus,  // 'status': {[symStatus]: condStatus}
+		'stsOrderLg': condition.condStatuslg,
 	})
 	.skip(condition.index).limit(condition.entry)
 	.populate('payAc').populate('payMd').populate('paySa')
@@ -123,6 +135,7 @@ sfOrderFindOrders = function(req, res, next, condition) {
 			list.keyword = req.query.keyword;
 
 			list.condStatus = condition.condStatus;
+			list.condStatuslg = condition.condStatuslg;
 
 			list.currentPage = (condition.page + 1);
 			list.entry = condition.entry;
@@ -134,7 +147,7 @@ sfOrderFindOrders = function(req, res, next, condition) {
 			next();
 		} else {
 			info = "Option error, Please Contact Manger";
-			Index.sfOptionWrong(req, res, info);
+			Index.lgOptionWrong(req, res, info);
 		}
 	})
 
@@ -142,10 +155,10 @@ sfOrderFindOrders = function(req, res, next, condition) {
 }
 
 
-exports.orders = function(req, res) {
+exports.lgOrders = function(req, res) {
 	let list = req.body.list;
 	list.title = 'Order List';
-	list.url = "/sfOrders";
+	list.url = "/lgOrders";
 	list.crSfer = req.session.crSfer;
 
 	let today = new Date();
@@ -154,11 +167,11 @@ exports.orders = function(req, res) {
 	list.weekday = moment(weekday).format('YYYYMMDD');
 
 	// console.log(list.objects[0])
-	res.render('./sfer/sfer/order/list', list)
+	res.render('./sfer/lger/order/list', list)
 }
 
 
-exports.ordersPrint = function(req, res) {
+exports.lgOrdersPrint = function(req, res) {
 	let objects = req.body.list.objects
 	
 	let xl = require('excel4node');
@@ -205,81 +218,7 @@ exports.ordersPrint = function(req, res) {
 
 
 
-exports.orderAdd =function(req, res) {
-	res.render('./sfer/sfer/order/add', {
-		title: 'Add Order',
-		crSfer : req.session.crSfer,
-		// code: code,
-		action: "/sfOrderNew",
-	})
-}
-
-
-
-
-exports.orderNew = function(req, res) {
-	let objBody = req.body.object
-	// console.log(objBody)
-	objBody.status = 0
-	objBody.stsOrderLg = 0
-	objBody.order = objBody.order.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
-	objBody.brand = objBody.brand.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
-	objBody.price = parseFloat(objBody.price)
-	if(isNaN(objBody.price)){
-		info = "订单价格设置错误";
-		Index.sfOptionWrong(req, res, info);
-	} else {
-		objBody.updateAt = objBody.createAt = Date.now();
-		objBody.updater = objBody.creater = req.session.crSfer._id;
-
-		let _object = new Order(objBody)
-		sfAddPayFunc(objBody, _object)
-		if(objBody.taxType == 0) {
-
-			Vder.findOne({_id: objBody.vder}, function(err, vder) {
-				if(err) console.log(err);
-				if(vder) {
-					vder.taxFree -= objBody.price;
-					vder.save(function(err, vderSave) {
-						if(err) console.log(err);
-					})
-				}
-			})
-		}
-		_object.save(function(err, objSave) {
-			if(err) {
-				console.log(err);
-			} else {
-				res.redirect('/sfOrder/'+objSave._id)
-			}
-		})
-	}
-}
-
-sfAddPayFunc = function(objBody, object) {
-	let objAc = new Object();
-	objAc.price = parseFloat(objBody.acPrice);
-	objAc.code = "ac";
-	objAc.status = 0;
-
-	let objSa = new Object();
-	objSa.price = parseFloat(objBody.saPrice);
-	objSa.code = "sa";
-	objSa.status = 0;
-
-	objAc.order = objSa.order = object._id;
-	let _payAc = new Pay(objAc);
-	_payAc.save(function(err, acSave) {});
-	let _paySa = new Pay(objSa);
-	_paySa.save(function(err, saSave) {});
-
-	object.payAc = _payAc._id;
-	object.paySa = _paySa._id;
-}
-
-
-
-exports.orderFilter = function(req, res, next) {
+exports.lgOrderFilter = function(req, res, next) {
 	let id = req.params.id;
 	Order.findOne({_id: id})
 	.populate('payAc').populate('payMd').populate('paySa')
@@ -289,14 +228,14 @@ exports.orderFilter = function(req, res, next) {
 		if(err) console.log(err);
 		if(!object) {
 			info = "此订单已经被删除"
-			Index.sfOptionWrong(req, res, info)
+			Index.lgOptionWrong(req, res, info)
 		} else {
 			req.body.object = object
 			next()
 		}
 	})
 }
-exports.order = function(req, res) {
+exports.lgOrder = function(req, res) {
 	let objBody = req.body.object
 	// console.log(objBody)
 	let list = req.body.list;
@@ -305,8 +244,8 @@ exports.order = function(req, res) {
 	let weekday = new Date(now.getTime() + 7*24*60*60*1000)
 	weekday = moment(weekday).format('YYYYMMDD');
 
-	res.render('./sfer/sfer/order/detail', {
-		title: 'sfOrder Infomation',
+	res.render('./sfer/lger/order/detail', {
+		title: 'lgOrder Infomation',
 		crSfer : req.session.crSfer,
 		object: objBody,
 		today: today,
@@ -323,9 +262,9 @@ exports.orderUp = function(req, res) {
 		let weekday = new Date(now.getTime() + 7*24*60*60*1000)
 		weekday = moment(weekday).format('YYYYMMDD');
 
-		res.render('./sfer/sfer/order/update', {
-			title: 'sfOrder Update',
-			action: '/sfOrderUpd',
+		res.render('./sfer/lger/order/update', {
+			title: 'lgOrder Update',
+			action: '/lgOrderUpd',
 			crSfer : req.session.crSfer,
 			object: objBody,
 			today: today,
@@ -333,117 +272,73 @@ exports.orderUp = function(req, res) {
 		})
 	} else {
 		info = "订单信息已经确认，请联系财务部"
-		Index.sfOptionWrong(req, res, info)
+		Index.lgOptionWrong(req, res, info)
 	}
 }
 
-exports.orderFixed = function(req, res) {
+exports.lgOrderUpd = function(req, res) {
 	let objBody = req.body.object
 	Order.findOne({_id: objBody._id}, function(err, object) {
 		if(err) console.log(err);
 		if(!object) {
 			info = "此订单已经被删除"
-			Index.sfOptionWrong(req, res, info)
+			Index.lgOptionWrong(req, res, info)
 		} else {
-			if(objBody.price) objBody.price = parseFloat(objBody.price)
-			if(objBody.order) objBody.order = objBody.order.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
-
-			let _object = _.extend(object, objBody)
-			_object.save(function(err, objSave) {
-				if(err) {
-					console.log(err);
-					info = "sfOrderUpd order save error, Please Contact Manager";
-					Index.sfOptionWrong(req, res, info);
-				} else {
-					res.redirect('/sfOrder/'+objSave._id)
-				}
-			})	
-		}
-	})
-}
-exports.orderUpd = function(req, res) {
-	let objBody = req.body.object
-	Order.findOne({_id: objBody._id}, function(err, object) {
-		if(err) console.log(err);
-		if(!object) {
-			info = "此订单已经被删除"
-			Index.sfOptionWrong(req, res, info)
-		} else {
-			objBody.price = parseFloat(objBody.price)
-			if(isNaN(parseFloat(objBody.price)) || isNaN(parseFloat(objBody.acPrice)) || isNaN(parseFloat(objBody.saPrice))){
-				info = "订单价格设置错误";
-				Index.sfOptionWrong(req, res, info);
+			objBody.volumeLg = parseFloat(objBody.volumeLg)
+			objBody.gwlg = parseInt(objBody.gwlg)
+			objBody.nwlg = parseInt(objBody.nwlg)
+			objBody.packlg = parseInt(objBody.packlg)
+			if(isNaN(objBody.volumeLg) || isNaN(objBody.gwlg) || isNaN(objBody.nwlg) || isNaN(objBody.packlg)){
+				info = "数值设置错误";
+				Index.lgOptionWrong(req, res, info);
 			} else {
-				objBody.order = objBody.order.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
-				objBody.brand = objBody.brand.replace(/(\s*$)/g, "").replace( /^\s*/, '').toUpperCase();
-				objBody.updateAt = Date.now();
-				objBody.updater = req.session.crSfer._id;
-
 				let _object = _.extend(object, objBody)
-				sfUpdPayFunc(req, res, objBody, _object)
+				_object.save(function(err, objSave) {
+					if(err) {
+						console.log(err);
+						info = "lgOrderUpd order save error, Please Contact Manager";
+						Index.lgOptionWrong(req, res, info);
+					} else {
+						res.redirect('/lgOrder/'+objSave._id)
+					}
+				})
 				
 			}
 		}
 	})
 }
 
-sfUpdPayFunc = function(req, res, objBody, object) {
-	Pay.findOne({_id: object.payAc}, function(err, payAc) {
-		if(err) {
-			console.log(err);
-			info = "sfOrderUpd payAc find id error, Please Contact Manager";
-			Index.sfOptionWrong(req, res, info);
-		} else if(!payAc) {
-			info = "sfOrderUpd payAc find error, Please Contact Manager";
-			Index.sfOptionWrong(req, res, info);
-		} else {
-			payAc.price = parseFloat(objBody.acPrice);
-			payAc.save(function(err, payAcSave) {
+
+exports.lgOrderStslg = function(req, res) {
+	let id = req.query.id
+	let newStatus = req.query.newStatus
+	Order.findOne({_id: id}, function(err, object){
+		if(err) console.log(err);
+		if(object){
+			object.stsOrderLg = parseInt(newStatus)
+			object.save(function(err,objSave) {
 				if(err) console.log(err);
-				Pay.findOne({_id: object.paySa}, function(err, paySa) {
-					if(err) {
-						console.log(err);
-						info = "sfOrderUpd paySa find id error, Please Contact Manager";
-						Index.sfOptionWrong(req, res, info);
-					} else if(!paySa) {
-						info = "sfOrderUpd paySa find error, Please Contact Manager";
-						Index.sfOptionWrong(req, res, info);
-					} else {
-						paySa.price = parseFloat(objBody.saPrice);
-						paySa.save(function(err, paySaSave) {
-							if(err) console.log(err);
-							object.save(function(err, objSave) {
-								if(err) {
-									console.log(err);
-									info = "sfOrderUpd order save error, Please Contact Manager";
-									Index.sfOptionWrong(req, res, info);
-								} else {
-									res.redirect('/sfOrder/'+objSave._id)
-								}
-							})
-						})
-					}
-				})
+				res.json({success: 1, info: "已经更改"});
 			})
+		} else {
+			res.json({success: 0, info: "已被删除，按F5刷新页面查看"})
 		}
 	})
 }
 
-exports.orderDel = function(req, res) {
-	let objBody = req.body.object;
-	if(objBody.status == 0) {
-		payAc = objBody.payAc
-		payMd = objBody.payMd
-		paySa = objBody.paySa
-		if(payAc) Pay.remove({_id: payAc}, function(err, rmPayAc) {});
-		if(payMd) Pay.remove({_id: payMd}, function(err, rmPayMd) {});
-		if(paySa) Pay.remove({_id: paySa}, function(err, rmPaySa) {});
-		Order.remove({_id: objBody._id}, function(err, sfOrderRm) {
-			if(err) console.log(err);
-			res.redirect('/sfOrders')
-		})
-	} else {
-		info = "订单信息已经确认，不能删除，请联系财务部"
-		Index.sfOptionWrong(req, res, info)
-	}
+
+exports.orderNull = function(req, res) {
+	
+	Order.find({'stsOrderLg': null}, function(err, orders){
+		if(err) console.log(err);
+		let len = orders.length;
+		console.log(len)
+		for(i=0 ; i< len; i++) {
+			orders[i].stsOrderLg = 0;
+			orders[i].save(function(err, orderSave) {
+				console.log(err);
+			})
+		}
+		res.redirect('/')
+	})
 }
