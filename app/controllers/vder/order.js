@@ -12,7 +12,7 @@ let moment = require('moment')
 exports.ordersFilter = function(req, res, next) {
 	let title = 'Order List';
 	let url = "/orderList";
-	
+
 	// 分页
 	let slipCond = ""; // 分页时用到的其他条件
 
@@ -26,7 +26,7 @@ exports.ordersFilter = function(req, res, next) {
 	[keytype, keyword, slipCond] = Filter.key(req, keytype, keyword, slipCond)
 	// 根据状态筛选
 	// let condStatus = Object.keys(Conf.stsOrder);
-	let condStatus = ['1', '2', '3'];
+	let condStatus = ['2', '3'];
 	[condStatus, slipCond] = Filter.status(req.query.status, condStatus, slipCond);
 
 	// 根据创建更新时间筛选
