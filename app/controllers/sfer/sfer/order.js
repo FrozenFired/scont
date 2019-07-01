@@ -217,7 +217,7 @@ exports.orderAdd =function(req, res) {
 
 
 
-exports.orderNew = function(req, res) {
+exports.sfOrderNew = function(req, res) {
 	let objBody = req.body.object
 	// console.log(objBody)
 	objBody.status = 0
@@ -268,6 +268,7 @@ sfAddPayFunc = function(objBody, object) {
 	objSa.status = 0;
 
 	objAc.order = objSa.order = object._id;
+	objAc.vder = objSa.vder = object.vder;
 	let _payAc = new Pay(objAc);
 	_payAc.save(function(err, acSave) {});
 	let _paySa = new Pay(objSa);

@@ -80,7 +80,7 @@ module.exports = function(app){
 	app.post('/sfOrderUpd', PostForm, MdRole.sferIsLogin, MdRole.sfUniLog, Order.orderUpd)
 	app.post('/sfOrderFixed', PostForm, MdRole.sferIsLogin, MdRole.sfUniLog, Order.orderFixed)
 	app.get('/sfOrderAdd', MdRole.sferIsLogin, MdRole.sfUniLog, Order.orderAdd)
-	app.post('/sfOrderNew', PostForm, MdRole.sferIsLogin, MdRole.sfUniLog, Order.orderNew)
+	app.post('/sfOrderNew', PostForm, MdRole.sferIsLogin, MdRole.sfUniLog, Order.sfOrderNew)
 	app.get('/sfOrderDel/:id', MdRole.sferIsLogin, Order.orderFilter, Order.orderDel)
 
 	// Pay         ----------------------------------------------------------------------

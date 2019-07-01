@@ -5,38 +5,38 @@ let Order = require('../app/controllers/vder/order');
 let Pay = require('../app/controllers/vder/pay');
 let Brand = require('../app/controllers/vder/brand');
 
-let MiddleBcrypt = require('../app/middle/middleBcrypt');
-let MiddleRole = require('../app/middle/middleRole');
+let MdBcrypt = require('../app/middle/middleBcrypt');
+let MdRole = require('../app/middle/middleRole');
 
 let multipart = require('connect-multiparty');
-let multipartMiddleware = multipart();
+let PostForm = multipart();
 
 module.exports = function(app){
 
 	// index ---------------Vder 首页 登录页面 登录 登出---------------------------------------
 	app.get('/vder', Index.vder);
-	// app.get('/headerBrand', MiddleRole.vderIsLogin, Brand.brandsFilter, Brand.headerBrand)
+	// app.get('/headerBrand', MdRole.vderIsLogin, Brand.brandsFilter, Brand.headerBrand)
 
 	// Vder -------------------------------------------------------------------------------
-	app.get('/vderDetail/:id', MiddleRole.vderIsLogin, Vder.vderDetail);
-	app.post('/updateVderInfo', multipartMiddleware, MiddleRole.vderIsLogin,
+	app.get('/vderDetail/:id', MdRole.vderIsLogin, Vder.vderDetail);
+	app.post('/updateVderInfo', PostForm, MdRole.vderIsLogin,
 		Vder.checkVderUp, Vder.updateVderInfo);
-	app.post('/updateVderPw', multipartMiddleware, MiddleRole.vderIsLogin,
-		Vder.checkVderOrgPw, MiddleBcrypt.rqBcrypt, 
+	app.post('/updateVderPw', PostForm, MdRole.vderIsLogin,
+		Vder.checkVderOrgPw, MdBcrypt.rqBcrypt, 
 		Vder.updateVderPw);
 
 	// order ------------------------------------------------------------------------------
-	app.get('/orderList', MiddleRole.vderIsLogin, Order.ordersFilter, Order.orderList)
-	app.get('/orderListPrint', MiddleRole.vderIsLogin, Order.ordersFilter, Order.orderListPrint)
-	app.get('/orderDetail/:id', MiddleRole.vderIsLogin, Order.orderFilter, Order.orderDetail)
-	app.post('/updateOrder', multipartMiddleware, MiddleRole.vderIsLogin, Order.updateOrder)
-	app.get('/vdOrderStatus', multipartMiddleware, MiddleRole.vderIsLogin, Order.vdOrderStatus)
+	app.get('/orderList', MdRole.vderIsLogin, Order.ordersFilter, Order.orderList)
+	app.get('/orderListPrint', MdRole.vderIsLogin, Order.ordersFilter, Order.orderListPrint)
+	app.get('/orderDetail/:id', MdRole.vderIsLogin, Order.orderFilter, Order.orderDetail)
+	app.post('/updateOrder', PostForm, MdRole.vderIsLogin, Order.updateOrder)
+	app.get('/vdOrderStatus', PostForm, MdRole.vderIsLogin, Order.vdOrderStatus)
 
 	// Pay         ----------------------------------------------------------------------
 	app.get('/payRoop', Pay.payRoop)
-	// app.get('/payList', MdRole.vderIsLogin, Pay.paysFilter, Pay.payList)
+	app.get('/payList', MdRole.vderIsLogin, Pay.payList)
 	// app.get('/payDetail/:id', MdRole.vderIsLogin, Pay.payFilter, Pay.payDetail)
 
 	// brand ---------------------------------------
-	app.get('/vdBrandList', MiddleRole.vderIsLogin, Brand.vdBrandList)
+	app.get('/vdBrandList', MdRole.vderIsLogin, Brand.vdBrandList)
 };

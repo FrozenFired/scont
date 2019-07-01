@@ -192,7 +192,7 @@ exports.orderAdd =function(req, res) {
 
 
 
-exports.orderNew = function(req, res) {
+exports.fnOrderNew = function(req, res) {
 	let objBody = req.body.object
 	// console.log(objBody)
 	objBody.status = 0
@@ -242,6 +242,7 @@ fnAddPayFunc = function(objBody, _object) {
 	objSa.status = 0;
 
 	objAc.order = objSa.order = _object._id;
+	objAc.vder = objSa.vder = _object.vder;
 	let _payAc = new Pay(objAc);
 	_payAc.save(function(err, acSave) {});
 	let _paySa = new Pay(objSa);
