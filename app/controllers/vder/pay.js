@@ -28,7 +28,7 @@ exports.payRoop = function(req, res, next) {
 }
 
 
-exports.ordersFilter = function(req, res, next) {
+exports.payList = function(req, res, next) {
 	let title = 'Pay List';
 	let url = "/payList";
 
