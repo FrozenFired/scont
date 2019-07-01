@@ -5,6 +5,7 @@ let Float = require('mongoose-float').loadType(mongoose, 2)
 let ObjectId = Schema.Types.ObjectId
 const colection = 'Pay';
 let dbSchema = new Schema({
+	vder: {type: ObjectId, ref: 'Vendor'},
 	order: {type: ObjectId, ref: 'Order'},
 
 	code: String, // auto: ac sa sa2

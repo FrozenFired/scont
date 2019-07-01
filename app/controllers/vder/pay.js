@@ -1,5 +1,6 @@
 let Index = require('./index')
 let Order = require('../../models/finance/order')
+let Pay = require('../../models/finance/pay')
 let _ = require('underscore')
 
 let Filter = require('../../middle/filter');
@@ -8,12 +9,28 @@ let Conf = require('../../../confile/conf.js')
 let moment = require('moment')
 
 
-
-exports.ordersFilter = function(req, res, next) {
+exports.payRoop = function(req, res, next) {
 	let crVder = req.session.crVder;
 
-	let title = 'Order List';
-	let url = "/orderList";
+	Pay.find()
+	.populate('order')
+	.exec(function(err, pays) {
+		if(err) console.log(err);
+		let len = pays.length;
+		for(i=0; i<len; i++){
+			pays[i].vder = pays[i].order.vder;
+			pays[i].save(function(err, paySave) {
+				if(err) console.log(err);
+			})
+		}
+		res.redirect('/')
+	})
+}
+
+
+exports.ordersFilter = function(req, res, next) {
+	let title = 'Pay List';
+	let url = "/payList";
 
 	// 分页
 	let slipCond = ""; // 分页时用到的其他条件
@@ -31,26 +48,34 @@ exports.ordersFilter = function(req, res, next) {
 	let condStatus = ['2', '3'];
 	[condStatus, slipCond] = Filter.status(req.query.status, condStatus, slipCond);
 
-	// // 根据创建更新时间筛选
-	// let at = Filter.at(req);
-	// slipCond+=at.slipCond;
+	// 根据创建更新时间筛选
+	let at = Filter.at(req);
+	slipCond+=at.slipCond;
+
+	// 根据首位款筛选
+	let cs = Filter.cs(req);
+	slipCond+=cs.slipCond;
 
 	Order.count({
 		[keytype]: new RegExp(keyword + '.*'),
-		// 'createAt': {[at.symCrtStart]: at.condCrtStart, [at.symCrtEnded]: at.condCrtEnded},
-		// 'updateAt': {[at.symUpdStart]: at.condUpdStart, [at.symUpdEnded]: at.condUpdEnded},
+		'createAt': {[at.symCrtStart]: at.condCrtStart, [at.symCrtEnded]: at.condCrtEnded},
+		'updateAt': {[at.symUpdStart]: at.condUpdStart, [at.symUpdEnded]: at.condUpdEnded},
+		'acAt': {[cs.symAcStart]: cs.condAcStart, [cs.symAcEnded]: cs.condAcEnded},
+		'saAt': {[cs.symSaStart]: cs.condSaStart, [cs.symSaEnded]: cs.condSaEnded},
 		'status': condStatus  // 'status': {[symStatus]: condStatus}
 	})
-	.where('vder').equals(crVder._id)
+	.where('vder').equals(req.session.crVder._id)
 	.exec(function(err, count) {
 		if(err) console.log(err);
 		Order.find({
 			[keytype]: new RegExp(keyword + '.*'),
-			// 'createAt': {[at.symCrtStart]: at.condCrtStart, [at.symCrtEnded]: at.condCrtEnded},
-			// 'updateAt': {[at.symUpdStart]: at.condUpdStart, [at.symUpdEnded]: at.condUpdEnded},
+			'createAt': {[at.symCrtStart]: at.condCrtStart, [at.symCrtEnded]: at.condCrtEnded},
+			'updateAt': {[at.symUpdStart]: at.condUpdStart, [at.symUpdEnded]: at.condUpdEnded},
+			'acAt': {[cs.symAcStart]: cs.condAcStart, [cs.symAcEnded]: cs.condAcEnded},
+			'saAt': {[cs.symSaStart]: cs.condSaStart, [cs.symSaEnded]: cs.condSaEnded},
 			'status': condStatus  // 'status': {[symStatus]: condStatus}
 		})
-		.where('vder').equals(crVder._id)
+		.where('vder').equals(req.session.crVder._id)
 		.skip(index).limit(entry)
 		.populate('payAc').populate('payMd').populate('paySa')
 		.populate('vder')
@@ -62,7 +87,7 @@ exports.ordersFilter = function(req, res, next) {
 				let list = new Object()
 				list.title = title;
 				list.url = url;
-				list.crVder = crVder;
+				list.crVder = req.session.crVder;
 
 				list.count = count;
 				list.objects = objects;
@@ -72,10 +97,15 @@ exports.ordersFilter = function(req, res, next) {
 
 				list.condStatus = condStatus;
 
-				// list.condCrtStart = req.query.crtStart;
-				// list.condCrtEnded = req.query.crtEnded;
-				// list.condUpdStart = req.query.updStart;
-				// list.condUpdEnded = req.query.updEnded;
+				list.condCrtStart = req.query.crtStart;
+				list.condCrtEnded = req.query.crtEnded;
+				list.condUpdStart = req.query.updStart;
+				list.condUpdEnded = req.query.updEnded;
+
+				list.condAcStart = req.query.acStart;
+				list.condAcEnded = req.query.acEnded;
+				list.condSaStart = req.query.saStart;
+				list.condSaEnded = req.query.saEnded;
 
 				list.currentPage = (page + 1);
 				list.entry = entry;

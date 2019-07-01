@@ -2,6 +2,7 @@ let Index = require('../app/controllers/vder/index');
 
 let Vder = require('../app/controllers/vder/vder');
 let Order = require('../app/controllers/vder/order');
+let Pay = require('../app/controllers/vder/pay');
 let Brand = require('../app/controllers/vder/brand');
 
 let MiddleBcrypt = require('../app/middle/middleBcrypt');
@@ -24,14 +25,17 @@ module.exports = function(app){
 		Vder.checkVderOrgPw, MiddleBcrypt.rqBcrypt, 
 		Vder.updateVderPw);
 
-	app.get('/ajaxVder', MiddleRole.sferIsLogin, Vder.ajaxVder)
-
 	// order ------------------------------------------------------------------------------
 	app.get('/orderList', MiddleRole.vderIsLogin, Order.ordersFilter, Order.orderList)
 	app.get('/orderListPrint', MiddleRole.vderIsLogin, Order.ordersFilter, Order.orderListPrint)
 	app.get('/orderDetail/:id', MiddleRole.vderIsLogin, Order.orderFilter, Order.orderDetail)
 	app.post('/updateOrder', multipartMiddleware, MiddleRole.vderIsLogin, Order.updateOrder)
 	app.get('/vdOrderStatus', multipartMiddleware, MiddleRole.vderIsLogin, Order.vdOrderStatus)
+
+	// Pay         ----------------------------------------------------------------------
+	app.get('/payRoop', Pay.payRoop)
+	// app.get('/payList', MdRole.vderIsLogin, Pay.paysFilter, Pay.payList)
+	// app.get('/payDetail/:id', MdRole.vderIsLogin, Pay.payFilter, Pay.payDetail)
 
 	// brand ---------------------------------------
 	app.get('/vdBrandList', MiddleRole.vderIsLogin, Brand.vdBrandList)

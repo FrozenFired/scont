@@ -73,33 +73,3 @@ exports.updateVderPw = function(req, res) {
 		res.redirect("/vderDetail/"+objSave._id);
 	});
 }
-
-
-
-
-
-
-
-
-// Ajax
-exports.ajaxVder = function(req, res) {
-	let keytpye = req.query.keytype
-	let keyword = req.query.keyword.toUpperCase();
-	// console.log(keytpye)
-	// console.log(keyword)
-	Vder.findOne({[keytpye]: keyword}, function(err, vder) {
-		if(err) console.log(err);
-		if(vder){
-			res.json({success: 1, vder: vder})
-		} else {
-			Vder.find({[keytpye]: new RegExp(keyword + '.*')}, function(err, vders) {
-				if(err) console.log(err);
-				if(vders && vders.length > 0) {
-					res.json({success: 2, vders: vders});
-				} else {
-					res.json({success: 0})
-				}
-			})
-		}
-	})
-}

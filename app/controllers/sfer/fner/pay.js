@@ -1,13 +1,13 @@
-let Index = require('./index')
-let Pay = require('../../../models/finance/pay')
-let Order = require('../../../models/finance/order')
-let Vder = require('../../../models/scont/vendor')
-let _ = require('underscore')
+let Index = require('./index');
+let Pay = require('../../../models/finance/pay');
+let Order = require('../../../models/finance/order');
+let Vder = require('../../../models/scont/vendor');
+let _ = require('underscore');
 
 let Filter = require('../../../middle/filter');
 
-let Conf = require('../../../../confile/conf.js')
-let moment = require('moment')
+let Conf = require('../../../../confile/conf.js');
+let moment = require('moment');
 
 let randID = '5c63ecf72430bf23f7280ba3';
 exports.paysFilter = function(req, res, next) {
