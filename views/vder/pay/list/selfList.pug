@@ -1,0 +1,56 @@
+- var total = 0;
+each item in objects
+	- total += parseFloat(item.price)
+
+	-paidAt="";
+	if item.paidAt
+		-paidAt = moment(item.paidAt).format('YYYYMMDD');
+
+	- bgRecent = 'bg-default';
+	if paidAt < weekday && paidAt > today
+		- bgRecent = 'bg-info';
+
+	-bgStatus = Conf.stsPayBg[item.status];
+	.card.mt-4
+		.row.m-1
+			.col-lg-12.col-xl-4.border-right
+				if item.order
+					-order = item.order;
+					a.btn.text-dark.text-left(href="/sfOrder/"+order._id)
+						h5
+							span(class=Conf.stsOrderBg[order.status] + " text-secondary") Order: 
+							span #{order.order} 
+					if order.vder
+						-vder = order.vder;
+						h5 <span class="text-secondary">Supplier:</span> #{vder.code}
+					else
+						h5.text-danger Supplier Loss
+					h5 <span class="text-secondary">TaxType:</span> #{Conf.taxType[order.taxType]}
+					h5 <span class="text-secondary">Staff:</span> #{item.order.staff}
+					if item.note
+						- note = item.note;
+						h5  <span class="text-secondary">Note:</span>#{item.note}
+				else
+					h2.text-danger Order Loss
+			.col-lg-12.col-xl-4.border-right
+				h2
+					span #{(item.code).toUpperCase()}: 
+					if !isNaN(item.price)
+						-price = (item.price).toFixed(2);
+						span.text-info #{price} 
+					else
+						span.text-danger NaN
+					span €
+				if item.paidAt
+					-a;
+					h5(class=bgRecent) PaidAt: #{moment(item.paidAt).format("MM/DD/YYYY")}
+				if item.createAt
+						-a;
+						h5 CreatAt #{moment(item.createAt).format("MM/DD/YYYY")}
+			.col-lg-12.col-xl-4
+				h5
+					span(class=bgStatus) #{Conf.stsPay[item.status]}
+				p #{item.picUrl}
+
+//- h2.bg-info.rounded Total price : #{total.toFixed(2)}
+script(src="/js/changeStatus.js")

@@ -51,8 +51,8 @@ exports.paysFilter = function(req, res, next) {
 	// 根据创建时间筛选
 	let today = new Date();
 	let begin = today.setHours(0, 0, 0, 0);
-	condition.symPaidS = "$ne"; condition.condPaidS = begin + 24*60*60*1000;
-	condition.symPaidF = "$ne"; condition.condPaidF = begin + 24*60*60*1000;
+	condition.symPaidS = "$ne"; condition.condPaidS = 1061672800000;
+	condition.symPaidF = "$ne"; condition.condPaidF = 1061672800000;
 	if(req.query.paidS) {
 		condition.slipCond += "&paidS="+req.query.paidS;
 
@@ -66,8 +66,8 @@ exports.paysFilter = function(req, res, next) {
 		condition.condPaidF = new Date(req.query.paidF).setHours(0,0,0,0) + 24*60*60*1000;
 	}
 
-	condition.symCrtS = "$ne"; condition.condCrtS = begin + 24*60*60*1000;
-	condition.symCrtF = "$ne"; condition.condCrtF = begin + 24*60*60*1000;
+	condition.symCrtS = "$ne"; condition.condCrtS = 1061672800000;
+	condition.symCrtF = "$ne"; condition.condCrtF = 1061672800000;
 	if(req.query.crtS) {
 		condition.slipCond += "&crtS="+req.query.crtS;
 

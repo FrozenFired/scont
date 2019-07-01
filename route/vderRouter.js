@@ -33,8 +33,8 @@ module.exports = function(app){
 	app.get('/vdOrderStatus', PostForm, MdRole.vderIsLogin, Order.vdOrderStatus)
 
 	// Pay         ----------------------------------------------------------------------
-	app.get('/payRoop', Pay.payRoop)
-	app.get('/payList', MdRole.vderIsLogin, Pay.payList)
+	// app.get('/payRoop', Pay.payRoop)
+	app.get('/payList', MdRole.vderIsLogin, Pay.paysFilter, Pay.payList)
 	// app.get('/payDetail/:id', MdRole.vderIsLogin, Pay.payFilter, Pay.payDetail)
 
 	// brand ---------------------------------------
