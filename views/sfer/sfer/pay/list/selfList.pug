@@ -17,23 +17,23 @@ each item in objects
 				if item.order
 					-order = item.order;
 					a.btn.text-dark.text-left(href="/sfOrder/"+order._id)
-						h3
+						h5
 							span(class=Conf.stsOrderBg[order.status] + " text-secondary") Order: 
 							span #{order.order} 
 					if order.vder
 						-vder = order.vder;
-						h4 <span class="text-secondary">Supplier:</span> #{vder.code}
+						h5 <span class="text-secondary">Supplier:</span> #{vder.code}
 					else
-						h4.text-danger Supplier Loss
-					h4 <span class="text-secondary">TaxType:</span> #{Conf.taxType[order.taxType]}
-					h4 <span class="text-secondary">Staff:</span> #{item.order.staff}
+						h5.text-danger Supplier Loss
+					h5 <span class="text-secondary">TaxType:</span> #{Conf.taxType[order.taxType]}
+					h5 <span class="text-secondary">Staff:</span> #{item.order.staff}
 					if item.note
 						- note = item.note;
 						h5  <span class="text-secondary">Note:</span>#{item.note}
 				else
-					h2.text-danger Order Loss
+					h3.text-danger Order Loss
 			.col-lg-12.col-xl-4.border-right
-				h2
+				h3
 					span #{(item.code).toUpperCase()}: 
 					if !isNaN(item.price)
 						-price = (item.price).toFixed(2);
@@ -41,6 +41,9 @@ each item in objects
 					else
 						span.text-danger NaN
 					span €
+				if item.agCode
+					-a;
+					h5 #{item.agCode}
 				if item.paidAt
 					-a;
 					h5(class=bgRecent) PaidAt: #{moment(item.paidAt).format("MM/DD/YYYY")}
@@ -48,7 +51,7 @@ each item in objects
 						-a;
 						h5 CreatAt #{moment(item.createAt).format("MM/DD/YYYY")}
 			.col-lg-12.col-xl-4
-				h4
+				h5
 					span(class=bgStatus) #{Conf.stsPay[item.status]}
 				p #{item.picUrl}
 				if item.order && item.order.staff == crSfer.code
@@ -59,5 +62,5 @@ each item in objects
 					else
 						button.btn.btn-info.change(class="del-"+item._id, type="button", data-url="/sfPayMailed", data-sts=1, data-id=item._id) Not->Mailed
 
-//- h2.bg-info.rounded Total price : #{total.toFixed(2)}
+//- h3.bg-info.rounded Total price : #{total.toFixed(2)}
 script(src="/js/changeStatus.js")

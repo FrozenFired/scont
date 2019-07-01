@@ -205,7 +205,7 @@ exports.payList = function(req, res) {
 	let list = req.body.list;
 	list.title = 'Pay List';
 	list.url = "/payList";
-	list.crSfer = req.session.crSfer;
+	list.crVder = req.session.crVder;
 
 	let today = new Date();
 	list.today = moment(today).format('YYYYMMDD');
