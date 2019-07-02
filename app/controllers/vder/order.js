@@ -1,12 +1,11 @@
-let Index = require('./index')
-let Order = require('../../models/finance/order')
-let _ = require('underscore')
+let Index = require('./index');
+let Order = require('../../models/finance/order');
+let _ = require('underscore');
 
 let Filter = require('../../middle/filter');
 
-let Conf = require('../../../confile/conf.js')
-let moment = require('moment')
-
+let Conf = require('../../../confile/conf.js');
+let moment = require('moment');
 
 
 exports.ordersFilter = function(req, res, next) {

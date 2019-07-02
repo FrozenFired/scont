@@ -163,16 +163,28 @@ vdPayFindPays = function(req, res, next, condition) {
 		})
 		.skip(condition.index).limit(condition.entry)
 		.populate('vder')
-		.populate({path: 'order', populate: {path: 'vder'} } )
+		.populate({
+			path: 'order', 
+			populate: {path: 'vder'}
+		})
 		.sort({"status": 1, "paidAt": 1})
 		.exec(function(err, objects) {
 			if(err) console.log(err);
 			if(objects){
+				let len = objects.length;
+				let objs = new Array();
+				for(i=0; i<len; i++) {
+					if(objects[i].order && objects[i].order.status != 0 ) {
+						objs.push(objects[i]);
+					} else {
+						count--;
+					}
+				}
 				// console.log(objects[0])
 				let list = new Object()
 
 				list.count = count;
-				list.objects = objects;
+				list.objects = objs;
 
 				list.keytype = req.query.keytype;
 				list.keyword = req.query.keyword;

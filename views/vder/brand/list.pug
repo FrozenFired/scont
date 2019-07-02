@@ -1,34 +1,24 @@
 extends ../aalayout/layout
 
 block content
-	.container
+	.bg-secondary.py-5
+		.container
+			.row.text-center
+				h2.col-12.col-md-6.mt-3 Brands [#{sconts.length}]
+				
+				h2.col-6.col-md-3.mt-3 ac: #{vendor.ac} %
+				h2.col-6.col-md-3.mt-3 sa: #{vendor.sa} %
+	.container.mt-5
 		.row
-			h1.col-sm-6 Brand [#{sconts.length}]
-			h2.col-sm-3 ac: #{vendor.ac} %
-			h2.col-sm-3 sa: #{vendor.sa} %
-		hr
-		.row
-			table.table.table-hover.table-bordered
-				thead
-					tr
-						th brand code
-						th scont
-						th status
-						th createAt
-				tbody
-					each scont in sconts
-						- let item = scont.brand;
-						if item.status == 0
-							-objBg ="bg-info";
-						else if item.status == 1
-							-objBg ="bg-default";
-						else if item.status == 2
-							-objBg ="bg-secondary";
-						tr(class=objBg+" item-id-"+item._id)
-							td #{item.code}
-							td 
+			each scont in sconts
+				if scont.brand
+					- let item = scont.brand;
+					.col-sm-12.col-md-6.col-lg-4.col-xl-3.mb-5
+						.card.bg-light
+							.row.text-center.m-1
+								h4.col-12 #{item.code}
+								- let disct = 'undefined';
 								if scont.scont != 'undefined'
-									-a;
-									span #{scont.scont}
-							td #{Conf.stsBrand[item.status]}
-							td #{moment(item.createAt).format('YYYY/MM/DD')}
+									-disct = scont.scont+' %';
+								h5.col-12 sconto: #{disct}
+								.col-12 #{moment(item.createAt).format('YYYY/MM/DD')}

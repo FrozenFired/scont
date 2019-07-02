@@ -14,19 +14,31 @@ exports.vdBrandList = function(req, res) {
 	// .populate({path: 'brands', options: {sort: {'weight': -1} } } )
 	.populate({
 		path: 'sconts',
-		options: {sort: {'status': 1} }, 
-		populate: {path: 'brand', populate: {path: 'bcateg nation'} } 
+		match: {'status': {'$ne': 4} },
+		populate: {
+			path: 'brand',
+			match: {'status': {'$ne': 2} },
+			populate: {path: 'bcateg nation'}
+		} 
 	})
 	.populate('creater')
 	.populate('updater')
 	.exec(function(err, object){
 		if(err) console.log(err);
 		if(object) {
+			let sconts = object.sconts;
+			let len = sconts.length
+			let items = new Array();
+			for(i=0; i<len; i++) {
+				if(sconts[i].brand) {
+					items.push(sconts[i]);
+				}
+			}
 			res.render('./vder/brand/list', {
 				title: title,
 				crVder: crVder,
 				vendor: object,
-				sconts: object.sconts
+				sconts: items,
 			})
 		} else {
 			info = "This VendorI is deleted, Please reflesh"
