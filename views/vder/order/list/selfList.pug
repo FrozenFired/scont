@@ -1,10 +1,12 @@
-table.table.table-hover.table-bordered
+.row
+	.col-12.text-right
+		button.showHide.btn.btn-info(type="button") Show All
+table.table.table-hover.table-bordered.mt-3
 	thead
 		tr
 			th status
-			th order
+			th order / P.I.
 			th brand
-			//- th P/I
 			th price
 			th ac / Method
 			th acAt
@@ -26,78 +28,87 @@ table.table.table-hover.table-bordered
 			-let methodAc, methodMd, methodSa;
 			-let bgAcPaid = bgMdPaid = bgSaPaid = "bg-default";
 			-let textAcWeek = textMdWeek = textSaWeek = "bg-default";
+
+			-let acStatus, mdStatus, saSatus;
 			if item.payAc
 				-payAc = item.payAc;
+				-acStatus = payAc.status;
 				-methodAc = payAc.method;
 				-acPrice = payAc.price;
 				-acTot += payAc.price;
 
-				if payAc.status == 0
+				if acStatus == 0
 					- unCheck += payAc.price;
-				else if payAc.status == 1
+				else if acStatus == 1
 					- checking += payAc.price;
 					- bgAcPaid = "bg-warning";
-				else if payAc.status == 2
+				else if acStatus == 2
 					- checked += payAc.price;
-					- bgAcPaid = "bg-success"
+					- bgAcPaid = "bg-success";
 
 				if payAc.paidAt
 					-acTime = moment(payAc.paidAt).format('YYYYMMDD');
 					if today <= acTime && acTime < weekday
 						- textAcWeek="text-info";
-					else if acTime < today && payAc.status == 1
+					else if acTime < today && acStatus == 1
 						- textAcWeek="text-danger";
 			if item.payMd
 				-payMd = item.payMd;
+				-mdStatus = payMd.status;
 				-methodMd = payMd.method;
 				-mdPrice = payMd.price;
 				-mdTot += payMd.price;
 
-				if payMd.status == 0
+				if mdStatus == 0
 					- unCheck += payMd.price;
-				else if payMd.status == 1
+				else if mdStatus == 1
 					- checking += payMd.price;
 					- bgMdPaid = "bg-warning";
-				else if payMd.status == 2
+				else if mdStatus == 2
 					- checked += payMd.price;
-					- bgMdPaid = "bg-success"
+					- bgMdPaid = "bg-success";
 
 				if payMd.paidAt
 					-mdTime = moment(payMd.paidAt).format('YYYYMMDD');
 					if today <= mdTime && mdTime < weekday
 						- textMdWeek="text-info";
-					else if mdTime < today && payMd.status == 1
+					else if mdTime < today && mdStatus == 1
 						- textMdWeek="text-danger";
 			if item.paySa
 				-paySa = item.paySa;
+				-saStatus = paySa.status;
 				-methodSa = paySa.method;
 				-saPrice = paySa.price;
 				-saTot += paySa.price;
 
-				if paySa.status == 0
+				if saStatus == 0
 					- unCheck += paySa.price;
-				else if paySa.status == 1
+				else if saStatus == 1
 					- checking += paySa.price;
 					- bgSaPaid = "bg-warning";
-				else if paySa.status == 2
+				else if saStatus == 2
 					- checked += paySa.price;
-					- bgSaPaid = "bg-success"
+					- bgSaPaid = "bg-success";
 
 				if paySa.paidAt
 					-saTime = moment(paySa.paidAt).format('YYYYMMDD');
 					if today <= saTime && saTime < weekday
 						- textSaWeek="text-info";
-					else if saTime < today && paySa.status == 1
+					else if saTime < today && saStatus == 1
 						- textSaWeek="text-danger";
-
-			tr(class="item-id-"+item._id)
+			-let hideStyle = "display:none";
+			-let hideClass="hideTr";
+			if acStatus == 1 || mdStatus == 1 || saStatus == 1
+				-hideStyle = "";
+				-hideClass = "showTr";
+			tr(class=hideClass+" item-id-"+item._id, style=hideStyle)
 				td(class=stsOrderBg)
-					if item.status == 3 && paySa.status ==2
+					if item.status == 3 && saStatus ==2
 						-a;
-						button.btn.btn-warning.change(type="button", , data-url="/vdOrderStatus", data-id=item._id, data-sts=4) Confermare
+						button.btn.btn-warning.change(type="button", data-url="/vdOrderStatus", data-id=item._id, data-sts=4) Confermare
 					else
-						span #{Conf.stsOrderVder[item.status]}
-				td 
+						span #{Conf.stsOrderVder[item.status]} #{hideClass}
+				td
 					span #{item.order}
 					if item.pi
 						-a;
@@ -106,10 +117,10 @@ table.table.table-hover.table-bordered
 				td #{item.brand}
 				//- td #{item.pi}
 				td #{item.price}
-				td(class=bgAcPaid)
+				td(class=bgAcPaid).text-right
 					if acPrice
 						-a;
-						span #{acPrice} €
+						span #{acPrice.toFixed(2)} €
 					br
 					if methodAc || methodAc == 0
 						-a;
@@ -118,10 +129,10 @@ table.table.table-hover.table-bordered
 					if payAc && payAc.paidAt
 						-paidAt = payAc.paidAt;
 						h5 #{moment(paidAt).format('YYYY/MM/DD')}
-				td(class=bgMdPaid)
+				td(class=bgMdPaid).text-right
 					if mdPrice
 						-a;
-						span #{mdPrice} €
+						span #{mdPrice.toFixed(2)} €
 					br
 					if methodMd || methodMd == 0
 						-a;
@@ -130,10 +141,10 @@ table.table.table-hover.table-bordered
 					if payMd && payMd.paidAt
 						-a;
 						h5 #{moment(payMd.paidAt).format('YYYY/MM/DD')}
-				td(class=bgSaPaid)
+				td(class=bgSaPaid).text-right
 					if saPrice
 						-a;
-						span #{saPrice} €
+						span #{saPrice.toFixed(2)} €
 					br
 					if methodSa || methodSa == 0
 						-a;
@@ -147,19 +158,19 @@ table.table.table-hover.table-bordered
 		tr
 			td(colspan="11") .
 		tr.bg-light
-			td(colspan="4").text-right Total Price: #{pTot.toFixed(2)} €
-			td(colspan="2") Total AC: #{acTot.toFixed(2)} €
-			td(colspan="2")
+			td(colspan="4").text-right: h4 Total Price: #{pTot.toFixed(2)} €
+			td(colspan="2"): h4 Total AC: #{acTot.toFixed(2)} €
+			td(colspan="2"): h4
 				if mdTot && mdTot != 0
 					-a;
 					span Total MD: #{mdTot} €
-			td(colspan="2") Total SA: #{saTot.toFixed(2)} €
+			td(colspan="2"): h4 Total SA: #{saTot.toFixed(2)} €
 			td
 		tr
 			td
-			td(colspan="3") 未付: #{unCheck.toFixed(2)} €
-			td(colspan="3") 已签: <span class="text-warning">#{checking.toFixed(2)}</span> €
-			td(colspan="3") 已取: <span class="text-success">#{checked.toFixed(2)}</span> €
+			td(colspan="3").text-secondary: h3 未付: #{unCheck.toFixed(2)} €
+			td(colspan="3"): h3 已签: <span class="text-warning">#{checking.toFixed(2)}</span> €
+			td(colspan="3"): h3 已取: <span class="text-success">#{checked.toFixed(2)}</span> €
 			td
 
 script(src="/js/order/list.js")

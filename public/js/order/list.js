@@ -18,4 +18,7 @@ $( function() {
 		$('.cancel-'+id).hide()
 		$('.form-'+id).hide()
 	})
+	$('.showHide').click(function(e) {
+		$(".hideTr").show()
+	})
 } );
