@@ -16,17 +16,16 @@ each item in objects
 			.col-lg-12.col-xl-4.border-right
 				if item.order
 					-order = item.order;
-					a.btn.text-dark.text-left(href="/sfOrder/"+order._id)
-						h5
-							span(class=Conf.stsOrderBg[order.status] + " text-secondary") Order: 
-							span #{order.order} 
+					h5
+						span(class=Conf.stsOrderBg[order.status] + " text-secondary") Order: 
+						span #{order.order} 
 					if order.vder
 						-vder = order.vder;
 						h5 <span class="text-secondary">Supplier:</span> #{vder.code}
 					else
 						h5.text-danger Supplier Loss
 					h5 <span class="text-secondary">TaxType:</span> #{Conf.taxType[order.taxType]}
-					h5 <span class="text-secondary">Staff:</span> #{item.order.staff}
+					//- h5 <span class="text-secondary">Staff:</span> #{item.order.staff}
 					if item.note
 						- note = item.note;
 						h5  <span class="text-secondary">Note:</span>#{item.note}
@@ -43,7 +42,7 @@ each item in objects
 					span €
 				if item.agCode
 					-a;
-					h5 #{item.agCode}
+					h5 N.assegno: #{item.agCode}
 				if item.paidAt
 					-a;
 					h5(class=bgRecent) PaidAt: #{moment(item.paidAt).format("MM/DD/YYYY")}

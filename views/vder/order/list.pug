@@ -8,11 +8,12 @@ block content
 				
 				.col-12.col-md-3.mt-3
 					button.btn.btn-warning.btn-block.btnFilter(type="button") Filter
-	.contain1.mt-3
+	.container
 		.filterInfo(style="display:none")
 			#selectOption.bg-light.p-2
 				include ./list/filter
 			hr
+	.contain1.mt-3
 		include ../../aaPlugin/pageSlip
 		include ./list/selfList
 	script(src="/js/filtTog.js")

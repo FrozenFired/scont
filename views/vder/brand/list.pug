@@ -13,12 +13,27 @@ block content
 			each scont in sconts
 				if scont.brand
 					- let item = scont.brand;
-					.col-sm-12.col-md-6.col-lg-4.col-xl-3.mb-5
+					.col-sm-12.col-md-6.col-lg-4.mb-4
 						.card.bg-light
 							.row.text-center.m-1
 								h4.col-12 #{item.code}
+								.col-12
+									span Website: 
+									-website = item.website;
+									if website && website.slice(0,4) != 'http'
+										- item.website = 'http://'+website
+									a(href=item.website, target="view_window")
+										if website && website.length > 15
+											- website = website.slice(0, 12) + '...';
+										span #{website}
+							.row.text-center.m-1(class="more-"+item._id, style="display:none")
 								- let disct = 'undefined';
 								if scont.scont != 'undefined'
 									-disct = scont.scont+' %';
 								h5.col-12 sconto: #{disct}
-								.col-12 #{moment(item.createAt).format('YYYY/MM/DD')}
+								//- .col-12 #{moment(item.createAt).format('YYYY/MM/DD')}
+							.row.text-center
+								.col-12
+									button.btn.btn-link.show(class="show-"+item._id, type="button", data-id=item._id) show
+									button.btn.btn-link.hide(class="hide-"+item._id, type="button", data-id=item._id, style="display:none") hide
+	script(src="/js/vder/brand.js")
