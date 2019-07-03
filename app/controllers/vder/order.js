@@ -7,7 +7,6 @@ let Filter = require('../../middle/filter');
 let Conf = require('../../../confile/conf.js');
 let moment = require('moment');
 
-
 exports.ordersFilter = function(req, res, next) {
 	let crVder = req.session.crVder;
 
@@ -16,10 +15,6 @@ exports.ordersFilter = function(req, res, next) {
 
 	// 分页
 	let slipCond = ""; // 分页时用到的其他条件
-
-	let page = 0, entry = 50;
-	[entry, page, slipCond] = Filter.slipPage(req, entry, slipCond)
-	let index = page * entry;
 
 	// 条件判断   ----------------
 	// 查找关键字
@@ -30,14 +25,8 @@ exports.ordersFilter = function(req, res, next) {
 	let condStatus = ['2', '3'];
 	[condStatus, slipCond] = Filter.status(req.query.status, condStatus, slipCond);
 
-	// // 根据创建更新时间筛选
-	// let at = Filter.at(req);
-	// slipCond+=at.slipCond;
-
 	Order.count({
 		[keytype]: new RegExp(keyword + '.*'),
-		// 'createAt': {[at.symCrtStart]: at.condCrtStart, [at.symCrtEnded]: at.condCrtEnded},
-		// 'updateAt': {[at.symUpdStart]: at.condUpdStart, [at.symUpdEnded]: at.condUpdEnded},
 		'status': condStatus  // 'status': {[symStatus]: condStatus}
 	})
 	.where('vder').equals(crVder._id)
@@ -45,12 +34,9 @@ exports.ordersFilter = function(req, res, next) {
 		if(err) console.log(err);
 		Order.find({
 			[keytype]: new RegExp(keyword + '.*'),
-			// 'createAt': {[at.symCrtStart]: at.condCrtStart, [at.symCrtEnded]: at.condCrtEnded},
-			// 'updateAt': {[at.symUpdStart]: at.condUpdStart, [at.symUpdEnded]: at.condUpdEnded},
 			'status': condStatus  // 'status': {[symStatus]: condStatus}
 		})
 		.where('vder').equals(crVder._id)
-		.skip(index).limit(entry)
 		.populate('payAc').populate('payMd').populate('paySa')
 		.populate('vder')
 		.sort({'status': 1, "createAt": -1})
@@ -70,15 +56,6 @@ exports.ordersFilter = function(req, res, next) {
 				list.keyword = req.query.keyword;
 
 				list.condStatus = condStatus;
-
-				// list.condCrtStart = req.query.crtStart;
-				// list.condCrtEnded = req.query.crtEnded;
-				// list.condUpdStart = req.query.updStart;
-				// list.condUpdEnded = req.query.updEnded;
-
-				list.currentPage = (page + 1);
-				list.entry = entry;
-				list.totalPage = Math.ceil(count / entry);
 
 				list.slipCond = slipCond;
 
