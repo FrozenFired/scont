@@ -1,6 +1,17 @@
 .row
+	.col-12.col-lg-4.mt-3
+		h3 未付: <span id="unCheck"></span> €
+	.col-12.col-lg-4.mt-3.text-center
+		h3 已签: <span id="checking" class="text-warning"></span> €
+	.col-12.col-lg-4.mt-3.text-right
+		h3 已取: <span id="checked" class="text-success"></span> €
+.row.mt-3
 	.col-12.text-right
-		button.showHide.btn.btn-info(type="button") Show All
+		button.hideBtn.btn.btn-info(type="button", style="display:none") hide 
+		button.showHide.btn.btn-success(type="button") Show All
+
+- let pTot = acTot = mdTot = saTot = 0;
+- let unCheck = checking = checked = 0;
 table.table.table-hover.table-bordered.mt-3
 	thead
 		tr
@@ -16,8 +27,6 @@ table.table.table-hover.table-bordered.mt-3
 			th saAt
 			th(style="min-width: 100px") note
 	tbody
-		- let pTot = acTot = mdTot = saTot = 0;
-		- let unCheck = checking = checked = 0;
 		each item in objects
 			if !isNaN(item.price)
 				- pTot += item.price;
@@ -166,12 +175,9 @@ table.table.table-hover.table-bordered.mt-3
 					span Total MD: #{mdTot} €
 			td(colspan="2"): h4 Total SA: #{saTot.toFixed(2)} €
 			td
-		tr
-			td
-			td(colspan="3").text-secondary: h3 未付: #{unCheck.toFixed(2)} €
-			td(colspan="3"): h3 已签: <span class="text-warning">#{checking.toFixed(2)}</span> €
-			td(colspan="3"): h3 已取: <span class="text-success">#{checked.toFixed(2)}</span> €
-			td
+input.unCheck(type="hidden", value=unCheck.toFixed(2))
+input.checking(type="hidden", value=checking.toFixed(2))
+input.checked(type="hidden", value=checked.toFixed(2))
 
-script(src="/js/order/list.js")
+script(src="/js/vder/orderlist.js")
 script(src="/js/changeStatus.js")
