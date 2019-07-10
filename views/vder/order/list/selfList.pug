@@ -34,6 +34,7 @@ table.table.table-hover.table-bordered.mt-3
 			-let stsOrderBg = Conf.stsOrderBg[item.status];
 
 			-let payAc, acPrice, payMd, mdPrice, paySa, saPrice;
+			-let imgSrcAc, imgSrcMd, imgSrcSa;
 			-let methodAc, methodMd, methodSa;
 			-let bgAcPaid = bgMdPaid = bgSaPaid = "bg-default";
 			-let textAcWeek = textMdWeek = textSaWeek = "bg-default";
@@ -45,6 +46,8 @@ table.table.table-hover.table-bordered.mt-3
 				-methodAc = payAc.method;
 				-acPrice = payAc.price;
 				-acTot += payAc.price;
+				if payAc.photo
+					-imgSrcAc = payAc.photo
 
 				if acStatus == 0
 					- unCheck += payAc.price;
@@ -67,6 +70,8 @@ table.table.table-hover.table-bordered.mt-3
 				-methodMd = payMd.method;
 				-mdPrice = payMd.price;
 				-mdTot += payMd.price;
+				if payMd.photo
+					-imgSrcMd = payMd.photo
 
 				if mdStatus == 0
 					- unCheck += payMd.price;
@@ -89,6 +94,8 @@ table.table.table-hover.table-bordered.mt-3
 				-methodSa = paySa.method;
 				-saPrice = paySa.price;
 				-saTot += paySa.price;
+				if paySa.photo
+					-imgSrcSa = paySa.photo
 
 				if saStatus == 0
 					- unCheck += paySa.price;
@@ -130,10 +137,16 @@ table.table.table-hover.table-bordered.mt-3
 					if acPrice
 						-a;
 						span #{acPrice.toFixed(2)} €
-					br
+						br
 					if methodAc || methodAc == 0
 						-a;
 						span #{Conf.payMethod[methodAc]}
+					if imgSrcAc
+						-a;
+						br
+						a(href=imgSrcAc)
+							img(id="imgSm-"+payAc._id, src=imgSrcAc, width="50px")
+						img.imgBg(id="imgBg-"+payAc._id, src=imgSrcAc, width="300px", style="display:none")
 				td(class=textAcWeek)
 					if payAc && payAc.paidAt
 						-paidAt = payAc.paidAt;

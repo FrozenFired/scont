@@ -32,4 +32,17 @@ $( function() {
 		$(this).hide();
 		$(".hideTr").hide()
 	})
+
+	$(".imgSm").click(function(e) {
+		let str = $(this).attr('id');
+		let id = str.split('-')[1]
+		$(this).hide();
+		$("#imgBg-"+id).show();
+	})
+	$(".imgBg").click(function(e) {
+		let str = $(this).attr('id');
+		let id = str.split('-')[1]
+		$(this).hide();
+		$("#imgSm-"+id).show();
+	})
 } );

@@ -1,7 +1,7 @@
 extends ../aalayout/layout
 
 block content
-	.container
+	.container.mt-3
 		.row
 			h1.col-sm-6 Pay Update
 			.col-sm-6.text-right
@@ -91,6 +91,21 @@ block content
 				-picUrl += '-' + object.price;
 			if object.picUrl
 				-picUrl = object.picUrl;
+
+			if object.method == 0
+				-a;
+				.row.text-center
+					.col-10
+						img(src=object.photo, width="300px")
+					.col-2
+				input.form-control(type="hidden", class="iptCode", name="object[code]", value=object.code, readonly="readonly")
+				input(type="hidden", name="object[photoDir]", value=Conf.photoPath.payPhoto)
+				input(type="hidden", name="object[orgPhoto]", value=object.photo)
+				.form-group.row
+					label.col-sm-2.col-form-label Pay Photo
+					.col-sm-6
+						input#uploadPhoto.form-control.btn.btn-info.btn-block(type="file", name="uploadPhoto")
+
 			.form-group.row
 				label.col-sm-2.col-form-label #{object.code} Picture Path
 				.col-sm-6
@@ -101,17 +116,6 @@ block content
 				label.col-sm-2.col-form-label Pay note
 				.col-sm-6
 					input#iptPicUrl.form-control(type="text", name="object[note]", value=object.note)
-			//- .form-group.row
-			//- 	label.col-sm-2.col-form-label Pay
-			//- 	.col-sm-6
-			//- 		select#iptStatus.form-control(name="object[status]", data-style="btn-info")
-			//- 			each key in Object.keys(Conf.stsPay)
-			//- 				-a;
-			//- 				if key == object.status
-			//- 					-a;
-			//- 					option(value=key, selected="selected") #{Conf.stsPay[key]} #{key}
-			//- 				else
-			//- 					option(value=key) #{Conf.stsPay[key]} #{key}
 			.form-group.row
 				.offset-md-2.col-md-10
 					input.btn.btn-default(type="submit" value="submit")

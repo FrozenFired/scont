@@ -10,6 +10,7 @@ let dbSchema = new Schema({
 
 	code: String, // auto: ac sa sa2
 	price: Float,
+	photo: String,
 
 	method: Number,	// BONIFICO CREDIT	SYSTEM 
 	agCode: String, // 支票号码

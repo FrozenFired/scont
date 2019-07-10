@@ -96,7 +96,11 @@ table.table.table-hover.table-bordered
 				-a;
 				if object.status == 0
 					-a;
-					button.btn.btn-warning.change(type="button", class=referBtn, data-url="/fnPayStatus", data-id=object._id, data-sts=2) Paid
+					if object.photo
+						-a;
+						button.btn.btn-warning.change(type="button", class=referBtn, data-url="/fnPayStatus", data-id=object._id, data-sts=2) Paid
+					else
+						span &nbsp; &nbsp; (Upload Photo)
 				else
 					button.btn.btn-danger.change(type="button", class=referBtn, data-url="/fnPayStatus", data-id=object._id, data-sts=0) init
 script(src="/js/changeStatus.js")

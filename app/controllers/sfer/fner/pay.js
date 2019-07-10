@@ -337,13 +337,13 @@ exports.payFilter = function(req, res, next) {
 }
 exports.pay = function(req, res) {
 	let list = req.body.list
-
 	list.title = "fnPay Infomation";
 
 	res.render('./sfer/fner/pay/detail', list)
 }
 exports.payUp = function(req, res) {
 	let list = req.body.list;
+	// console.log(list.object)
 	list.title = "fnPay Update";
 	list.action = "/fnPayUpd";
 	res.render('./sfer/fner/pay/update', list)

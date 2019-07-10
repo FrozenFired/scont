@@ -33,7 +33,7 @@ module.exports = function(app){
 	// Pay         ----------------------------------------------------------------------
 	app.get('/fnPays', MdRole.fnerIsLogin, Pay.paysFilter, Pay.pays)
 	app.get('/fnPaysPrint', MdRole.fnerIsLogin, Pay.paysFilter, Pay.paysPrint)
-	app.post('/fnPayUpd', PostForm, MdRole.fnerIsLogin, MdRole.sfUniLog, Pay.payUpd)
+	app.post('/fnPayUpd', PostForm, MdRole.fnerIsLogin, MdRole.sfUniLog, MdPicture.addNewPhoto, Pay.payUpd)
 	app.get('/fnPay/:id', MdRole.fnerIsLogin, Pay.payFilter, Pay.pay)
 	app.get('/fnPayUp/:id', MdRole.fnerIsLogin, Pay.payFilter, Pay.payUp)
 	// app.get('/fnPayDel/:id', MdRole.fnerIsLogin, Pay.payFilter, Pay.payDel)

@@ -1,7 +1,8 @@
 let Conf = {
 	photoPath: {
 		sferAvatar: '/avatar/sfer/',
-		carPhoto: '/car/'
+		carPhoto: '/car/',
+		payPhoto: '/pay/'
 	},
 
 	weight: {0: 'general', 1: 'usual', 2: 'often', 3: 'always', 4: 'important'},
