@@ -144,8 +144,8 @@ table.table.table-hover.table-bordered.mt-3
 					if imgSrcAc
 						-a;
 						br
-						a(href=imgSrcAc)
-							img(id="imgSm-"+payAc._id, src=imgSrcAc, width="50px")
+						a(href=imgSrcAc, target="_blank")
+							img.imgSm1(id="imgSm-"+payAc._id, src=imgSrcAc, width="50px")
 						img.imgBg(id="imgBg-"+payAc._id, src=imgSrcAc, width="300px", style="display:none")
 				td(class=textAcWeek)
 					if payAc && payAc.paidAt
@@ -159,6 +159,12 @@ table.table.table-hover.table-bordered.mt-3
 					if methodMd || methodMd == 0
 						-a;
 						span #{Conf.payMethod[methodMd]}
+					if imgSrcMd
+						-a;
+						br
+						a(href=imgSrcMd, target="_blank")
+							img.imgSm1(id="imgSm-"+payMd._id, src=imgSrcMd, width="50px")
+						img.imgBg(id="imgBg-"+payMd._id, src=imgSrcMd, width="300px", style="display:none")
 				td(class=textMdWeek)
 					if payMd && payMd.paidAt
 						-a;
@@ -171,6 +177,12 @@ table.table.table-hover.table-bordered.mt-3
 					if methodSa || methodSa == 0
 						-a;
 						span #{Conf.payMethod[methodSa]}
+					if imgSrcSa
+						-a;
+						br
+						a(href=imgSrcSa, target="_blank")
+							img.imgSm1(id="imgSm-"+paySa._id, src=imgSrcSa, width="50px")
+						img.imgBg(id="imgBg-"+paySa._id, src=imgSrcSa, width="300px", style="display:none")
 				td(class=textSaWeek)
 					if paySa && paySa.paidAt
 						-a;

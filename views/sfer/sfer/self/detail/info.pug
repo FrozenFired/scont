@@ -32,5 +32,6 @@ table.table.table-hover
 	tr
 		td: strong updateAt:
 		td #{moment(object.updateAt).format('YYYY/MM/DD')}
-	
-img(src=object.photo, width="200px", height="200px")
+
+a(href=object.photo, target="_blank")
+	img(src=object.photo, width="200px", height="200px")
