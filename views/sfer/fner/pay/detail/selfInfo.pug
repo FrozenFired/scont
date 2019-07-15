@@ -81,7 +81,18 @@ table.table.table-hover.table-bordered
 		td(class=bgStatus): strong Status
 		td 
 			span #{Conf.stsPay[object.status]} &nbsp;
-			if object.method != 0
+			if object.method || object.method == 0
+				-a;
+				if object.status == 0
+					-a;
+					if object.photo
+						-a;
+						button.btn.btn-warning.change(type="button", class=referBtn, data-url="/fnPayStatus", data-id=object._id, data-sts=2) Paid
+					else
+						span &nbsp; &nbsp; (Upload Photo)
+				else
+					button.btn.btn-danger.change(type="button", class=referBtn, data-url="/fnPayStatus", data-id=object._id, data-sts=0) init
+			else if object.method == 1
 				-a;
 				if object.status == 0
 					-a;
@@ -92,15 +103,10 @@ table.table.table-hover.table-bordered
 				else
 					button.btn.btn-danger.change(type="button", class=referBtn, data-url="/fnPayStatus", data-id=object._id, data-sts=0) init
 
-			else if object.method || object.method == 0
-				-a;
+			else 
 				if object.status == 0
 					-a;
-					if object.photo
-						-a;
-						button.btn.btn-warning.change(type="button", class=referBtn, data-url="/fnPayStatus", data-id=object._id, data-sts=2) Paid
-					else
-						span &nbsp; &nbsp; (Upload Photo)
+					button.btn.btn-warning.change(type="button", class=referBtn, data-url="/fnPayStatus", data-id=object._id, data-sts=2) Paid
 				else
 					button.btn.btn-danger.change(type="button", class=referBtn, data-url="/fnPayStatus", data-id=object._id, data-sts=0) init
 script(src="/js/changeStatus.js")
