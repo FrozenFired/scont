@@ -81,7 +81,7 @@ table.table.table-hover.table-bordered
 		td(class=bgStatus): strong Status
 		td 
 			span #{Conf.stsPay[object.status]} &nbsp;
-			if object.method == 1
+			if object.method != 0
 				-a;
 				if object.status == 0
 					-a;
