@@ -12,7 +12,7 @@ table.table.table-hover.table-bordered
 			th status
 			th Assegno
 			th Picture
-			th note
+			th edit
 	tbody
 		- let total = 0;
 		each item in objects
@@ -63,7 +63,12 @@ table.table.table-hover.table-bordered
 				td #{Conf.stsPay[item.status]}
 				td #{item.agCode}
 				td #{item.picUrl}
-				td #{item.note}
+				td
+					if item.method == 1 && item.status == 1
+						-a;
+						button.btn.btn-warning.change(type="button", class=referBtn, data-url="/fnPayStatus", data-id=item._id, data-sts=2) Paid
 .row
 	.col-sm-6
 		h2.bg-light.rounded Total price : #{total.toFixed(2)}
+
+script(src="/js/changeStatus.js")
