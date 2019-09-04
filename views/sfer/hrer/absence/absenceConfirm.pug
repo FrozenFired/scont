@@ -34,9 +34,13 @@ block content
 							- manage = item.manage.code;
 						td #{manage}
 						td #{moment(item.ctAt).format('YYYY/MM/DD')}
-						td: button.btn.btn-danger.del(type="button", data-urldel="/hrAbsenceDelAjax", data-id=item._id) refuse
-						td
-							button.btn.btn-warning.change(class="del-"+item._id, type="button", data-url="/hrAbsenceStatus", data-sts=3, data-id=item._id) confirm
-														
+						if item.status == 2
+							-a;
+							td: button.btn.btn-danger.del(type="button", data-urldel="/hrAbsenceDelAjax", data-id=item._id) refuse
+							td
+								button.btn.btn-warning.change(class="del-"+item._id, type="button", data-url="/hrAbsenceStatus", data-sts=3, data-id=item._id) confirm
+						else
+							td
+							td
 		script(src="/js/changeStatus.js")
 		script(src="/js/delete.js")

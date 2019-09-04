@@ -110,7 +110,7 @@ exports.hrAbsencesMonthAjax = function(req, res) {
 
 exports.hrAbsenceConfirm = function(req, res) {
 	let crSfer = req.session.crSfer;
-	Absence.find({status: 2})
+	Absence.find({status: {$in: [1, 2]}})
 	.populate('apler code')
 	.populate('manage code')
 	.exec(function(err, objects) {
