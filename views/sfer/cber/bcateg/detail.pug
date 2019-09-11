@@ -1,0 +1,18 @@
+extends ../aalayout/layout
+
+block content
+	.container
+		.row(class=objBg)
+			h1.col-sm-8 品牌二级分类: #{object.code}
+			.col-sm-4.text-right
+				a.btn.btn-link(href="/bcategList") category list
+		hr
+		include ./detail/selfInfo
+		if brands && brands.length > 0
+			-a;
+			hr
+			include ./detail/brands
+		.row
+			.col-sm-8
+			.col-sm-4
+				a.btn.btn-info.btn-lg.btn-block(href="/cbBcategPrint/"+object._id) DownLoad Excel

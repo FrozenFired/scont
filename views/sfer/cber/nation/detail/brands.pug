@@ -1,0 +1,31 @@
+h3.mt-4 品牌 - #{brands.length} :
+each brand in brands
+	-a;
+	.card.mt-4
+		.row.m-1
+			.col-12.col-sm-4
+				h4: a(href="/cbBrand/"+brand._id) 品牌: #{brand.code}
+				if brand.bcateg
+					- bcateg = brand.bcateg;
+					h5 一级： #{Conf.bcateCn[bcateg.bcate]}
+					h5 二级： #{bcateg.code}
+				else
+					h5 Brand Category Lost
+			.col-12.col-sm-4
+				h5
+					span.col-6.text-secondary 材料描述:
+					span.col-6.text-info #{brand.matDesp}
+				h5
+					span.col-6.text-secondary 公司名:
+					span.col-6.text-info #{brand.firmName}
+			.col-12.col-sm-4
+				h5
+					span.col-6.text-secondary 状态:
+					span.col-6.text-info #{Conf.stsBrand[brand.status]}
+				h5
+					span.col-6.text-secondary 供应商数:
+					if brand.sconts
+						-sconts = brand.sconts;
+						span #{sconts.length}
+					else
+						span 0

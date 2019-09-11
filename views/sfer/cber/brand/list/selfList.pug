@@ -1,0 +1,58 @@
+.row
+	each item in objects
+		- let objBg;
+		if item.status == 0
+			-objBg ="bg-info";
+		else if item.status == 1
+			-objBg ="bg-default";
+		else if item.status == 2
+			-objBg ="bg-secondary";
+		.col-sm-12.col-md-6.col-lg-4.col-xl-3.mb-5(class="item-id-"+item._id)
+			.card
+				.row.m-1
+					h4.text-center.col-12(class=objBg+" item-id-"+item._id) 
+						a.text-dark(href="/cbBrand/"+item._id)
+							- code = item.code;
+							if code && code.length > 14
+								-code = code.slice(0,12)+'...';
+							span #{code}
+					if item.nation
+						-nation = item.nation;
+						h5.text-center.col-12 [#{nation.code}]
+					if item.bcateg
+						-bcateg = item.bcateg;
+						.col-6
+							strong [#{Conf.bcateCn[bcateg.bcate]}]
+						.col-6.text-right
+							-var name ="错误"
+							if bcateg.nameCN
+								-name = bcateg.nameCN;
+							else
+								-name = bcateg.code;
+							strong [#{name}]
+					else
+						.col-12
+							p 分类数据丢失
+					.col-12.mt-2(style="height:40px")
+						- matDesp = item.matDesp;
+						if matDesp && matDesp.length > 30
+							- matDesp = matDesp.slice(0, 27) + '...';
+						span 材料描述: #{matDesp}
+
+					.col-12
+						span 供应商数: 
+						if item.sconts && item.sconts.length > 0
+							-sconts = item.sconts;
+							font.text-info(size=5) #{sconts.length}
+						else
+							span.text-danger 0
+					.col-12
+						span 网站: 
+						-website = item.website;
+						if website && website.slice(0,4) != 'http'
+							- item.website = 'http://'+website
+						a(href=item.website, target="view_window")
+							if website && website.length > 15
+								- website = website.slice(0, 12) + '...';
+							span #{website}
+					.col-12 更新时间: #{moment(item.updateAt).format('YYYY/MM/DD')}

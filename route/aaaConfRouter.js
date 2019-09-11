@@ -12,6 +12,7 @@ module.exports = function(app){
 	require('./rperRouter')(app);
 	require('./hrerRouter')(app);
 	require('./cnerRouter')(app);
+	require('./cberRouter')(app);
 
 	require('./vderRouter')(app);
 };

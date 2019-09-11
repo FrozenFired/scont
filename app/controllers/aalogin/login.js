@@ -33,6 +33,9 @@ exports.index = function(req, res) {
 	else if(crSfer && crSfer.role == 15) {
 		res.redirect('/cner');
 	}
+	else if(crSfer && crSfer.role == 16) {
+		res.redirect('/cber');
+	}
 	else if(req.session.crMger) {
 		res.redirect('/mger');
 	}
@@ -107,6 +110,8 @@ loginSfer = function(req, res, code, password) {
 					if(sfer.role == 20) {
 						delete req.session.crSfer;
 						loginMger(req, res, code, password);
+					} else if(sfer.role == 16) {
+						res.redirect('/cber');
 					} else if(sfer.role == 15) {
 						res.redirect('/cner');
 					} else if(sfer.role == 11) {

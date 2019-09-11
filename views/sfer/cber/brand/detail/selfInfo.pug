@@ -1,0 +1,111 @@
+-let objBg = "bg-light";
+
+if object.status == 0
+	-objBg ="bg-info";
+else if object.status == 1
+	-objBg ="bg-white";
+else if object.status == 2
+	-objBg ="bg-secondary";
+.card.p-3
+	.row(class=objBg)
+		h5.col-4.col-sm-3.text-secondary 状态
+		h5.col-8.text-dark #{Conf.stsBrand[object.status]}
+	if object.bcateg
+		-bcateg = object.bcateg;
+		h5.text-secondary 品牌分类
+		.row
+			.col-1.col-sm-1
+			h5.col-4.col-sm-2.text-secondary 一级
+			h5.col-6.text-info #{Conf.bcateCn[bcateg.bcate]} 
+		.row
+			.col-1.col-sm-1
+			h5.col-4.col-sm-2.text-secondary 二级 
+			h5.col-6.text-info #{object.bcateg.nameCN}
+	else
+		h5.col-12.text-danger 品牌分类 丢失
+	.row
+		if object.matDesp
+			-matDesp = object.matDesp;
+			h5.col-5.col-sm-3.text-secondary 材料
+			h5.col-6.text-info #{matDesp}
+	.row
+		if object.nation
+			-nation = object.nation;
+			h5.col-5.col-sm-3.text-secondary 国家
+			h5.col-6.text-info #{object.nation.code}
+		else
+			span 国家 丢失
+	.row
+		if object.firmName
+			-firmName = object.firmName;
+			h5.col-4.col-sm-3.text-secondary 公司名
+			h5.col-8.text-info #{firmName}
+	.row
+		h5.col-4.col-sm-3.text-secondary 网站
+		- website = object.website;
+		if website && website.slice(0, 4) != 'http'
+			-website = 'http://'+website;
+		h5.col-8.text-info: a(href=website, target="view_window") #{object.website}
+	//- .basicDetail(style="display:none")
+	.basicDetail
+		if object.webNote
+			- webNote = object.webNote;
+			.row
+				.col-1.col-sm-1
+				p.col-4.col-sm-2.text-secondary 备注
+				p.col-6.text-info #{webNote}
+		.row
+			h5.col-4.col-sm-3.text-secondary 生产周济
+			h5.col-8.text-info #{object.pTime}
+		.row
+			h5.col-4.col-sm-3.text-secondary 价目表
+			h5.col-8.text-info #{object.plist}
+		if object.plNote && object.plNote.length > 0
+			-plNote = object.plNote;
+			.row
+				.col-1.col-sm-1
+				p.col-4.col-sm-2.text-secondary 备注
+				p.col-6.text-info #{plNote}
+		.row
+			h5.col-4.col-sm-3.text-secondary 价目表
+			h5.col-8.text-info #{object.atlas}
+		if object.atNote && object.atNote.length > 0
+			-atNote = object.atNote;
+			.row
+				.col-1.col-sm-1
+				p.col-4.col-sm-2.text-secondary 备注
+				p.col-6.text-info #{atNote}
+		.row
+			if object.creater
+				-creater = object.creater;
+				h5.col-4.col-sm-3.text-secondary 创建者
+				h5.col-8.text-info #{object.creater.code}
+			else
+				span 创建者 丢失
+		.row
+			if object.updater
+				-updater = object.updater;
+				h5.col-4.col-sm-3.text-secondary 更新者
+				h5.col-8.text-info #{object.updater.code}
+			else
+				span 更新者 丢失
+		.row
+			if object.createAt
+				-createAt = object.createAt;
+				h5.col-4.col-sm-3.text-secondary 创建时间
+				h5.col-8.text-info #{moment(createAt).format('YYYY/MM/DD')}
+			else
+				span 创建时间 丢失
+		.row
+			if object.updateAt
+				-updateAt = object.updateAt;
+				h5.col-4.col-sm-3.text-secondary 更新时间
+				h5.col-8.text-info #{moment(updateAt).format('YYYY/MM/DD')}
+			else
+				span 更新时间 丢失
+		if object.weight
+			- weight = object.weight;
+			.row
+				p.col-3.col-sm-1.text-secondary 权重
+				p.col-8.text-info #{Conf.weight[object.weight]}
+	//- button.btn.btn-default.btn-block.btnToggle(type="button") 详细信息

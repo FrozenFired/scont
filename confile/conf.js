@@ -13,7 +13,7 @@ let Conf = {
 	sfRole: { 
 		1: 'Order', 2: 'Contabilita', 3: 'Logistic', 4: 'Reception',
 		5: 'Brand',  6: 'HR', 10: 'Quotation', 11: 'Market',
-		15: '中国报价', 20: 'leave',
+		15: '中国报价', 16: '中国品牌', 20: 'leave',
 	},
 	vdRole: {0: 'register', 1: 'unregister', 2: 'logout'},
 	/* --------------------- order ---------------------*/

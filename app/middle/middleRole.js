@@ -153,3 +153,13 @@ exports.cnerIsLogin = function(req, res, next) {
 		Index.optionError(req, res, info)
 	}
 }
+
+exports.cberIsLogin = function(req, res, next) {
+	let crSfer = req.session.crSfer
+	if(crSfer && crSfer.role == 16) {
+		next();
+	} else {
+		info = "需要登录您的账户"
+		Index.optionError(req, res, info)
+	}
+}
