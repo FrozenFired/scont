@@ -13,5 +13,7 @@ block content
 				a.nav-link(href="/fnPays")
 					img.figure-img.img-fluid.rounded(src="/imgs/pays.jpg", width="100%", alt="pays list")
 		.row.mt-3
-			include ../../sfer/index/scont
+			if crSfer.part == 1
+				-a;
+				include ../../sfer/index/scont
 			include ../../sfer/index/index
