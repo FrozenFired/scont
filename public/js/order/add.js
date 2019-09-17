@@ -132,6 +132,18 @@ $( function() {
 		let sa = parseFloat(price) - parseFloat(ac)
 		$("#iptSa").val(sa);
 	})
+	$("#iptSa").blur(function(e) {
+		let sa = $(this).val();
+		// 突然想自己写个逻辑，就没有用正则
+		if(isFloat(sa)) {
+			$("#optSa").hide();
+		} else {
+			$("#optSa").show();
+		}
+		let price = $("#iptPrice").val();
+		let ac = parseFloat(price) - parseFloat(sa)
+		$("#iptAc").val(ac);
+	})
 
 	// $("#iptAcAt").change(function(e) {
 	// 	let acAt = $("#iptAcAt").val();
