@@ -123,3 +123,16 @@
   vertical-align: top;
   border-top: 1px solid #dee2e6;
 }
+
+.tbFattura {
+	width: 100%;
+	margin-bottom: 1rem;
+	background-color: transparent;
+}
+
+.tbFattura th,
+.tbFattura td {
+	padding: 0.4rem;
+	vertical-align: top;
+	border-top: 1px solid #dee2e6;
+}

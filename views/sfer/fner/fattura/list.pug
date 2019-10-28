@@ -1,0 +1,35 @@
+extends ../aalayout/layout
+
+block content
+	.container.mt-3
+		.row.noprint
+			.col-4
+				h3 Fatturas
+			.col-4.text-center
+				h2(style="font-size: 40px"): strong CasaItaliana
+			.col-4.text-right
+				a.btn.btn-primary(href="/fnFatturaAdd") 新发票
+		hr
+		.row.noprint(style="height:60px")
+
+		.row.noprint
+			table.table
+				thead
+					tr
+						th(style="font-size: 25px") Code
+						th(style="font-size: 25px") Type
+						th(style="font-size: 25px") goods
+						th(style="font-size: 25px") Total
+						th(style="font-size: 25px") Paid
+						th(style="font-size: 25px") Imp
+				tbody
+					each object in objects
+						-a;
+						tr
+							td(style="font-size: 25px") 
+								a(href="/fnFattura/"+object._id) #{object.code}/#{object.year}
+							td(style="font-size: 25px") #{Conf.fattura[object.type]}
+							td(style="font-size: 25px") #{object.goods.length}
+							td(style="font-size: 25px") #{object.total}
+							td(style="font-size: 25px") #{object.paid}
+							td(style="font-size: 25px") #{object.imp}

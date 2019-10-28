@@ -7,6 +7,8 @@ let Conf = {
 
 	weight: {0: 'general', 1: 'usual', 2: 'often', 3: 'always', 4: 'important'},
 
+	fattura: {0: 'AC INVOICE', 1: 'EXPORT INVOICE', 9: 'OTHER'},
+
 	//员工角色
 	sfPart: { 0: '职员', 1: '主管'},
 	// 员工部门

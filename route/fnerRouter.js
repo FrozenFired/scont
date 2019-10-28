@@ -3,6 +3,7 @@ let Index = require('../app/controllers/sfer/fner/index');
 let Order = require('../app/controllers/sfer/fner/order');
 let Pay = require('../app/controllers/sfer/fner/pay');
 let Vder = require('../app/controllers/sfer/fner/vder');
+let Fattura = require('../app/controllers/sfer/fner/fattura');
 
 let MdBcrypt = require('../app/middle/middleBcrypt');
 let MdRole = require('../app/middle/middleRole');
@@ -46,4 +47,10 @@ module.exports = function(app){
 	app.post('/fnUpVderInfo', MdRole.fnerIsLogin, PostForm, 
 		Vder.fnCheckVderUp, Vder.fnUpVderInfo)
 	app.get('/ajaxFnVendor', MdRole.fnerIsLogin, Vder.ajaxFnVendor)
+
+	// Fattura -----------------------------------------------------------------------
+	app.get('/fnFatturaAdd', MdRole.fnerIsLogin, Fattura.fnFatturaAdd)
+	app.post('/fnFatturaNew', MdRole.fnerIsLogin, PostForm, Fattura.fnFatturaNew)
+	app.get('/fnFatturas', MdRole.fnerIsLogin, Fattura.fnFatturas)
+	app.get('/fnFattura/:id', MdRole.fnerIsLogin, Fattura.fnFattura)
 };

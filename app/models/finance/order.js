@@ -22,7 +22,7 @@ let dbSchema = new Schema({
 
 	status: String,
 	stsOrderLg: {type: Number, default: 0},
-	
+
 	volumeLg: Float,
 	gwlg: Number, // gross weight 毛重
 	nwlg: Number, // net weight 净重

@@ -1,0 +1,53 @@
+extends ../aalayout/layout
+
+block content
+	.container.mt-4
+		.row
+			h1.col-lg-6 New Fattura
+			.col-lg-6.text-right
+				a.btn.btn-link(href="/fnFatturas") back List
+		hr
+		form#addFattura(method="post", action='/fnFatturaNew', enctype="multipart/form-data")
+			.form-group.row
+				label.col-lg-2.com-form-label Fattura Code
+				.col-lg-2
+					input.form-control(type="text", name="obj[code]", value=code)
+				.col-lg-2
+				label.col-lg-2.com-form-label Fattura Year
+				.col-lg-2
+					input.form-control(type="text", name="obj[year]", value=year)
+			.form-group.row
+				label.col-lg-2.col-form-label#imgUpdEnded UpAt End
+				.col-lg-3
+					input.datepicker.form-control(type="text", name="obj[ctAuto]", placeholder="format : month/day/year", readonly="readonly")
+				.col-lg-1
+				label.col-lg-2.col-form-label Type
+				.col-lg-3
+					select#iptTaxType.form-control(name="obj[type]", data-style="btn-info")
+						each key in Object.keys(Conf.fattura)
+							-a;
+							option(value=key) #{Conf.fattura[key]} - #{key}
+				.col-lg-1
+					span#optTaxType.text-danger
+			hr
+			.form-group.row.attrib0
+				label.col-lg-2.col-form-label Goods
+				.col-lg-5
+					a.btn.btn-block.btn-warning#addAttrib(href="#") plus
+				.col-lg-5
+					a.btn.btn-block.btn-danger#delAttrib(href="#") minus
+
+			hr
+			.form-group.row
+				.offset-md-2.col-md-10
+					input.btn.btn-default(type="submit" value="Add Fattura")
+
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	//- <link rel="stylesheet" href="/resources/demos/style.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	//- timepicker
+	link(rel="stylesheet", href="/libs/jt.timepicker/jquery.timepicker.css")
+	script(src="/libs/jt.timepicker/jquery.timepicker.min.js")
+	script(src="/js/plugin/filter.js")
+	script(src="/js/fner/fattura/add.js")

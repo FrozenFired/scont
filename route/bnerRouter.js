@@ -19,7 +19,7 @@ module.exports = function(app){
 	app.get('/bner', MdRole.bnerIsLogin, Index.bner);
 
 	app.get('/bnAjaxSfer', MdRole.bnerIsLogin, Index.bnAjaxSfer)
-	
+
 	app.get('/headerBnBrand', MdRole.bnerIsLogin, Brand.brandsFilter, Brand.headerBrand)
 
 	// Nation ------------------------------------------------------------------------------
@@ -86,5 +86,4 @@ module.exports = function(app){
 	app.post('/bnScontNew', PostForm, MdRole.bnerIsLogin, Scont.scontNew)
 
 	app.get('/ajaxScontSts', MdRole.bnerIsLogin, Scont.ajaxScontSts)
-
 };

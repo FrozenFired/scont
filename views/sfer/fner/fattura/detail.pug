@@ -1,0 +1,102 @@
+extends ../aalayout/layout
+
+block content
+	.container.mt-3.noprint
+		.row
+			.col-4
+				h3 Fattura
+			.col-4.text-center
+				h2(style="font-size: 40px"): strong CasaItaliana
+			.col-4.text-right
+				a.btn.btn-primary(href="javascript:window.print()") 订单发票
+		hr
+	.container.mt-5
+		.row
+			.col-6
+				img(src="/imgs/fattura.jpg" width="100%", height="280px" alt="orders list")
+			.col-6
+				.row.mt-5.border
+					.col-12.mt-3: Strong Spett.le
+					.col-12.mt-3 客户名称：YOU RONG
+					.col-12.mt-3 客户地址：VIA MASSIMO SIRONI， 22, 20015, VILLASANTA DI PARABIAGO， MI
+				.row.mt-4.border
+					.col-12.mt-2 P.I.:
+		.row.mt-2
+			.col-6
+				.row.mt-1.mr-2.border
+					.col-12
+						.row
+							.col-12.mt-2 Riferimento
+						.row
+							.col-2.mt-2 FATTURA
+							.col-3.mt-2 #{object.code}/#{object.year}
+							.col-7.mt-2 del: #{moment(object.ctAuto).format('DD/MM/YYYY')}
+				.row.mt-1.mr-2.border
+					.col-12
+						.row
+							.col-12.mt-2 Pagamento
+						.row
+							.col-12.mt-2 B.B. RICEVIMENTO FATTURA
+							.col-12.mt-2 BANCA: BANCO DI DESIO E DELLA BRIANZA SPA
+							.col-8.mt-2 IBAN: IT49I0344001611000000673200
+							.col-4.mt-2.text-right SWIFT: BDBDIT22
+			.col-6.border
+				.row.mt-4
+					.col-12 Vs. Banca
+				.row.mt-2
+					.col-12 ABI:
+				.row.mt-2
+					.col-12 CAB:
+				.row.mt-2
+					.col-12 C/C:
+				.row.mt-2
+					.col-12 IBAN:
+
+		.row.mt-4
+			table.tbFattura.table-borderless.border.border-dark
+				thead
+					tr.text-center
+						th.border.border-dark: h5 Goods No.
+						th.border.border-dark: h5 Descrizione
+						th.border.border-dark: h5 HS Code
+						th.border.border-dark: h5 Brand
+						th.border.border-dark: h5 Order
+						th.border.border-dark: h5 UM
+						th.border.border-dark: h5 Qty
+						th.border.border-dark: h5 U. Price EURO
+						th.border.border-dark: h5 S. Total EURO
+				tbody
+					-var proLen = object.goods.length;
+					-var proNum = 0;
+					each good in object.goods
+						-proNum += good.quot;
+						tr
+							td(style="font-size: 20px") #{good.code}
+							td(style="font-size: 20px") #{good.desp}
+							td(style="font-size: 20px") #{good.hs}
+							td(style="font-size: 20px") #{good.brand}
+							td(style="font-size: 20px") #{good.order}
+							td(style="font-size: 20px") No.
+							td(style="font-size: 20px").text-right #{good.quot}
+							td(style="font-size: 20px").text-right #{good.price}
+							td(style="font-size: 20px").text-right #{good.tot}
+					tr
+						td(colspan="9") &nbsp;
+					tr
+						th.border.border-dark(colspan="3") Totale merci 
+						th.border.border-dark(colspan="3") Spesa incasso
+						th.border.border-dark(colspan="3"): h5 IMP:  #{odImp} €
+		.row.mt-5
+			.col-3.text-center CASAITALIANA Srl
+			.col-9.text-right
+				span - Via Einaudi, 4 -20068 Peschiera Borromeo (MI) Italy 
+				span - Tel: +39 344 10 18232
+				span - Cod. Fisc. e P.IVA 03555180136
+		.row
+			.col-1
+			.col-3.text-right
+				span Email: info@italyclassico.it
+			.col-4.text-center
+				span - www.italyclassico.it
+			.col-3
+				span - www.italyclassico.com
