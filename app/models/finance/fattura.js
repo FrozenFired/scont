@@ -25,9 +25,7 @@ let dbSchema = new Schema({
 	/* ----------- general Fattura ----------- */
 	facs: [{			// from ac fattura
 		ac: {type: ObjectId, ref: 'Fattura'},
-		code: String,
-		ctAt: String,
-		rmd: Float,
+		pay: Float,
 	}],
 	paid: Float,
 	imp: Float,	

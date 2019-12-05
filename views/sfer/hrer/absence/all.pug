@@ -1,0 +1,34 @@
+extends ../aalayout/layout
+
+block content
+	div(style="height:50px")
+
+	.container
+		each object in objects
+			-a;
+			.card.my-3.bg-secondary.singlemonth
+				.row.p-1
+					.col-12.col-md-6.border-right
+						- let apler = "Loss";
+						if object.apler
+							- apler = object.apler.code;
+						h5 Applicant: #{apler}
+						h6 [ reason: #{object.desp} ]
+						div Start At: #{moment(object.sAt).format("YYYYMMDD HH:mm")}
+						div pre End: #{moment(object.peAt).format("YYYYMMDD HH:mm")}
+
+						.mt-2 Apply At: #{moment(object.ctAt).format("YYYYMMDD HH:mm")}
+					.col-12.col-md-6
+						if object.manage
+							- manage = object.manage.code;
+							h5 Manager: #{manage}
+						if object.hr
+							- hr = object.hr.code;
+							h5 HR: #{hr}
+							if object.duration
+								- duration = object.duration;
+								h6 [ Duration: #{duration} ]						
+							if object.note
+								- note = object.note;
+								h6 [ Note: #{note} ]						
+						.mt-2 status: #{object.status}

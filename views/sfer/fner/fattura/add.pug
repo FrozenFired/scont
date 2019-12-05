@@ -30,20 +30,34 @@ block content
 				.col-lg-1
 					span#optTaxType.text-danger
 			hr
-			.form-group.row.attrib0
+			.form-group.row.notAC.attrib0(style="display:none").mt-5
 				label.col-lg-2.col-form-label Goods
 				.col-lg-5
 					a.btn.btn-block.btn-warning#addAttrib(href="#") plus
 				.col-lg-5
 					a.btn.btn-block.btn-danger#delAttrib(href="#") minus
+			.form-group.row.notAC(style="display:none").mt-3
+				label.col-lg-2.col-form-label imp:
+				.col-lg-4
+					input.form-control#total(type="text", value=0, readonly="readonly")
+				.col-lg-2
+				label.col-lg-2.col-form-label AC FATTURA:
+				.col-lg-2
+					if acFt
+						-a;
+						span #{acFt.code} / #{acFt.year}
+						input#acYear0(type="hidden", value=acFt.year)
 			hr
-			.form-group.row.acFattura.ac0(style="display:none")
-				label.col-lg-2.col-form-label Goods
+			.form-group.row.notAC.ac0(style="display:none").mt-5
+				label.col-lg-2.col-form-label AC Fattura
 				.col-lg-5
 					a.btn.btn-block.btn-warning#addAc(href="#") plus
 				.col-lg-5
 					a.btn.btn-block.btn-danger#delAc(href="#") minus
-			hr
+			.form-group.row.notAC(style="display:none").mt-3
+				label.col-lg-2.col-form-label paid:
+				.col-lg-4
+					input.form-control#paid(type="text", value=0, readonly="readonly")
 			.form-group.row
 				.offset-md-2.col-md-10
 					input.btn.btn-default(type="submit" value="Add Fattura")

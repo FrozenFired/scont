@@ -4,7 +4,9 @@ block content
 	.container.mt-3.noprint
 		.row
 			.col-4
-				h3 Fattura
+				h3 
+					span Fattura &nbsp;
+					a.btn.btn-danger(href="/fnFatturaDel/"+object._id) Del
 			.col-4.text-center
 				h2(style="font-size: 40px"): strong CasaItaliana
 			.col-4.text-right
@@ -85,7 +87,7 @@ block content
 					tr
 						th.border.border-dark(colspan="3") Totale merci 
 						th.border.border-dark(colspan="3") Spesa incasso
-						th.border.border-dark(colspan="3"): h5 IMP:  #{odImp} €
+						th.border.border-dark(colspan="3"): h5 IMP:  #{object.total} €
 		.row.mt-5
 			.col-3.text-center CASAITALIANA Srl
 			.col-9.text-right

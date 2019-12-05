@@ -30,6 +30,7 @@ module.exports = function(app){
 
 	// absence ------------------------------------------------------------------------------
 	app.get('/hrAbsences', MdRole.hrerIsLogin, Absence.hrAbsences)
+	app.get('/hrAbsenceAll/:staff', MdRole.hrerIsLogin, Absence.hrAbsenceAll)
 	app.get('/hrAbsencesAjax', MdRole.hrerIsLogin, Absence.hrAbsencesAjax)
 	app.get('/hrAbsencesMonth', MdRole.hrerIsLogin, Absence.hrAbsencesMonth)
 	app.get('/hrAbsencesMonthAjax', MdRole.hrerIsLogin, Absence.hrAbsencesMonthAjax)

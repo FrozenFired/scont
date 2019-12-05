@@ -7,7 +7,25 @@ let Filter = require('../../../middle/filter');
 let Conf = require('../../../../confile/conf.js')
 let moment = require('moment')
 
-
+exports.hrAbsenceAll = function(req, res) {
+	let staff = req.params.staff;
+	Absence.find({'apler': staff})
+	.populate('apler', 'code')
+	.populate('manage', 'code')
+	.populate('hr', 'code')
+	.sort({'apler': 1, 'ctAt': -1})
+	.exec(function(err, objects) { if(err) {
+		console.log(err);
+		info = "hrAbsenceAll Error, Please Contact Li Kelin, hahaha";
+		Index.hrOptionWrong(req, res, info);
+	} else {
+		res.render('./sfer/hrer/absence/all', {
+			title: 'Absences Staff',
+			crSfer: req.session.crSfer,
+			objects: objects
+		})
+	} })
+}
 exports.hrAbsences = function(req, res) {
 	res.render('./sfer/hrer/absence/list', {
 		title: 'Absences',
@@ -89,7 +107,6 @@ exports.hrAbsencesMonthAjax = function(req, res) {
 	condCreatS = begin;
 	condCreatF = ended;
 
-	
 	Absence.find({
 		$or:[
 			{'sAt': {"$gte": condCreatS, "$lt": condCreatF}},

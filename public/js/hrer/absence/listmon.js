@@ -25,9 +25,12 @@ $( function() {
 		elem = '<div class="card my-3 bg-secondary singlemonth smonthshow_'+ident+'">';
 			elem += '<div class="row p-1 id-'+object._id+'">';
 				elem += '<div class="col-12 col-md-6 border-right">';
-					let apler = "Loss";
-					if(object.apler) apler = object.apler.code;
-					elem += '<h5><b>Applicant: '+apler+'</b></h5>';
+					let apler = "Loss", aplerId="";
+					if(object.apler) {
+						apler = object.apler.code;
+						aplerId = object.apler._id;
+					}
+					elem += '<h5><b>Applicant: <a href="/hrAbsenceAll/'+aplerId+'">'+apler+'</a></b></h5>';
 					elem += '<h6>[ reason: '+object.desp+' ]</h6>';
 					let sAt = getTime(object.sAt)
 					elem += '<div>Start At: '+sAt+'</div>';

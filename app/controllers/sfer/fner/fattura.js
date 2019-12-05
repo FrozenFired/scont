@@ -52,11 +52,18 @@ exports.fnFatturaAdd = function(req, res, next) {
 			code = object.code+1;
 			year = object.year;
 		}
-		res.render('./sfer/fner/fattura/add', {
-			title: 'New Fattura',
-			crSfer : req.session.crSfer,
-			code : code,
-			year : year,
+		Fattura.findOne({'type': 0})
+		.where('rmd').gt(0)
+		.sort({'ctAt': 1})
+		.exec(function(err, acFt) {
+			if(err) console.log(err);
+			res.render('./sfer/fner/fattura/add', {
+				title: 'New Fattura',
+				crSfer : req.session.crSfer,
+				code : code,
+				year : year,
+				acFt : acFt,
+			})
 		})
 	})
 }
@@ -67,15 +74,15 @@ exports.fnFatturaNew = function(req, res, next) {
 	let goods = req.body.goods;
 	if(goods instanceof Array && goods.length>0) {
 		obj.goods = new Array();
+		let total = 0;
 		for(let i=0; i<goods.length; i++) {
 			let pd = goods[i];
 			if(!pd.code) pd.code="goods Code";
-			if(!pd.hs) pd.hs="goods Code";
 
 			if(!isNaN(parseInt(pd.quot))) {
 				pd.quot=parseInt(pd.quot);
 			} else {
-				pd.quot = 0;
+				pd.quot = 1;
 			}
 			if(!isNaN(parseFloat(pd.price))) {
 				pd.price=parseFloat(pd.price);
@@ -85,16 +92,18 @@ exports.fnFatturaNew = function(req, res, next) {
 			if(!isNaN(parseFloat(pd.tot))) {
 				pd.tot=parseFloat(pd.tot);
 			} else {
-				pd.tot = 0;
+				pd.tot = pd.price * pd.quot;
 			}
-
-			if(!pd.brand) pd.brand="Brand";
-			if(!pd.order) pd.order="Order";
+			total += pd.tot;
 			if(!pd.Brand) pd.Brand=null;
 			if(!pd.Order) pd.Order=null;
 			if(!pd.desp) pd.desp="Description";
 
+			obj.total = total;
 			obj.goods.push(pd);
+		}
+		if(obj.type == 0) {
+			obj.rmd = obj.total;
 		}
 		if(obj.ctAuto) {
 			obj.ctAuto = new Date(obj.ctAuto).setHours(23,59,59,1);
@@ -124,4 +133,43 @@ exports.fnFatturaNew = function(req, res, next) {
 		info = 'Please input "Goods"';
 		Index.fnOptionWrong(req, res, info);
 	}
+}
+
+
+exports.fnAjaxCodeFattura = function(req, res) {
+	let code = req.query.code
+	let year = req.query.year
+	Fattura.findOne({'code': code, 'year': year})
+	.exec(function(err, fattura) {
+		if(err) {
+			console.log(err);
+			res.json({success: 0, info: "数据错误"});
+		} else if(!fattura) {
+			res.json({success: 0, info: "Could not find fattura"});
+		} else {
+			res.json({success: 1, fattura: fattura});
+		}
+
+	})
+}
+
+
+exports.fnFatturaDel = function(req, res) {
+	let id = req.params.id;
+	Fattura.findOne({_id: id})
+	.exec(function(err, fattura) {
+		if(err) {
+			console.log(err);
+			info = "fnFatturaDel, Fattura.findOne, Error!"
+			Index.fnOptionWrong(req, res, info)
+		} else if(!fattura) {
+			info = "已经被删除，请刷新查看"
+			Index.fnOptionWrong(req, res, info)
+		} else {
+			Fattura.remove({_id: fattura._id}, function(err, objRm) {
+				if(err) console.log(err);
+				res.redirect('/fnFatturas')
+			})
+		}
+	})
 }

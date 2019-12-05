@@ -53,4 +53,7 @@ module.exports = function(app){
 	app.post('/fnFatturaNew', MdRole.fnerIsLogin, PostForm, Fattura.fnFatturaNew)
 	app.get('/fnFatturas', MdRole.fnerIsLogin, Fattura.fnFatturas)
 	app.get('/fnFattura/:id', MdRole.fnerIsLogin, Fattura.fnFattura)
+	app.get('/fnAjaxCodeFattura', MdRole.fnerIsLogin, Fattura.fnAjaxCodeFattura)
+
+	app.get('/fnFatturaDel/:id', MdRole.fnerIsLogin, Fattura.fnFatturaDel)
 };
