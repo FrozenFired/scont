@@ -1,6 +1,7 @@
 let Index = require('../app/controllers/sfer/hrer/index');
 
 let HrCar = require('../app/controllers/sfer/hrer/car');
+let HrSfer = require('../app/controllers/sfer/hrer/sfer');
 let Absence = require('../app/controllers/sfer/hrer/absence');
 
 let MdBcrypt = require('../app/middle/middleBcrypt');
@@ -14,6 +15,9 @@ module.exports = function(app){
 
 	// index ---------------Sfer 首页 登录页面 登录 登出---------------------------------------
 	app.get('/hrer', MdRole.hrerIsLogin, Index.hrer);
+
+	// sfer ---------------Sfer 首页 登录页面 登录 登出---------------------------------------
+	app.get('/hrSfers', MdRole.hrerIsLogin, HrSfer.hrSfers);
 
 	// car ------------------------------------------------------------------------------
 	app.get('/hrCars', MdRole.hrerIsLogin, HrCar.hrCars)

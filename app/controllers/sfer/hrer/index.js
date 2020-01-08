@@ -5,8 +5,6 @@ exports.hrer = function(req, res) {
 	});
 }
 
-
-
 hrWrongpage = function(req, res, info){
 	res.render('./sfer/hrer/index/optionWrong', {
 		title: '500-15 Page',

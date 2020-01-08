@@ -1,0 +1,24 @@
+extends ../aalayout/layout
+
+block content
+	.container.mt-5
+		.row
+			//- a.btn.btn-lg.btn-success.btn-block(href="/hrSferAdd") 添加Sfer
+		.row
+			table.table.table-hover.table-bordered
+				thead
+					tr
+						th 账户
+						th 部门
+						th 角色
+						th 昵称
+						th 请假
+				tbody
+					each item in objects
+						-a;
+						tr(class="item-id-"+item._id)
+							td #{item.code}
+							td #{Conf.sfRole[item.role]} #{item.role}
+							td #{Conf.sfPart[item.part]}
+							td #{item.name}
+							td: a.btn.btn-info(href="/hrAbsenceAll/"+item._id) 请假
