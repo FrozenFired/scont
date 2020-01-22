@@ -1,0 +1,73 @@
+-let pays = new Array();
+if object.payAc
+	- pays.push(object.payAc);
+if object.payMd
+	- pays.push(object.payMd);
+if object.paySa
+	- pays.push(object.paySa);
+
+
+h3 Payment Information (此订单付款信息)
+table.table.table-hover.table-bordered
+	tr
+		th ac/sa
+		th createAt
+		th price
+		th paidAt
+		th status
+		th method
+		th agCode
+		th note
+	each pay in pays
+		-paidAt="";
+		if pay.paidAt
+			-paidAt = moment(pay.paidAt).format('YYYYMMDD');
+
+		- bgRecent = 'bg-default';
+		if paidAt < weekday && paidAt > today
+			- bgRecent = 'bg-info';
+
+		-bgStatus = Conf.stsPayBg[pay.status];
+
+		tr(class="pay-"+pay._id)
+			td(class=bgStatus): a(href="/odPay/"+pay._id) #{pay.code}
+			td
+				if pay.createAt
+					-a;
+					span #{moment(pay.createAt).format('YYYY/MM/DD')}
+				//- else
+				//- 	-objStr = "object[createAt]";
+				//- 	include ./editAt
+			td
+				if (paidAt == today) && (pay.status == 0)
+					-a;
+					a.btn.btn-info(href="/odPayUp/"+pay._id) #{pay.price}
+				else
+					span #{pay.price}
+			td(class=bgRecent)
+				if pay.paidAt
+					-a;
+					span #{moment(pay.paidAt).format('YYYY/MM/DD')}
+				//- else
+				//- 	-objStr = "object[paidAt]";
+				//- 	include ./editAt
+			td #{Conf.stsPay[pay.status]}
+			td #{Conf.payMethod[pay.method]}
+			td #{pay.agCode}
+			td #{pay.note}
+	if !object.payMd && object.status == 2
+		-a;
+		tr
+			td: a.btn.btn-info.btn-block(href="/odOrderUpMd/"+object._id) split sa md
+			td 添加中款 点击左边按钮
+
+//- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+//- //- <link rel="stylesheet" href="/resources/demos/style.css">
+//- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+//- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+//- //- timepicker
+//- link(rel="stylesheet", href="/libs/jt.timepicker/jquery.timepicker.css")
+//- script(src="/libs/jt.timepicker/jquery.timepicker.min.js")
+
+
+//- script(src="/js/order/detail.js")

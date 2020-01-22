@@ -1,0 +1,98 @@
+table.table.table-hover.table-bordered
+	thead
+		tr
+			th view
+			th supplier
+			th order
+			th brand
+			//- th P/I
+			th price
+			th ac
+			th acAt
+			th md
+			th mdAt
+			th sa
+			th saAt
+			th note
+			th(style="min-width: 200px") ourNote
+	tbody
+		- let pTot = 0, acTot = 0, saTot = 0;
+		each item in objects
+			-let stsOrderBg = Conf.stsOrderBg[item.status];
+
+			-let payAc, acPrice, payMd, mdPrice, paySa, saPrice;
+			-let bgAcPaid = bgMdPaid = bgSaPaid = "bg-default";
+			-let bgAcToday = bgMdToday = bgSaToday = "bg-default";
+			-let bgAcWeek = bgMdWeek = bgSaWeek = "bg-default";
+			if item.payAc
+				-payAc = item.payAc;
+				-acPrice = payAc.price;
+
+				if payAc.status > 0
+					- bgAcPaid = "bg-warning";
+
+				if payAc.paidAt
+					-acTime = moment(payAc.paidAt).format('YYYYMMDD');
+					if today == acTime
+						- bgAcToday="bg-info";
+					else if today < acTime && acTime < weekday
+						- bgAcWeek="bg-info";
+			if item.payMd
+				-payMd = item.payMd;
+				-mdPrice = payMd.price;
+
+				if payMd.status > 0
+					- bgMdPaid = "bg-warning";
+
+				if payMd.paidAt
+					-mdTime = moment(payMd.paidAt).format('YYYYMMDD');
+					if today == mdTime
+						- bgMdToday="bg-info";
+					else if today < mdTime && mdTime < weekday
+						- bgMdWeek="bg-info";
+			if item.paySa
+				-paySa = item.paySa;
+				-saPrice = paySa.price;
+
+				if paySa.status > 0
+					- bgSaPaid = "bg-warning";
+
+				if paySa.paidAt
+					-saTime = moment(paySa.paidAt).format('YYYYMMDD');
+					if today == saTime
+						- bgSaToday="bg-info";
+					else if today < saTime && saTime < weekday
+						- bgSaWeek="bg-info";
+
+			tr(class="item-id-"+item._id)
+				td(class=stsOrderBg): a(href="/odOrder/"+item._id) view
+				td
+					if item.vder
+						-a;
+						span #{item.vder.code} #{weekTime}
+					else
+						span loss supplier
+				td #{item.order}
+				td #{item.brand}
+				//- td #{item.pi}
+				td #{item.price}
+				td(class=bgAcPaid + " " + bgAcToday) #{acPrice}
+				td(class=bgAcWeek)
+					if payAc && payAc.paidAt
+						-a;
+						span #{moment(payAc.paidAt).format('YYYY/MM/DD')}
+				td(class=bgMdPaid + " " + bgMdToday) #{mdPrice}
+				td(class=bgMdWeek)
+					if payMd && payMd.paidAt
+						-a;
+						span #{moment(payMd.paidAt).format('YYYY/MM/DD')}
+				td(class=bgSaPaid + " " + bgSaToday) #{saPrice}
+				td(class=bgSaWeek)
+					if paySa && paySa.paidAt
+						-a;
+						span #{moment(paySa.paidAt).format('YYYY/MM/DD')}
+				td #{item.note}
+				td
+					include ./editOurnote
+//- script(src="/js/changeStatus.js")
+script(src="/js/order/list.js")
