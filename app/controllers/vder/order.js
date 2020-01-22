@@ -188,7 +188,7 @@ exports.updateOrder = function(req, res) {
 exports.vdOrderStatus = function(req, res) {
 	let id = req.query.id
 	let newStatus = req.query.newStatus
-	console.log(id)
+	// console.log(id)
 	Order.findOne({_id: id}, function(err, object){
 		if(err) console.log(err);
 		if(object){

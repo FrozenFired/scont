@@ -147,6 +147,8 @@ table.table.table-hover.table-bordered.mt-3
 						a(href=imgSrcAc, target="_blank")
 							img.imgSm1(id="imgSm-"+payAc._id, src=imgSrcAc, width="50px")
 						img.imgBg(id="imgBg-"+payAc._id, src=imgSrcAc, width="300px", style="display:none")
+					else
+						//- span no Img
 				td(class=textAcWeek)
 					if payAc && payAc.paidAt
 						-paidAt = payAc.paidAt;
