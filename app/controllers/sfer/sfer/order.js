@@ -235,7 +235,6 @@ exports.sfOrderNew = function(req, res) {
 		let _object = new Order(objBody)
 		sfAddPayFunc(objBody, _object)
 		if(objBody.taxType == 0) {
-
 			Vder.findOne({_id: objBody.vder}, function(err, vder) {
 				if(err) console.log(err);
 				if(vder) {
@@ -261,21 +260,26 @@ sfAddPayFunc = function(objBody, object) {
 	objAc.price = parseFloat(objBody.acPrice);
 	objAc.code = "ac";
 	objAc.status = 0;
-
-	let objSa = new Object();
-	objSa.price = parseFloat(objBody.saPrice);
-	objSa.code = "sa";
-	objSa.status = 0;
-
-	objAc.order = objSa.order = object._id;
-	objAc.vder = objSa.vder = object.vder;
+	objAc.order =  object._id;
+	objAc.vder =  object.vder;
 	let _payAc = new Pay(objAc);
 	_payAc.save(function(err, acSave) {});
-	let _paySa = new Pay(objSa);
-	_paySa.save(function(err, saSave) {});
-
 	object.payAc = _payAc._id;
-	object.paySa = _paySa._id;
+
+	let saPrice = parseFloat(objBody.saPrice)
+	if(!isNaN(saPrice) && saPrice > 0) {
+		let objSa = new Object();
+		objSa.price = saPrice;
+		objSa.code = "sa";
+		objSa.status = 0;
+
+		objSa.order = object._id
+		objSa.vder = object.vder
+		let _paySa = new Pay(objSa);
+		_paySa.save(function(err, saSave) {});
+
+		object.paySa = _paySa._id;
+	}
 }
 
 

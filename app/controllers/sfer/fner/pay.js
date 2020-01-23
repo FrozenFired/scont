@@ -425,35 +425,36 @@ fnPayChangeOrderStatus = function(orderId) {
 	.populate('payMd')
 	.populate('paySa')
 	.exec(function(err, order) {
-		if(err) console.log(err);
-		if(order) {
-			let flag = 0;
-			if(order.payAc && order.payAc.status != 0) {
-				flag += 1
-			}
-			if(order.payMd) {
-				if(order.payMd.status != 0) {
-					flag += 2	
+		if(err) {
+			console.log(err);
+		} else if(!order) {
+			console.log("can't find order");
+		} else if(!order.payAc) {
+			console.log("can't find order pay");
+		} else {
+			let newSts = 1;
+			if(order.payAc.status == 0) {
+				newSts = 1;
+				if(order.paySa) {
+					if(order.paySa.status == 0) {
+						newSts = 1;
+					} else {
+						newSts = 2;
+					}
 				}
 			} else {
-				flag += 2
-			}
-			if(order.paySa && order.paySa.status != 0) {
-				flag += 4
+				newSts = 3;
+				if(order.paySa) {
+					if(order.paySa.status == 0) {
+						newSts = 2;
+					} else {
+						newSts = 3;
+					}
+				}
 			}
 
-			let status = order.status
-			if(flag == 0) {
-				status = 1;
-			}
-			else if(flag == 7) {
-				status = 3
-			}
-			else{
-				status = 2;
-			}
-			if(order.status != status) {
-				order.status = status;
+			if(order.status != newSts) {
+				order.status = newSts;
 				order.save(function(err, orderSave) {
 					if(err) console.log(err);
 				})

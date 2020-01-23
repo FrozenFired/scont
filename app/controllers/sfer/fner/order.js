@@ -41,7 +41,7 @@ exports.ordersFilter = function(req, res, next) {
 
 	// 根据状态筛选
 	// let condStatus = Object.keys(Conf.stsOrder);
-	let condStatus = ['0', '1', '2'];
+	let condStatus = ['1', '2'];
 	[condition.condStatus, condition.slipCond] = Filter.status(req.query.status, condStatus, condition.slipCond);
 	if(req.query && req.query.keytype == "vder"){
 		condition.keytype = "order";

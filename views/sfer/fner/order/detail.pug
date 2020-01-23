@@ -11,26 +11,12 @@ block content
 		hr
 		if object.status == 0
 			-a;
-			button.btn.btn-warning.change(type="button", data-url="/fnOrderStatus", data-id=object._id, data-sts=1) 确定订单信息正确
-			dl
-				if object.payAc
-					-a;
-					dt ac:
-					dd #{object.payAc.price}
-				if object.payMd
-					-a;
-					dt md:
-					dd #{object.payMd.price}
-				if object.paySa
-					-a;
-					dt sa:
-					dd #{object.paySa.price}
-		else
-			include ./detail/acsaInfo
+			h4 需要订单部确认
+		include ./detail/acsaInfo
 		hr
 		include ./detail/selfInfo
-		hr
-		a.btn.btn-warning(href="/fnOrderUp/"+object._id) Update
-		span &nbsp; &nbsp;
-		a.btn.btn-danger(href="/fnOrderDel/"+object._id) Delete
-	script(src="/js/changeStatus.js")
+		//- hr
+		//- a.btn.btn-warning(href="/fnOrderUp/"+object._id) Update
+		//- span &nbsp; &nbsp;
+		//- a.btn.btn-danger(href="/fnOrderDel/"+object._id) Delete
+	//- script(src="/js/changeStatus.js")
