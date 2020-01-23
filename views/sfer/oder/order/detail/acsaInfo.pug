@@ -30,7 +30,8 @@ table.table.table-hover.table-bordered
 		-bgStatus = Conf.stsPayBg[pay.status];
 
 		tr(class="pay-"+pay._id)
-			td(class=bgStatus): a(href="/odPay/"+pay._id) #{pay.code}
+			td(class=bgStatus) #{pay.code}
+			//- td(class=bgStatus): a(href="/odPay/"+pay._id) #{pay.code}
 			td
 				if pay.createAt
 					-a;
