@@ -1,0 +1,42 @@
+- var pTot = 0, acTot = 0, saTot = 0;
+each item in objects
+	-var stsOrdBg = Conf.stsOrdBg[item.status];
+
+	-var payAc, acPrice, payMd, mdPrice, paySa, saPrice;
+	-var bgAcPaid = bgMdPaid = bgSaPaid = "bg-default";
+	-var bgAcToday = bgMdToday = bgSaToday = "bg-default";
+	-var bgAcWeek = bgMdWeek = bgSaWeek = "bg-default";
+	.card.p-2.mt-2(class="item-id-"+item._id)
+		.row
+			a.col-11.col-sm-4.btn.btn-default.text-left.text-dark.bord.ml-2(class=stsOrdBg href="/sfOrd/"+item._id)
+				h5 #{item.ord}
+				if item.vder
+					-var vder = item.vder;
+					- let vderCode = vder.code;
+					if vderCode.length > 10
+						- vderCode = vderCode.slice(0,10) + '...'
+					h5 <span class="text-secondary">Supplier:</span> #{vderCode}
+				else
+					span Supplier Lost
+
+				p <span class="text-secondary">Brand:</span> #{item.brand}
+			.col-11.col-sm-4.ml-2
+				if !isNaN(item.price)
+					- let price = (item.price).toFixed(2);
+					h4 Total: #{price} €
+				else
+					h4 Total: <span class="text-danger">NaN </span>
+			.col-11.col-sm-3.ml-2
+				h5 P/I： #{item.pi}
+				if item.vdNote
+					-a;
+					div SupplierNote: #{item.vdNote}
+				div
+					include ./editNote
+				if item.creater
+					-creater = item.creater;
+					span Staff: #{creater.code}
+				else
+					span Staff Lost
+
+script(src="/js/ord/list.js")

@@ -428,8 +428,24 @@ odUpdPayFunc = function(req, res, objBody, object) {
 						info = "odOrderUpd paySa find id error, Please Contact Manager";
 						Index.odOptionWrong(req, res, info);
 					} else if(!paySa) {
-						info = "odOrderUpd paySa find error, Please Contact Manager";
-						Index.odOptionWrong(req, res, info);
+						let objPaySa = new Object();
+						objPaySa.vder = payAc.vder;
+						objPaySa.order = payAc.order;
+						objPaySa.code = sa;
+						paySa.price = parseFloat(objBody.saPrice);
+						let _paySa = new Pay(objPaySa);
+						_paySa.save(function(err, paySaSave) {
+							if(err) console.log(err);
+							object.save(function(err, objSave) {
+								if(err) {
+									console.log(err);
+									info = "odOrderUpd order save error, Please Contact Manager";
+									Index.odOptionWrong(req, res, info);
+								} else {
+									res.redirect('/odOrder/'+objSave._id)
+								}
+							})
+						})
 					} else {
 						paySa.price = parseFloat(objBody.saPrice);
 						paySa.save(function(err, paySaSave) {

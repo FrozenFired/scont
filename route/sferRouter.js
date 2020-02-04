@@ -8,6 +8,8 @@ let Brand = require('../app/controllers/sfer/sfer/brand');
 let Vendor = require('../app/controllers/sfer/sfer/vendor');
 let Scont = require('../app/controllers/sfer/sfer/scont');
 
+let Ord = require('../app/controllers/sfer/sfer/ord');
+
 let Order = require('../app/controllers/sfer/sfer/order');
 let Pay = require('../app/controllers/sfer/sfer/pay');
 
@@ -71,6 +73,14 @@ module.exports = function(app){
 
 	app.get('/sfAjaxScontSts', MdRole.sferIsLogin, Scont.ajaxScontSts)
 
+	// Ord         ----------------------------------------------------------------------
+	app.get('/sfOrds', MdRole.sferIsLogin, Ord.ordsFilter, Ord.ords)
+	app.get('/sfOrd/:id', MdRole.sferIsLogin, Ord.ordFilter, Ord.ord)
+	app.get('/sfOrdUp/:id', MdRole.sferIsLogin, Ord.ordFilter, Ord.ordUp)
+	app.post('/sfOrdUpd', PostForm, MdRole.sferIsLogin, MdRole.sfUniLog, Ord.ordUpd)
+	app.get('/sfOrdAdd', MdRole.sferIsLogin, MdRole.sfUniLog, Ord.ordAdd)
+	app.post('/sfOrdNew', PostForm, MdRole.sferIsLogin, MdRole.sfUniLog, Ord.sfOrdNew)
+	app.get('/sfOrdDel/:id', MdRole.sferIsLogin, Ord.ordFilter, Ord.ordDel)
 
 	// Order         ----------------------------------------------------------------------
 	app.get('/sfOrders', MdRole.sferIsLogin, Order.ordersFilter, Order.orders)

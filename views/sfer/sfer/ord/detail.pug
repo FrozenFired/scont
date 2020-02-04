@@ -1,0 +1,17 @@
+extends ../aalayout/layout
+
+block content
+	.bg-secondary.py-5
+		.container
+			-let stsOrdBg = Conf.stsOrdBg[object.status];
+			.row(class=stsOrdBg)
+				h1.col-sm-6
+					span Ord Information: #{object.ordCode}
+	.container.mt-3
+		include ./detail/selfInfo
+		if object.creater && object.creater.code == crSfer.code && object.status == 0
+			-a;
+			hr
+			a.btn.btn-warning(href="/sfOrdUp/"+object._id) Update
+			span &nbsp; &nbsp;
+			a.btn.btn-danger(href="/sfOrdDel/"+object._id) Delete

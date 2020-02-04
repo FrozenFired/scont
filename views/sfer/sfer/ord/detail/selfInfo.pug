@@ -1,0 +1,50 @@
+.card.mt-2.p-2
+	.row.mt-2
+		h4.col-5.text-secondary.text-right status:
+		h4.col-7 #{Conf.stsOrd[object.status]}
+	.row.mt-2
+		h4.col-5.text-secondary.text-right price:
+		h4.col-7
+			if !isNaN(object.price)
+				-price = (object.price).toFixed(2);
+				span.text-info #{price} 
+				span €
+			else
+				span.text-danger NaN
+			if object.priceHis
+				-priceHis = object.priceHis;
+				span -(#{priceHis})
+	.row.mt-2
+		h4.col-5.text-secondary.text-right supplier:
+		h4.col-7
+			if object.vder
+				-a;
+				span #{object.vder.code}
+			else
+				span loss supplier
+	.row.mt-2
+		h4.col-5.text-secondary.text-right brand:
+		h4.col-7 #{object.brand}
+	.row.mt-2
+		h4.col-5.text-secondary.text-right 形发P/I:
+		h4.col-7 #{object.piCode}
+	.row.mt-2
+		h4.col-5.text-secondary.text-right taxType:
+		h4.col-7 #{Conf.taxType[object.taxType]}
+	.row.mt-2
+		h4.col-5.text-secondary.text-right supplierNote:
+		h4.col-7 #{object.vdNote}
+	.row.mt-2
+		h4.col-5.text-secondary.text-right quoterNote:
+		h4.col-7 #{object.qtNote}
+	.row.mt-2
+		h4.col-5.text-secondary.text-right Creater:
+		h4.col-7 
+			if object.creater
+				- createrCode = object.creater.code;
+				span #{createrCode}
+			else 
+				span Creater Loss
+	.row.mt-2
+		h4.col-5.text-secondary.text-right CreateAt:
+		h4.col-7 #{moment(object.createAt).format('YYYY/MM/DD')}
