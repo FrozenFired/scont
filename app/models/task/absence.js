@@ -4,20 +4,20 @@ let Schema = mongoose.Schema;
 let ObjectId = Schema.Types.ObjectId
 const colection = 'Absence';
 let dbSchema = new Schema({
-	apler: {type: ObjectId, ref: 'Sfer'},
+	apler: {type: ObjectId, ref: 'Sfer'},	// 申请人
 	role: Number,// 所属部门，方便部门查看
-	desp: String,
-	sAt: Date,
-	peAt: Date,
+	desp: String,// 描述
+	sAt: Date,	// 开始时间
+	peAt: Date,// 结束时间
 
-	manage: {type: ObjectId, ref: 'Sfer'},
-	hr: {type: ObjectId, ref: 'Sfer'},
-	eAt: Date,
-	duration:String,
-	note: String,
+	manage: {type: ObjectId, ref: 'Sfer'},	// 确认的负责人
+	hr: {type: ObjectId, ref: 'Sfer'},		// 确认的hr
+	eAt: Date,				// 实际结束时间
+	duration:String,		// 间隔多久
+	note: String,		// 备注
 
-	status: Number,
-	ctAt: Date,
+	status: Number,	// 状态
+	ctAt: Date,		// 创建时间
 });
 
 dbSchema.pre('save', function(next) {	

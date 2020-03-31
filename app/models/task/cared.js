@@ -4,18 +4,18 @@ let Schema = mongoose.Schema;
 let ObjectId = Schema.Types.ObjectId
 const colection = 'Cared';
 let dbSchema = new Schema({
-	desp: String,
-	car: {type: ObjectId, ref: 'Car'},
-	apler: {type: ObjectId, ref: 'Sfer'},
-	ctAt: Date,
+	desp: String,	// 申请描述
+	car: {type: ObjectId, ref: 'Car'}, // 申请的汽车
+	apler: {type: ObjectId, ref: 'Sfer'}, // 申请人
+	ctAt: Date,		// 申请创建时间
 
-	cfmer: {type: ObjectId, ref: 'Sfer'},
-	sAt: Date,
+	cfmer: {type: ObjectId, ref: 'Sfer'},	// 确认人
+	sAt: Date,	// 开始时间
 
-	ender: {type: ObjectId, ref: 'Sfer'},
-	eAt: Date,
+	ender: {type: ObjectId, ref: 'Sfer'},// 钥匙接收人
+	eAt: Date,// 结束时间
 
-	note: String,
+	note: String, // 备注
 });
 
 dbSchema.pre('save', function(next) {	

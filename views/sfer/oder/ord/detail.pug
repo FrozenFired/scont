@@ -1,0 +1,19 @@
+extends ../aalayout/layout
+
+block content
+	.container
+		-let stsOrdBg = Conf.stsOrdBg[object.status];
+		.row.my-3(class=stsOrdBg)
+			h1.col-sm-6
+				span #{object.ordCode} 订单信息
+			.col-sm-4.text-right
+				a.btn.btn-link(href="/odOrds") back list
+		if object.status == 10
+			-a;
+			button.btn.btn-warning.change(type="button", data-url="/odOrdStatus", data-id=object._id, data-sts=1) 确定订单信息正确
+		include ./detail/selfInfo
+		hr
+		a.btn.btn-warning(href="/odOrdUp/"+object._id) Update
+		span &nbsp; &nbsp;
+		a.btn.btn-danger(href="/odOrdDel/"+object._id) Delete
+	script(src="/js/changeStatus.js")

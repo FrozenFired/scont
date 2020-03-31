@@ -4,18 +4,18 @@ let Schema = mongoose.Schema;
 let ObjectId = Schema.Types.ObjectId
 const colection = 'Car';
 let dbSchema = new Schema({
-	code: {
+	code: {	// 汽车编号
 		unique: true,
 		type: String
 	},
-	nome: String,
-	desp: String,
+	nome: String,// 汽车名字
+	desp: String, // 描述
 
-	status: Number,
-	apler: {type: ObjectId, ref: 'Sfer'},
+	status: Number, // 汽车状态 
+	apler: {type: ObjectId, ref: 'Sfer'}, // 申请人
 	cared: {type: ObjectId, ref: 'Cared'},
 
-	photo: {
+	photo: {	// 汽车照片
 		type: String,
 		default: '/upload/car/1.jpg'
 	},

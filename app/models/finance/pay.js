@@ -9,21 +9,21 @@ let dbSchema = new Schema({
 	order: {type: ObjectId, ref: 'Order'},
 
 	code: String, // auto: ac sa sa2
-	price: Float,
-	photo: String,
+	price: Float,	// 金额
+	photo: String,	// 付款截图
 
-	method: Number,	// BONIFICO CREDIT	SYSTEM 
+	method: Number,	// BONIFICO CREDIT	SYSTEM 付款方式
 	agCode: String, // 支票号码
-	createAt: Date,
-	paidAt: Date,
+	createAt: Date,	// 创建时间
+	paidAt: Date,	// 支付时间
 
-	status: String,	// paid unpaid
-	mailed: String, // Not Mailed
-	note: String,
+	status: String,	// paid unpaid 状态
+	mailed: String, // Not Mailed 是否已经发邮件标记
+	note: String,	// 备注
 
-	picUrl: String,
+	picUrl: String, // 保存照片的路径
 
-	paider: {type: ObjectId, ref: 'Sfer'},
+	paider: {type: ObjectId, ref: 'Sfer'},	// 付款人
 });
 
 dbSchema.pre('save', function(next) {

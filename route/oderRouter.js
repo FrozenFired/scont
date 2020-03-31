@@ -1,6 +1,7 @@
 let Index = require('../app/controllers/sfer/oder/index');
 
 let Order = require('../app/controllers/sfer/oder/order');
+let Ord = require('../app/controllers/sfer/oder/ord');
 let Vder = require('../app/controllers/sfer/oder/vder');
 
 let MdBcrypt = require('../app/middle/middleBcrypt');
@@ -28,6 +29,20 @@ module.exports = function(app){
 	app.get('/odOrderDel/:id', MdRole.oderIsLogin, Order.orderFilter, Order.orderDel)
 
 	app.get('/odOrderStatus', MdRole.oderIsLogin, Order.orderStatus)
+
+
+	// Ord ----------------------------------------------------------------------
+	app.get('/odOrds', MdRole.oderIsLogin, Ord.ordsFilter, Ord.ords)
+	app.get('/odOrdsPrint', MdRole.oderIsLogin, Ord.ordsFilter, Ord.ordsPrint)
+	app.get('/odOrdAdd', MdRole.oderIsLogin, MdRole.sfUniLog, Ord.ordAdd)
+	app.post('/odOrdNew', PostForm, MdRole.oderIsLogin, MdRole.sfUniLog, Ord.odOrdNew)
+	app.get('/odOrd/:id', MdRole.oderIsLogin, Ord.ordFilter, Ord.ord)
+	app.get('/odOrdUp/:id', MdRole.oderIsLogin, Ord.ordFilter, Ord.ordUp)
+	app.get('/odOrdUpPrice/:id', MdRole.oderIsLogin, Ord.ordFilter, Ord.ordUpPrice)
+	app.post('/odOrdUpd', PostForm, MdRole.oderIsLogin, MdRole.sfUniLog, Ord.ordUpd)
+	app.get('/odOrdDel/:id', MdRole.oderIsLogin, Ord.ordFilter, Ord.ordDel)
+
+	app.get('/odOrdStatus', MdRole.oderIsLogin, Ord.ordStatus)
 
 	// Vder ---------------------------------------------------------------------------------
 	app.get('/odVders', MdRole.oderIsLogin, Vder.odVdersFilter, Vder.odVders)
