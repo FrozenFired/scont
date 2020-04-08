@@ -23,4 +23,9 @@ block content
 							td #{Conf.sfPart[item.part]}
 							td #{item.name}
 							td: button.btn.btn-danger.del(type="button", data-urldel="/mgSferDel", data-id=item._id) delete
+		.row
+			.col-6
+				a.btn.btn-default.btn-block(href="/logisticOrder") 物流订单
+			.col-6.text-right
+				a.btn.btn-default.btn-block(href="/userExcel") 下载用户列表
 	script(src="/js/delete.js")

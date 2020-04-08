@@ -39,6 +39,7 @@ module.exports = function(app){
 
 
 	// Sfer ---------------------------------------------------------------------------------
+	app.get('/logisticOrder', MdRole.mgerIsLogin, Sfer.logisticOrder)
 	app.get('/mgSferAdd', MdRole.mgerIsLogin, Sfer.mgSferAdd)
 
 	app.post('/mgAddSfer', MdRole.mgerIsLogin, PostForm,
@@ -46,6 +47,7 @@ module.exports = function(app){
 		Sfer.mgAddSfer)
 
 	app.get('/mgSferList', MdRole.mgerIsLogin, Sfer.mgSferList)
+	app.get('/userExcel', MdRole.mgerIsLogin, Sfer.userExcel)
 	app.get('/mgSferDetail/:id', MdRole.mgerIsLogin, Sfer.mgExistSferY, Sfer.mgSferDetail)
 	app.post('/mgUpdateSferInfo',
 		MdRole.mgerIsLogin, PostForm, MdPicture.addNewPhoto, Sfer.mgCheckSferUp, 
