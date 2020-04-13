@@ -37,6 +37,7 @@ let Conf = {
 	},
 	/* --------------------- order --------------------- */
 	stsOrder: {0: 'refer', 1: 'checked', 2: 'partPaid', 3: 'allPaid', 4: 'History'},
+	stsOrderCn: {0: '未审核', 1: '已审核', 2: '已付首款', 3: '全部付款', 4: '历史记录'},
 	stsOrderLg: {0: 'daPagare', 1: 'daRitirare', 2: 'daSpedire', 3: 'spedito'},
 	stsOrderVder: {1: 'noPaid', 2: 'partPaid', 3: 'all paid', 4: 'History'},
 	stsOrderBg: {0: 'bg-success', 1: 'bg-default', 2: 'bg-default', 3: 'bg-default', 4: 'bg-secondary'},

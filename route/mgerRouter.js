@@ -40,6 +40,7 @@ module.exports = function(app){
 
 	// Sfer ---------------------------------------------------------------------------------
 	app.get('/logisticOrder', MdRole.mgerIsLogin, Sfer.logisticOrder)
+	app.get('/mgerOrder', MdRole.mgerIsLogin, Sfer.mgerOrder)
 	app.get('/mgSferAdd', MdRole.mgerIsLogin, Sfer.mgSferAdd)
 
 	app.post('/mgAddSfer', MdRole.mgerIsLogin, PostForm,

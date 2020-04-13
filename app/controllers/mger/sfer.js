@@ -158,6 +158,63 @@ exports.logisticOrder = function(req, res) {
 		wb.write('LogisticOrder_'+ moment(new Date()).format('YYYYMMDD-HHmmss') + '.xlsx', res);
 	})
 }
+exports.mgerOrder = function(req, res) {
+	Order.find()
+	.populate('vder')
+	.populate('paySa')
+	.sort({'createAt': -1})
+	.exec(function(err, objects) {
+		if(err) console.log(err)
+		let xl = require('excel4node');
+		let wb = new xl.Workbook({
+			defaultFont: {
+				size: 12,
+				color: '333333'
+			},
+			dateFormat: 'yyyy-mm-dd hh:mm:ss'
+		});
+		
+		let ws = wb.addWorksheet('Sheet 1');
+		ws.column(1).setWidth(20);
+		ws.column(2).setWidth(20);
+		ws.column(3).setWidth(15);
+		ws.column(4).setWidth(15);
+		ws.column(5).setWidth(30);
+		ws.column(6).setWidth(20);
+		ws.column(7).setWidth(20);
+
+		
+		// header
+		ws.cell(1,1).string('订单号');
+		ws.cell(1,2).string('金额');
+		ws.cell(1,3).string('品牌');
+		ws.cell(1,4).string('供应商');
+		ws.cell(1,5).string('折扣');
+		ws.cell(1,6).string('支付状态');
+		ws.cell(1,7).string('创建日期');
+
+		for(let i=0; i<objects.length; i++){
+			let object = objects[i];
+
+			if(object.order) ws.cell((i+2), 1).string(String(object.order));
+			if(object.price) ws.cell((i+2), 2).string(String(object.price));
+			if(object.brand) ws.cell((i+2), 3).string(String(object.brand));
+			if(object.vder && object.vder.code) ws.cell((i+2), 4).string(String(object.vder.code));
+			if(object.status == 2) {
+				if(object.paySa && object.paySa.status > 0) {
+					ws.cell((i+2), 6).string("全部付款")
+				} else {
+					ws.cell((i+2), 6).string(String(Conf.stsOrderCn[object.status]));
+				}
+			} else {
+				if(object.status) ws.cell((i+2), 6).string(String(Conf.stsOrderCn[object.status]));
+			}
+			if(object.createAt) ws.cell((i+2), 7).string(moment(object.createAt).format('YYYY/MM/DD'));
+		}
+
+		wb.write('LogisticOrder_'+ moment(new Date()).format('YYYYMMDD-HHmmss') + '.xlsx', res);
+	})
+}
 
 exports.mgExistSferY = function(req, res, next) {
 	let id = req.params.id;
